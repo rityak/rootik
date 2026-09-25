@@ -10,7 +10,11 @@ one of them needs it or because a mainstream toolkit (Radix/Mantine/shadcn) has 
 - **Zero runtime deps** besides React. Icons inside the kit are inline SVG (`src/lib/icons.tsx`);
   consumers pass any `ReactNode` as `icon` (lucide works). `lucide-react` is a dev dep for stories only.
 - Plain CSS with custom properties, no Tailwind in the kit. All kit CSS lives in `@layer rootik`.
-- Commands: `bun run dev` (Ladle on :61000), `bun run check` (tsc + biome), `bun run format`.
+- Commands: `bun run dev` (Ladle on :61000), `bun run check` (tsc + biome + bun test), `bun run format`.
+  CI (`.github/workflows/ci.yml`) runs typecheck, `biome ci`, tests and `ladle build`; Bun version is pinned
+  by `packageManager` in package.json.
+- Biome is stricter than `recommended` (see biome.json). Kit code (components/lib/theme) may import only peer
+  deps; stories may use dev deps. Plugin `biome/untinted-neutral.grit` rejects translucent `oklch(L 0 0 / a)`.
 - Consumed from source (`exports` → `src/`); no dist build yet.
 - Ladle's own types don't compile under TS 7: tsconfig `paths` maps `@ladle/react` to `.ladle/ladle-types.d.ts`.
 - Stories live in `src/stories/*.stories.tsx` (one file per family); preview a single story with

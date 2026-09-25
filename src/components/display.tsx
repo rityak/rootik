@@ -110,6 +110,8 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
   status?: Tone;
 }
 
+const WHITESPACE = /\s+/;
+
 /** Image or initials; the initials background hue is derived from the name, so it's stable. */
 export function Avatar({
   name = "",
@@ -122,7 +124,7 @@ export function Avatar({
   ...rest
 }: AvatarProps) {
   const initials = name
-    .split(/\s+/)
+    .split(WHITESPACE)
     .filter(Boolean)
     .slice(0, 2)
     .map((w) => w[0]?.toUpperCase())

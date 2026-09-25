@@ -84,7 +84,9 @@ export function writeStorage(key: string | undefined, value: unknown) {
   if (!key) return;
   try {
     localStorage.setItem(key, JSON.stringify(value));
-  } catch {}
+  } catch {
+    // storage unavailable (private mode, quota): the value just isn't persisted
+  }
 }
 
 /** Global keyboard shortcut. `combo` like "mod+k", "shift+?", "escape"; mod = Ctrl or ⌘. */

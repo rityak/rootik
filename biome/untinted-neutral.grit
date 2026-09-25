@@ -1,0 +1,13 @@
+// Style rule 1: overlays carry the neutral tint. A translucent oklch(L 0 0 / a) — plain black/white — reads grey
+// on the tinted canvas; use oklch(var(--rk-shade) / a) or oklch(var(--rk-tint) / a). Opaque labels on fills are fine.
+language css;
+
+or {
+  `oklch($args / $alpha)` as $call where { $args <: r"\s*[0-9.]+%?\s+0%?\s+[0-9.]+[a-z]*\s*" },
+  `oklch($args)` as $call where { $args <: r"\s*[0-9.]+%?\s+0%?\s+[0-9.]+[a-z]*\s*/.*" }
+} where {
+  register_diagnostic(
+    span=$call,
+    message="Untinted overlay (chroma 0 with alpha) reads grey on the tinted canvas: use oklch(var(--rk-shade) / a) or oklch(var(--rk-tint) / a)."
+  )
+}

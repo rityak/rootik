@@ -3,6 +3,7 @@
   "files": {
     "includes": ["src/**", ".ladle/**", "*.json"]
   },
+  "plugins": ["./biome/untinted-neutral.grit"],
   "formatter": {
     "indentStyle": "space",
     "indentWidth": 2,
@@ -11,11 +12,127 @@
   "linter": {
     "rules": {
       "preset": "recommended",
+      "complexity": {
+        "noForEach": "error",
+        "noImplicitCoercions": "error",
+        "noImportantStyles": "error",
+        "noUselessStringConcat": "error",
+        "noUselessUndefined": "error",
+        "noUselessUndefinedInitialization": "error",
+        "useDateNow": "error",
+        "useIndexOf": "error",
+        "useWhile": "error"
+      },
+      "correctness": {
+        "noChildrenProp": "error",
+        "noNestedComponentDefinitions": "error",
+        "noNodejsModules": "error",
+        "noProcessGlobal": "error",
+        "noReactPropAssignments": "error",
+        "noRenderReturnValue": "error",
+        "noUndeclaredDependencies": "error",
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error",
+        "useHookAtTopLevel": "error",
+        "useJsxKeyInIterable": "error"
+      },
+      "performance": {
+        "noAccumulatingSpread": "error",
+        "noDelete": "error",
+        "noDynamicNamespaceImportAccess": "error",
+        "noNamespaceImport": "error",
+        "useTopLevelRegex": "error"
+      },
       "style": {
-        "noDescendingSpecificity": "off"
+        "noDescendingSpecificity": "off",
+        "noCommonJs": "error",
+        "noDefaultExport": "error",
+        "noEnum": "error",
+        "noHexColors": "error",
+        "noInferrableTypes": "error",
+        "noNamespace": "error",
+        "noNonNullAssertion": "error",
+        "noParameterAssign": "error",
+        "noUselessElse": "error",
+        "noYodaExpression": "error",
+        "useArrayLiterals": "error",
+        "useAtIndex": "error",
+        "useCollapsedElseIf": "error",
+        "useCollapsedIf": "error",
+        "useConsistentTypeDefinitions": "error",
+        "useDefaultParameterLast": "error",
+        "useExplicitLengthCheck": "error",
+        "useExportType": "error",
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["kebab-case"],
+            "requireAscii": true
+          }
+        },
+        "useForOf": "error",
+        "useFragmentSyntax": "error",
+        "useImportType": "error",
+        "useNumberNamespace": "error",
+        "useReactFunctionComponents": "error",
+        "useSelfClosingElements": "error",
+        "useShorthandFunctionType": "error",
+        "useThrowNewError": "error",
+        "useThrowOnlyError": "error"
+      },
+      "suspicious": {
+        "noAlert": "error",
+        "noConsole": "error",
+        "noDeprecatedImports": "error",
+        "noEmptyBlockStatements": "error",
+        "noEvolvingTypes": "error",
+        "noImplicitAnyLet": "error",
+        "noImportCycles": "error",
+        "noReactForwardRef": "error",
+        "noShadow": "error",
+        "noSkippedTests": "error",
+        "noTsIgnore": "error",
+        "noUnassignedVariables": "error",
+        "noVar": "error",
+        "useAwait": "error",
+        "useErrorMessage": "error"
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["src/components/**", "src/lib/**", "src/theme/**", "src/index.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUndeclaredDependencies": {
+              "level": "error",
+              "options": {
+                "devDependencies": false,
+                "optionalDependencies": false,
+                "peerDependencies": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/stories/**", ".ladle/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          },
+          "suspicious": {
+            "noAlert": "off",
+            "noConsole": "off",
+            "noEmptyBlockStatements": "off"
+          }
+        }
+      }
+    }
+  ],
   "assist": {
     "actions": {
       "source": {

@@ -15,9 +15,14 @@ import { Floating, type Placement } from "../lib/floating";
 import { cloneTrigger, useControllable } from "../lib/hooks";
 import { CheckIcon } from "../lib/icons";
 
-const MenuContext = createContext<{ close: () => void }>({ close: () => {} });
+const MenuContext = createContext<{ close: () => void }>({
+  close: () => {
+    // outside a Menu there is nothing to close
+  },
+});
 
 const ITEM = '[role^="menuitem"]:not([aria-disabled="true"])';
+const PRINTABLE = /\S/;
 
 /** Roving focus over menu items: arrows, Home/End, first-letter typeahead. */
 function onMenuKeyDown(event: React.KeyboardEvent<HTMLElement>, close: () => void) {
@@ -32,7 +37,7 @@ function onMenuKeyDown(event: React.KeyboardEvent<HTMLElement>, close: () => voi
   else if (event.key === "Home") focus(0);
   else if (event.key === "End") focus(-1);
   else if (event.key === "Tab") close();
-  else if (event.key.length === 1 && /\S/.test(event.key)) {
+  else if (event.key.length === 1 && PRINTABLE.test(event.key)) {
     const k = event.key.toLowerCase();
     const order = [...items.slice(i + 1), ...items.slice(0, i + 1)];
     order.find((el) => el.textContent?.trim().toLowerCase().startsWith(k))?.focus();

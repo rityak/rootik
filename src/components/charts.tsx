@@ -23,20 +23,21 @@ function useWidth<T extends HTMLElement>() {
 
 /** Round tick values covering [min, max]. */
 export function niceTicks(min: number, max: number, count = 4): number[] {
-  if (max === min) max = min + 1;
-  const raw = (max - min) / count;
+  const hi = max === min ? min + 1 : max;
+  const raw = (hi - min) / count;
   const mag = 10 ** Math.floor(Math.log10(raw));
   const step = ([1, 2, 2.5, 5, 10].find((s) => s * mag >= raw) ?? 10) * mag;
   const out: number[] = [];
-  for (let v = Math.floor(min / step) * step; v <= max + step * 1e-9; v += step)
+  for (let v = Math.floor(min / step) * step; v <= hi + step * 1e-9; v += step)
     out.push(Number(v.toFixed(10)));
-  if ((out[out.length - 1] ?? 0) < max) out.push((out[out.length - 1] ?? 0) + step);
+  const last = out.at(-1) ?? 0;
+  if (last < hi) out.push(last + step);
   return out;
 }
 
 /** Path of a bar with a rounded data-end and a square baseline. */
-function barPath(x: number, y: number, w: number, h: number, r: number, horizontal = false) {
-  r = Math.max(0, Math.min(r, w / 2, h));
+function barPath(x: number, y: number, w: number, h: number, radius: number, horizontal = false) {
+  const r = Math.max(0, Math.min(radius, w / 2, h));
   if (h <= 0) return "";
   return horizontal
     ? `M${x},${y}h${w - r}a${r},${r} 0 0 1 ${r},${r}v${h - 2 * r}a${r},${r} 0 0 1 -${r},${r}h-${w - r}z`
@@ -188,7 +189,7 @@ export function BarChart({
   const horizontal = orientation === "horizontal";
   const dataMax = Math.max(0, ...data.map((d) => d.value), reference?.value ?? 0);
   const ticks = niceTicks(0, maxProp ?? dataMax, horizontal ? 4 : 4);
-  const top = ticks[ticks.length - 1] ?? 1;
+  const top = ticks.at(-1) ?? 1;
 
   const fill = (i: number, d: BarDatum) => {
     const hot = d.label === highlight || i === hover;
@@ -395,7 +396,7 @@ export function LineChart({
   const lo = zero ? Math.min(0, ...values) : Math.min(...values);
   const ticks = niceTicks(lo, Math.max(...values), 4);
   const bottom = ticks[0] ?? 0;
-  const top = ticks[ticks.length - 1] ?? 1;
+  const top = ticks.at(-1) ?? 1;
   const padL = 40;
   const padR = 8;
   const padT = 10;

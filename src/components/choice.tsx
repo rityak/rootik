@@ -435,10 +435,12 @@ export function ColorSwatches({
   );
 }
 
+const HEX6 = /^#[0-9a-f]{6}$/i;
+
 /** Native color inputs only accept #rrggbb; resolve any CSS color via canvas. */
 function toHex(color: string | undefined): string {
   if (!color) return "#000000";
-  if (/^#[0-9a-f]{6}$/i.test(color)) return color;
+  if (HEX6.test(color)) return color;
   try {
     const ctx = document.createElement("canvas").getContext("2d");
     if (!ctx) return "#000000";

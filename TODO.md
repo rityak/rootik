@@ -4,7 +4,8 @@ Legend: `[x]` done (component + story, checked in browser) · `[ ]` planned · `
 Sources: **DT** = dataset-toolkit/client, **UR** = umiray-client. Priority: P0 needed by a consumer now,
 P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 `↗ Kit` = idea borrowed from another kit (2026-09 review of shadcn, Base UI, React Aria, Mantine 9, Ark, HeroUI v3,
-Magic UI, M3 Expressive) or from new web platform features.
+Magic UI, M3 Expressive) or from new web platform features; component inventories checked against Mantine 9.6, Ark 5.39,
+React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd 6.6, Primer 38. `★` = own idea.
 
 ## Foundation
 
@@ -16,9 +17,12 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [x] `AppearanceSettings`: schema-driven form, project `extensions`, nested fields (`children`), `visible`, `cssVar`/`apply`
 - [x] `useHotkey`, `useControllable`, `cx`, inline icon set
 - [x] Surface materials (Settings → Effects → Surfaces): solid / veil (default) / frost / liquid via `.rk-surface` (cards + layout parts), ambient glow on the AppShell canvas, gradient hairline rim
+- [x] CI (`.github/workflows/ci.yml`): typecheck, `biome ci`, unit tests, Ladle build on push to main and PRs
+- [x] Strict Biome: extra rules on top of `recommended`, kit code may import only peer deps (no dev deps like lucide-react), `noHexColors`, GritQL plugin `biome/untinted-neutral.grit` (translucent `oklch(L 0 0 / a)` overlays)
+- [ ] Label-on-fill token (`--rk-on-danger` or a generic `--rk-on-tone`) instead of hardcoded `oklch(0.99 0 0)` in Button armed and TitleBar close hover, `oklch(0.15 0 0)` on the custom swatch — P2 ★
 - [ ] Light theme recipe/example token override (docs + story) — P1
 - [ ] Dist build (`bun build` + d.ts) for npm publishing; now consumed from source — P2
-- [ ] Visual regression (Playwright screenshots of stories) — P2
+- [ ] Visual regression (Playwright screenshots of stories), as a CI job on top of the Ladle build — P2
 - [ ] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1
 - [ ] Squircle corners: `--rk-corner-shape` token (`corner-shape: squircle`, progressive — plain radius elsewhere) + Settings → Shape "Corners: round / squircle" — P1 ↗ CSS `corner-shape`
 - [ ] Floating on CSS anchor positioning (`position-anchor`, `position-try-fallbacks`), `computePosition` stays as fallback; anchored container queries so a flipped popover animates from the anchor side — P2 ↗ CSS anchor positioning
@@ -26,6 +30,23 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [ ] Scroll shadows: sticky table head / PageHeader get a shadow only while content is scrolled under them (`@container scroll-state()`) — P2 ↗ CSS scroll-state queries
 - [ ] Pointer spotlight on interactive cards (glow follows the pointer via `--x/--y`, ≤ 16%), a material option — P2 ↗ Linear/Vercel, Magic UI
 - [ ] `llms.txt` generated from stories (component → props → story example) so AI assistants use the kit correctly during migrations — P2 ↗ HeroUI v3, Mantine 9, shadcn registry
+- [ ] `useHotkey` fires inside inputs: plain and `shift+` combos (e.g. `shift+?`) swallow typing — skip editable targets unless the combo has `mod` — P1 ★
+- [ ] Scoped appearance: `<Scope density="compact" accent=…>` writes the same CSS vars on a subtree (dense table inside a roomy page) — P2 ★ ↗ Radix Themes nested Theme
+
+## Utilities & hooks
+
+- [ ] Format helpers on `Intl` returning parts `{ value, unit }` so Stat/charts render big number + small unit: `formatBytes`, `formatBitrate`, `formatDuration`, `formatPercent`, `formatNumber` — P1 ★ ↗ Ark/Chakra Format, Mantine NumberFormatter
+- [ ] `useSelection` — single/multi, Shift range, Ctrl/⌘ toggle, select all; shared by DataTable, Tree, ImageGrid, Item lists — P1 ↗ Mantine use-selection
+- [ ] `useVirtual` — one windowing hook for LogView, DataTable, Tree, ImageGrid — P1 ↗ React Aria Virtualizer, antd Listy
+- [ ] `confirm()` / `prompt()` — promise-based dialogs over Dialog (`await confirm({ title, tone: "danger" })`) — P1 ↗ Base UI AlertDialog, Primer ConfirmationDialog
+- [ ] `announce()` — live region for screen readers (copied, saved, "12 results") — P1 ↗ Primer live-region
+- [ ] `useClipboard` (copied state + reset); base for CopyButton, CodeBlock, KeyValue `copyable` — P1 ↗ Mantine use-clipboard, Ark Clipboard
+- [ ] `usePersistentState` — public `readStorage`/`writeStorage` with cross-tab sync (`storage` event) — P2 ★
+- [ ] `useInterval` / polling that pauses while the document is hidden (dashboard refresh) — P2 ↗ Mantine use-interval + use-document-visibility
+- [ ] `useMediaQuery`, `useElementSize` — P2 ↗ Mantine hooks
+- [ ] Export `useIndicator` for consumers' custom controls — P2 ↗ Mantine FloatingIndicator
+- [ ] Hotkey registry: `useHotkey` registers into context → generated shortcuts sheet on `?` and CommandPalette hints from the same source — P2 ★
+- [ ] `useWindowFocus` + inactive shell state (TitleBar and selection dim when the window loses focus, like native apps) — P2 ★ (Tauri)
 
 ## Actions
 
@@ -33,7 +54,7 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [x] IconButton — label = aria-label + tooltip, round — DT IconButton, UR `size=icon*`
 - [x] ButtonGroup
 - [x] ConfirmButton — two-step destructive (UR `on`/armed `Remove`)
-- [ ] CopyButton — P2
+- [ ] CopyButton — icon swaps to a check on success, `announce()` — P1 (needed by CodeBlock, LogView, KeyValue) ↗ Ark Clipboard, Mantine CopyButton
 - [ ] SplitButton (button + menu) — P1 ↗ M3 Expressive, shadcn ButtonGroup
 
 ## Inputs & forms
@@ -49,6 +70,16 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [x] ChoiceCards — radio cards with description/note — UR Segment
 - [x] ChipGroup — toggle chips multi/single, counts — DT MultiSelectField
 - [x] ColorSwatches — presets + native custom picker — DT color param
+- [ ] RangeSlider (two thumbs, min distance) + vertical Slider — P1 ↗ Mantine RangeSlider, Radix/Base UI Slider
+- [ ] Editable — rename in place: click/Enter edits, Enter commits, Esc cancels (dataset, profile, server names) — P1 ★ ↗ Ark/Chakra Editable
+- [ ] SelectPanel — button-triggered popover: search, checkable list with counts, Clear/Apply footer; for table and chart filters — P1 ↗ Primer SelectPanel
+- [ ] InputGroup addons — text prefix/suffix segments (`https://`, `px`, `ms`), attached buttons — P2 ↗ shadcn/HeroUI/Chakra InputGroup
+- [ ] ColorPicker in OKLCH — L/C area, hue + alpha sliders, text input, EyeDropper API button; also for the AppearanceSettings accent — P2 ↗ Ark/HeroUI/React Aria ColorPicker
+- [ ] ChoiceCards `multiple` (checkbox cards) — P2 ↗ Radix Themes CheckboxCards, Chakra CheckboxCard
+- [ ] CheckboxGroup with a parent "select all" (indeterminate) — P2 ↗ Base UI CheckboxGroup
+- [ ] Fieldset — native `<fieldset>` + legend, `disabled` covers the whole group; used by SchemaForm — P2 ↗ Base UI/Mantine Fieldset
+- [ ] Form on the native constraint API — `validity` → Field error, focus the first invalid field on submit — P2 ↗ Base UI Form, React Aria Form
+- [ ] TreeSelect / Cascader — P2 ↗ Mantine 9, antd
 - [ ] NumberInput — steppers, min/max clamp, wheel, units — P1 (DT number params) ↗ Base UI NumberField, HeroUI v3
 - [ ] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select)
 - [ ] MultiSelect / TagInput as a TokenField — tokens inline with the text, autocomplete, auto-tokenize on separator; also `key:value` filter tokens for SearchInput — P1 (DT caption tags) ↗ React Aria TokenField
@@ -57,7 +88,7 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [ ] Select `native` variant on `appearance: base-select` (real `<select>` in kit styling) for simple cases — P2 ↗ customizable select
 - [ ] FileDrop / DropZone (hatched) — P1 (DT dataset import)
 - [ ] PathField — stays in DT (needs its FS API); build on Input + Dialog
-- [ ] DateInput / DateRange presets — P2 (native `<input type=date>` styled first)
+- [ ] DateInput / DateRange presets (Last 1h / 24h / 7d / custom) + TimeInput — P2 (native `<input type=date>` styled first) ↗ Mantine dates, React Aria DatePicker
 - [ ] SchemaForm (generic ParamsForm: string/text/number/slider/select/multi/color/boolean) — P1, reuse AppearanceSettings renderer — DT ParamsForm
 
 ## Display
@@ -80,6 +111,19 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [ ] RelativeTime ("5 s ago", live tick) + duration/timer (session uptime) on `Intl.RelativeTimeFormat` — P1 ↗ Primer RelativeTime, Ark Timer
 - [ ] Text shimmer for pending labels ("Connecting…", "Indexing…") via `background-clip: text` — P2 ↗ AI UIs, Magic UI
 - [ ] Card `data-state="running"`: light beam travelling along the gradient rim (`@property` angle + conic gradient), status only — P2 ↗ Magic UI Border Beam
+- [ ] Truncate — single/multi-line ellipsis that shows the full text in a Tooltip only when actually truncated — P1 ★ ↗ Primer Truncate
+- [ ] Meter — `<meter>` semantics, low/high/optimum pick the tone, stacked sections with hatched rest (disk, quota, CPU) — P1 ↗ Base UI/React Aria/HeroUI Meter, Mantine Progress sections, Tremor CategoryBar
+- [ ] Tracker — row of small status bars (uptime/latency per hour or day) with tooltips — P1 ★ (UR node health) ↗ Tremor Tracker
+- [ ] KeyValue `copyable` values (IDs, hashes, IPs) — copy button on hover — P1 ★
+- [ ] Lightbox / ImageViewer — fullscreen preview, zoom/pan, prev/next, keyboard; pairs with ImageGrid — P1 (DT gallery) ↗ antd Image preview
+- [ ] Highlight — search matches via CSS Custom Highlight API (`::highlight()`, no DOM wrapping) for CommandPalette, Tree filter, DataTable search — P2 ↗ Mantine/Ark/Chakra Highlight
+- [ ] Indicator — dot/count pinned to the corner of any element (avatar, icon button) — P2 ↗ Mantine Indicator, Chakra Float
+- [ ] JsonView — collapsible JSON tree, typed colors, copy value/path — P2 ↗ Ark JsonTreeView
+- [ ] QrCode — zero-dep SVG encoder (share a connection/subscription link) — P2 ↗ Ark/Chakra/antd QrCode
+- [ ] Prose — `.rk-prose` for markdown help/release notes (headings, lists, code, quotes, links) — P2 ↗ Mantine Typography, Radix Themes
+- [ ] Spoiler — clamp long text with a fade + "Show more" — P2 ↗ Mantine Spoiler
+- [ ] EmptyState presets/tones (success, error, no access, offline) — P2 ↗ antd Result, Primer Blankslate
+- [ ] Busy overlay for a region — `inert` + dim + spinner over a card/table while refetching — P2 ↗ Mantine LoadingOverlay
 - [ ] Code / CodeBlock (copy, line numbers) — P1 (UR SourceCode, DT RunLog)
 - [ ] LogView — virtualized, levels, follow-tail — P1 (DT LogDock/RunLog, UR Logs/Console); built on `StickToBottom` (Layout)
 - [ ] Timeline — P2
@@ -104,6 +148,8 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [ ] Tooltip on `interestfor` + `popover="hint"` (native hover/focus delays and Esc), current JS as fallback — P2 ↗ interest invokers
 - [ ] Exit animations for dialog/popover (`allow-discrete`) — P1
 - [ ] Toast stack: collapsed deck that expands on hover/focus, swipe to dismiss — P2 ↗ Sonner
+- [ ] SelectionBar — floating "N selected" bar with bulk actions + clear, appears with DataTable/ImageGrid selection — P1 ↗ Mantine/Chakra ActionBar
+- [ ] Tour — step-by-step coach marks anchored to elements — P2 ↗ Ark/antd Tour
 
 ## Navigation
 
@@ -113,6 +159,10 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [x] Breadcrumbs, Pagination
 - [ ] Stepper / Wizard — P2
 - [ ] TopNav (pill nav as links, not tabs) — P2
+- [ ] Vertical Tabs (`orientation`) for settings pages — P2 ↗ Radix/Base UI Tabs
+- [ ] TableOfContents + `useScrollSpy` for long settings/docs pages — P2 ↗ Mantine TableOfContents, Ark Toc
+- [ ] Pagination: page-size select, compact variant ("3 / 20" + prev/next), total — P2 ★
+- [ ] SkipLink ("Skip to content") in AppShell — P2 ↗ Chakra SkipNav
 
 ## Layout
 
@@ -127,6 +177,11 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [ ] Scroller — horizontal overflow with edge fade + arrows only when scrollable (`scroll-state()`, JS fallback); for Tabs/Dock/ChipGroup on phones — P1 ↗ Mantine 9 Scroller
 - [ ] `StickToBottom` scroll container — follow tail, "jump to latest", keeps position on prepended history; base for LogView (and a chat later) — P1 ↗ shadcn MessageScroller
 - [ ] FloatingWindow — draggable/resizable non-modal panel (inspector, log, preview) — P2 ↗ Mantine FloatingWindow, Ark FloatingPanel
+- [ ] Toolbar: `role="toolbar"` without arrow-key roving focus (APG) — add it — P1 ★
+- [ ] SettingsGroup / SettingsRow — title + description left, control right, divided rows; extract from the AppearanceSettings layout — P1 ★
+- [ ] Responsive AppShell — below a container width the sidebar turns into a Drawer, header gets a menu button (layout.css has no breakpoints yet) — P2 ★ ↗ Mantine AppShell + Burger
+- [ ] MasterDetail — list + detail side by side, stacked with a back button when narrow — P2 ★
+- [ ] DataState — one switch for loading (Skeleton) / error (Callout + retry) / empty (EmptyState) / content — P2 ★
 - [ ] Splitter (two panes) — P2
 - [ ] PowerButton / hero toggle orb (now a story-only `.vpn-orb`) — P1 when umiray migrates
 - Not planned: Stack/Grid/Box — use CSS/Tailwind in apps
@@ -139,6 +194,10 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [ ] DataTable: row selection checkboxes, column resize, virtualization — P1
 - [ ] Tree: virtualization for large models, drag & drop — P2
 - [ ] DataTable tree rows — expandable rows with indent guides (tree with columns, Finder-like) — P1 (candidates: DT TensorTree, UR NodeTree) ↗ React Aria Table
+- [ ] Scrollable Table/regions are not keyboard-reachable — focusable wrapper (`tabIndex=0` + label) when content overflows — P1 ↗ Primer ScrollableRegion
+- [ ] Tree: tri-state checkboxes, multi-select, type-to-filter — P2 ↗ Ark TreeView, antd Tree
+- [ ] DataTable: column visibility menu, pinned first column, inline cell edit — P2 ↗ antd, Primer DataTable
+- [ ] Sortable list — reorder by drag and by keyboard (Space lifts, arrows move) — P2 ↗ React Aria useDragAndDrop
 
 ## Charts
 
@@ -151,6 +210,11 @@ Magic UI, M3 Expressive) or from new web platform features.
 - [ ] Scatter (log axes) — P2 (DT tag scatter)
 - [ ] StackedBar / Donut — P2
 - [ ] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList
+- [ ] Brush / zoom range on LineChart for long series (training runs) — P2 ↗ Mantine ChartBrush
+- [ ] BulletChart — value vs target + qualitative ranges — P2 ↗ Mantine BulletChart
+- [ ] Waffle — part-of-whole grid with hatched rest — P2 ↗ Mantine WaffleChart
+- [ ] Treemap — composition (dataset classes, disk usage) — P2 ↗ Mantine Treemap
+- [ ] Histogram via a `bin()` helper on top of BarChart — P2 ★ (DT distributions)
 - [ ] Table view toggle for every chart (a11y) — P1
 
 ## Not planned (2026-09 review)
@@ -158,6 +222,9 @@ Magic UI, M3 Expressive) or from new web platform features.
 - Motion-library effects (animated beams, globe, retro grid, marquee), Dock magnification, M3 Expressive shape
   morphing — marketing flourish; break density and the short-motion rule
 - Custom ScrollArea (styled native scrollbars are enough), Carousel
+- Rating, Transfer, Mentions, Watermark, SignaturePad, FloatButton, NavigationMenu (site mega-menu) — not dashboard/desktop needs
+- AngleSlider, ImageCropper, Masonry — until a consumer asks (masonry via CSS grid lanes when it ships)
+- Pie, Radar, Sankey, Funnel, Candlestick, Sunburst — Donut/StackedBar/Treemap cover our cases
 
 ## Migration (after P0 is stable)
 
