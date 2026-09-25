@@ -1,1 +1,69 @@
-/* Placeholder: PinInput styles land in its own PR (TODO.md, batch 3). */
+.rk-pin {
+  --rk-pin-size: var(--rk-h-md);
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--rk-space) * 3);
+  &[data-size="sm"] {
+    --rk-pin-size: var(--rk-h-sm);
+  }
+  &[data-size="lg"] {
+    --rk-pin-size: var(--rk-h-lg);
+  }
+}
+
+.rk-pin-group {
+  display: inline-flex;
+  gap: calc(var(--rk-space) * 1.5);
+}
+
+.rk-pin-cell {
+  --rk-ctl-edge: var(--rk-line);
+  width: calc(var(--rk-pin-size) * 1.05);
+  height: calc(var(--rk-pin-size) * 1.2);
+  padding: 0;
+  border: 0;
+  border-radius: var(--rk-radius-control);
+  background: var(--rk-well);
+  box-shadow: inset 0 0 0 1px var(--rk-ctl-edge);
+  color: var(--rk-text);
+  font-family: var(--rk-font-mono);
+  font-size: calc(var(--rk-pin-size) * 0.5);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  text-transform: uppercase;
+  caret-color: var(--rk-accent);
+  outline: none;
+  appearance: none;
+  transition: box-shadow var(--rk-dur) var(--rk-ease);
+
+  &[data-filled] {
+    --rk-ctl-edge: var(--rk-line-strong);
+  }
+  &:hover:not(:disabled) {
+    --rk-ctl-edge: var(--rk-line-strong);
+  }
+  &:focus-visible,
+  &:focus {
+    box-shadow:
+      inset 0 0 0 1px var(--rk-accent),
+      0 0 0 3px var(--rk-accent-soft);
+  }
+  [data-invalid] & {
+    --rk-ctl-edge: color-mix(in oklab, var(--rk-danger) 70%, transparent);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* dash between groups */
+.rk-pin-group + .rk-pin-group::before {
+  content: "";
+  align-self: center;
+  width: calc(var(--rk-space) * 2);
+  height: 2px;
+  margin-inline: calc(var(--rk-space) * -1) calc(var(--rk-space) * 0.5);
+  border-radius: 1px;
+  background: var(--rk-line-strong);
+}
