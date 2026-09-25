@@ -46,7 +46,7 @@ below once the batch is in.
 
 - [ ] SelectPanel — button-triggered popover: search, checkable list with counts, Clear/Apply footer; for table and chart filters — P1 ↗ Primer SelectPanel · `claude/rk-select-panel`
 
-- [ ] FileDrop / DropZone (hatched) — P1 (DT dataset import) · `claude/rk-file-drop`
+- [x] FileDrop / DropZone (hatched) — P1 (DT dataset import) · `claude/rk-file-drop`
 
 - [x] SettingsGroup / SettingsRow — title + description left, control right, divided rows; extract from the AppearanceSettings layout — P1 ★ · `claude/rk-settings-list`
 
