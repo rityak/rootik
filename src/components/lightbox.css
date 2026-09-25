@@ -1,1 +1,213 @@
-/* Placeholder: Lightbox styles land in its own PR (TODO.md, batch 2). */
+html:has(.rk-lightbox[open]) {
+  overflow: hidden;
+}
+
+.rk-lightbox {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: oklch(var(--rk-shade) / 0.86);
+  color: var(--rk-text);
+  overflow: hidden;
+  outline: none;
+  opacity: 0;
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    display var(--rk-dur) allow-discrete,
+    overlay var(--rk-dur) allow-discrete;
+
+  &::backdrop {
+    background: transparent;
+    backdrop-filter: blur(calc(var(--rk-blur) * 0.6)) saturate(0.8);
+  }
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
+
+.rk-lightbox-bar {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--rk-space) * 3);
+  padding: calc(var(--rk-space) * 2) calc(var(--rk-space) * 3);
+}
+
+.rk-lightbox-title {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--rk-space) * 3);
+  flex: 1;
+  min-width: 0;
+  font-size: var(--rk-text-sm);
+  color: var(--rk-text);
+}
+
+.rk-lightbox-counter {
+  flex: none;
+  color: var(--rk-text-3);
+}
+
+.rk-lightbox-tools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: calc(var(--rk-radius-control) + 3px);
+  background: var(--rk-glass-bg);
+  backdrop-filter: blur(var(--rk-blur)) saturate(1.1);
+  box-shadow: var(--rk-shadow-pop);
+}
+
+.rk-lightbox-zoom {
+  min-width: 5ch;
+  text-align: center;
+  font-size: var(--rk-text-xs);
+  color: var(--rk-text-2);
+}
+
+.rk-lightbox-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* room for the side arrows; the zoomed image still spans the whole stage */
+  padding: calc(var(--rk-space) * 2) calc(var(--rk-h-lg) + var(--rk-space) * 5);
+  overflow: hidden;
+  touch-action: none;
+  outline: none;
+}
+
+.rk-lightbox-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  user-select: none;
+  cursor: zoom-in;
+  opacity: 0;
+  transition:
+    transform var(--rk-dur) var(--rk-ease-out),
+    opacity var(--rk-dur) var(--rk-ease);
+  &[data-ready] {
+    opacity: 1;
+  }
+  [data-zoomed] > & {
+    cursor: grab;
+  }
+  [data-dragging] > & {
+    cursor: grabbing;
+    transition: opacity var(--rk-dur) var(--rk-ease);
+  }
+}
+
+.rk-lightbox-spinner {
+  position: absolute;
+  color: var(--rk-text-3);
+}
+
+.rk-lightbox-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--rk-space) * 2);
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-sm);
+  & > svg {
+    width: 40px;
+    height: 40px;
+    stroke-width: 1.25;
+  }
+}
+
+.rk-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  background: var(--rk-glass-bg);
+  backdrop-filter: blur(var(--rk-blur));
+  box-shadow: var(--rk-shadow-2);
+  &[data-side="prev"] {
+    left: calc(var(--rk-space) * 3);
+  }
+  &[data-side="next"] {
+    right: calc(var(--rk-space) * 3);
+  }
+  &:disabled {
+    opacity: 0;
+  }
+}
+
+.rk-lightbox-caption {
+  margin: 0;
+  padding: 0 calc(var(--rk-space) * 6) calc(var(--rk-space) * 2);
+  text-align: center;
+  font-size: var(--rk-text-sm);
+  color: var(--rk-text-2);
+  text-wrap: balance;
+}
+
+.rk-lightbox-strip {
+  display: flex;
+  gap: calc(var(--rk-space) * 1.5);
+  padding: calc(var(--rk-space) * 2) calc(var(--rk-space) * 3) calc(var(--rk-space) * 3);
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* centred while it fits, scrollable from the first thumb once it doesn't */
+  & > :first-child {
+    margin-inline-start: auto;
+  }
+  & > :last-child {
+    margin-inline-end: auto;
+  }
+}
+
+.rk-lightbox-thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--rk-radius-sm);
+  overflow: hidden;
+  background: var(--rk-surface-2);
+  opacity: 0.5;
+  cursor: pointer;
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    box-shadow var(--rk-dur) var(--rk-ease);
+  & > svg {
+    width: 20px;
+    height: 20px;
+    color: var(--rk-text-3);
+  }
+  & > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+  &[aria-current="true"] {
+    opacity: 1;
+    box-shadow:
+      0 0 0 2px var(--rk-bg),
+      0 0 0 4px var(--rk-inverse);
+  }
+}
