@@ -198,7 +198,7 @@
     }
     &[data-close]:hover {
       background: var(--rk-danger);
-      color: oklch(0.99 0 0);
+      color: var(--rk-on-danger);
     }
   }
 }

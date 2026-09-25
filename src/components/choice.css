@@ -440,7 +440,7 @@
     inset: 0;
     display: grid;
     place-items: center;
-    color: oklch(0.15 0 0);
+    color: var(--rk-on-inverse);
     font-weight: 700;
   }
 }

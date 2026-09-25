@@ -145,3 +145,124 @@ export function useClipboard(resetMs = 1500) {
   }, []);
   return { copy, copied: copiedAt > 0 };
 }
+
+/** Live media query match: `useMediaQuery("(max-width: 640px)")`. */
+export function useMediaQuery(query: string, initial = false): boolean {
+  const [matches, setMatches] = useState(() =>
+    typeof matchMedia === "function" ? matchMedia(query).matches : initial,
+  );
+  useEffect(() => {
+    const list = matchMedia(query);
+    const update = () => setMatches(list.matches);
+    update();
+    list.addEventListener("change", update);
+    return () => list.removeEventListener("change", update);
+  }, [query]);
+  return matches;
+}
+
+/** Content-box size of an element: `const { ref, width, height } = useElementSize()`. */
+export function useElementSize<T extends Element = HTMLElement>() {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const ref = useCallback((el: T | null) => {
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      if (!entry) return;
+      const { width, height } = entry.contentRect;
+      setSize((s) => (s.width === width && s.height === height ? s : { width, height }));
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return { ref, width: size.width, height: size.height };
+}
+
+/**
+ * Run `callback` every `ms` (null stops). Polling pauses while the tab is hidden and runs once right
+ * away when it comes back, so a dashboard is fresh without burning requests in the background.
+ */
+export function useInterval(callback: () => void, ms: number | null, { whenHidden = false } = {}) {
+  const latest = useLatest(callback);
+  useEffect(() => {
+    if (ms === null) return;
+    let id: ReturnType<typeof setInterval> | undefined;
+    const start = () => {
+      id ??= setInterval(() => latest.current(), ms);
+    };
+    const stop = () => {
+      clearInterval(id);
+      id = undefined;
+    };
+    const onVisibility = () => {
+      if (document.hidden) return stop();
+      latest.current();
+      start();
+    };
+    if (whenHidden || !document.hidden) start();
+    if (!whenHidden) document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [ms, whenHidden, latest]);
+}
+
+const STORAGE_SYNC = "rootik:storage";
+
+/**
+ * useState persisted in localStorage (JSON). Every hook on the same key stays in sync: across tabs via the
+ * `storage` event, within the tab via a custom event.
+ */
+export function usePersistentState<T>(key: string, initial: T) {
+  const [value, setValue] = useState<T>(() => readStorage(key, initial));
+  const current = useLatest(value);
+  const fallback = useLatest(initial);
+  const self = useRef({});
+
+  useEffect(() => {
+    setValue(readStorage(key, fallback.current));
+    const reread = () => setValue(readStorage(key, fallback.current));
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === key || event.key === null) reread();
+    };
+    const onSync = (event: Event) => {
+      const detail = (event as CustomEvent<{ key: string; source: object }>).detail;
+      if (detail.key === key && detail.source !== self.current) reread();
+    };
+    window.addEventListener("storage", onStorage);
+    window.addEventListener(STORAGE_SYNC, onSync);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener(STORAGE_SYNC, onSync);
+    };
+  }, [key, fallback]);
+
+  const set = useCallback(
+    (next: T | ((prev: T) => T)) => {
+      const resolved = typeof next === "function" ? (next as (prev: T) => T)(current.current) : next;
+      current.current = resolved;
+      writeStorage(key, resolved);
+      setValue(resolved);
+      window.dispatchEvent(new CustomEvent(STORAGE_SYNC, { detail: { key, source: self.current } }));
+    },
+    [key, current],
+  );
+  return [value, set] as const;
+}
+
+/** Whether the app window has focus (native apps dim their chrome and selection when it doesn't). */
+export function useWindowFocus(): boolean {
+  const [focused, setFocused] = useState(() => typeof document === "undefined" || document.hasFocus());
+  useEffect(() => {
+    const on = () => setFocused(true);
+    const off = () => setFocused(false);
+    setFocused(document.hasFocus());
+    window.addEventListener("focus", on);
+    window.addEventListener("blur", off);
+    return () => {
+      window.removeEventListener("focus", on);
+      window.removeEventListener("blur", off);
+    };
+  }, []);
+  return focused;
+}

@@ -130,7 +130,7 @@
 
   &[data-armed] {
     --rk-btn-bg: var(--rk-danger);
-    --rk-btn-fg: oklch(0.99 0 0);
+    --rk-btn-fg: var(--rk-on-danger);
     &:hover:not(:disabled) {
       --rk-btn-bg: oklch(from var(--rk-danger) calc(l + 0.04) c h);
     }

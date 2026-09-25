@@ -89,6 +89,8 @@ html {
 [data-tone] {
   --rk-tone: var(--rk-accent);
   --rk-tone-text: var(--rk-accent-text);
+  /* label on a --rk-tone fill; resolves per element, so it follows the tone set next to it */
+  --rk-on-tone: oklch(from var(--rk-tone) clamp(0.16, (0.73 - l) * 100, 0.99) 0 0);
 }
 [data-tone="neutral"] {
   --rk-tone: var(--rk-text-3);

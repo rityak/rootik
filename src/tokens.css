@@ -70,6 +70,8 @@
   --rk-warn: oklch(0.83 0.15 78);
   --rk-danger: oklch(0.68 0.2 24);
   --rk-info: oklch(0.75 0.13 245);
+  /* label on a danger fill (armed button, close hover): same APCA crossover as --rk-on-accent */
+  --rk-on-danger: oklch(from var(--rk-danger) clamp(0.16, (0.73 - l) * 100, 0.99) 0 0);
 
   /* data viz: categorical order is fixed (validated: dark band, CVD dE >= 10.9 on adjacent pairs).
      Accent is not a series color — it marks the highlighted datum. */
