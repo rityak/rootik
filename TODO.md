@@ -32,7 +32,7 @@ module, so any merge order works.
 
 - [ ] Spoiler — clamp long text with a fade + "Show more" — P2 ↗ Mantine Spoiler · `claude/rk-spoiler`
 
-- [ ] Prose — `.rk-prose` for markdown help/release notes (headings, lists, code, quotes, links) — P2 ↗ Mantine Typography, Radix Themes · `claude/rk-prose`
+- [x] Prose — `.rk-prose` for markdown help/release notes (headings, lists, code, quotes, links) — P2 ↗ Mantine Typography, Radix Themes · `claude/rk-prose`
 
 - [ ] Timeline — P2 · `claude/rk-timeline`
 
