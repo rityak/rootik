@@ -10,7 +10,7 @@ import {
   Settings,
   Trash,
 } from "lucide-react";
-import { Button, ButtonGroup, ConfirmButton, IconButton } from "..";
+import { Button, ButtonGroup, ConfirmButton, CopyButton, IconButton, KeyValue } from "..";
 
 export default { title: "Actions" };
 
@@ -94,5 +94,30 @@ export const Confirm: Story = () => (
     <ConfirmButton size="sm" variant="outline" confirmLabel="Really reset?" onConfirm={() => {}}>
       Reset
     </ConfirmButton>
+  </div>
+);
+
+export const Copy: Story = () => (
+  <div className="story-col" style={{ maxWidth: 420 }}>
+    <div className="story-row">
+      <CopyButton value="vless://6f1c…@node-3.umiray.net:443" />
+      <CopyButton size="sm" value="sha256:9f86d081884c7d65" label="Copy digest" />
+      <CopyButton variant="secondary" value={() => new URL(window.location.href).toString()}>
+        Copy link
+      </CopyButton>
+    </div>
+    <KeyValue
+      items={[
+        {
+          label: "Node ID",
+          value: (
+            <span className="story-row">
+              <span className="rk-mono">n3-fra-01</span>
+              <CopyButton size="sm" value="n3-fra-01" label="Copy node ID" />
+            </span>
+          ),
+        },
+      ]}
+    />
   </div>
 );

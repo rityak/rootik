@@ -1,7 +1,8 @@
 import type { ReactNode, SVGProps } from "react";
 
 // Paths from Lucide (ISC). Inline so the kit has no icon dependency.
-const icon = (paths: ReactNode) =>
+/** Icon component from SVG children on a 24×24 Lucide grid; components may define private icons with it. */
+export const icon = (paths: ReactNode) =>
   function Icon(props: SVGProps<SVGSVGElement>) {
     return (
       <svg
@@ -119,5 +120,47 @@ export const RotateIcon = icon(
   <>
     <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
     <path d="M3 3v5h5" />
+  </>,
+);
+export const CopyIcon = icon(
+  <>
+    <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+  </>,
+);
+export const UploadIcon = icon(
+  <>
+    <path d="M12 3v12" />
+    <path d="m17 8-5-5-5 5" />
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+  </>,
+);
+export const FileIcon = icon(
+  <>
+    <path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+    <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  </>,
+);
+export const PencilIcon = icon(
+  <>
+    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+    <path d="m15 5 4 4" />
+  </>,
+);
+export const ChevronUpIcon = icon(<path d="m18 15-6-6-6 6" />);
+export const TableIcon = icon(
+  <>
+    <path d="M12 3v18" />
+    <rect width="18" height="18" x="3" y="3" rx="2" />
+    <path d="M3 9h18" />
+    <path d="M3 15h18" />
+  </>,
+);
+export const ChartIcon = icon(
+  <>
+    <path d="M3 3v16a2 2 0 0 0 2 2h16" />
+    <path d="M18 17V9" />
+    <path d="M13 17V5" />
+    <path d="M8 17v-3" />
   </>,
 );
