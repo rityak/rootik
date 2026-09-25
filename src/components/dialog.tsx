@@ -137,6 +137,8 @@ export interface CommandPaletteProps {
   emptyText?: ReactNode;
 }
 
+const WHITESPACE = /\s+/;
+
 /** Ctrl/⌘K launcher: fuzzy-ish word filter, groups, keyboard only. Pair with `useHotkey("mod+k", …)`. */
 export function CommandPalette({
   open,
@@ -157,7 +159,7 @@ export function CommandPalette({
   }, [open]);
 
   const filtered = useMemo(() => {
-    const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    const words = query.toLowerCase().split(WHITESPACE).filter(Boolean);
     const hits = commands.filter((c) => {
       const hay = `${c.label} ${c.keywords ?? ""} ${c.group ?? ""}`.toLowerCase();
       return words.every((w) => hay.includes(w));

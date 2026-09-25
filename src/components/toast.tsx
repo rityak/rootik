@@ -78,7 +78,7 @@ export function Toaster({ position = "bottom-right", max = 4 }: ToasterProps) {
     const el = ref.current;
     if (!el) return;
     if (el.matches(":popover-open")) el.hidePopover();
-    if (list.length) el.showPopover();
+    if (list.length > 0) el.showPopover();
   }, [list]);
 
   const shown = position.startsWith("top") ? list.slice(0, max) : list.slice(-max);

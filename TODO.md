@@ -17,9 +17,12 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] `AppearanceSettings`: schema-driven form, project `extensions`, nested fields (`children`), `visible`, `cssVar`/`apply`
 - [x] `useHotkey`, `useControllable`, `cx`, inline icon set
 - [x] Surface materials (Settings → Effects → Surfaces): solid / veil (default) / frost / liquid via `.rk-surface` (cards + layout parts), ambient glow on the AppShell canvas, gradient hairline rim
+- [x] CI (`.github/workflows/ci.yml`): typecheck, `biome ci`, unit tests, Ladle build on push to main and PRs
+- [x] Strict Biome: extra rules on top of `recommended`, kit code may import only peer deps (no dev deps like lucide-react), `noHexColors`, GritQL plugin `biome/untinted-neutral.grit` (translucent `oklch(L 0 0 / a)` overlays)
+- [ ] Label-on-fill token (`--rk-on-danger` or a generic `--rk-on-tone`) instead of hardcoded `oklch(0.99 0 0)` in Button armed and TitleBar close hover, `oklch(0.15 0 0)` on the custom swatch — P2 ★
 - [ ] Light theme recipe/example token override (docs + story) — P1
 - [ ] Dist build (`bun build` + d.ts) for npm publishing; now consumed from source — P2
-- [ ] Visual regression (Playwright screenshots of stories) — P2
+- [ ] Visual regression (Playwright screenshots of stories), as a CI job on top of the Ladle build — P2
 - [ ] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1
 - [ ] Squircle corners: `--rk-corner-shape` token (`corner-shape: squircle`, progressive — plain radius elsewhere) + Settings → Shape "Corners: round / squircle" — P1 ↗ CSS `corner-shape`
 - [ ] Floating on CSS anchor positioning (`position-anchor`, `position-try-fallbacks`), `computePosition` stays as fallback; anchored container queries so a flipped popover animates from the anchor side — P2 ↗ CSS anchor positioning
