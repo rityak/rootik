@@ -56,7 +56,7 @@ below once the batch is in.
 
 - [x] Toolbar: `role="toolbar"` without arrow-key roving focus (APG) — add it — P1 ★ · `claude/rk-toolbar-roving`
 
-- [ ] Animated open/close for Disclosure (`interpolate-size: allow-keywords` + `::details-content`); collapsible Card on the same technique instead of unmounting the body — P1 · `claude/rk-disclosure-motion`
+- [x] Animated open/close for Disclosure (`interpolate-size: allow-keywords` + `::details-content`); collapsible Card on the same technique instead of unmounting the body — P1 · `claude/rk-disclosure-motion`
 
 - [ ] KeyValue `copyable` values (IDs, hashes, IPs) — copy button on hover — P1 ★ · `claude/rk-kv-copyable`
 

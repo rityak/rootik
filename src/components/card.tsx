@@ -54,7 +54,6 @@ export function Card({
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
   const bodyId = useId();
   const hasHeader = title !== undefined || actions !== undefined;
-  const shown = !collapsible || isOpen;
 
   const heading = (
     <>
@@ -93,12 +92,24 @@ export function Card({
           {actions && <div className="rk-card-actions">{actions}</div>}
         </header>
       )}
-      {shown && children !== undefined && (
-        <div id={bodyId} className="rk-card-body">
-          {children}
+      {collapsible ? (
+        // stays mounted so it can animate (0fr ↔ 1fr) and keep its state; inert while closed
+        <div id={bodyId} className="rk-card-collapse" data-open={isOpen || undefined} inert={!isOpen}>
+          <div className="rk-card-collapse-inner">
+            {children !== undefined && <div className="rk-card-body">{children}</div>}
+            {footer && <footer className="rk-card-footer">{footer}</footer>}
+          </div>
         </div>
+      ) : (
+        <>
+          {children !== undefined && (
+            <div id={bodyId} className="rk-card-body">
+              {children}
+            </div>
+          )}
+          {footer && <footer className="rk-card-footer">{footer}</footer>}
+        </>
       )}
-      {shown && footer && <footer className="rk-card-footer">{footer}</footer>}
     </section>
   );
 }

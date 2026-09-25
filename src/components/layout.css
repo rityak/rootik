@@ -423,6 +423,18 @@
 /* disclosure */
 .rk-disclosure {
   border-radius: var(--rk-radius-md);
+  /* animate open/close where ::details-content and interpolate-size exist; instant elsewhere */
+  interpolate-size: allow-keywords;
+  &::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition:
+      block-size var(--rk-dur-slow) var(--rk-ease-out),
+      content-visibility var(--rk-dur-slow) allow-discrete;
+  }
+  &[open]::details-content {
+    block-size: auto;
+  }
 
   & > summary {
     display: flex;
