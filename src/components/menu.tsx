@@ -16,7 +16,8 @@ import { Floating, type Placement } from "../lib/floating";
 import { cloneTrigger, useControllable } from "../lib/hooks";
 import { CheckIcon, ChevronRightIcon } from "../lib/icons";
 
-const MenuContext = createContext<{ close: () => void }>({
+/** What MenuItem calls after a pick; custom menu containers (Menubar) provide their own `close`. */
+export const MenuContext = createContext<{ close: () => void }>({
   close: () => {
     // outside a Menu there is nothing to close
   },
@@ -25,8 +26,8 @@ const MenuContext = createContext<{ close: () => void }>({
 const ITEM = '[role^="menuitem"]:not([aria-disabled="true"])';
 const PRINTABLE = /\S/;
 
-/** Roving focus over menu items: arrows, Home/End, first-letter typeahead. */
-function onMenuKeyDown(event: React.KeyboardEvent<HTMLElement>, close: () => void) {
+/** Roving focus over a menu panel's own items: arrows, Home/End, first-letter typeahead; Tab closes. */
+export function onMenuKeyDown(event: React.KeyboardEvent<HTMLElement>, close: () => void) {
   // own items only: a submenu's items live inside this element too
   const items = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(ITEM)).filter(
     (el) => el.parentElement?.closest('[role="menu"]') === event.currentTarget,

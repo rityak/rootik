@@ -29,7 +29,7 @@ on Combobox.
 
 - [ ] LogView — virtualized, levels, follow-tail — P1 (DT LogDock/RunLog, UR Logs/Console); built on `StickToBottom` (Layout) · `claude/rk-log-view`
 
-- [ ] Menubar — desktop File/Edit/View bar next to TitleBar, APG menubar keyboard (arrows move between menus, hover-to-switch once open) — P1 ↗ Mantine 9.4, Base UI, Radix · `claude/rk-menubar`
+- [x] Menubar — desktop File/Edit/View bar next to TitleBar, APG menubar keyboard (arrows move between menus, hover-to-switch once open) — P1 ↗ Mantine 9.4, Base UI, Radix · `claude/rk-menubar`
 
 - [ ] DataTable: column resize (drag + keyboard, persisted widths) — P1 · `claude/rk-table-resize`
 
