@@ -5,6 +5,18 @@
     border-radius: var(--rk-radius-md);
     box-shadow: inset 0 0 0 1px var(--rk-line);
   }
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+}
+
+/* checkbox column of a selectable DataTable */
+.rk-table .rk-table-select {
+  width: 1%;
+  padding-right: 0;
+  & .rk-checkbox {
+    vertical-align: middle;
+  }
 }
 
 .rk-table {

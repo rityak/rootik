@@ -1,7 +1,10 @@
-import { type ReactNode, type TableHTMLAttributes, useMemo, useRef, useState } from "react";
+import { type ReactNode, type TableHTMLAttributes, useCallback, useMemo, useRef, useState } from "react";
 import { cx } from "../lib/cx";
 import { useControllable } from "../lib/hooks";
 import { ArrowDownIcon, ArrowUpIcon, ChevronRightIcon, ChevronsUpDownIcon } from "../lib/icons";
+import { useLabels } from "../lib/labels";
+import { useSelection } from "../lib/selection";
+import { Checkbox } from "./choice";
 
 export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   density?: "compact" | "default" | "comfortable";
@@ -14,7 +17,10 @@ export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   framed?: boolean;
 }
 
-/** Styled native table: write thead/tbody/tr/td as usual. */
+/**
+ * Styled native table: write thead/tbody/tr/td as usual. When it overflows its wrapper (maxHeight, narrow
+ * container) the wrapper becomes a focusable, labelled region so keyboard users can scroll it.
+ */
 export function Table({
   density = "default",
   sticky,
@@ -24,8 +30,26 @@ export function Table({
   className,
   ...rest
 }: TableProps) {
+  const [scrolls, setScrolls] = useState(false);
+  const observe = useCallback((wrap: HTMLDivElement | null) => {
+    if (!wrap) return;
+    const measure = () =>
+      setScrolls(wrap.scrollHeight > wrap.clientHeight + 1 || wrap.scrollWidth > wrap.clientWidth + 1);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(wrap);
+    if (wrap.firstElementChild) observer.observe(wrap.firstElementChild);
+    return () => observer.disconnect();
+  }, []);
+  const name = rest["aria-label"];
   return (
-    <div className="rk-table-wrap" data-framed={framed || undefined} style={{ maxHeight }}>
+    <div
+      ref={observe}
+      className="rk-table-wrap"
+      data-framed={framed || undefined}
+      style={{ maxHeight }}
+      {...(scrolls ? { tabIndex: 0, role: "region", "aria-label": name } : {})}
+    >
       <table
         {...rest}
         className={cx("rk-table", className)}
@@ -62,6 +86,14 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   rowKey: (row: T) => string;
   onRowClick?: (row: T) => void;
   selectedKey?: string | null;
+  /**
+   * Row selection with a checkbox column: select-all (indeterminate when partial), Shift ranges. Without
+   * `onRowClick` a row click selects like a file manager (click / Ctrl-⌘ / Shift).
+   */
+  selection?: "single" | "multiple";
+  selected?: string[];
+  defaultSelected?: string[];
+  onSelectedChange?: (keys: string[]) => void;
   /** Controlled sort (server-side); omit for client sort. */
   sort?: SortState | null;
   defaultSort?: SortState | null;
@@ -83,12 +115,17 @@ export function DataTable<T>({
   rowKey,
   onRowClick,
   selectedKey,
+  selection,
+  selected,
+  defaultSelected,
+  onSelectedChange,
   sort,
   defaultSort = null,
   onSortChange,
   empty = "No data",
   ...rest
 }: DataTableProps<T>) {
+  const labels = useLabels();
   const [current, setSort] = useControllable(sort, defaultSort, onSortChange);
   const sorted = useMemo(() => {
     const col = current && columns.find((c) => c.key === current.key);
@@ -106,6 +143,15 @@ export function DataTable<T>({
     });
   }, [rows, columns, current, sort]);
 
+  const keys = useMemo(() => sorted.map(rowKey), [sorted, rowKey]);
+  const sel = useSelection({
+    keys,
+    mode: selection ?? "multiple",
+    value: selected,
+    defaultValue: defaultSelected,
+    onChange: onSelectedChange,
+  });
+
   const cycle = (key: string) =>
     setSort(current?.key !== key ? { key, dir: "asc" } : current.dir === "asc" ? { key, dir: "desc" } : null);
 
@@ -113,6 +159,18 @@ export function DataTable<T>({
     <Table {...rest}>
       <thead>
         <tr>
+          {selection && (
+            <th className="rk-table-select">
+              {selection === "multiple" && (
+                <Checkbox
+                  aria-label={labels.selectAll}
+                  checked={sel.allSelected}
+                  indeterminate={sel.someSelected}
+                  onChange={() => (sel.allSelected ? sel.clear() : sel.selectAll())}
+                />
+              )}
+            </th>
+          )}
           {columns.map((col) => {
             const dir = current?.key === col.key ? current.dir : undefined;
             return (
@@ -148,28 +206,60 @@ export function DataTable<T>({
       <tbody>
         {sorted.length === 0 && (
           <tr>
-            <td colSpan={columns.length} className="rk-table-empty">
+            <td colSpan={columns.length + (selection ? 1 : 0)} className="rk-table-empty">
               {empty}
             </td>
           </tr>
         )}
         {sorted.map((row, i) => {
           const key = rowKey(row);
+          const picked = selection ? sel.isSelected(key) : undefined;
+          const activate = onRowClick
+            ? () => onRowClick(row)
+            : selection
+              ? (event: { shiftKey?: boolean; ctrlKey?: boolean; metaKey?: boolean }) =>
+                  sel.select(key, event)
+              : undefined;
           return (
             <tr
               key={key}
-              aria-selected={selectedKey === undefined ? undefined : selectedKey === key}
-              data-clickable={onRowClick ? true : undefined}
-              onClick={onRowClick ? () => onRowClick(row) : undefined}
-              onKeyDown={
-                onRowClick
+              aria-selected={picked ?? (selectedKey === undefined ? undefined : selectedKey === key)}
+              data-clickable={activate ? true : undefined}
+              onClick={
+                activate
                   ? (event) => {
-                      if (event.key === "Enter") onRowClick(row);
+                      // clicks on the row's own controls (checkbox, buttons, links) aren't row clicks
+                      if ((event.target as HTMLElement).closest("input, button, a, label")) return;
+                      activate(event);
                     }
                   : undefined
               }
-              tabIndex={onRowClick ? 0 : undefined}
+              onKeyDown={
+                activate
+                  ? (event) => {
+                      if (event.target !== event.currentTarget) return;
+                      if (event.key === "Enter" || (selection && !onRowClick && event.key === " ")) {
+                        event.preventDefault();
+                        activate(event);
+                      }
+                    }
+                  : undefined
+              }
+              tabIndex={activate ? 0 : undefined}
             >
+              {selection && (
+                <td className="rk-table-select">
+                  <Checkbox
+                    aria-label={labels.selectRow}
+                    checked={Boolean(picked)}
+                    onChange={(event) =>
+                      selection === "single"
+                        ? sel.select(key, { toggle: true })
+                        : sel.toggle(key, (event.nativeEvent as MouseEvent).shiftKey)
+                    }
+                  />
+                </td>
+              )}
               {columns.map((col) => (
                 <td key={col.key} style={{ textAlign: col.align }} data-mono={col.mono || undefined}>
                   {col.cell ? col.cell(row, i) : (cellValue(col, row) as ReactNode)}
