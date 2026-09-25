@@ -14,7 +14,7 @@ module, so any merge order works.
 
 - [x] Foundation: `--rk-on-danger` / `--rk-on-tone` label-on-fill tokens, `useMediaQuery`, `useElementSize`, `useInterval` (pauses while the tab is hidden), `usePersistentState` (cross-tab), `useWindowFocus`, public `readStorage`/`writeStorage`, icons and labels for the batch, module stubs · `claude/dreamy-franklin-e2kev1`
 
-- [ ] PasswordInput (reveal) — P2 · `claude/rk-password-input`
+- [x] PasswordInput (reveal) — P2 · `claude/rk-password-input`
 
 - [ ] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput · `claude/rk-pin-input`
 
