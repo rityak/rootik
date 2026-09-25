@@ -11,6 +11,8 @@ import {
   WarnIcon,
   XIcon,
 } from "../lib/icons";
+import { useLabels } from "../lib/labels";
+import { CopyButton } from "./copy-button";
 import type { Tone } from "./progress";
 
 export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
@@ -269,25 +271,56 @@ export function Divider({
   );
 }
 
+export interface KeyValueItem {
+  label: ReactNode;
+  value: ReactNode;
+  icon?: ReactNode;
+  /** Copy button next to the value (IDs, hashes, IPs): the text to copy, or `true` for a string value. */
+  copy?: string | boolean;
+}
+
 export interface KeyValueProps extends HTMLAttributes<HTMLDListElement> {
-  items: ReadonlyArray<{ label: ReactNode; value: ReactNode; icon?: ReactNode }>;
+  items: ReadonlyArray<KeyValueItem>;
   /** rows — label left, value right (detail panels); grid — label above value in columns. */
   layout?: "rows" | "grid";
 }
 
 export function KeyValue({ items, layout = "rows", className, ...rest }: KeyValueProps) {
+  const labels = useLabels();
   return (
     <dl {...rest} className={cx("rk-kv", className)} data-layout={layout}>
-      {items.map((item, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: order is the identity of a static list
-        <div key={i} className="rk-kv-item">
-          <dt>
-            {item.icon && <span className="rk-icon">{item.icon}</span>}
-            {item.label}
-          </dt>
-          <dd>{item.value}</dd>
-        </div>
-      ))}
+      {items.map((item, i) => {
+        const text =
+          item.copy === true
+            ? typeof item.value === "string"
+              ? item.value
+              : undefined
+            : item.copy || undefined;
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: order is the identity of a static list
+          <div key={i} className="rk-kv-item">
+            <dt>
+              {item.icon && <span className="rk-icon">{item.icon}</span>}
+              {item.label}
+            </dt>
+            <dd>
+              {text === undefined ? (
+                item.value
+              ) : (
+                <span className="rk-kv-copyable">
+                  <span className="rk-kv-value">{item.value}</span>
+                  <CopyButton
+                    size="sm"
+                    value={text}
+                    label={typeof item.label === "string" ? `${labels.copy}: ${item.label}` : undefined}
+                    className="rk-kv-copy"
+                  />
+                </span>
+              )}
+            </dd>
+          </div>
+        );
+      })}
     </dl>
   );
 }
