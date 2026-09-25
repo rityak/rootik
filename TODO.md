@@ -23,7 +23,7 @@ on Combobox.
 
 - [x] SchemaForm (generic ParamsForm: string/text/number/slider/select/multi/color/boolean) — P1, reuse AppearanceSettings renderer — DT ParamsForm · `claude/rk-schema-form`
 
-- [ ] Lightbox / ImageViewer — fullscreen preview, zoom/pan, prev/next, keyboard; pairs with ImageGrid — P1 (DT gallery) ↗ antd Image preview · `claude/rk-lightbox`
+- [x] Lightbox / ImageViewer — fullscreen preview, zoom/pan, prev/next, keyboard; pairs with ImageGrid — P1 (DT gallery) ↗ antd Image preview · `claude/rk-lightbox`
 
 - [x] ImageGrid / Thumbnail (selection, lazy) — P1 (DT gallery) · `claude/rk-image-grid`
 
