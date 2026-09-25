@@ -183,6 +183,25 @@
   border-top: 1px solid var(--rk-line);
 }
 
+.rk-card-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--rk-dur-slow) var(--rk-ease-out);
+  &[data-open] {
+    grid-template-rows: 1fr;
+  }
+}
+
+.rk-card-collapse-inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  .rk-card-header + .rk-card-collapse > & > .rk-card-body:first-child {
+    padding-top: calc(var(--rk-space) * 3);
+  }
+}
+
 /* KPI */
 .rk-stat {
   --rk-stat-size: var(--rk-text-3xl);
