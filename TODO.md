@@ -40,7 +40,7 @@ below once the batch is in.
 
 - [ ] SelectionBar — floating "N selected" bar with bulk actions + clear, appears with DataTable/ImageGrid selection — P1 ↗ Mantine/Chakra ActionBar · `claude/rk-selection-bar`
 
-- [ ] `confirm()` / `prompt()` — promise-based dialogs over Dialog (`await confirm({ title, tone: "danger" })`) — P1 ↗ Base UI AlertDialog, Primer ConfirmationDialog · `claude/rk-confirm`
+- [x] `confirm()` / `prompt()` — promise-based dialogs over Dialog (`await confirm({ title, tone: "danger" })`) — P1 ↗ Base UI AlertDialog, Primer ConfirmationDialog · `claude/rk-confirm`
 
 - [ ] Code / CodeBlock (copy, line numbers) — P1 (UR SourceCode, DT RunLog) · `claude/rk-code-block`
 

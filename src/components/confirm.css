@@ -1,1 +1,3 @@
-/* Placeholder: confirm() / prompt() styles land in its own PR (TODO.md, batch 1). */
+.rk-prompt-form {
+  display: contents;
+}
