@@ -24,7 +24,7 @@ below once the batch is in.
 
 - [x] RollingNumber — digits roll on value change (tabular column + translate, CSS only, off with `--rk-motion`); used by Stat/Gauge — P1 ↗ Mantine RollingNumber, Magic UI Number Ticker · `claude/rk-rolling-number`
 
-- [ ] RelativeTime ("5 s ago", live tick) + duration/timer (session uptime) on `Intl.RelativeTimeFormat` — P1 ↗ Primer RelativeTime, Ark Timer · `claude/rk-relative-time`
+- [x] RelativeTime ("5 s ago", live tick) + duration/timer (session uptime) on `Intl.RelativeTimeFormat` — P1 ↗ Primer RelativeTime, Ark Timer · `claude/rk-relative-time`
 
 - [ ] Item — generic row: media/icon + title + description + trailing actions, sizes, interactive, list container — P1 ↗ shadcn Item · `claude/rk-item`
 

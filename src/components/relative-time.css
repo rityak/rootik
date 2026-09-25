@@ -1,1 +1,10 @@
-/* Placeholder: RelativeTime styles land in its own PR (TODO.md, batch 1). */
+.rk-relative-time {
+  white-space: nowrap;
+}
+
+.rk-timer {
+  white-space: nowrap;
+  &[data-ended] {
+    color: var(--rk-text-3);
+  }
+}
