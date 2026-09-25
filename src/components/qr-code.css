@@ -1,1 +1,12 @@
-/* Placeholder: QrCode styles land in its own PR (TODO.md, batch 3). */
+.rk-qr {
+  display: block;
+  flex: none;
+  border-radius: var(--rk-radius-md);
+  /* scanners expect dark modules on a light plate, whatever the theme */
+  & .rk-qr-plate {
+    fill: var(--rk-inverse);
+  }
+  & .rk-qr-modules {
+    fill: var(--rk-on-inverse);
+  }
+}

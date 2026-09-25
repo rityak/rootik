@@ -44,7 +44,7 @@ module, so any merge order works.
 
 - [ ] Busy overlay for a region — `inert` + dim + spinner over a card/table while refetching — P2 ↗ Mantine LoadingOverlay · `claude/rk-busy-overlay`
 
-- [ ] QrCode — zero-dep SVG encoder (share a connection/subscription link) — P2 ↗ Ark/Chakra/antd QrCode · `claude/rk-qr-code`
+- [x] QrCode — zero-dep SVG encoder (share a connection/subscription link) — P2 ↗ Ark/Chakra/antd QrCode · `claude/rk-qr-code`
 
 - [ ] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList · `claude/rk-bars-list`
 
