@@ -58,7 +58,7 @@ below once the batch is in.
 
 - [x] Animated open/close for Disclosure (`interpolate-size: allow-keywords` + `::details-content`); collapsible Card on the same technique instead of unmounting the body — P1 · `claude/rk-disclosure-motion`
 
-- [ ] KeyValue `copyable` values (IDs, hashes, IPs) — copy button on hover — P1 ★ · `claude/rk-kv-copyable`
+- [x] KeyValue `copyable` values (IDs, hashes, IPs) — copy button on hover — P1 ★ · `claude/rk-kv-copyable`
 
 - [ ] DataTable row selection checkboxes (`useSelection`, Shift ranges, select all) + keyboard-reachable scroll wrapper for Table (`tabIndex=0` + label when it overflows) — P1 ↗ Primer ScrollableRegion · `claude/rk-data-selection`
 

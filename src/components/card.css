@@ -484,7 +484,12 @@
     &:last-child {
       border-bottom: 0;
     }
+    & dt {
+      flex-shrink: 0;
+    }
+    /* the value takes the rest of the row, so long values (Truncate) can shrink */
     & dd {
+      flex: 1 1 auto;
       text-align: end;
     }
   }
@@ -501,5 +506,38 @@
       font-size: var(--rk-text-xs);
       color: var(--rk-text-3);
     }
+  }
+}
+
+.rk-kv-copyable {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  min-width: 0;
+  vertical-align: middle;
+  /* right-aligned rows: the button sits left of the value so values stay flush with the other rows */
+  [data-layout="rows"] & {
+    flex-direction: row-reverse;
+  }
+}
+
+.rk-kv-value {
+  min-width: 0;
+}
+
+/* shown while the row is hovered or the button focused; always on touch */
+.rk-kv-copy {
+  --rk-btn-h: 22px;
+  margin-block: -4px;
+  opacity: 0;
+  transition: opacity var(--rk-dur) var(--rk-ease);
+  .rk-kv-item:hover &,
+  &:focus-visible,
+  &[data-copied] {
+    opacity: 1;
+  }
+  @media (hover: none) {
+    opacity: 1;
   }
 }
