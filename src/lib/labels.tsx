@@ -23,6 +23,15 @@ export const LABELS = {
   resize: "Resize",
   customColor: "Custom color",
   unsaved: "Unsaved changes",
+  /** SchemaForm validation messages. */
+  required: "Required",
+  minValue: (min: number): string => `Must be at least ${min}`,
+  maxValue: (max: number): string => `Must be at most ${max}`,
+  minLength: (count: number): string => `At least ${count} characters`,
+  maxLength: (count: number): string => `At most ${count} characters`,
+  minCount: (count: number): string => `Pick at least ${count}`,
+  maxCount: (count: number): string => `Pick at most ${count}`,
+  invalidFormat: "Invalid format",
   /** Screen-reader text for a dot badge without its own label. */
   newItems: "new",
   skipToContent: "Skip to content",

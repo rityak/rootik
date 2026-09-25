@@ -165,6 +165,10 @@
   &:disabled {
     cursor: not-allowed;
   }
+  /* a bare switch dims itself; inside .rk-check the label row dims instead */
+  &:disabled:not(.rk-check > *) {
+    opacity: 0.45;
+  }
 }
 
 /* sliding indicator shared by segmented control and tabs */
