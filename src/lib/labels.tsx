@@ -63,6 +63,17 @@ export const LABELS = {
   dropFiles: "Drop files here or",
   browseFiles: "browse",
   wrapLines: "Wrap lines",
+  moreActions: "More actions",
+  showOptions: "Show options",
+  removeToken: (label: string): string => `Remove ${label}`,
+  previous: "Previous",
+  next: "Next",
+  zoomIn: "Zoom in",
+  zoomOut: "Zoom out",
+  fitToScreen: "Fit to screen",
+  imageCounter: (index: number, count: number): string => `${index} / ${count}`,
+  selectItem: "Select",
+  logLevels: "Levels",
 };
 
 export type Labels = typeof LABELS;
