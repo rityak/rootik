@@ -216,3 +216,31 @@ html {
     background-position: -50% 0;
   }
 }
+
+/*
+ * Corner shape knob (Settings → Shape → Corners). Only the soft-geometry parts take it: circles (avatars,
+ * radios, dots, round buttons) stay circles. Where corner-shape is unsupported the radius alone applies.
+ */
+@supports (corner-shape: squircle) {
+  :where(
+    .rk-surface,
+    .rk-card,
+    .rk-button:not([data-round]),
+    .rk-input,
+    .rk-textarea,
+    .rk-select-trigger,
+    .rk-menu,
+    .rk-popover,
+    .rk-dialog-panel,
+    .rk-toast,
+    .rk-callout,
+    .rk-choice-card,
+    .rk-table-wrap
+  ) {
+    corner-shape: var(--rk-corner-shape, round);
+  }
+  /* the hairline rim is a pseudo-element: corner-shape isn't inherited by default */
+  .rk-surface::before {
+    corner-shape: inherit;
+  }
+}

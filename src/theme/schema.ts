@@ -201,6 +201,18 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         default: false,
       },
       {
+        key: "corners",
+        type: "segmented",
+        label: "Corners",
+        hint: "Squircle: smoother, continuous curves where the browser supports corner-shape",
+        default: "round",
+        options: [
+          { value: "round", label: "Round" },
+          { value: "squircle", label: "Squircle" },
+        ],
+        cssVar: "--rk-corner-shape",
+      },
+      {
         key: "layout",
         type: "segmented",
         label: "Layout",
