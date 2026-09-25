@@ -48,7 +48,7 @@ below once the batch is in.
 
 - [ ] FileDrop / DropZone (hatched) — P1 (DT dataset import) · `claude/rk-file-drop`
 
-- [ ] SettingsGroup / SettingsRow — title + description left, control right, divided rows; extract from the AppearanceSettings layout — P1 ★ · `claude/rk-settings-list`
+- [x] SettingsGroup / SettingsRow — title + description left, control right, divided rows; extract from the AppearanceSettings layout — P1 ★ · `claude/rk-settings-list`
 
 - [x] Heatmap (sequential ramp) — P1 (DT co-occurrence) · `claude/rk-heatmap`
 

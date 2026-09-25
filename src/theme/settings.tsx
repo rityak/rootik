@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { Button } from "../components/button";
-import { Card, Nest } from "../components/card";
 import { ColorSwatches, SegmentedControl, Switch } from "../components/choice";
-import { Field, Input } from "../components/input";
+import { Input } from "../components/input";
 import { Select } from "../components/select";
+import { SettingsGroup, SettingsRow } from "../components/settings-list";
 import { Slider } from "../components/slider";
 import { cx } from "../lib/cx";
 import { RotateIcon } from "../lib/icons";
@@ -38,30 +38,29 @@ export function AppearanceSettings({
       .map((f) => {
         const v = values[f.key] ?? f.default;
         return (
-          <div key={f.key} className="rk-settings-field">
-            <Field layout="inline" label={f.label} hint={f.hint}>
-              {control(f, v, (next) => set(f.key, next), values)}
-            </Field>
-            {f.children && Boolean(v) && <Nest>{renderFields(f.children)}</Nest>}
-          </div>
+          <SettingsRow
+            key={f.key}
+            label={f.label}
+            hint={f.hint}
+            nested={f.children && v ? renderFields(f.children) : undefined}
+          >
+            {control(f, v, (next) => set(f.key, next), values)}
+          </SettingsRow>
         );
       });
 
   return (
     <div className={cx("rk-settings", className)} data-variant={variant}>
-      {shown.map((s) =>
-        variant === "cards" ? (
-          <Card key={s.id} title={s.title} description={s.description}>
-            <div className="rk-settings-fields">{renderFields(s.fields)}</div>
-          </Card>
-        ) : (
-          <section key={s.id} className="rk-settings-group">
-            <h3 className="rk-settings-title">{s.title}</h3>
-            {s.description && <p className="rk-settings-desc">{s.description}</p>}
-            <div className="rk-settings-fields">{renderFields(s.fields)}</div>
-          </section>
-        ),
-      )}
+      {shown.map((s) => (
+        <SettingsGroup
+          key={s.id}
+          variant={variant === "cards" ? "card" : "plain"}
+          title={s.title}
+          description={s.description}
+        >
+          {renderFields(s.fields)}
+        </SettingsGroup>
+      ))}
       {resettable && (
         <div className="rk-settings-footer">
           <Button variant="ghost" size="sm" icon={<RotateIcon />} onClick={() => reset()}>
