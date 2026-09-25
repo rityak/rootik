@@ -184,3 +184,13 @@
     rotate: 180deg;
   }
 }
+
+.rk-menu-sub-trigger[aria-expanded="true"] {
+  background: var(--rk-press);
+}
+
+.rk-menu-sub-chevron {
+  flex-shrink: 0;
+  margin-inline-start: auto;
+  color: var(--rk-text-3);
+}

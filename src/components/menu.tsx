@@ -6,6 +6,7 @@ import {
   type ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useId,
   useRef,
   useState,
@@ -13,7 +14,7 @@ import {
 import { cx } from "../lib/cx";
 import { Floating, type Placement } from "../lib/floating";
 import { cloneTrigger, useControllable } from "../lib/hooks";
-import { CheckIcon } from "../lib/icons";
+import { CheckIcon, ChevronRightIcon } from "../lib/icons";
 
 const MenuContext = createContext<{ close: () => void }>({
   close: () => {
@@ -26,7 +27,10 @@ const PRINTABLE = /\S/;
 
 /** Roving focus over menu items: arrows, Home/End, first-letter typeahead. */
 function onMenuKeyDown(event: React.KeyboardEvent<HTMLElement>, close: () => void) {
-  const items = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(ITEM));
+  // own items only: a submenu's items live inside this element too
+  const items = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(ITEM)).filter(
+    (el) => el.parentElement?.closest('[role="menu"]') === event.currentTarget,
+  );
   const i = items.indexOf(document.activeElement as HTMLElement);
   const focus = (n: number) => {
     event.preventDefault();
@@ -207,6 +211,115 @@ export function MenuItem({
       {trailing}
       {shortcut && <kbd className="rk-menu-shortcut">{shortcut}</kbd>}
     </button>
+  );
+}
+
+export interface MenuSubProps {
+  /** The submenu's own item text. */
+  label: ReactNode;
+  icon?: ReactNode;
+  hint?: ReactNode;
+  disabled?: boolean;
+  /** Submenu items: MenuItem, MenuCheckboxItem, nested MenuSub. */
+  children: ReactNode;
+  className?: string;
+}
+
+/**
+ * Nested menu (APG): opens on hover after a short delay, or with →/Enter/Space and focuses its first item;
+ * ←/Esc close it and return to its item; choosing an item closes the whole menu. The panel is a nested
+ * popover, so the parent stays open and light dismiss closes both.
+ */
+export function MenuSub({ label, icon, hint, disabled, children, className }: MenuSubProps) {
+  const { close } = useContext(MenuContext);
+  const [open, setOpen] = useState(false);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const id = useId();
+  useEffect(() => () => clearTimeout(timer.current), []);
+
+  const show = (focusFirst: boolean) => {
+    clearTimeout(timer.current);
+    if (disabled) return;
+    setOpen(true);
+    if (focusFirst) requestAnimationFrame(() => panel.current?.querySelector<HTMLElement>(ITEM)?.focus());
+  };
+  const back = () => {
+    setOpen(false);
+    trigger.current?.focus();
+  };
+
+  return (
+    <>
+      <button
+        ref={trigger}
+        type="button"
+        role="menuitem"
+        tabIndex={-1}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={id}
+        aria-disabled={disabled || undefined}
+        className="rk-menu-item rk-menu-sub-trigger"
+        onPointerMove={(event) => {
+          if (disabled) return;
+          event.currentTarget.focus();
+          if (!open) {
+            clearTimeout(timer.current);
+            timer.current = setTimeout(() => show(false), 120);
+          }
+        }}
+        onPointerLeave={() => clearTimeout(timer.current)}
+        onClick={() => show(true)}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowRight" || event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            event.stopPropagation();
+            show(true);
+          }
+        }}
+        onBlur={() =>
+          // focus moved to a sibling item (hover or arrows): the submenu goes away
+          requestAnimationFrame(() => {
+            const now = document.activeElement;
+            if (now !== trigger.current && !panel.current?.contains(now)) setOpen(false);
+          })
+        }
+      >
+        {icon && <span className="rk-icon rk-menu-icon">{icon}</span>}
+        <span className="rk-menu-text">
+          <span className="rk-truncate">{label}</span>
+          {hint && <span className="rk-menu-hint">{hint}</span>}
+        </span>
+        <ChevronRightIcon className="rk-menu-sub-chevron" />
+      </button>
+      <Floating
+        ref={panel}
+        id={id}
+        role="menu"
+        anchor={trigger}
+        open={open}
+        onOpenChange={(next) => {
+          if (!next && panel.current?.contains(document.activeElement)) trigger.current?.focus();
+          if (next !== open) setOpen(next);
+        }}
+        placement="right-start"
+        offset={2}
+        className={cx("rk-menu rk-submenu", className)}
+        onKeyDown={(event) => {
+          event.stopPropagation();
+          if (event.key === "ArrowLeft" || event.key === "Escape") {
+            event.preventDefault();
+            back();
+            return;
+          }
+          onMenuKeyDown(event, close);
+        }}
+      >
+        {children}
+      </Floating>
+    </>
   );
 }
 
