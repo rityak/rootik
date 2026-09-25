@@ -1,5 +1,9 @@
 import { type HTMLAttributes, type ReactNode, useId, useLayoutEffect, useRef, useState } from "react";
 import { cx } from "../lib/cx";
+import { ChartIcon, TableIcon } from "../lib/icons";
+import { useLabels } from "../lib/labels";
+import { IconButton } from "./button";
+import { Table } from "./data";
 
 const SERIES = Array.from({ length: 6 }, (_, i) => `var(--rk-chart-${i + 1})`);
 /** Categorical color by fixed slot (never cycled past 6 — fold extras into "Other"). */
@@ -7,6 +11,10 @@ export const seriesColor = (i: number) => SERIES[Math.min(i, SERIES.length - 1)]
 
 const compact = new Intl.NumberFormat(undefined, { notation: "compact", maximumFractionDigits: 1 });
 export const formatCompact = (n: number) => compact.format(n);
+const plain = new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 });
+/** Tables show exact numbers unless the chart was given its own format. */
+const exact = (format: (n: number) => string) =>
+  format === formatCompact ? (n: number) => plain.format(n) : format;
 
 function useWidth<T extends HTMLElement>() {
   const ref = useRef<T>(null);
@@ -80,6 +88,67 @@ export function Legend({ items, className }: { items: ReadonlyArray<LegendItem>;
         </li>
       ))}
     </ul>
+  );
+}
+
+/** Chart ⇄ table switch in a chart's top row (the table view is the accessible reading of any chart). */
+function TableToggle({ table, onToggle }: { table: boolean; onToggle: () => void }) {
+  const labels = useLabels();
+  return (
+    <IconButton
+      size="sm"
+      className="rk-chart-toggle"
+      icon={table ? <ChartIcon /> : <TableIcon />}
+      label={table ? labels.showChart : labels.showTable}
+      onClick={onToggle}
+    />
+  );
+}
+
+function DataTableView({
+  head,
+  rows,
+  label,
+}: {
+  head: ReadonlyArray<ReactNode>;
+  rows: ReadonlyArray<ReadonlyArray<ReactNode>>;
+  label?: string;
+}) {
+  return (
+    <Table framed density="compact" aria-label={label} className="rk-chart-table">
+      {head.some((h) => h !== "") && (
+        <thead>
+          <tr>
+            {head.map((h, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: columns are positional
+              <th key={i} style={{ textAlign: i === 0 ? "start" : "end" }}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+      )}
+      <tbody>
+        {rows.map((row, r) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: rows follow the data order
+          <tr key={r}>
+            {row.map((cell, c) =>
+              c === 0 ? (
+                // biome-ignore lint/suspicious/noArrayIndexKey: columns are positional
+                <th key={c} scope="row">
+                  {cell}
+                </th>
+              ) : (
+                // biome-ignore lint/suspicious/noArrayIndexKey: columns are positional
+                <td key={c} className="rk-num" style={{ textAlign: "end" }}>
+                  {cell}
+                </td>
+              ),
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </Table>
   );
 }
 
@@ -166,6 +235,8 @@ export interface BarChartProps extends Omit<HTMLAttributes<HTMLDivElement>, "chi
   /** Value labels: at the highlighted bar only, all, or none. */
   labels?: "highlight" | "all" | "none";
   max?: number;
+  /** Chart ⇄ table toggle in a top row. */
+  tableView?: boolean;
   "aria-label"?: string;
 }
 
@@ -180,9 +251,11 @@ export function BarChart({
   reference,
   labels = "highlight",
   max: maxProp,
+  tableView,
   className,
   ...rest
 }: BarChartProps) {
+  const [asTable, setAsTable] = useState(false);
   const [ref, width] = useWidth<HTMLDivElement>();
   const [hover, setHover] = useState<number | null>(null);
   const hatchId = useId();
@@ -327,7 +400,7 @@ export function BarChart({
     tip = tipFor(hovered, 36 + band * hover + band / 2, 18 + (height - 40) * (1 - hovered.value / top));
   }
 
-  return (
+  const chart = (
     <div
       ref={ref}
       role="img"
@@ -335,11 +408,28 @@ export function BarChart({
         rest["aria-label"] ?? `Bar chart: ${data.map((d) => `${d.label} ${format(d.value)}`).join(", ")}`
       }
       {...rest}
-      className={cx("rk-chart", className)}
+      className={cx("rk-chart", !tableView && className)}
       style={{ minHeight: horizontal ? undefined : height, ...rest.style }}
     >
       {svg}
       <ChartTip tip={tip} />
+    </div>
+  );
+  if (!tableView) return chart;
+  return (
+    <div className={cx("rk-chart-frame", className)}>
+      <div className="rk-chart-top">
+        <TableToggle table={asTable} onToggle={() => setAsTable(!asTable)} />
+      </div>
+      {asTable ? (
+        <DataTableView
+          label={rest["aria-label"]}
+          head={["", ""]}
+          rows={data.map((d) => [d.label, exact(format)(d.value)])}
+        />
+      ) : (
+        chart
+      )}
     </div>
   );
 }
@@ -374,6 +464,8 @@ export interface LineChartProps extends Omit<HTMLAttributes<HTMLDivElement>, "ch
   zero?: boolean;
   /** Show legend (auto for ≥2 series). */
   legend?: boolean;
+  /** Chart ⇄ table toggle next to the legend. */
+  tableView?: boolean;
   "aria-label"?: string;
 }
 
@@ -386,9 +478,11 @@ export function LineChart({
   format = formatCompact,
   zero = true,
   legend,
+  tableView,
   className,
   ...rest
 }: LineChartProps) {
+  const [asTable, setAsTable] = useState(false);
   const [ref, width] = useWidth<HTMLDivElement>();
   const [hover, setHover] = useState<number | null>(null);
   const len = Math.max(0, ...series.map((s) => s.data.length));
@@ -426,10 +520,29 @@ export function LineChart({
 
   return (
     <div className={cx("rk-chart-frame", className)}>
-      {showLegend && (
-        <Legend items={series.map((s, i) => ({ label: s.name, color: colorOf(s, i), shape: "line" }))} />
+      {(showLegend || tableView) && (
+        <div className="rk-chart-top">
+          {showLegend && (
+            <Legend items={series.map((s, i) => ({ label: s.name, color: colorOf(s, i), shape: "line" }))} />
+          )}
+          {tableView && <TableToggle table={asTable} onToggle={() => setAsTable(!asTable)} />}
+        </div>
+      )}
+      {asTable && (
+        <DataTableView
+          label={rest["aria-label"]}
+          head={["", ...series.map((s) => s.name)]}
+          rows={Array.from({ length: len }, (_, i) => [
+            labels?.[i] ?? String(i + 1),
+            ...series.map((s) => {
+              const v = s.data[i];
+              return v === null || v === undefined ? "—" : exact(format)(v);
+            }),
+          ])}
+        />
       )}
       <div
+        hidden={asTable}
         ref={ref}
         role="img"
         aria-label={rest["aria-label"] ?? `Line chart: ${series.map((s) => s.name).join(", ")}`}
