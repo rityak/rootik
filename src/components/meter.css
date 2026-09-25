@@ -1,1 +1,51 @@
-/* Placeholder: Meter styles land in its own PR (TODO.md, batch 1). */
+.rk-meter {
+  --rk-meter-h: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 1.5);
+  min-width: 0;
+  &[data-size="sm"] {
+    --rk-meter-h: 3px;
+  }
+  &[data-size="lg"] {
+    --rk-meter-h: 10px;
+  }
+}
+
+.rk-meter-head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--rk-space);
+  font-size: var(--rk-text-xs);
+  color: var(--rk-text-2);
+}
+
+.rk-meter-track {
+  display: flex;
+  height: var(--rk-meter-h);
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--rk-hatch), color-mix(in oklab, var(--rk-surface-3) 70%, transparent);
+}
+
+.rk-meter-bar {
+  flex-shrink: 0;
+  height: 100%;
+  background: var(--rk-tone);
+  transition:
+    width var(--rk-dur-slow) var(--rk-ease-out),
+    background-color var(--rk-dur) var(--rk-ease);
+  &:first-child {
+    border-radius: 999px 0 0 999px;
+  }
+  &:last-child {
+    border-radius: 0 999px 999px 0;
+  }
+  &:only-child {
+    border-radius: 999px;
+  }
+  /* hairline gap between stacked parts */
+  &[data-section] + & {
+    box-shadow: inset 1.5px 0 0 var(--rk-surface-1);
+  }
+}
