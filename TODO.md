@@ -17,7 +17,7 @@ on Combobox.
 
 - [x] SplitButton (button + menu) — P1 ↗ M3 Expressive, shadcn ButtonGroup · `claude/rk-split-button`
 
-- [ ] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select) · `claude/rk-combobox`
+- [x] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select) · `claude/rk-combobox`
 
 - [x] MultiSelect / TagInput as a TokenField — tokens inline with the text, autocomplete, auto-tokenize on separator; also `key:value` filter tokens for SearchInput — P1 (DT caption tags) ↗ React Aria TokenField · `claude/rk-token-field`
 
