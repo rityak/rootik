@@ -1,1 +1,71 @@
-/* Placeholder: SelectionBar styles land in its own PR (TODO.md, batch 1). */
+.rk-selection-bar {
+  position: fixed;
+  inset: auto auto var(--rk-selection-offset) 50%;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--rk-space) * 2);
+  max-width: calc(100vw - 32px);
+  margin: 0;
+  padding: 6px 6px 6px 14px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--rk-text);
+  translate: -50% 0;
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    translate var(--rk-dur-slow) var(--rk-ease-out);
+
+  &:not(:popover-open) {
+    display: none;
+  }
+  @starting-style {
+    opacity: 0;
+    translate: -50% 16px;
+  }
+}
+
+.rk-selection-count {
+  font-size: var(--rk-text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.rk-selection-clear {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rk-surface-4);
+  color: var(--rk-text-2);
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    color var(--rk-dur) var(--rk-ease);
+  &:hover {
+    color: var(--rk-text);
+  }
+  & > svg {
+    width: 1em;
+    height: 1em;
+  }
+}
+
+.rk-selection-sep {
+  align-self: stretch;
+  width: 1px;
+  margin-block: 4px;
+  background: var(--rk-line-strong);
+}
+
+.rk-selection-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  & .rk-button {
+    border-radius: 999px;
+  }
+}

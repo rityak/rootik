@@ -38,7 +38,7 @@ below once the batch is in.
 
 - [x] `StickToBottom` scroll container — follow tail, "jump to latest", keeps position on prepended history; base for LogView (and a chat later) — P1 ↗ shadcn MessageScroller · `claude/rk-stick-to-bottom`
 
-- [ ] SelectionBar — floating "N selected" bar with bulk actions + clear, appears with DataTable/ImageGrid selection — P1 ↗ Mantine/Chakra ActionBar · `claude/rk-selection-bar`
+- [x] SelectionBar — floating "N selected" bar with bulk actions + clear, appears with DataTable/ImageGrid selection — P1 ↗ Mantine/Chakra ActionBar · `claude/rk-selection-bar`
 
 - [x] `confirm()` / `prompt()` — promise-based dialogs over Dialog (`await confirm({ title, tone: "danger" })`) — P1 ↗ Base UI AlertDialog, Primer ConfirmationDialog · `claude/rk-confirm`
 
