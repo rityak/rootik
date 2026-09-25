@@ -34,7 +34,7 @@ below once the batch is in.
 
 - [ ] OverflowList (priority+) — items that don't fit collapse into a "+N" menu; used by Toolbar, Tabs, Breadcrumbs, ChipGroup, AvatarGroup — P1 ↗ Mantine 9 OverflowList · `claude/rk-overflow-list`
 
-- [ ] Scroller — horizontal overflow with edge fade + arrows only when scrollable (`scroll-state()`, JS fallback); for Tabs/Dock/ChipGroup on phones — P1 ↗ Mantine 9 Scroller · `claude/rk-scroller`
+- [x] Scroller — horizontal overflow with edge fade + arrows only when scrollable (`scroll-state()`, JS fallback); for Tabs/Dock/ChipGroup on phones — P1 ↗ Mantine 9 Scroller · `claude/rk-scroller`
 
 - [ ] `StickToBottom` scroll container — follow tail, "jump to latest", keeps position on prepended history; base for LogView (and a chat later) — P1 ↗ shadcn MessageScroller · `claude/rk-stick-to-bottom`
 
