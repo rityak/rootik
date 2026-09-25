@@ -1,0 +1,44 @@
+/*
+ * Light theme recipe — not shipped with the kit: copy it into your app.
+ * Apply on :root (<html data-theme="light">) or on a subtree together with data-rk-scope, so the derived
+ * tokens (lines, hovers, hatch, glass) recompute from the new --rk-tint / --rk-shade.
+ * Knobs (accent, neutral hue/chroma, radius, density…) keep working: everything derives from them.
+ */
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* "tint" draws lines and hovers, "shade" wells and shadows: both dark on a light canvas */
+  --rk-tint: 0.25 calc(var(--rk-neutral-c) * 2.5) var(--rk-neutral-h);
+  --rk-shade: 0.35 calc(var(--rk-neutral-c) * 2) var(--rk-neutral-h);
+
+  /* depth: light surfaces step up to near white */
+  --rk-bg: oklch(0.965 calc(var(--rk-neutral-c) * 0.8) var(--rk-neutral-h));
+  --rk-surface-1: oklch(0.992 calc(var(--rk-neutral-c) * 0.3) var(--rk-neutral-h));
+  --rk-surface-2: oklch(0.975 calc(var(--rk-neutral-c) * 0.6) var(--rk-neutral-h));
+  --rk-surface-3: oklch(0.935 calc(var(--rk-neutral-c) * 0.9) var(--rk-neutral-h));
+  --rk-surface-4: oklch(0.9 calc(var(--rk-neutral-c) * 1.1) var(--rk-neutral-h));
+  --rk-sunken: oklch(0.95 calc(var(--rk-neutral-c) * 0.8) var(--rk-neutral-h));
+
+  /* wells and scrim are much lighter than on the dark canvas */
+  --rk-well: oklch(var(--rk-shade) / 0.06);
+  --rk-well-soft: oklch(var(--rk-shade) / 0.035);
+  --rk-scrim: oklch(var(--rk-shade) / 0.35);
+  /* the 1px top highlight is light on light surfaces, not a dark hairline */
+  --rk-highlight: inset 0 1px 0 color-mix(in oklab, var(--rk-surface-1) 70%, transparent);
+
+  /* text */
+  --rk-text: oklch(0.2 calc(var(--rk-neutral-c) * 1.5) var(--rk-neutral-h));
+  --rk-text-2: oklch(0.42 calc(var(--rk-neutral-c) * 2.5) var(--rk-neutral-h));
+  --rk-text-3: oklch(0.55 calc(var(--rk-neutral-c) * 2.5) var(--rk-neutral-h));
+  --rk-inverse: oklch(0.24 calc(var(--rk-neutral-c) * 1.6) var(--rk-neutral-h));
+  --rk-on-inverse: oklch(0.985 calc(var(--rk-neutral-c) * 0.5) var(--rk-neutral-h));
+
+  /* accent as text/icon on light: darkened instead of lifted */
+  --rk-accent-text: oklch(from var(--rk-accent) min(l, 0.5) c h);
+
+  /* status for a light surface; re-run the dataviz validator (--mode light) if you retune charts */
+  --rk-success: oklch(0.58 0.14 162);
+  --rk-warn: oklch(0.68 0.15 70);
+  --rk-danger: oklch(0.58 0.2 24);
+  --rk-info: oklch(0.58 0.13 245);
+}

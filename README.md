@@ -53,4 +53,20 @@ Values are available via `useAppearance().values`; `<AppearanceSettings />` rend
 
 ## Light theme
 
-Not shipped. Override tokens under your own selector, e.g. `:root[data-theme="light"] { --rk-bg: …; --rk-surface-1: …; --rk-text: …; }` — every component reads only `--rk-*` tokens (see `src/tokens.css`).
+Not shipped — the kit is dark-first — but every component reads only `--rk-*` tokens, so a light theme is one
+block of overrides. A tested recipe lives in [`src/stories/light-theme.css`](src/stories/light-theme.css)
+(story: Overview → Light Theme). Copy it into your app and switch with an attribute:
+
+```html
+<html data-theme="light">
+```
+
+- Override the **neutrals** (`--rk-bg`, `--rk-surface-1…4`, `--rk-sunken`, `--rk-text*`, `--rk-inverse`,
+  `--rk-on-inverse`) and flip `--rk-tint` / `--rk-shade` to dark triplets: lines, hovers, hatch and shadows
+  derive from them. Keep the `--rk-neutral-h/c` knobs in the formulas so the tint setting still works.
+- Re-state the tokens that assume a dark canvas: `--rk-well*`, `--rk-scrim`, `--rk-highlight`,
+  `--rk-accent-text` (darken instead of lift) and the status colours.
+- For a light **subtree** instead of the whole page, put `data-rk-scope` next to `data-theme="light"` so the
+  derived tokens recompute there. Token overrides inside a scope must use explicit values (see CLAUDE.md).
+- The chart palette was validated for the dark band; re-run the dataviz validator with `--mode light` against
+  your light surface before shipping charts.
