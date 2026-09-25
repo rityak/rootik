@@ -1,1 +1,39 @@
-/* Placeholder: Menubar styles land in its own PR (TODO.md, batch 2). */
+.rk-menubar {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  min-width: 0;
+}
+
+.rk-menubar-trigger {
+  height: calc(var(--rk-h-sm) - 4px);
+  padding: 0 calc(var(--rk-space) * 2.5);
+  border: 0;
+  border-radius: calc(var(--rk-radius-control) - 2px);
+  background: transparent;
+  color: var(--rk-text-2);
+  font: inherit;
+  font-size: var(--rk-text-sm);
+  white-space: nowrap;
+  cursor: default;
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    color var(--rk-dur) var(--rk-ease);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--rk-hover);
+    color: var(--rk-text);
+  }
+  &[aria-expanded="true"] {
+    background: var(--rk-press);
+    color: var(--rk-text);
+  }
+  &[aria-disabled="true"] {
+    opacity: 0.45;
+  }
+  /* the bar is dense: the ring hugs the title instead of floating 2px out */
+  &:focus-visible {
+    outline-offset: -1px;
+  }
+}
