@@ -16,7 +16,7 @@ below once the batch is in.
 
 - [x] Foundation: `useHotkey` skips typing targets, `useClipboard`, `announce()`, `format*` parts, `useSelection`, CopyButton, icons (`icon()` exported) and labels for the batch, module stubs · `claude/dreamy-franklin-e2kev1`
 
-- [ ] Truncate — single/multi-line ellipsis that shows the full text in a Tooltip only when actually truncated — P1 ★ ↗ Primer Truncate · `claude/rk-truncate`
+- [x] Truncate — single/multi-line ellipsis that shows the full text in a Tooltip only when actually truncated — P1 ★ ↗ Primer Truncate · `claude/rk-truncate`
 
 - [ ] Meter — `<meter>` semantics, low/high/optimum pick the tone, stacked sections with hatched rest (disk, quota, CPU) — P1 ↗ Base UI/React Aria/HeroUI Meter, Mantine Progress sections, Tremor CategoryBar · `claude/rk-meter`
 
