@@ -1,1 +1,80 @@
-/* Placeholder: SelectPanel styles land in its own PR (TODO.md, batch 1). */
+.rk-select-panel {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 1.5);
+  width: 280px;
+  padding: 6px;
+  overflow: hidden;
+  & .rk-popover-title {
+    padding: 4px 6px 0;
+  }
+}
+
+.rk-select-panel-search {
+  flex-shrink: 0;
+}
+
+.rk-select-panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-height: min(300px, calc(var(--rk-available-h, 420px) - 120px));
+  overflow-y: auto;
+  outline: none;
+}
+
+.rk-select-panel-option {
+  font-size: var(--rk-text-sm);
+  &[aria-selected="true"] {
+    font-weight: 400;
+  }
+}
+
+.rk-select-panel-box {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1.5px var(--rk-line-strong);
+  color: var(--rk-on-accent);
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    box-shadow var(--rk-dur) var(--rk-ease);
+  &[data-checked] {
+    background: var(--rk-accent);
+    box-shadow: none;
+  }
+  & > svg {
+    width: 11px;
+    height: 11px;
+    stroke-width: 3;
+  }
+}
+
+.rk-select-panel-count {
+  flex-shrink: 0;
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+}
+
+.rk-select-panel-empty {
+  padding: 14px 8px;
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-sm);
+  text-align: center;
+}
+
+.rk-select-panel-foot {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 2px 0 6px;
+  border-top: 1px solid var(--rk-line);
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+  & > :first-child {
+    flex: 1;
+  }
+}
