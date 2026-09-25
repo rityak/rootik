@@ -16,7 +16,7 @@ module, so any merge order works.
 
 - [x] PasswordInput (reveal) — P2 · `claude/rk-password-input`
 
-- [ ] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput · `claude/rk-pin-input`
+- [x] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput · `claude/rk-pin-input`
 
 - [ ] Fieldset — native `<fieldset>` + legend, `disabled` covers the whole group; used by SchemaForm — P2 ↗ Base UI/Mantine Fieldset · `claude/rk-fieldset`
 
