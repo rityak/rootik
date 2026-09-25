@@ -102,7 +102,7 @@ below once the batch is in.
 
 - [x] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1 · `claude/rk-logic-tests`
 
-- [ ] Light theme recipe/example token override (docs + story) — P1 · `claude/rk-light-theme`
+- [x] Light theme recipe/example token override (docs + story) — P1 · `claude/rk-light-theme`
 
 ## Foundation
 
