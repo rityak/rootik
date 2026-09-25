@@ -50,7 +50,7 @@ below once the batch is in.
 
 - [ ] SettingsGroup / SettingsRow — title + description left, control right, divided rows; extract from the AppearanceSettings layout — P1 ★ · `claude/rk-settings-list`
 
-- [ ] Heatmap (sequential ramp) — P1 (DT co-occurrence) · `claude/rk-heatmap`
+- [x] Heatmap (sequential ramp) — P1 (DT co-occurrence) · `claude/rk-heatmap`
 
 - [ ] RangeSlider (two thumbs, min distance) + vertical Slider — P1 ↗ Mantine RangeSlider, Radix/Base UI Slider · `claude/rk-range-slider`
 
