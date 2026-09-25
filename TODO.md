@@ -26,7 +26,7 @@ module, so any merge order works.
 
 - [ ] ColorPicker in OKLCH — L/C area, hue + alpha sliders, text input, EyeDropper API button; also for the AppearanceSettings accent — P2 ↗ Ark/HeroUI/React Aria ColorPicker · `claude/rk-color-picker`
 
-- [ ] JsonView — collapsible JSON tree, typed colors, copy value/path — P2 ↗ Ark JsonTreeView · `claude/rk-json-view`
+- [x] JsonView — collapsible JSON tree, typed colors, copy value/path — P2 ↗ Ark JsonTreeView · `claude/rk-json-view`
 
 - [ ] Indicator — dot/count pinned to the corner of any element (avatar, icon button) — P2 ↗ Mantine Indicator, Chakra Float · `claude/rk-indicator`
 
