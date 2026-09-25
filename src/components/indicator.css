@@ -1,1 +1,79 @@
-/* Placeholder: Indicator styles land in its own PR (TODO.md, batch 3). */
+.rk-indicator-anchor {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.rk-indicator-mark {
+  /* corner inset: 0 for boxes; 14.6% puts the center on a circle's edge (1 - cos 45°) / 2 */
+  --rk-mark-inset: 0%;
+  position: absolute;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--rk-tone);
+  color: var(--rk-on-tone);
+  /* a ring of the surrounding surface separates the mark from the target */
+  box-shadow: 0 0 0 2px var(--rk-indicator-ring, var(--rk-bg));
+  font-size: var(--rk-text-2xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  pointer-events: none;
+
+  &[data-count] {
+    width: auto;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+  }
+  &[data-round] {
+    --rk-mark-inset: 14.6%;
+  }
+  /* centered on the corner: half the mark outside the target on both axes */
+  &[data-position^="top"] {
+    --rk-mark-y: -50%;
+    top: var(--rk-mark-inset);
+  }
+  &[data-position^="bottom"] {
+    --rk-mark-y: 50%;
+    bottom: var(--rk-mark-inset);
+  }
+  &[data-position$="end"] {
+    right: var(--rk-mark-inset);
+    translate: 50% var(--rk-mark-y);
+  }
+  &[data-position$="start"] {
+    left: var(--rk-mark-inset);
+    translate: -50% var(--rk-mark-y);
+  }
+
+  &[data-pulse]::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    animation: rk-indicator-ping calc(var(--rk-dur-slow) * 5) var(--rk-ease-out) infinite;
+  }
+}
+
+@keyframes rk-indicator-ping {
+  from {
+    opacity: 0.6;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 2.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-indicator-mark[data-pulse]::after {
+    animation: none;
+  }
+}

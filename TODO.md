@@ -28,7 +28,7 @@ module, so any merge order works.
 
 - [ ] JsonView — collapsible JSON tree, typed colors, copy value/path — P2 ↗ Ark JsonTreeView · `claude/rk-json-view`
 
-- [ ] Indicator — dot/count pinned to the corner of any element (avatar, icon button) — P2 ↗ Mantine Indicator, Chakra Float · `claude/rk-indicator`
+- [x] Indicator — dot/count pinned to the corner of any element (avatar, icon button) — P2 ↗ Mantine Indicator, Chakra Float · `claude/rk-indicator`
 
 - [ ] Spoiler — clamp long text with a fade + "Show more" — P2 ↗ Mantine Spoiler · `claude/rk-spoiler`
 
