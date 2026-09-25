@@ -1,1 +1,143 @@
-/* Placeholder: Stepper styles land in its own PR (TODO.md, batch 3). */
+.rk-stepper {
+  --rk-step-marker: 26px;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  &[data-size="sm"] {
+    --rk-step-marker: 20px;
+    font-size: var(--rk-text-sm);
+  }
+  &[data-orientation="vertical"] {
+    flex-direction: column;
+  }
+}
+
+.rk-step {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+
+  /* connector to the next step: solid while done, hatched for what's left */
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    border-radius: 1px;
+    background: var(--rk-hatch);
+  }
+  &[data-done]:not(:last-child)::after {
+    background: var(--rk-accent);
+  }
+  [data-orientation="horizontal"] > &:not(:last-child)::after {
+    top: calc(var(--rk-step-marker) / 2 - 1px);
+    left: calc(var(--rk-step-marker) + var(--rk-space) * 2);
+    right: calc(var(--rk-space) * 2);
+    height: 2px;
+  }
+  [data-orientation="vertical"] > & {
+    padding-bottom: calc(var(--rk-space) * 5);
+  }
+  [data-orientation="vertical"] > &:not(:last-child)::after {
+    top: calc(var(--rk-step-marker) + var(--rk-space) * 1.5);
+    bottom: calc(var(--rk-space) * 1.5);
+    left: calc(var(--rk-step-marker) / 2 - 1px);
+    width: 2px;
+  }
+}
+
+.rk-step-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--rk-space) * 2.5);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  [data-orientation="horizontal"] & {
+    flex-direction: column;
+    padding-inline-end: calc(var(--rk-space) * 4);
+  }
+  &:is(button) {
+    border-radius: var(--rk-radius-control);
+    cursor: pointer;
+    &:hover .rk-step-label {
+      color: var(--rk-text);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+  }
+  &[data-disabled] {
+    opacity: 0.5;
+  }
+}
+
+.rk-step-marker {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--rk-step-marker);
+  height: var(--rk-step-marker);
+  border-radius: 50%;
+  background: var(--rk-surface-2);
+  box-shadow: inset 0 0 0 1px var(--rk-line-strong);
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    box-shadow var(--rk-dur) var(--rk-ease);
+  & > svg {
+    width: 55%;
+    height: 55%;
+    stroke-width: 2.5;
+  }
+  [data-state="complete"] & {
+    background: var(--rk-accent);
+    box-shadow: none;
+    color: var(--rk-on-accent);
+  }
+  /* current = the inverted pill of the style guide */
+  [data-state="current"] & {
+    background: var(--rk-inverse);
+    box-shadow: 0 0 0 4px var(--rk-accent-soft);
+    color: var(--rk-on-inverse);
+  }
+  [data-state="error"] & {
+    background: var(--rk-danger);
+    box-shadow: none;
+    color: var(--rk-on-danger);
+  }
+}
+
+.rk-step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  padding-top: calc((var(--rk-step-marker) - 1.45em) / 2);
+  [data-orientation="horizontal"] & {
+    padding-top: 0;
+  }
+}
+
+.rk-step-label {
+  color: var(--rk-text-2);
+  font-weight: 500;
+  [data-state="current"] & {
+    color: var(--rk-text);
+  }
+  [data-state="upcoming"] & {
+    color: var(--rk-text-3);
+  }
+  [data-state="error"] & {
+    color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
+  }
+}
+
+.rk-step-desc {
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+}

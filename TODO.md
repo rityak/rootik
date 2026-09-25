@@ -36,7 +36,7 @@ module, so any merge order works.
 
 - [x] Timeline — P2 · `claude/rk-timeline`
 
-- [ ] Stepper / Wizard — P2 · `claude/rk-stepper`
+- [x] Stepper / Wizard — P2 · `claude/rk-stepper`
 
 - [ ] Splitter (two panes) — P2 · `claude/rk-splitter`
 
