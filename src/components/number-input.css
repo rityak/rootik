@@ -1,1 +1,59 @@
-/* Placeholder: NumberInput styles land in its own PR (TODO.md, batch 1). */
+.rk-number-input {
+  padding-right: calc(var(--rk-space) * 0.75);
+  & .rk-input-el {
+    font-variant-numeric: tabular-nums;
+  }
+  & .rk-input-end {
+    gap: calc(var(--rk-space) * 2);
+  }
+}
+
+.rk-number-unit {
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-sm);
+  pointer-events: none;
+}
+
+.rk-number-stepper {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  justify-content: center;
+  gap: 1px;
+  width: calc(var(--rk-input-h) * 0.62);
+  padding-block: 3px;
+}
+
+.rk-number-step {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--rk-radius-control) * 0.55);
+  background: transparent;
+  color: var(--rk-text-3);
+  font-size: calc(var(--rk-input-h) * 0.32);
+  cursor: pointer;
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    color var(--rk-dur) var(--rk-ease);
+
+  &:hover:not(:disabled) {
+    background: var(--rk-hover);
+    color: var(--rk-text);
+  }
+  &:active:not(:disabled) {
+    background: var(--rk-press);
+  }
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  & > svg {
+    width: 1em;
+    height: 1em;
+  }
+}
