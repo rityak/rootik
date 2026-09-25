@@ -22,7 +22,7 @@ below once the batch is in.
 
 - [x] Tracker — row of small status bars (uptime/latency per hour or day) with tooltips — P1 ★ (UR node health) ↗ Tremor Tracker · `claude/rk-tracker`
 
-- [ ] RollingNumber — digits roll on value change (tabular column + translate, CSS only, off with `--rk-motion`); used by Stat/Gauge — P1 ↗ Mantine RollingNumber, Magic UI Number Ticker · `claude/rk-rolling-number`
+- [x] RollingNumber — digits roll on value change (tabular column + translate, CSS only, off with `--rk-motion`); used by Stat/Gauge — P1 ↗ Mantine RollingNumber, Magic UI Number Ticker · `claude/rk-rolling-number`
 
 - [ ] RelativeTime ("5 s ago", live tick) + duration/timer (session uptime) on `Intl.RelativeTimeFormat` — P1 ↗ Primer RelativeTime, Ark Timer · `claude/rk-relative-time`
 
