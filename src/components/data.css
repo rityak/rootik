@@ -120,6 +120,54 @@
   }
 }
 
+/* column resize */
+.rk-table[data-resizable]:not([data-sticky]) th {
+  position: relative;
+}
+
+.rk-table[data-fixed] :is(th, td):not(.rk-table-select) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rk-th-content {
+  display: inline-flex;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+.rk-th-resize {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 9px;
+  cursor: col-resize;
+  touch-action: none;
+  outline: none;
+  /* hairline that turns into an accent bar while hovered, focused or dragged */
+  &::after {
+    content: "";
+    position: absolute;
+    top: 30%;
+    bottom: 30%;
+    right: 0;
+    width: 1px;
+    background: var(--rk-line-strong);
+    transition:
+      background-color var(--rk-dur) var(--rk-ease),
+      inset var(--rk-dur) var(--rk-ease),
+      width var(--rk-dur) var(--rk-ease);
+  }
+  &:is(:hover, :focus-visible, :active)::after {
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--rk-accent);
+  }
+}
+
 .rk-table td.rk-table-empty {
   padding: 32px 12px;
   text-align: center;

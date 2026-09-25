@@ -31,7 +31,7 @@ on Combobox.
 
 - [x] Menubar — desktop File/Edit/View bar next to TitleBar, APG menubar keyboard (arrows move between menus, hover-to-switch once open) — P1 ↗ Mantine 9.4, Base UI, Radix · `claude/rk-menubar`
 
-- [ ] DataTable: column resize (drag + keyboard, persisted widths) — P1 · `claude/rk-table-resize`
+- [x] DataTable: column resize (drag + keyboard, persisted widths) — P1 · `claude/rk-table-resize`
 
 - [ ] DataTable tree rows — expandable rows with indent guides (tree with columns, Finder-like) — P1 (candidates: DT TensorTree, UR NodeTree) ↗ React Aria Table · `claude/rk-table-tree`
 
