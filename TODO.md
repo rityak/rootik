@@ -52,7 +52,7 @@ below once the batch is in.
 
 - [x] Heatmap (sequential ramp) — P1 (DT co-occurrence) · `claude/rk-heatmap`
 
-- [ ] RangeSlider (two thumbs, min distance) + vertical Slider — P1 ↗ Mantine RangeSlider, Radix/Base UI Slider · `claude/rk-range-slider`
+- [x] RangeSlider (two thumbs, min distance) + vertical Slider — P1 ↗ Mantine RangeSlider, Radix/Base UI Slider · `claude/rk-range-slider`
 
 - [ ] Toolbar: `role="toolbar"` without arrow-key roving focus (APG) — add it — P1 ★ · `claude/rk-toolbar-roving`
 

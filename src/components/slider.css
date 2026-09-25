@@ -107,3 +107,78 @@
     translate: -50% 0;
   }
 }
+
+/* vertical: native vertical writing mode, min at the bottom */
+.rk-slider[data-orientation="vertical"] {
+  flex-direction: column-reverse;
+  align-items: center;
+  min-width: 0;
+  min-height: 120px;
+  & .rk-slider-input {
+    flex: 1;
+    width: var(--rk-thumb);
+    height: auto;
+    writing-mode: vertical-lr;
+    direction: rtl;
+    &::-webkit-slider-runnable-track {
+      width: var(--rk-track);
+      height: 100%;
+      background:
+        linear-gradient(to top, var(--rk-accent) var(--rk-fill), transparent var(--rk-fill)), var(--rk-hatch),
+        var(--rk-surface-3);
+    }
+    &::-webkit-slider-thumb {
+      margin-top: 0;
+      margin-left: calc((var(--rk-track) - var(--rk-thumb)) / 2);
+    }
+  }
+}
+
+.rk-range-body {
+  position: relative;
+  height: var(--rk-thumb);
+  &[data-disabled] {
+    opacity: 0.45;
+  }
+}
+
+.rk-range-track {
+  position: absolute;
+  inset: calc((var(--rk-thumb) - var(--rk-track)) / 2) 0;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      to right,
+      transparent var(--rk-lo),
+      var(--rk-accent) var(--rk-lo),
+      var(--rk-accent) var(--rk-hi),
+      transparent var(--rk-hi)
+    ),
+    var(--rk-hatch), var(--rk-surface-3);
+}
+
+/* two inputs share the track: only their thumbs take the pointer */
+.rk-range-input {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  &[data-top] {
+    z-index: 1;
+  }
+  &::-webkit-slider-runnable-track {
+    background: transparent;
+  }
+  &::-moz-range-track,
+  &::-moz-range-progress {
+    background: transparent;
+  }
+  &::-webkit-slider-thumb {
+    pointer-events: auto;
+  }
+  &::-moz-range-thumb {
+    pointer-events: auto;
+  }
+  &:disabled {
+    opacity: 1;
+  }
+}
