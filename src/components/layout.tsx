@@ -2,6 +2,7 @@ import { type DetailsHTMLAttributes, type HTMLAttributes, type ReactNode, useRef
 import { cx } from "../lib/cx";
 import { readStorage, useControllable, writeStorage } from "../lib/hooks";
 import { ChevronRightIcon, MinusIcon, SquareIcon, XIcon } from "../lib/icons";
+import { useRovingFocus } from "../lib/roving";
 import { useAppearanceValue } from "../theme/provider";
 
 export type ShellVariant = "islands" | "inset";
@@ -175,9 +176,30 @@ export function PageBody({
   );
 }
 
-/** Row of controls above a work area (gallery, canvas, table). */
-export function Toolbar({ className, ...rest }: HTMLAttributes<HTMLDivElement>) {
-  return <div role="toolbar" {...rest} className={cx("rk-toolbar", className)} />;
+export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
+  orientation?: "horizontal" | "vertical";
+}
+
+/**
+ * Row of controls above a work area (gallery, canvas, table). One Tab stop; arrow keys move between the
+ * controls (APG toolbar), while fields, segmented controls and sliders inside keep their own arrows.
+ */
+export function Toolbar({ orientation = "horizontal", className, onKeyDown, ...rest }: ToolbarProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const rove = useRovingFocus(ref, orientation);
+  return (
+    <div
+      role="toolbar"
+      aria-orientation={orientation}
+      {...rest}
+      ref={ref}
+      className={cx("rk-toolbar", className)}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (!event.defaultPrevented) rove(event);
+      }}
+    />
+  );
 }
 
 /** Spacer that pushes following toolbar items to the right. */

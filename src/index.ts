@@ -40,6 +40,7 @@ export * from "./lib/format";
 export { isTypingTarget, useClipboard, useControllable, useHotkey } from "./lib/hooks";
 export * as icons from "./lib/icons";
 export { LABELS, type Labels, useLabels } from "./lib/labels";
+export { useRovingFocus } from "./lib/roving";
 export {
   nextSelection,
   type SelectIntent,
