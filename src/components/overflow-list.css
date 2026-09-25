@@ -1,1 +1,57 @@
-/* Placeholder: OverflowList styles land in its own PR (TODO.md, batch 1). */
+.rk-overflow-list {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--rk-space) * 1.5);
+  min-width: 0;
+}
+
+.rk-overflow-item {
+  display: flex;
+  flex-shrink: 0;
+}
+
+/* an off-screen copy of every item: its widths drive the fit */
+.rk-overflow-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  gap: inherit;
+  width: max-content;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.rk-overflow-more {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rk-surface-3);
+  color: var(--rk-text-2);
+  font: inherit;
+  font-size: var(--rk-text-xs);
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    color var(--rk-dur) var(--rk-ease);
+  &:hover,
+  &[aria-expanded="true"] {
+    background: var(--rk-surface-4);
+    color: var(--rk-text);
+  }
+}
+
+.rk-overflow-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--rk-space) * 1.5);
+  max-height: min(320px, var(--rk-available-h, 320px));
+  overflow: auto;
+}
