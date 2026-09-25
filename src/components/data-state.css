@@ -1,1 +1,6 @@
-/* Placeholder: DataState styles land in its own PR (TODO.md, batch 3). */
+.rk-data-state {
+  min-width: 0;
+  &[data-status="loading"] {
+    padding-block: calc(var(--rk-space) * 2);
+  }
+}
