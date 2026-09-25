@@ -60,7 +60,7 @@ below once the batch is in.
 
 - [ ] KeyValue `copyable` values (IDs, hashes, IPs) — copy button on hover — P1 ★ · `claude/rk-kv-copyable`
 
-- [ ] DataTable row selection checkboxes (`useSelection`, Shift ranges, select all) + keyboard-reachable scroll wrapper for Table (`tabIndex=0` + label when it overflows) — P1 ↗ Primer ScrollableRegion · `claude/rk-data-selection`
+- [x] DataTable row selection checkboxes (`useSelection`, Shift ranges, select all) + keyboard-reachable scroll wrapper for Table (`tabIndex=0` + label when it overflows) — P1 ↗ Primer ScrollableRegion · `claude/rk-data-selection`
 
 - [ ] Submenus in Menu — P1 (Menubar follows in batch 2) · `claude/rk-menu-submenus`
 
