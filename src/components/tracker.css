@@ -1,1 +1,59 @@
-/* Placeholder: Tracker styles land in its own PR (TODO.md, batch 1). */
+.rk-tracker {
+  --rk-tracker-h: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 1.5);
+  min-width: 0;
+  &[data-size="sm"] {
+    --rk-tracker-h: 16px;
+  }
+  &[data-size="lg"] {
+    --rk-tracker-h: 40px;
+  }
+}
+
+.rk-tracker-head,
+.rk-tracker-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--rk-space);
+  font-size: var(--rk-text-xs);
+  color: var(--rk-text-2);
+}
+
+.rk-tracker-foot {
+  color: var(--rk-text-3);
+}
+
+.rk-tracker-bars {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 2px;
+  height: var(--rk-tracker-h);
+}
+
+.rk-tracker-bar {
+  flex: 1 1 0;
+  min-width: 2px;
+  border-radius: 2px;
+  background: var(--rk-tone);
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-ease-out);
+
+  &[data-idle] {
+    background: var(--rk-hatch), color-mix(in oklab, var(--rk-surface-3) 70%, transparent);
+  }
+  /* neighbours dim while one bar is inspected */
+  .rk-tracker-bars:has([data-shown]) > &:not([data-shown]) {
+    opacity: 0.55;
+  }
+  &[data-shown] {
+    scale: 1 1.12;
+  }
+  &:focus-visible {
+    outline-offset: 1px;
+  }
+}
