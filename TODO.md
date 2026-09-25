@@ -36,7 +36,7 @@ below once the batch is in.
 
 - [ ] Scroller — horizontal overflow with edge fade + arrows only when scrollable (`scroll-state()`, JS fallback); for Tabs/Dock/ChipGroup on phones — P1 ↗ Mantine 9 Scroller · `claude/rk-scroller`
 
-- [ ] `StickToBottom` scroll container — follow tail, "jump to latest", keeps position on prepended history; base for LogView (and a chat later) — P1 ↗ shadcn MessageScroller · `claude/rk-stick-to-bottom`
+- [x] `StickToBottom` scroll container — follow tail, "jump to latest", keeps position on prepended history; base for LogView (and a chat later) — P1 ↗ shadcn MessageScroller · `claude/rk-stick-to-bottom`
 
 - [ ] SelectionBar — floating "N selected" bar with bulk actions + clear, appears with DataTable/ImageGrid selection — P1 ↗ Mantine/Chakra ActionBar · `claude/rk-selection-bar`
 

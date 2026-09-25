@@ -1,1 +1,57 @@
-/* Placeholder: StickToBottom styles land in its own PR (TODO.md, batch 1). */
+.rk-stick {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.rk-stick-viewport {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-anchor: auto;
+  overscroll-behavior-y: contain;
+}
+
+.rk-stick-jump {
+  position: absolute;
+  bottom: calc(var(--rk-space) * 3);
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rk-inverse);
+  box-shadow: 0 8px 24px -8px oklch(var(--rk-shade) / 0.7);
+  color: var(--rk-on-inverse);
+  font: inherit;
+  font-size: var(--rk-text-xs);
+  font-weight: 500;
+  translate: -50% 0;
+  cursor: pointer;
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    translate var(--rk-dur) var(--rk-ease-out);
+  @starting-style {
+    opacity: 0;
+    translate: -50% 8px;
+  }
+  & > svg {
+    width: 1.1em;
+    height: 1.1em;
+  }
+}
+
+.rk-stick-unseen {
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--rk-accent);
+  color: var(--rk-on-accent);
+  font-size: var(--rk-text-2xs);
+  line-height: 18px;
+  text-align: center;
+}
