@@ -1,1 +1,131 @@
-/* Placeholder: Timeline styles land in its own PR (TODO.md, batch 3). */
+.rk-timeline {
+  --rk-tl-marker: 22px;
+  --rk-tl-dot: 10px;
+  --rk-tl-gap: calc(var(--rk-space) * 5);
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  &[data-size="sm"] {
+    --rk-tl-marker: 16px;
+    --rk-tl-dot: 8px;
+    --rk-tl-gap: calc(var(--rk-space) * 3);
+  }
+}
+
+.rk-timeline-item {
+  --rk-tone: var(--rk-text-3);
+  position: relative;
+  display: flex;
+  gap: calc(var(--rk-space) * 3);
+  padding-bottom: var(--rk-tl-gap);
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  /* the line to the next item */
+  &:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--rk-tl-marker) + 2px);
+    bottom: 2px;
+    left: calc(var(--rk-tl-marker) / 2 - 1px);
+    width: 2px;
+    border-radius: 1px;
+    background: var(--rk-line-strong);
+  }
+  /* the stretch still to come is hatched */
+  &:is([data-status="current"], [data-status="pending"]):not(:last-child)::before {
+    background: var(--rk-hatch);
+    background-size: 6px 6px;
+    opacity: 0.9;
+  }
+
+  &[data-status="current"] {
+    --rk-tone: var(--rk-accent);
+  }
+}
+
+.rk-timeline-marker {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--rk-tl-marker);
+  height: var(--rk-tl-marker);
+  color: var(--rk-tone-text, var(--rk-text-2));
+
+  /* dot */
+  &:not([data-icon])::after {
+    content: "";
+    width: var(--rk-tl-dot);
+    height: var(--rk-tl-dot);
+    border-radius: 50%;
+    background: var(--rk-tone);
+  }
+  [data-status="pending"] > &:not([data-icon])::after {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--rk-line-strong);
+  }
+  [data-status="current"] > &:not([data-icon])::after {
+    box-shadow: 0 0 0 4px var(--rk-accent-soft);
+  }
+
+  /* icon in a circle */
+  &[data-icon] {
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--rk-tone) 16%, var(--rk-surface-2));
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--rk-tone) 35%, transparent);
+    & > svg {
+      width: 60%;
+      height: 60%;
+    }
+  }
+  [data-status="pending"] > &[data-icon] {
+    background: var(--rk-surface-2);
+    box-shadow: inset 0 0 0 1px var(--rk-line);
+    color: var(--rk-text-3);
+  }
+}
+
+.rk-timeline-body {
+  flex: 1;
+  min-width: 0;
+  padding-top: calc((var(--rk-tl-marker) - 1.45em) / 2);
+}
+
+.rk-timeline-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(var(--rk-space) * 3);
+}
+
+.rk-timeline-title {
+  min-width: 0;
+  color: var(--rk-text);
+  font-weight: 500;
+  [data-status="pending"] > .rk-timeline-body > .rk-timeline-head > & {
+    color: var(--rk-text-3);
+    font-weight: 400;
+  }
+}
+
+.rk-timeline-time {
+  flex: none;
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.rk-timeline-desc {
+  margin-top: 2px;
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-sm);
+  text-wrap: pretty;
+}
+
+.rk-timeline-extra {
+  margin-top: calc(var(--rk-space) * 2);
+}
