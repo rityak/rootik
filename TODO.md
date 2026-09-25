@@ -46,7 +46,7 @@ module, so any merge order works.
 
 - [ ] QrCode — zero-dep SVG encoder (share a connection/subscription link) — P2 ↗ Ark/Chakra/antd QrCode · `claude/rk-qr-code`
 
-- [ ] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList · `claude/rk-bars-list`
+- [x] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList · `claude/rk-bars-list`
 
 - [ ] HoverCard — interactive popover on hover/focus/long press; `interestfor` where supported, JS delay fallback — P2 ↗ React Aria PreviewTrigger · `claude/rk-hover-card`
 
