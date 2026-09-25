@@ -54,7 +54,7 @@ below once the batch is in.
 
 - [x] RangeSlider (two thumbs, min distance) + vertical Slider — P1 ↗ Mantine RangeSlider, Radix/Base UI Slider · `claude/rk-range-slider`
 
-- [ ] Toolbar: `role="toolbar"` without arrow-key roving focus (APG) — add it — P1 ★ · `claude/rk-toolbar-roving`
+- [x] Toolbar: `role="toolbar"` without arrow-key roving focus (APG) — add it — P1 ★ · `claude/rk-toolbar-roving`
 
 - [ ] Animated open/close for Disclosure (`interpolate-size: allow-keywords` + `::details-content`); collapsible Card on the same technique instead of unmounting the body — P1 · `claude/rk-disclosure-motion`
 
