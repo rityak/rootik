@@ -1,1 +1,91 @@
-/* Placeholder: FileDrop styles land in its own PR (TODO.md, batch 1). */
+.rk-file-drop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--rk-space) * 3);
+  min-height: 160px;
+  padding: calc(var(--rk-space) * 6);
+  border-radius: var(--rk-radius-lg);
+  background: var(--rk-hatch), var(--rk-well-soft);
+  box-shadow: inset 0 0 0 1.5px var(--rk-line-strong);
+  color: var(--rk-text-2);
+  text-align: center;
+  transition:
+    box-shadow var(--rk-dur) var(--rk-ease),
+    background-color var(--rk-dur) var(--rk-ease);
+
+  &[data-size="sm"] {
+    flex-direction: row;
+    gap: calc(var(--rk-space) * 2.5);
+    min-height: var(--rk-h-lg);
+    padding: calc(var(--rk-space) * 2) calc(var(--rk-space) * 4);
+    border-radius: var(--rk-radius-md);
+    text-align: start;
+  }
+  &[data-dragging] {
+    background: var(--rk-hatch), var(--rk-accent-soft);
+    box-shadow:
+      inset 0 0 0 1.5px var(--rk-accent-line),
+      0 0 0 3px var(--rk-accent-soft);
+    color: var(--rk-text);
+  }
+  &[data-disabled] {
+    opacity: 0.5;
+  }
+  &:has(.rk-file-drop-browse:focus-visible) {
+    box-shadow: inset 0 0 0 1.5px var(--rk-accent-line);
+  }
+}
+
+.rk-file-drop-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--rk-surface-3);
+  box-shadow: var(--rk-highlight);
+  color: var(--rk-text-2);
+  font-size: 20px;
+  [data-size="sm"] > & {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+  [data-dragging] > & {
+    color: var(--rk-accent-text);
+  }
+}
+
+.rk-file-drop-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--rk-text-md);
+}
+
+.rk-file-drop-browse {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--rk-accent-text);
+  font: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--rk-accent-line);
+  text-underline-offset: 3px;
+  cursor: pointer;
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.rk-file-drop-hint {
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+}
