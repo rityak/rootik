@@ -168,6 +168,35 @@
   }
 }
 
+/* tree rows: indent plus one guide per ancestor level, drawn on the cell so they join across rows */
+.rk-table-tree-cell {
+  --rk-indent: 20px;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0 9px,
+    var(--rk-line-strong) 9px 10px,
+    transparent 10px var(--rk-indent)
+  );
+  background-size: calc(var(--rk-depth, 0) * var(--rk-indent)) 100%;
+  background-position: 12px 0;
+  background-repeat: no-repeat;
+}
+
+.rk-table-tree-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  margin-inline-start: calc(var(--rk-depth, 0) * var(--rk-indent));
+  vertical-align: middle;
+}
+
+.rk-table-tree-content {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .rk-table td.rk-table-empty {
   padding: 32px 12px;
   text-align: center;

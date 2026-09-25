@@ -127,6 +127,28 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   onColumnWidthsChange?: (widths: ColumnWidths | null) => void;
   /** Remember widths in localStorage under this key (uncontrolled widths only). */
   persistWidths?: string;
+  /**
+   * Tree rows (a treegrid): a row's children, shown indented under it while expanded. Siblings sort
+   * among themselves. ←/→ collapse/expand, ↑/↓ move between rows.
+   */
+  getChildren?: (row: T) => ReadonlyArray<T> | undefined;
+  /** Row has children that aren't loaded yet: shows the toggle (load them in onExpandedChange). */
+  hasChildren?: (row: T) => boolean;
+  expanded?: string[];
+  defaultExpanded?: string[];
+  onExpandedChange?: (keys: string[]) => void;
+  /** Column carrying the toggle and indent (default: the first). */
+  treeColumn?: string;
+}
+
+interface FlatRow<T> {
+  row: T;
+  key: string;
+  depth: number;
+  parent: string | null;
+  pos: number;
+  size: number;
+  expandable: boolean;
 }
 
 const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
@@ -253,6 +275,12 @@ export function DataTable<T>({
   defaultColumnWidths = null,
   onColumnWidthsChange,
   persistWidths,
+  getChildren,
+  hasChildren,
+  expanded,
+  defaultExpanded = [],
+  onExpandedChange,
+  treeColumn,
   style,
   ...rest
 }: DataTableProps<T>) {
@@ -306,12 +334,12 @@ export function DataTable<T>({
     resizeTo(col.key, Math.round(Math.min(col.maxWidth ?? 1200, Math.max(col.minWidth ?? 48, width))));
   };
   const [current, setSort] = useControllable(sort, defaultSort, onSortChange);
-  const sorted = useMemo(() => {
+  const compare = useMemo(() => {
     const col = current && columns.find((c) => c.key === current.key);
     // controlled sort = rows arrive sorted from the server
-    if (!col || !current || sort !== undefined) return rows;
+    if (!col || !current || sort !== undefined) return null;
     const sign = current.dir === "asc" ? 1 : -1;
-    return [...rows].sort((a, b) => {
+    return (a: T, b: T) => {
       const x = cellValue(col, a);
       const y = cellValue(col, b);
       if (x == null || y == null) return x == null ? 1 : -1;
@@ -319,10 +347,71 @@ export function DataTable<T>({
         sign *
         (typeof x === "number" && typeof y === "number" ? x - y : collator.compare(String(x), String(y)))
       );
-    });
-  }, [rows, columns, current, sort]);
+    };
+  }, [columns, current, sort]);
 
-  const keys = useMemo(() => sorted.map(rowKey), [sorted, rowKey]);
+  const tree = getChildren !== undefined || hasChildren !== undefined;
+  const [open, setOpen] = useControllable(expanded, defaultExpanded, onExpandedChange);
+  const openSet = useMemo(() => new Set(open), [open]);
+  // visible rows in display order: siblings sorted, children under expanded parents
+  const flat = useMemo(() => {
+    const out: FlatRow<T>[] = [];
+    const walk = (list: ReadonlyArray<T>, depth: number, parent: string | null) => {
+      const level = compare ? [...list].sort(compare) : list;
+      level.forEach((row, i) => {
+        const key = rowKey(row);
+        const kids = getChildren?.(row);
+        const expandable = Boolean(kids?.length) || Boolean(hasChildren?.(row));
+        out.push({ row, key, depth, parent, pos: i + 1, size: level.length, expandable });
+        if (kids && openSet.has(key)) walk(kids, depth + 1, key);
+      });
+    };
+    walk(rows, 0, null);
+    return out;
+  }, [rows, compare, rowKey, getChildren, hasChildren, openSet]);
+
+  const keys = useMemo(() => flat.map((f) => f.key), [flat]);
+  const toggleRow = (key: string, to = !openSet.has(key)) =>
+    setOpen(to ? [...open, key] : open.filter((k) => k !== key));
+  const treeKey = treeColumn ?? columns[0]?.key;
+  const body = useRef<HTMLTableSectionElement>(null);
+  const [focusedKey, setFocusedKey] = useState<string | null>(null);
+  const tabStop = focusedKey !== null && keys.includes(focusedKey) ? focusedKey : keys[0];
+  const focusRow = (key: string | null | undefined) => {
+    if (!key) return;
+    setFocusedKey(key);
+    body.current?.querySelector<HTMLElement>(`tr[data-key="${CSS.escape(key)}"]`)?.focus();
+  };
+  /** treegrid row keys (APG): ↑/↓/Home/End move, → expands or enters, ← collapses or goes up. */
+  const onTreeKey = (event: KeyboardEvent<HTMLTableRowElement>, f: FlatRow<T>, index: number) => {
+    const isOpen = openSet.has(f.key);
+    switch (event.key) {
+      case "ArrowDown":
+        focusRow(keys[index + 1]);
+        break;
+      case "ArrowUp":
+        focusRow(keys[index - 1]);
+        break;
+      case "Home":
+        focusRow(keys[0]);
+        break;
+      case "End":
+        focusRow(keys.at(-1));
+        break;
+      case "ArrowRight":
+        if (f.expandable && !isOpen) toggleRow(f.key, true);
+        else if (isOpen) focusRow(keys[index + 1]);
+        break;
+      case "ArrowLeft":
+        if (isOpen) toggleRow(f.key, false);
+        else focusRow(f.parent);
+        break;
+      default:
+        return false;
+    }
+    event.preventDefault();
+    return true;
+  };
   const sel = useSelection({
     keys,
     mode: selection ?? "multiple",
@@ -351,6 +440,7 @@ export function DataTable<T>({
 
   return (
     <Table
+      role={tree ? "treegrid" : undefined}
       {...rest}
       style={fixed ? { ...style, width: total, tableLayout: "fixed" } : style}
       data-resizable={anyResizable || undefined}
@@ -408,16 +498,17 @@ export function DataTable<T>({
           })}
         </tr>
       </thead>
-      <tbody>
-        {sorted.length === 0 && (
+      <tbody ref={body}>
+        {flat.length === 0 && (
           <tr>
             <td colSpan={columns.length + (selection ? 1 : 0)} className="rk-table-empty">
               {empty}
             </td>
           </tr>
         )}
-        {sorted.map((row, i) => {
-          const key = rowKey(row);
+        {flat.map((f, i) => {
+          const { row, key } = f;
+          const isOpen = openSet.has(key);
           const picked = selection ? sel.isSelected(key) : undefined;
           const activate = onRowClick
             ? () => onRowClick(row)
@@ -428,6 +519,11 @@ export function DataTable<T>({
           return (
             <tr
               key={key}
+              data-key={key}
+              aria-level={tree ? f.depth + 1 : undefined}
+              aria-posinset={tree ? f.pos : undefined}
+              aria-setsize={tree ? f.size : undefined}
+              aria-expanded={tree && f.expandable ? isOpen : undefined}
               aria-selected={picked ?? (selectedKey === undefined ? undefined : selectedKey === key)}
               data-clickable={activate ? true : undefined}
               onClick={
@@ -440,17 +536,23 @@ export function DataTable<T>({
                   : undefined
               }
               onKeyDown={
-                activate
+                activate || tree
                   ? (event) => {
                       if (event.target !== event.currentTarget) return;
-                      if (event.key === "Enter" || (selection && !onRowClick && event.key === " ")) {
+                      if (tree && onTreeKey(event, f, i)) return;
+                      if (
+                        activate &&
+                        (event.key === "Enter" || (selection && !onRowClick && event.key === " "))
+                      ) {
                         event.preventDefault();
                         activate(event);
                       }
                     }
                   : undefined
               }
-              tabIndex={activate ? 0 : undefined}
+              onFocus={tree ? () => setFocusedKey(key) : undefined}
+              // a treegrid is one tab stop (arrows move between rows); flat tables keep a stop per row
+              tabIndex={tree ? (key === tabStop ? 0 : -1) : activate ? 0 : undefined}
             >
               {selection && (
                 <td className="rk-table-select">
@@ -465,11 +567,42 @@ export function DataTable<T>({
                   />
                 </td>
               )}
-              {columns.map((col) => (
-                <td key={col.key} style={{ textAlign: col.align }} data-mono={col.mono || undefined}>
-                  {col.cell ? col.cell(row, i) : (cellValue(col, row) as ReactNode)}
-                </td>
-              ))}
+              {columns.map((col) => {
+                const content = col.cell ? col.cell(row, i) : (cellValue(col, row) as ReactNode);
+                if (!(tree && col.key === treeKey))
+                  return (
+                    <td key={col.key} style={{ textAlign: col.align }} data-mono={col.mono || undefined}>
+                      {content}
+                    </td>
+                  );
+                return (
+                  <td
+                    key={col.key}
+                    className="rk-table-tree-cell"
+                    style={{ textAlign: col.align, "--rk-depth": f.depth } as React.CSSProperties}
+                    data-mono={col.mono || undefined}
+                  >
+                    <span className="rk-table-tree-inner">
+                      {f.expandable ? (
+                        // pointer shortcut; keyboard users have ←/→ on the row
+                        <span
+                          className="rk-tree-toggle"
+                          aria-hidden="true"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            toggleRow(key);
+                          }}
+                        >
+                          <ChevronRightIcon data-open={isOpen || undefined} />
+                        </span>
+                      ) : (
+                        <span className="rk-tree-toggle" aria-hidden="true" />
+                      )}
+                      <span className="rk-table-tree-content">{content}</span>
+                    </span>
+                  </td>
+                );
+              })}
             </tr>
           );
         })}
