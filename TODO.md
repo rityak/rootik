@@ -34,7 +34,7 @@ module, so any merge order works.
 
 - [x] Prose — `.rk-prose` for markdown help/release notes (headings, lists, code, quotes, links) — P2 ↗ Mantine Typography, Radix Themes · `claude/rk-prose`
 
-- [ ] Timeline — P2 · `claude/rk-timeline`
+- [x] Timeline — P2 · `claude/rk-timeline`
 
 - [ ] Stepper / Wizard — P2 · `claude/rk-stepper`
 
