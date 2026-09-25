@@ -3,6 +3,8 @@
 Legend: `[x]` done (component + story, checked in browser) · `[ ]` planned · `~` partial.
 Sources: **DT** = dataset-toolkit/client, **UR** = umiray-client. Priority: P0 needed by a consumer now,
 P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
+`↗ Kit` = idea borrowed from another kit (2026-09 review of shadcn, Base UI, React Aria, Mantine 9, Ark, HeroUI v3,
+Magic UI, M3 Expressive) or from new web platform features.
 
 ## Foundation
 
@@ -18,6 +20,12 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 - [ ] Dist build (`bun build` + d.ts) for npm publishing; now consumed from source — P2
 - [ ] Visual regression (Playwright screenshots of stories) — P2
 - [ ] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1
+- [ ] Squircle corners: `--rk-corner-shape` token (`corner-shape: squircle`, progressive — plain radius elsewhere) + Settings → Shape "Corners: round / squircle" — P1 ↗ CSS `corner-shape`
+- [ ] Floating on CSS anchor positioning (`position-anchor`, `position-try-fallbacks`), `computePosition` stays as fallback; anchored container queries so a flipped popover animates from the anchor side — P2 ↗ CSS anchor positioning
+- [ ] Sliding indicator (Tabs/SegmentedControl/Dock) anchored to the active item instead of measuring in `lib/indicator.ts` — P2 ↗ CSS anchor positioning
+- [ ] Scroll shadows: sticky table head / PageHeader get a shadow only while content is scrolled under them (`@container scroll-state()`) — P2 ↗ CSS scroll-state queries
+- [ ] Pointer spotlight on interactive cards (glow follows the pointer via `--x/--y`, ≤ 16%), a material option — P2 ↗ Linear/Vercel, Magic UI
+- [ ] `llms.txt` generated from stories (component → props → story example) so AI assistants use the kit correctly during migrations — P2 ↗ HeroUI v3, Mantine 9, shadcn registry
 
 ## Actions
 
@@ -26,7 +34,7 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 - [x] ButtonGroup
 - [x] ConfirmButton — two-step destructive (UR `on`/armed `Remove`)
 - [ ] CopyButton — P2
-- [ ] SplitButton (button + menu) — P2
+- [ ] SplitButton (button + menu) — P1 ↗ M3 Expressive, shadcn ButtonGroup
 
 ## Inputs & forms
 
@@ -41,10 +49,12 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 - [x] ChoiceCards — radio cards with description/note — UR Segment
 - [x] ChipGroup — toggle chips multi/single, counts — DT MultiSelectField
 - [x] ColorSwatches — presets + native custom picker — DT color param
-- [ ] NumberInput — steppers, min/max clamp, wheel, units — P1 (DT number params)
-- [ ] Combobox / Autocomplete — filterable select, async options — P1 (DT dynamic-select)
-- [ ] MultiSelect / TagInput — typed tags with suggestions — P1 (DT caption tags)
+- [ ] NumberInput — steppers, min/max clamp, wheel, units — P1 (DT number params) ↗ Base UI NumberField, HeroUI v3
+- [ ] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select)
+- [ ] MultiSelect / TagInput as a TokenField — tokens inline with the text, autocomplete, auto-tokenize on separator; also `key:value` filter tokens for SearchInput — P1 (DT caption tags) ↗ React Aria TokenField
 - [ ] PasswordInput (reveal) — P2
+- [ ] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput
+- [ ] Select `native` variant on `appearance: base-select` (real `<select>` in kit styling) for simple cases — P2 ↗ customizable select
 - [ ] FileDrop / DropZone (hatched) — P1 (DT dataset import)
 - [ ] PathField — stays in DT (needs its FS API); build on Input + Dialog
 - [ ] DateInput / DateRange presets — P2 (native `<input type=date>` styled first)
@@ -65,8 +75,13 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 - [x] Nest — nested option group — UR Nest
 - [x] Divider (label, vertical)
 - [x] Progress (hatched rest, indeterminate), ProgressRing, Spinner, Skeleton — DT ProgressBar
+- [ ] RollingNumber — digits roll on value change (tabular column + translate, CSS only, off with `--rk-motion`); used by Stat/Gauge — P1 ↗ Mantine RollingNumber, Magic UI Number Ticker
+- [ ] Item — generic row: media/icon + title + description + trailing actions, sizes, interactive, list container — P1 ↗ shadcn Item
+- [ ] RelativeTime ("5 s ago", live tick) + duration/timer (session uptime) on `Intl.RelativeTimeFormat` — P1 ↗ Primer RelativeTime, Ark Timer
+- [ ] Text shimmer for pending labels ("Connecting…", "Indexing…") via `background-clip: text` — P2 ↗ AI UIs, Magic UI
+- [ ] Card `data-state="running"`: light beam travelling along the gradient rim (`@property` angle + conic gradient), status only — P2 ↗ Magic UI Border Beam
 - [ ] Code / CodeBlock (copy, line numbers) — P1 (UR SourceCode, DT RunLog)
-- [ ] LogView — virtualized, levels, follow-tail — P1 (DT LogDock/RunLog, UR Logs/Console)
+- [ ] LogView — virtualized, levels, follow-tail — P1 (DT LogDock/RunLog, UR Logs/Console); built on `StickToBottom` (Layout)
 - [ ] Timeline — P2
 - [ ] ImageGrid / Thumbnail (selection, lazy) — P1 (DT gallery)
 - [ ] Flag (country) — stays in UR
@@ -81,10 +96,14 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 - [x] Drawer / bottom sheet (Dialog placements)
 - [x] CommandPalette — groups, keywords, shortcuts — DT CommandPalette
 - [x] Toast / Toaster — tones, action, sticky, loading→done update, pause on hover — DT Tasks notifications
-- [ ] Submenus in Menu — P1
+- [ ] Submenus in Menu — P1 (blocks Menubar)
+- [ ] Menubar — desktop File/Edit/View bar next to TitleBar, APG menubar keyboard (arrows move between menus, hover-to-switch once open) — P1 ↗ Mantine 9.4, Base UI, Radix
 - [ ] Menu radio items — P2
-- [ ] HoverCard — P2
-- [ ] Exit animations for dialog/popover (`allow-discrete`) — P2
+- [ ] Menu async loading + empty state — P2 ↗ React Aria 1.21
+- [ ] HoverCard — interactive popover on hover/focus/long press; `interestfor` where supported, JS delay fallback — P2 ↗ React Aria PreviewTrigger
+- [ ] Tooltip on `interestfor` + `popover="hint"` (native hover/focus delays and Esc), current JS as fallback — P2 ↗ interest invokers
+- [ ] Exit animations for dialog/popover (`allow-discrete`) — P1
+- [ ] Toast stack: collapsed deck that expands on hover/focus, swipe to dismiss — P2 ↗ Sonner
 
 ## Navigation
 
@@ -103,6 +122,11 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 - [x] PageHeader (sm/lg), PageBody, Toolbar + Spacer, ActionBar, StatusBar (progress line) — DT Page.tsx, UR Toolbar
 - [x] ResizablePanel — pointer + keyboard, persisted — DT ResizableSidebar, LogDock
 - [x] Disclosure (native details, exclusive accordion via `name`)
+- [ ] Animated open/close for Disclosure (`interpolate-size: allow-keywords` + `::details-content`); collapsible Card on the same technique instead of unmounting the body — P1
+- [ ] OverflowList (priority+) — items that don't fit collapse into a "+N" menu; used by Toolbar, Tabs, Breadcrumbs, ChipGroup, AvatarGroup — P1 ↗ Mantine 9 OverflowList
+- [ ] Scroller — horizontal overflow with edge fade + arrows only when scrollable (`scroll-state()`, JS fallback); for Tabs/Dock/ChipGroup on phones — P1 ↗ Mantine 9 Scroller
+- [ ] `StickToBottom` scroll container — follow tail, "jump to latest", keeps position on prepended history; base for LogView (and a chat later) — P1 ↗ shadcn MessageScroller
+- [ ] FloatingWindow — draggable/resizable non-modal panel (inspector, log, preview) — P2 ↗ Mantine FloatingWindow, Ark FloatingPanel
 - [ ] Splitter (two panes) — P2
 - [ ] PowerButton / hero toggle orb (now a story-only `.vpn-orb`) — P1 when umiray migrates
 - Not planned: Stack/Grid/Box — use CSS/Tailwind in apps
@@ -114,6 +138,7 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 - [x] Tree — keyboard per APG, lazy nodes, trailing, indent guides — DT FolderTree/TensorTree, UR NodeTree
 - [ ] DataTable: row selection checkboxes, column resize, virtualization — P1
 - [ ] Tree: virtualization for large models, drag & drop — P2
+- [ ] DataTable tree rows — expandable rows with indent guides (tree with columns, Finder-like) — P1 (candidates: DT TensorTree, UR NodeTree) ↗ React Aria Table
 
 ## Charts
 
@@ -125,7 +150,14 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 - [ ] Heatmap (sequential ramp) — P1 (DT co-occurrence)
 - [ ] Scatter (log axes) — P2 (DT tag scatter)
 - [ ] StackedBar / Donut — P2
+- [ ] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList
 - [ ] Table view toggle for every chart (a11y) — P1
+
+## Not planned (2026-09 review)
+
+- Motion-library effects (animated beams, globe, retro grid, marquee), Dock magnification, M3 Expressive shape
+  morphing — marketing flourish; break density and the short-motion rule
+- Custom ScrollArea (styled native scrollbars are enough), Carousel
 
 ## Migration (after P0 is stable)
 
