@@ -1,6 +1,16 @@
-import { type ReactNode, type TableHTMLAttributes, useCallback, useMemo, useRef, useState } from "react";
+import {
+  type KeyboardEvent,
+  type PointerEvent,
+  type ReactNode,
+  type TableHTMLAttributes,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { cx } from "../lib/cx";
-import { useControllable } from "../lib/hooks";
+import { useControllable, useLatest } from "../lib/hooks";
 import { ArrowDownIcon, ArrowUpIcon, ChevronRightIcon, ChevronsUpDownIcon } from "../lib/icons";
 import { useLabels } from "../lib/labels";
 import { useSelection } from "../lib/selection";
@@ -78,7 +88,15 @@ export interface Column<T> {
   align?: "start" | "center" | "end";
   width?: number | string;
   mono?: boolean;
+  /** Drag handle on the header's right edge (default: the table's `resizable`). */
+  resizable?: boolean;
+  /** Resize bounds in px (default 48 – 1200). */
+  minWidth?: number;
+  maxWidth?: number;
 }
+
+/** Column widths in px by column key; `null` = automatic layout. */
+export type ColumnWidths = Record<string, number>;
 
 export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   columns: ReadonlyArray<Column<T>>;
@@ -99,9 +117,116 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   defaultSort?: SortState | null;
   onSortChange?: (sort: SortState | null) => void;
   empty?: ReactNode;
+  /**
+   * Column resize handles (drag, ←/→ with Shift for bigger steps, double-click to fit the content).
+   * The first resize freezes every column at its current width and switches to a fixed layout.
+   */
+  resizable?: boolean;
+  columnWidths?: ColumnWidths | null;
+  defaultColumnWidths?: ColumnWidths | null;
+  onColumnWidthsChange?: (widths: ColumnWidths | null) => void;
+  /** Remember widths in localStorage under this key (uncontrolled widths only). */
+  persistWidths?: string;
 }
 
 const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
+
+/** Checkbox column width in a fixed (resized) layout. */
+const SELECT_COL = 40;
+
+const storageKey = (key: string) => `rootik:table-widths:${key}`;
+
+function readWidths(key: string | undefined): ColumnWidths | null {
+  if (!key) return null;
+  try {
+    const raw = localStorage.getItem(storageKey(key));
+    return raw ? (JSON.parse(raw) as ColumnWidths) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeWidths(key: string, widths: ColumnWidths | null) {
+  try {
+    if (widths) localStorage.setItem(storageKey(key), JSON.stringify(widths));
+    else localStorage.removeItem(storageKey(key));
+  } catch {
+    // storage full or blocked: widths just aren't remembered
+  }
+}
+
+/** Content width of a cell, overflowing text included (for double-click fit). */
+function contentWidth(cell: HTMLElement) {
+  const target = cell.querySelector<HTMLElement>(".rk-th-content") ?? cell;
+  const range = document.createRange();
+  range.selectNodeContents(target);
+  const css = getComputedStyle(cell);
+  return (
+    range.getBoundingClientRect().width +
+    Number.parseFloat(css.paddingLeft) +
+    Number.parseFloat(css.paddingRight) +
+    1
+  );
+}
+
+interface ResizeHandleProps {
+  label: string;
+  width: number | undefined;
+  min: number;
+  max: number;
+  /** Current width in px; freezes the layout on the first resize. */
+  start: () => number;
+  onResize: (width: number) => void;
+  onFit: () => void;
+}
+
+/** Header-edge splitter: a focusable separator with its width as the value (APG window splitter). */
+function ResizeHandle({ label, width, min, max, start, onResize, onFit }: ResizeHandleProps) {
+  const drag = useRef<{ x: number; width: number } | null>(null);
+  const clamp = (w: number) => Math.round(Math.min(max, Math.max(min, w)));
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const step = event.shiftKey ? 50 : 10;
+    const now = start();
+    if (event.key === "ArrowLeft") onResize(clamp(now - step));
+    else if (event.key === "ArrowRight") onResize(clamp(now + step));
+    else if (event.key === "Home") onResize(min);
+    else if (event.key === "End") onResize(max);
+    else if (event.key === "Enter") onFit();
+    else return;
+    event.preventDefault();
+  };
+  return (
+    // biome-ignore lint/a11y/useSemanticElements: a focusable splitter; <hr> can't take focus or a value
+    <div
+      role="separator"
+      aria-orientation="vertical"
+      aria-label={label}
+      aria-valuenow={width === undefined ? undefined : Math.round(width)}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      tabIndex={0}
+      className="rk-th-resize"
+      onPointerDown={(event: PointerEvent<HTMLDivElement>) => {
+        if (event.button !== 0) return;
+        event.preventDefault();
+        event.currentTarget.setPointerCapture(event.pointerId);
+        drag.current = { x: event.clientX, width: start() };
+      }}
+      onPointerMove={(event) => {
+        const d = drag.current;
+        if (d) onResize(clamp(d.width + event.clientX - d.x));
+      }}
+      onPointerUp={() => {
+        drag.current = null;
+      }}
+      onPointerCancel={() => {
+        drag.current = null;
+      }}
+      onDoubleClick={onFit}
+      onKeyDown={onKeyDown}
+    />
+  );
+}
 
 function cellValue<T>(col: Column<T>, row: T) {
   return col.value
@@ -123,9 +248,63 @@ export function DataTable<T>({
   defaultSort = null,
   onSortChange,
   empty = "No data",
+  resizable,
+  columnWidths,
+  defaultColumnWidths = null,
+  onColumnWidthsChange,
+  persistWidths,
+  style,
   ...rest
 }: DataTableProps<T>) {
   const labels = useLabels();
+  const head = useRef<HTMLTableSectionElement>(null);
+  const [widths, setWidthsState] = useControllable<ColumnWidths | null>(
+    columnWidths,
+    // read once: later renders keep the state
+    useMemo(() => readWidths(persistWidths) ?? defaultColumnWidths, [persistWidths, defaultColumnWidths]),
+    onColumnWidthsChange,
+  );
+  const latestWidths = useLatest(widths);
+  const setWidths = (next: ColumnWidths | null) => {
+    latestWidths.current = next;
+    setWidthsState(next);
+  };
+  useEffect(() => {
+    if (persistWidths && columnWidths === undefined) writeWidths(persistWidths, widths);
+  }, [persistWidths, columnWidths, widths]);
+
+  const canResize = (col: Column<T>) => col.resizable ?? Boolean(resizable);
+  const anyResizable = columns.some(canResize);
+  // fixed layout once every column has a width (after the first resize or from storage)
+  const fixed = anyResizable && widths !== null && columns.every((c) => widths[c.key] !== undefined);
+  const total = fixed
+    ? columns.reduce((sum, c) => sum + (widths?.[c.key] ?? 0), 0) + (selection ? SELECT_COL : 0)
+    : undefined;
+
+  const headerCell = (key: string) =>
+    head.current?.querySelector<HTMLTableCellElement>(`th[data-col="${CSS.escape(key)}"]`) ?? null;
+  const freeze = (): ColumnWidths => {
+    const current = latestWidths.current;
+    if (current && columns.every((c) => current[c.key] !== undefined)) return current;
+    const measured: ColumnWidths = {};
+    for (const c of columns)
+      measured[c.key] = Math.round(headerCell(c.key)?.getBoundingClientRect().width ?? 120);
+    setWidths(measured);
+    return measured;
+  };
+  const resizeTo = (key: string, width: number) => setWidths({ ...freeze(), [key]: width });
+  const fit = (col: Column<T>) => {
+    const th = headerCell(col.key);
+    const table = th?.closest("table");
+    if (!th || !table) return;
+    const index = th.cellIndex;
+    let width = contentWidth(th);
+    for (const row of Array.from(table.tBodies[0]?.rows ?? [])) {
+      const cell = row.cells[index];
+      if (cell && cell.colSpan === 1) width = Math.max(width, contentWidth(cell));
+    }
+    resizeTo(col.key, Math.round(Math.min(col.maxWidth ?? 1200, Math.max(col.minWidth ?? 48, width))));
+  };
   const [current, setSort] = useControllable(sort, defaultSort, onSortChange);
   const sorted = useMemo(() => {
     const col = current && columns.find((c) => c.key === current.key);
@@ -155,9 +334,37 @@ export function DataTable<T>({
   const cycle = (key: string) =>
     setSort(current?.key !== key ? { key, dir: "asc" } : current.dir === "asc" ? { key, dir: "desc" } : null);
 
+  const headerContent = (col: Column<T>, dir: SortDir | undefined) =>
+    col.sortable ? (
+      <button
+        type="button"
+        className="rk-th-sort"
+        data-sorted={dir !== undefined || undefined}
+        onClick={() => cycle(col.key)}
+      >
+        {col.header}
+        {dir === "asc" ? <ArrowUpIcon /> : dir === "desc" ? <ArrowDownIcon /> : <ChevronsUpDownIcon />}
+      </button>
+    ) : (
+      col.header
+    );
+
   return (
-    <Table {...rest}>
-      <thead>
+    <Table
+      {...rest}
+      style={fixed ? { ...style, width: total, tableLayout: "fixed" } : style}
+      data-resizable={anyResizable || undefined}
+      data-fixed={fixed || undefined}
+    >
+      {fixed && (
+        <colgroup>
+          {selection && <col style={{ width: SELECT_COL }} />}
+          {columns.map((col) => (
+            <col key={col.key} style={{ width: widths?.[col.key] }} />
+          ))}
+        </colgroup>
+      )}
+      <thead ref={head}>
         <tr>
           {selection && (
             <th className="rk-table-select">
@@ -176,27 +383,25 @@ export function DataTable<T>({
             return (
               <th
                 key={col.key}
-                style={{ width: col.width, textAlign: col.align }}
+                data-col={col.key}
+                style={{ width: fixed ? undefined : col.width, textAlign: col.align }}
                 aria-sort={dir ? (dir === "asc" ? "ascending" : "descending") : undefined}
               >
-                {col.sortable ? (
-                  <button
-                    type="button"
-                    className="rk-th-sort"
-                    data-sorted={dir !== undefined || undefined}
-                    onClick={() => cycle(col.key)}
-                  >
-                    {col.header}
-                    {dir === "asc" ? (
-                      <ArrowUpIcon />
-                    ) : dir === "desc" ? (
-                      <ArrowDownIcon />
-                    ) : (
-                      <ChevronsUpDownIcon />
-                    )}
-                  </button>
+                {canResize(col) ? (
+                  <>
+                    <span className="rk-th-content">{headerContent(col, dir)}</span>
+                    <ResizeHandle
+                      label={`${labels.resize}: ${typeof col.header === "string" ? col.header : col.key}`}
+                      width={widths?.[col.key]}
+                      min={col.minWidth ?? 48}
+                      max={col.maxWidth ?? 1200}
+                      start={() => freeze()[col.key] ?? 120}
+                      onResize={(w) => resizeTo(col.key, w)}
+                      onFit={() => fit(col)}
+                    />
+                  </>
                 ) : (
-                  col.header
+                  headerContent(col, dir)
                 )}
               </th>
             );
