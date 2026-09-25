@@ -44,7 +44,7 @@ below once the batch is in.
 
 - [ ] Code / CodeBlock (copy, line numbers) — P1 (UR SourceCode, DT RunLog) · `claude/rk-code-block`
 
-- [ ] SelectPanel — button-triggered popover: search, checkable list with counts, Clear/Apply footer; for table and chart filters — P1 ↗ Primer SelectPanel · `claude/rk-select-panel`
+- [x] SelectPanel — button-triggered popover: search, checkable list with counts, Clear/Apply footer; for table and chart filters — P1 ↗ Primer SelectPanel · `claude/rk-select-panel`
 
 - [ ] FileDrop / DropZone (hatched) — P1 (DT dataset import) · `claude/rk-file-drop`
 
