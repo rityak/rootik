@@ -100,7 +100,7 @@ below once the batch is in.
 
 - [ ] Table view toggle for every chart (a11y) — P1 · `claude/rk-chart-table`
 
-- [ ] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1 · `claude/rk-logic-tests`
+- [x] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1 · `claude/rk-logic-tests`
 
 - [ ] Light theme recipe/example token override (docs + story) — P1 · `claude/rk-light-theme`
 
