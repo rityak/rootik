@@ -30,7 +30,7 @@ below once the batch is in.
 
 - [ ] Editable — rename in place: click/Enter edits, Enter commits, Esc cancels (dataset, profile, server names) — P1 ★ ↗ Ark/Chakra Editable · `claude/rk-editable`
 
-- [ ] NumberInput — steppers, min/max clamp, wheel, units — P1 (DT number params) ↗ Base UI NumberField, HeroUI v3 · `claude/rk-number-input`
+- [x] NumberInput — steppers, min/max clamp, wheel, units — P1 (DT number params) ↗ Base UI NumberField, HeroUI v3 · `claude/rk-number-input`
 
 - [ ] OverflowList (priority+) — items that don't fit collapse into a "+N" menu; used by Toolbar, Tabs, Breadcrumbs, ChipGroup, AvatarGroup — P1 ↗ Mantine 9 OverflowList · `claude/rk-overflow-list`
 
