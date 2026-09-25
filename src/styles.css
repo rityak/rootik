@@ -39,4 +39,12 @@
 @import "./components/stick-to-bottom.css" layer(rootik);
 @import "./components/tracker.css" layer(rootik);
 @import "./components/truncate.css" layer(rootik);
+@import "./components/combobox.css" layer(rootik);
+@import "./components/image-grid.css" layer(rootik);
+@import "./components/lightbox.css" layer(rootik);
+@import "./components/log-view.css" layer(rootik);
+@import "./components/menubar.css" layer(rootik);
+@import "./components/schema-form.css" layer(rootik);
+@import "./components/split-button.css" layer(rootik);
+@import "./components/token-field.css" layer(rootik);
 @import "./theme/settings.css" layer(rootik);

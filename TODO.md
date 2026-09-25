@@ -7,6 +7,36 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 Magic UI, M3 Expressive) or from new web platform features; component inventories checked against Mantine 9.6, Ark 5.39,
 React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd 6.6, Primer 38. `★` = own idea.
 
+## Batch 2 — one PR per item
+
+Same rules as Batch 1 (stubs registered up front, one line per PR, merge commits). The DataTable PRs all edit
+`data.tsx`, so they are stacked: merge resize → tree rows → virtualization in that order. TokenField is stacked
+on Combobox.
+
+- [x] Foundation: `useVirtual` (fixed or per-row sizes, `scrollToIndex`), icons and labels for the batch, module stubs · `claude/dreamy-franklin-e2kev1`
+
+- [x] SplitButton (button + menu) — P1 ↗ M3 Expressive, shadcn ButtonGroup · `claude/rk-split-button`
+
+- [ ] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select) · `claude/rk-combobox`
+
+- [ ] MultiSelect / TagInput as a TokenField — tokens inline with the text, autocomplete, auto-tokenize on separator; also `key:value` filter tokens for SearchInput — P1 (DT caption tags) ↗ React Aria TokenField · `claude/rk-token-field`
+
+- [ ] SchemaForm (generic ParamsForm: string/text/number/slider/select/multi/color/boolean) — P1, reuse AppearanceSettings renderer — DT ParamsForm · `claude/rk-schema-form`
+
+- [ ] Lightbox / ImageViewer — fullscreen preview, zoom/pan, prev/next, keyboard; pairs with ImageGrid — P1 (DT gallery) ↗ antd Image preview · `claude/rk-lightbox`
+
+- [ ] ImageGrid / Thumbnail (selection, lazy) — P1 (DT gallery) · `claude/rk-image-grid`
+
+- [ ] LogView — virtualized, levels, follow-tail — P1 (DT LogDock/RunLog, UR Logs/Console); built on `StickToBottom` (Layout) · `claude/rk-log-view`
+
+- [ ] Menubar — desktop File/Edit/View bar next to TitleBar, APG menubar keyboard (arrows move between menus, hover-to-switch once open) — P1 ↗ Mantine 9.4, Base UI, Radix · `claude/rk-menubar`
+
+- [ ] DataTable: column resize (drag + keyboard, persisted widths) — P1 · `claude/rk-table-resize`
+
+- [ ] DataTable tree rows — expandable rows with indent guides (tree with columns, Finder-like) — P1 (candidates: DT TensorTree, UR NodeTree) ↗ React Aria Table · `claude/rk-table-tree`
+
+- [ ] DataTable: row virtualization on `useVirtual` for large tables — P1 · `claude/rk-table-virtual`
+
 ## Batch 1 — one PR per item
 
 Parallel PRs on top of the foundation PR; each touches only its own module (stubs are registered in
@@ -101,7 +131,7 @@ below once the batch is in.
 
 - [x] Format helpers on `Intl` returning parts `{ value, unit }` so Stat/charts render big number + small unit: `formatBytes`, `formatBitrate`, `formatDuration`, `formatPercent`, `formatNumber` — P1 ★ ↗ Ark/Chakra Format, Mantine NumberFormatter
 - [x] `useSelection` — single/multi, Shift range, Ctrl/⌘ toggle, select all; shared by DataTable, Tree, ImageGrid, Item lists — P1 ↗ Mantine use-selection
-- [ ] `useVirtual` — one windowing hook for LogView, DataTable, Tree, ImageGrid — P1 ↗ React Aria Virtualizer, antd Listy
+- [x] `useVirtual` — one windowing hook for LogView, DataTable, Tree, ImageGrid — P1 ↗ React Aria Virtualizer, antd Listy
 - [x] `announce()` — live region for screen readers (copied, saved, "12 results") — P1 ↗ Primer live-region
 - [x] `useClipboard` (copied state + reset); base for CopyButton, CodeBlock, KeyValue `copyable` — P1 ↗ Mantine use-clipboard, Ark Clipboard
 - [ ] `usePersistentState` — public `readStorage`/`writeStorage` with cross-tab sync (`storage` event) — P2 ★
@@ -118,7 +148,6 @@ below once the batch is in.
 - [x] ButtonGroup
 - [x] ConfirmButton — two-step destructive (UR `on`/armed `Remove`)
 - [x] CopyButton — icon swaps to a check on success, `announce()` — P1 (needed by CodeBlock, LogView, KeyValue) ↗ Ark Clipboard, Mantine CopyButton
-- [ ] SplitButton (button + menu) — P1 ↗ M3 Expressive, shadcn ButtonGroup
 
 ## Inputs & forms
 
@@ -140,14 +169,11 @@ below once the batch is in.
 - [ ] Fieldset — native `<fieldset>` + legend, `disabled` covers the whole group; used by SchemaForm — P2 ↗ Base UI/Mantine Fieldset
 - [ ] Form on the native constraint API — `validity` → Field error, focus the first invalid field on submit — P2 ↗ Base UI Form, React Aria Form
 - [ ] TreeSelect / Cascader — P2 ↗ Mantine 9, antd
-- [ ] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select)
-- [ ] MultiSelect / TagInput as a TokenField — tokens inline with the text, autocomplete, auto-tokenize on separator; also `key:value` filter tokens for SearchInput — P1 (DT caption tags) ↗ React Aria TokenField
 - [ ] PasswordInput (reveal) — P2
 - [ ] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput
 - [ ] Select `native` variant on `appearance: base-select` (real `<select>` in kit styling) for simple cases — P2 ↗ customizable select
 - [ ] PathField — stays in DT (needs its FS API); build on Input + Dialog
 - [ ] DateInput / DateRange presets (Last 1h / 24h / 7d / custom) + TimeInput — P2 (native `<input type=date>` styled first) ↗ Mantine dates, React Aria DatePicker
-- [ ] SchemaForm (generic ParamsForm: string/text/number/slider/select/multi/color/boolean) — P1, reuse AppearanceSettings renderer — DT ParamsForm
 
 ## Display
 
@@ -166,7 +192,6 @@ below once the batch is in.
 - [x] Progress (hatched rest, indeterminate), ProgressRing, Spinner, Skeleton — DT ProgressBar
 - [ ] Text shimmer for pending labels ("Connecting…", "Indexing…") via `background-clip: text` — P2 ↗ AI UIs, Magic UI
 - [ ] Card `data-state="running"`: light beam travelling along the gradient rim (`@property` angle + conic gradient), status only — P2 ↗ Magic UI Border Beam
-- [ ] Lightbox / ImageViewer — fullscreen preview, zoom/pan, prev/next, keyboard; pairs with ImageGrid — P1 (DT gallery) ↗ antd Image preview
 - [ ] Highlight — search matches via CSS Custom Highlight API (`::highlight()`, no DOM wrapping) for CommandPalette, Tree filter, DataTable search — P2 ↗ Mantine/Ark/Chakra Highlight
 - [ ] Indicator — dot/count pinned to the corner of any element (avatar, icon button) — P2 ↗ Mantine Indicator, Chakra Float
 - [ ] JsonView — collapsible JSON tree, typed colors, copy value/path — P2 ↗ Ark JsonTreeView
@@ -175,9 +200,7 @@ below once the batch is in.
 - [ ] Spoiler — clamp long text with a fade + "Show more" — P2 ↗ Mantine Spoiler
 - [ ] EmptyState presets/tones (success, error, no access, offline) — P2 ↗ antd Result, Primer Blankslate
 - [ ] Busy overlay for a region — `inert` + dim + spinner over a card/table while refetching — P2 ↗ Mantine LoadingOverlay
-- [ ] LogView — virtualized, levels, follow-tail — P1 (DT LogDock/RunLog, UR Logs/Console); built on `StickToBottom` (Layout)
 - [ ] Timeline — P2
-- [ ] ImageGrid / Thumbnail (selection, lazy) — P1 (DT gallery)
 - [ ] Flag (country) — stays in UR
 
 ## Overlays
@@ -190,7 +213,6 @@ below once the batch is in.
 - [x] Drawer / bottom sheet (Dialog placements)
 - [x] CommandPalette — groups, keywords, shortcuts — DT CommandPalette
 - [x] Toast / Toaster — tones, action, sticky, loading→done update, pause on hover — DT Tasks notifications
-- [ ] Menubar — desktop File/Edit/View bar next to TitleBar, APG menubar keyboard (arrows move between menus, hover-to-switch once open) — P1 ↗ Mantine 9.4, Base UI, Radix
 - [ ] Menu radio items — P2
 - [ ] Menu async loading + empty state — P2 ↗ React Aria 1.21
 - [ ] HoverCard — interactive popover on hover/focus/long press; `interestfor` where supported, JS delay fallback — P2 ↗ React Aria PreviewTrigger
@@ -232,9 +254,7 @@ below once the batch is in.
 - [x] Table — styled native table, density/sticky/zebra/framed — UR Table
 - [x] DataTable — columns, client/server sort, row click/selection, empty — DT TagTable, UR NodeTable/ReportTable
 - [x] Tree — keyboard per APG, lazy nodes, trailing, indent guides — DT FolderTree/TensorTree, UR NodeTree
-- [ ] DataTable: column resize, virtualization — P1
 - [ ] Tree: virtualization for large models, drag & drop — P2
-- [ ] DataTable tree rows — expandable rows with indent guides (tree with columns, Finder-like) — P1 (candidates: DT TensorTree, UR NodeTree) ↗ React Aria Table
 - [ ] Tree: tri-state checkboxes, multi-select, type-to-filter — P2 ↗ Ark TreeView, antd Tree
 - [ ] DataTable: column visibility menu, pinned first column, inline cell edit — P2 ↗ antd, Primer DataTable
 - [ ] Sortable list — reorder by drag and by keyboard (Space lifts, arrows move) — P2 ↗ React Aria useDragAndDrop

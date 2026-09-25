@@ -1,0 +1,18 @@
+.rk-split-toggle {
+  --rk-btn-px: 0;
+  width: calc(var(--rk-btn-h) * 0.8);
+  & .rk-icon {
+    font-size: 1em;
+    transition: rotate var(--rk-dur) var(--rk-ease);
+  }
+  &[aria-expanded="true"] .rk-icon {
+    rotate: 180deg;
+  }
+}
+
+/* a hairline between the halves reads as one control with two targets */
+.rk-split-button > .rk-button + * {
+  box-shadow:
+    inset 0 0 0 1px var(--rk-btn-edge),
+    inset 1px 0 0 color-mix(in oklab, var(--rk-btn-fg) 22%, transparent);
+}
