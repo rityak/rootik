@@ -25,7 +25,7 @@ on Combobox.
 
 - [ ] Lightbox / ImageViewer — fullscreen preview, zoom/pan, prev/next, keyboard; pairs with ImageGrid — P1 (DT gallery) ↗ antd Image preview · `claude/rk-lightbox`
 
-- [ ] ImageGrid / Thumbnail (selection, lazy) — P1 (DT gallery) · `claude/rk-image-grid`
+- [x] ImageGrid / Thumbnail (selection, lazy) — P1 (DT gallery) · `claude/rk-image-grid`
 
 - [ ] LogView — virtualized, levels, follow-tail — P1 (DT LogDock/RunLog, UR Logs/Console); built on `StickToBottom` (Layout) · `claude/rk-log-view`
 
