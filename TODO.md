@@ -22,7 +22,7 @@ module, so any merge order works.
 
 - [x] CheckboxGroup with a parent "select all" (indeterminate) — P2 ↗ Base UI CheckboxGroup · `claude/rk-checkbox-group`
 
-- [ ] InputGroup addons — text prefix/suffix segments (`https://`, `px`, `ms`), attached buttons — P2 ↗ shadcn/HeroUI/Chakra InputGroup · `claude/rk-input-group`
+- [x] InputGroup addons — text prefix/suffix segments (`https://`, `px`, `ms`), attached buttons — P2 ↗ shadcn/HeroUI/Chakra InputGroup · `claude/rk-input-group`
 
 - [ ] ColorPicker in OKLCH — L/C area, hue + alpha sliders, text input, EyeDropper API button; also for the AppearanceSettings accent — P2 ↗ Ark/HeroUI/React Aria ColorPicker · `claude/rk-color-picker`
 
