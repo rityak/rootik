@@ -38,7 +38,7 @@ module, so any merge order works.
 
 - [x] Stepper / Wizard — P2 · `claude/rk-stepper`
 
-- [ ] Splitter (two panes) — P2 · `claude/rk-splitter`
+- [x] Splitter (two panes) — P2 · `claude/rk-splitter`
 
 - [ ] DataState — one switch for loading (Skeleton) / error (Callout + retry) / empty (EmptyState) / content — P2 ★ · `claude/rk-data-state`
 

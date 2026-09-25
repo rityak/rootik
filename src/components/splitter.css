@@ -1,1 +1,70 @@
-/* Placeholder: Splitter styles land in its own PR (TODO.md, batch 3). */
+.rk-splitter {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  &[data-orientation="horizontal"] {
+    grid-template-columns: minmax(0, var(--rk-split)) auto minmax(0, 1fr);
+  }
+  &[data-orientation="vertical"] {
+    grid-template-rows: minmax(0, var(--rk-split)) auto minmax(0, 1fr);
+  }
+  /* no text selection or iframe pointer theft while dragging */
+  &[data-dragging] {
+    user-select: none;
+    & .rk-splitter-pane {
+      pointer-events: none;
+    }
+  }
+}
+
+.rk-splitter-pane {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* a 1px hairline with a wider invisible hit area; the accent bar shows on hover, focus and drag */
+.rk-splitter-handle {
+  position: relative;
+  z-index: 1;
+  background: var(--rk-line);
+  touch-action: none;
+  outline: none;
+  &::before {
+    content: "";
+    position: absolute;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: 2px;
+    background: var(--rk-accent);
+    opacity: 0;
+    transition: opacity var(--rk-dur) var(--rk-ease);
+  }
+  &:is(:hover, :focus-visible, :active)::after,
+  [data-dragging] > &::after {
+    opacity: 0.85;
+  }
+
+  [data-orientation="horizontal"] > & {
+    width: 1px;
+    cursor: col-resize;
+    &::before {
+      inset: 0 -4px;
+    }
+    &::after {
+      inset: 0 -1px;
+    }
+  }
+  [data-orientation="vertical"] > & {
+    height: 1px;
+    cursor: row-resize;
+    &::before {
+      inset: -4px 0;
+    }
+    &::after {
+      inset: -1px 0;
+    }
+  }
+}
