@@ -1,0 +1,135 @@
+/*
+ * Design tokens. The first block holds the knobs AppearanceSettings writes; the second derives everything
+ * from them. [data-rk-scope] re-derives tokens for a subtree that overrides a knob (knobs themselves only
+ * live on :root, so a scope inherits the ones it doesn't override).
+ *
+ * Material knobs have no defaults here (unset = solid): --rk-surface-alpha, --rk-surface-filter,
+ * --rk-surface-edge, --rk-surface-sheen, --rk-surface-shadow, --rk-ambient — see MATERIALS in theme/schema.ts.
+ */
+:where(:root) {
+  color-scheme: dark;
+
+  /* knobs */
+  --rk-accent: oklch(0.57 0.2 277);
+  --rk-neutral-h: 260;
+  --rk-neutral-c: 0.012;
+  --rk-radius: 18px;
+  --rk-radius-control: 10px;
+  --rk-density: 1;
+  --rk-font-size: 13px;
+  --rk-font-sans: "Geist Variable", "Geist", "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --rk-font-mono:
+    "Geist Mono Variable", "Geist Mono", "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+  --rk-glass: 1;
+  --rk-motion: 1;
+}
+
+:where(:root, [data-rk-scope]) {
+  /* neutrals: chroma grows with lightness so every step carries the same tint
+     (equal chroma reads blue on the darkest step and grey on lighter ones) */
+  --rk-bg: oklch(0.145 var(--rk-neutral-c) var(--rk-neutral-h));
+  --rk-surface-1: oklch(0.185 calc(var(--rk-neutral-c) * 1.6) var(--rk-neutral-h));
+  --rk-surface-2: oklch(0.225 calc(var(--rk-neutral-c) * 2) var(--rk-neutral-h));
+  --rk-surface-3: oklch(0.27 calc(var(--rk-neutral-c) * 2.35) var(--rk-neutral-h));
+  --rk-surface-4: oklch(0.32 calc(var(--rk-neutral-c) * 2.6) var(--rk-neutral-h));
+  --rk-sunken: oklch(0.125 calc(var(--rk-neutral-c) * 0.9) var(--rk-neutral-h));
+
+  /* Tinted black and white as "L C H" triplets: use as oklch(var(--rk-shade) / a) for wells and shadows,
+     oklch(var(--rk-tint) / a) for lines and hovers. Pure black/white overlays read grey on tinted surfaces. */
+  --rk-shade: 0.08 calc(var(--rk-neutral-c) * 2) var(--rk-neutral-h);
+  --rk-tint: 0.92 calc(var(--rk-neutral-c) * 2.5) var(--rk-neutral-h);
+  --rk-line: oklch(var(--rk-tint) / 0.08);
+  --rk-line-strong: oklch(var(--rk-tint) / 0.15);
+  --rk-hover: oklch(var(--rk-tint) / 0.05);
+  --rk-press: oklch(var(--rk-tint) / 0.09);
+  /* recessed wells: inputs, segment/tab tracks, footers */
+  --rk-well: oklch(var(--rk-shade) / 0.32);
+  --rk-well-soft: oklch(var(--rk-shade) / 0.18);
+
+  /* text: secondary steps carry the surface tint (neutral greys look detached on tinted surfaces) */
+  --rk-text: oklch(0.965 calc(var(--rk-neutral-c) * 0.5) var(--rk-neutral-h));
+  --rk-text-2: oklch(0.77 calc(var(--rk-neutral-c) * 2.5) var(--rk-neutral-h));
+  --rk-text-3: oklch(0.61 calc(var(--rk-neutral-c) * 2.8) var(--rk-neutral-h));
+  --rk-inverse: oklch(0.965 calc(var(--rk-neutral-c) * 0.7) var(--rk-neutral-h));
+  --rk-on-inverse: oklch(0.17 calc(var(--rk-neutral-c) * 1.6) var(--rk-neutral-h));
+  --rk-scrim: oklch(var(--rk-shade) / 0.62);
+
+  /* accent (default Iris: analogous to the neutral hue, white label WCAG 4.6 / APCA Lc -76) */
+  --rk-accent-hover: oklch(from var(--rk-accent) calc(l + 0.04) c h);
+  --rk-accent-soft: color-mix(in oklab, var(--rk-accent) 16%, transparent);
+  --rk-accent-line: color-mix(in oklab, var(--rk-accent) 55%, transparent);
+  /* label on accent fills: dark above L 0.73, white below (APCA crossover) */
+  --rk-on-accent: oklch(from var(--rk-accent) clamp(0.16, (0.73 - l) * 100, 0.99) 0 0);
+  /* accent as text/icon on dark surfaces: lifted to L >= 0.82 (APCA ~ -69), chroma capped to stay in sRGB */
+  --rk-accent-text: oklch(from var(--rk-accent) max(l, 0.82) min(c, 0.11) h);
+
+  /* status */
+  --rk-success: oklch(0.78 0.15 162);
+  --rk-warn: oklch(0.83 0.15 78);
+  --rk-danger: oklch(0.68 0.2 24);
+  --rk-info: oklch(0.75 0.13 245);
+
+  /* data viz: categorical order is fixed (validated: dark band, CVD dE >= 10.9 on adjacent pairs).
+     Accent is not a series color — it marks the highlighted datum. */
+  --rk-chart-1: oklch(0.66 0.15 250);
+  --rk-chart-2: oklch(0.66 0.16 45);
+  --rk-chart-3: oklch(0.66 0.11 185);
+  --rk-chart-4: oklch(0.62 0.17 300);
+  --rk-chart-5: oklch(0.66 0.16 135);
+  --rk-chart-6: oklch(0.64 0.18 355);
+  --rk-chart-grid: oklch(var(--rk-tint) / 0.07);
+  --rk-chart-idle: var(--rk-surface-4);
+
+  /* geometry */
+  --rk-space: calc(4px * var(--rk-density));
+  --rk-h-sm: calc(28px * var(--rk-density));
+  --rk-h-md: calc(34px * var(--rk-density));
+  --rk-h-lg: calc(42px * var(--rk-density));
+  --rk-radius-sm: calc(var(--rk-radius) * 0.45);
+  --rk-radius-md: calc(var(--rk-radius) * 0.7);
+  --rk-radius-lg: var(--rk-radius);
+  --rk-radius-xl: calc(var(--rk-radius) * 1.4);
+  --rk-pad: calc(var(--rk-space) * 4);
+
+  /* type */
+  --rk-text-2xs: calc(var(--rk-font-size) * 0.77);
+  --rk-text-xs: calc(var(--rk-font-size) * 0.85);
+  --rk-text-sm: calc(var(--rk-font-size) * 0.93);
+  --rk-text-md: var(--rk-font-size);
+  --rk-text-lg: calc(var(--rk-font-size) * 1.15);
+  --rk-text-xl: calc(var(--rk-font-size) * 1.4);
+  --rk-text-2xl: calc(var(--rk-font-size) * 1.85);
+  --rk-text-3xl: calc(var(--rk-font-size) * 2.6);
+  --rk-text-display: calc(var(--rk-font-size) * 3.6);
+
+  /* depth */
+  --rk-highlight: inset 0 1px 0 oklch(var(--rk-tint) / 0.045);
+  --rk-shadow-1:
+    var(--rk-highlight), 0 1px 2px oklch(var(--rk-shade) / 0.25), 0 0 0 1px oklch(var(--rk-tint) / 0.035);
+  --rk-shadow-2:
+    inset 0 1px 0 oklch(var(--rk-tint) / 0.06), 0 0 0 1px oklch(var(--rk-tint) / 0.05),
+    0 10px 30px -12px oklch(var(--rk-shade) / 0.55);
+  --rk-shadow-pop:
+    inset 0 1px 0 oklch(var(--rk-tint) / 0.07), 0 0 0 1px var(--rk-line-strong),
+    0 24px 60px -16px oklch(var(--rk-shade) / 0.7);
+  --rk-blur: calc(var(--rk-glass) * 20px);
+  --rk-glass-bg: color-mix(in oklab, var(--rk-surface-2) calc(100% - var(--rk-glass) * 22%), transparent);
+
+  /* texture: "the rest" */
+  --rk-hatch: repeating-linear-gradient(-45deg, oklch(var(--rk-tint) / 0.09) 0 1.5px, transparent 1.5px 6px);
+
+  /* motion */
+  --rk-dur: calc(160ms * var(--rk-motion));
+  --rk-dur-slow: calc(320ms * var(--rk-motion));
+  --rk-ease: cubic-bezier(0.2, 0, 0, 1);
+  --rk-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --rk-spring: cubic-bezier(0.34, 1.45, 0.64, 1);
+
+  --rk-focus: var(--rk-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --rk-motion: 0;
+  }
+}

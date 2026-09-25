@@ -1,0 +1,210 @@
+html {
+  background: var(--rk-bg);
+  color: var(--rk-text);
+  font-family: var(--rk-font-sans);
+  font-size: var(--rk-text-md);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--rk-accent) 35%, transparent);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rk-surface-4) transparent;
+}
+
+:where([class*="rk-"]):focus-visible {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: 2px;
+}
+
+:where([class*="rk-"]) {
+  box-sizing: border-box;
+}
+
+/* Floating layer shell: every popover-based element (menus, selects, tooltips, toasts). */
+.rk-floating {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: visible;
+  background: transparent;
+  color: var(--rk-text);
+  font: inherit;
+}
+
+/* author `display` on menus/tooltips would otherwise beat the UA rule hiding closed popovers */
+.rk-floating:not(:popover-open) {
+  display: none;
+}
+
+.rk-floating {
+  opacity: 0;
+  scale: 0.97;
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-ease-out);
+  &[data-placed] {
+    opacity: 1;
+    scale: 1;
+  }
+  &[data-side="bottom"] {
+    transform-origin: top;
+  }
+  &[data-side="top"] {
+    transform-origin: bottom;
+  }
+  &[data-side="left"] {
+    transform-origin: right;
+  }
+  &[data-side="right"] {
+    transform-origin: left;
+  }
+}
+
+@starting-style {
+  .rk-floating[data-placed] {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+/* Semantic tone for any component carrying data-tone. */
+[data-tone] {
+  --rk-tone: var(--rk-accent);
+  --rk-tone-text: var(--rk-accent-text);
+}
+[data-tone="neutral"] {
+  --rk-tone: var(--rk-text-3);
+  --rk-tone-text: var(--rk-text-2);
+}
+[data-tone="success"] {
+  --rk-tone: var(--rk-success);
+  --rk-tone-text: var(--rk-success);
+}
+[data-tone="warn"] {
+  --rk-tone: var(--rk-warn);
+  --rk-tone-text: var(--rk-warn);
+}
+[data-tone="danger"] {
+  --rk-tone: var(--rk-danger);
+  --rk-tone-text: oklch(from var(--rk-danger) calc(l + 0.08) c h);
+}
+[data-tone="info"] {
+  --rk-tone: var(--rk-info);
+  --rk-tone-text: var(--rk-info);
+}
+
+/*
+ * Surface material: cards and every layout part (sidebar, header, dock, status bar). Reads raw material
+ * vars (MATERIALS in theme/schema.ts) resolved here, so a subtree can switch material; unset = solid.
+ */
+.rk-surface {
+  position: relative;
+  border-radius: var(--rk-radius-lg);
+  background:
+    var(--rk-surface-sheen, none),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--rk-surface-2) var(--rk-surface-alpha, 100%), transparent) -60%,
+      color-mix(in oklab, var(--rk-surface-1) var(--rk-surface-alpha, 100%), transparent) 40%
+    );
+  backdrop-filter: var(--rk-surface-filter, none);
+  box-shadow: var(--rk-surface-shadow, var(--rk-shadow-1));
+
+  /* gradient hairline edge: light catching the top-left rim */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: var(--rk-surface-edge, none);
+    mask:
+      linear-gradient(black 0 0) content-box,
+      linear-gradient(black 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+.rk-panel-glass {
+  background: var(--rk-glass-bg);
+  backdrop-filter: blur(var(--rk-blur)) saturate(1.3);
+  box-shadow: var(--rk-shadow-pop);
+}
+
+/* utilities */
+.rk-num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.rk-mono {
+  font-family: var(--rk-font-mono);
+  font-size: 0.94em;
+}
+
+.rk-hatch {
+  background-image: var(--rk-hatch);
+}
+
+.rk-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.rk-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.rk-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.rk-icon > svg {
+  width: 1em;
+  height: 1em;
+}
+
+@keyframes rk-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes rk-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes rk-shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}

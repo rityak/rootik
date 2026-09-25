@@ -1,0 +1,323 @@
+/* Story canvas: Ladle paints its own neutral grey (#141414) behind stories; use the kit's tinted bg. */
+html .ladle-background {
+  background: var(--rk-bg);
+}
+
+.ladle-main {
+  background: var(--rk-bg);
+  color: var(--rk-text);
+  padding: 24px;
+}
+
+.story-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.story-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.story-label {
+  font-size: var(--rk-text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rk-text-3);
+}
+
+/* dashboard demo */
+.demo-logo {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: var(--rk-accent);
+  color: var(--rk-on-accent);
+}
+
+.demo-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.demo-kpis {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.demo-main {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
+.demo-bottom {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+}
+
+.demo-report {
+  min-height: 240px;
+}
+
+.demo-report > .rk-card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1100px) {
+  .demo-main,
+  .demo-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ?mode=preview renders stories without .ladle-main */
+html:not(:has(.ladle-main)) body {
+  margin: 0;
+  padding: 24px;
+}
+
+/* stage: material switcher + device frame for layout stories */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px 12px;
+  background: var(--rk-sunken);
+}
+
+.stage-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: var(--rk-text-sm);
+  color: var(--rk-text-3);
+  white-space: nowrap;
+}
+
+.stage-bar > span {
+  min-width: 300px;
+}
+
+.stage-frame {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+}
+
+.stage-device {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow:
+    0 0 0 1px var(--rk-line-strong),
+    0 30px 80px -24px oklch(var(--rk-shade) / 0.9);
+}
+
+.stage-device > .rk-shell {
+  height: 100%;
+}
+
+.stage[data-frame="window"] .stage-device {
+  width: min(1080px, 100%);
+  height: min(700px, 100%);
+  border-radius: 14px;
+}
+
+.stage[data-frame="phone"] .stage-device {
+  width: 390px;
+  height: min(820px, 100%);
+  border-radius: 46px;
+  box-shadow:
+    0 0 0 1px var(--rk-line-strong),
+    0 0 0 9px oklch(var(--rk-shade) / 0.9),
+    0 0 0 10px var(--rk-line-strong),
+    0 40px 90px -24px oklch(var(--rk-shade) / 0.95);
+}
+
+.stage[data-frame="phone"] .rk-shell {
+  --rk-radius: 26px;
+  padding-top: 14px;
+}
+
+/* VPN demos */
+.vpn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.vpn-hero,
+.vpn-wide {
+  grid-column: 1 / -1;
+}
+
+.vpn-hero-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.vpn-hero-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 200px;
+}
+
+.vpn-timer {
+  font-size: var(--rk-text-display);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.vpn-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--rk-text-2);
+}
+
+.vpn-orb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--rk-surface-3);
+  color: var(--rk-text-2);
+  font-size: 40px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 oklch(var(--rk-tint) / 0.12),
+    0 0 0 10px oklch(var(--rk-tint) / 0.04);
+  transition:
+    background-color var(--rk-dur-slow) var(--rk-ease),
+    color var(--rk-dur-slow) var(--rk-ease),
+    box-shadow var(--rk-dur-slow) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-spring);
+
+  & svg {
+    width: 1em;
+    height: 1em;
+  }
+  &:active {
+    scale: 0.96;
+  }
+  &[data-on] {
+    background: var(--rk-accent);
+    color: var(--rk-on-accent);
+    box-shadow:
+      inset 0 1px 0 oklch(var(--rk-tint) / 0.3),
+      0 0 0 10px var(--rk-accent-soft),
+      0 0 60px -6px color-mix(in oklab, var(--rk-accent) 70%, transparent);
+  }
+}
+
+.vpn-log {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 8px 12px;
+  font-size: var(--rk-text-xs);
+}
+
+.vpn-log-row {
+  display: grid;
+  grid-template-columns: 64px 56px 1fr;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  color: var(--rk-text-2);
+  &:hover {
+    background: var(--rk-hover);
+  }
+}
+
+.vpn-log-time {
+  color: var(--rk-text-3);
+}
+
+.vpn-settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+
+.vpn-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vpn-compact-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px;
+}
+
+.vpn-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vpn-compact-title {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  & > span:first-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--rk-text-2xl);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+}
+
+.vpn-compact-gauge {
+  display: grid;
+  place-items: center;
+  margin: 4px 0 8px;
+}
+
+.vpn-compact-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.vpn-compact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+body:has(.stage) {
+  overflow: hidden;
+}

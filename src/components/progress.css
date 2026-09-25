@@ -1,0 +1,112 @@
+.rk-spinner {
+  --rk-size: 16px;
+  display: inline-block;
+  flex-shrink: 0;
+  width: var(--rk-size);
+  height: var(--rk-size);
+  border-radius: 50%;
+  border: 2px solid color-mix(in oklab, currentColor 22%, transparent);
+  border-top-color: currentColor;
+  animation: rk-spin 0.7s linear infinite;
+}
+
+.rk-progress {
+  --rk-progress-h: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 1.5);
+  min-width: 0;
+  &[data-size="sm"] {
+    --rk-progress-h: 3px;
+  }
+  &[data-size="lg"] {
+    --rk-progress-h: 10px;
+  }
+}
+
+.rk-progress-head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--rk-space);
+  font-size: var(--rk-text-xs);
+  color: var(--rk-text-2);
+}
+
+.rk-progress-track {
+  position: relative;
+  height: var(--rk-progress-h);
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--rk-hatch), color-mix(in oklab, var(--rk-surface-3) 70%, transparent);
+}
+
+.rk-progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--rk-tone);
+  box-shadow: 0 0 12px -2px color-mix(in oklab, var(--rk-tone) 60%, transparent);
+  transition: width var(--rk-dur-slow) var(--rk-ease-out);
+
+  [data-indeterminate] > & {
+    width: 35%;
+    animation: rk-indeterminate 1.3s var(--rk-ease) infinite;
+  }
+}
+
+@keyframes rk-indeterminate {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 300% 0;
+  }
+}
+
+.rk-ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  & svg {
+    position: absolute;
+    inset: 0;
+    rotate: -90deg;
+  }
+  & circle {
+    fill: none;
+  }
+}
+
+.rk-ring-track {
+  stroke: var(--rk-surface-3);
+}
+
+.rk-ring-bar {
+  stroke: var(--rk-tone);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--rk-dur-slow) var(--rk-ease-out);
+}
+
+.rk-ring-label {
+  font-size: var(--rk-text-xs);
+  font-weight: 500;
+}
+
+.rk-skeleton {
+  height: 0.9em;
+  border-radius: var(--rk-radius-sm);
+  background:
+    linear-gradient(90deg, var(--rk-surface-2) 30%, var(--rk-surface-3) 50%, var(--rk-surface-2) 70%) 0 0 /
+    300% 100%;
+  animation: rk-shimmer 1.6s linear infinite;
+  animation-duration: calc(1.6s / max(var(--rk-motion), 0.001));
+  &[data-round] {
+    border-radius: 999px;
+  }
+}
+
+.rk-skeleton-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}

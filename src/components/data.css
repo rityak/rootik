@@ -1,0 +1,213 @@
+.rk-table-wrap {
+  min-width: 0;
+  overflow: auto;
+  &[data-framed] {
+    border-radius: var(--rk-radius-md);
+    box-shadow: inset 0 0 0 1px var(--rk-line);
+  }
+}
+
+.rk-table {
+  --rk-cell-py: 8px;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--rk-text-sm);
+  font-variant-numeric: tabular-nums;
+
+  &[data-density="compact"] {
+    --rk-cell-py: 4px;
+  }
+  &[data-density="comfortable"] {
+    --rk-cell-py: 12px;
+  }
+
+  & th,
+  & td {
+    padding: var(--rk-cell-py) 12px;
+    text-align: start;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--rk-line);
+  }
+  & th {
+    height: 34px;
+    padding-block: 0;
+    color: var(--rk-text-3);
+    font-size: var(--rk-text-2xs);
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  & td {
+    color: var(--rk-text);
+    &[data-mono] {
+      font-family: var(--rk-font-mono);
+      font-size: 0.94em;
+    }
+  }
+  & tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  & tbody tr {
+    transition: background-color var(--rk-dur) var(--rk-ease);
+    &:hover {
+      background: var(--rk-hover);
+    }
+    &[data-clickable] {
+      cursor: pointer;
+    }
+    &[aria-selected="true"] {
+      background: var(--rk-accent-soft);
+      box-shadow: inset 2px 0 0 var(--rk-accent);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--rk-focus);
+      outline-offset: -2px;
+    }
+  }
+  &[data-zebra] tbody tr:nth-child(even):not(:hover):not([aria-selected="true"]) {
+    background: oklch(var(--rk-tint) / 0.025);
+  }
+  &[data-sticky] thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--rk-surface-1);
+  }
+}
+
+.rk-th-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 -4px;
+  padding: 4px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  & svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0.5;
+  }
+  &:hover {
+    color: var(--rk-text);
+    background: var(--rk-hover);
+  }
+  &[data-sorted] {
+    color: var(--rk-text);
+    & svg {
+      opacity: 1;
+    }
+  }
+}
+
+.rk-table td.rk-table-empty {
+  padding: 32px 12px;
+  text-align: center;
+  color: var(--rk-text-3);
+}
+
+/* tree */
+.rk-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: var(--rk-text-md);
+}
+
+.rk-tree-row {
+  --rk-depth: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--rk-h-sm);
+  padding: 0 6px 0 calc(4px + var(--rk-depth) * 16px);
+  border-radius: var(--rk-radius-control);
+  color: var(--rk-text-2);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+
+  &:hover {
+    background: var(--rk-hover);
+    color: var(--rk-text);
+  }
+  &:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--rk-focus);
+  }
+  &[aria-selected="true"] {
+    background: var(--rk-inverse);
+    color: var(--rk-on-inverse);
+    & .rk-tree-icon,
+    & .rk-tree-toggle {
+      color: inherit;
+    }
+  }
+  &[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: default;
+  }
+  /* indent guide */
+  &:not([aria-level="1"])::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(13px + (var(--rk-depth) - 1) * 16px);
+    width: 1px;
+    background: var(--rk-line);
+  }
+}
+
+.rk-tree-toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  color: var(--rk-text-3);
+  & svg {
+    transition: rotate var(--rk-dur) var(--rk-ease);
+  }
+  & svg[data-open] {
+    rotate: 90deg;
+  }
+  &:hover {
+    background: var(--rk-press);
+  }
+}
+
+.rk-tree-icon {
+  font-size: 15px;
+  color: var(--rk-text-3);
+}
+
+.rk-tree-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rk-tree-trailing {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  font-size: var(--rk-text-xs);
+  color: var(--rk-text-3);
+  [aria-selected="true"] > & {
+    color: inherit;
+    opacity: 0.7;
+  }
+}

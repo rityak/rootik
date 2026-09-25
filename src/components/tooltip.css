@@ -1,0 +1,21 @@
+.rk-tooltip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 280px;
+  padding: 5px 9px;
+  border-radius: calc(var(--rk-radius-sm) * 0.8);
+  background: var(--rk-inverse);
+  color: var(--rk-on-inverse);
+  box-shadow: 0 8px 24px -8px oklch(var(--rk-shade) / 0.6);
+  font-size: var(--rk-text-xs);
+  font-weight: 500;
+  line-height: 1.35;
+  pointer-events: none;
+}
+
+.rk-tooltip-kbd {
+  font-family: var(--rk-font-mono);
+  font-size: var(--rk-text-2xs);
+  opacity: 0.6;
+}

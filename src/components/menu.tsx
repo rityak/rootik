@@ -1,0 +1,292 @@
+import {
+  type ButtonHTMLAttributes,
+  createContext,
+  type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useId,
+  useRef,
+  useState,
+} from "react";
+import { cx } from "../lib/cx";
+import { Floating, type Placement } from "../lib/floating";
+import { cloneTrigger, useControllable } from "../lib/hooks";
+import { CheckIcon } from "../lib/icons";
+
+const MenuContext = createContext<{ close: () => void }>({ close: () => {} });
+
+const ITEM = '[role^="menuitem"]:not([aria-disabled="true"])';
+
+/** Roving focus over menu items: arrows, Home/End, first-letter typeahead. */
+function onMenuKeyDown(event: React.KeyboardEvent<HTMLElement>, close: () => void) {
+  const items = Array.from(event.currentTarget.querySelectorAll<HTMLElement>(ITEM));
+  const i = items.indexOf(document.activeElement as HTMLElement);
+  const focus = (n: number) => {
+    event.preventDefault();
+    items[(n + items.length) % items.length]?.focus();
+  };
+  if (event.key === "ArrowDown") focus(i + 1);
+  else if (event.key === "ArrowUp") focus(i < 0 ? -1 : i - 1);
+  else if (event.key === "Home") focus(0);
+  else if (event.key === "End") focus(-1);
+  else if (event.key === "Tab") close();
+  else if (event.key.length === 1 && /\S/.test(event.key)) {
+    const k = event.key.toLowerCase();
+    const order = [...items.slice(i + 1), ...items.slice(0, i + 1)];
+    order.find((el) => el.textContent?.trim().toLowerCase().startsWith(k))?.focus();
+  }
+}
+
+function useMenuState(open: boolean | undefined, onOpenChange: ((open: boolean) => void) | undefined) {
+  const [isOpen, setOpen] = useControllable(open, false, onOpenChange);
+  const anchor = useRef<HTMLElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const onFloatingChange = (next: boolean) => {
+    // Light dismiss / Esc: return focus to the trigger only if it was inside the menu.
+    if (!next && panel.current?.contains(document.activeElement)) anchor.current?.focus();
+    if (next !== isOpen) setOpen(next);
+    if (next) requestAnimationFrame(() => panel.current?.querySelector<HTMLElement>(ITEM)?.focus());
+  };
+  const close = () => {
+    setOpen(false);
+    anchor.current?.focus();
+  };
+  return { isOpen, setOpen, anchor, panel, onFloatingChange, close };
+}
+
+export interface MenuProps {
+  /** A button element; receives ref, aria and click wiring. */
+  trigger: ReactElement;
+  children: ReactNode;
+  placement?: Placement;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  className?: string;
+}
+
+export function Menu({
+  trigger,
+  children,
+  placement = "bottom-start",
+  open,
+  onOpenChange,
+  className,
+}: MenuProps) {
+  const m = useMenuState(open, onOpenChange);
+  const id = useId();
+  return (
+    <MenuContext value={{ close: m.close }}>
+      {cloneTrigger(trigger, {
+        ref: m.anchor,
+        "aria-haspopup": "menu",
+        "aria-expanded": m.isOpen,
+        "aria-controls": id,
+        onClick: () => m.setOpen(!m.isOpen),
+        onKeyDown: (event: React.KeyboardEvent) => {
+          if (event.key === "ArrowDown" && !m.isOpen) {
+            event.preventDefault();
+            m.setOpen(true);
+          }
+        },
+      })}
+      <Floating
+        ref={m.panel}
+        id={id}
+        role="menu"
+        anchor={m.anchor}
+        open={m.isOpen}
+        onOpenChange={m.onFloatingChange}
+        placement={placement}
+        className={cx("rk-menu", className)}
+        onKeyDown={(event) => onMenuKeyDown(event, m.close)}
+      >
+        {children}
+      </Floating>
+    </MenuContext>
+  );
+}
+
+export interface ContextMenuProps {
+  /** Target element; right-click (or the context-menu key) opens the menu at the pointer. */
+  children: ReactElement;
+  content: ReactNode;
+  className?: string;
+}
+
+export function ContextMenu({ children, content, className }: ContextMenuProps) {
+  const [point, setPoint] = useState<{ x: number; y: number } | null>(null);
+  const m = useMenuState(point !== null, (next) => !next && setPoint(null));
+  const anchor = useCallback(() => (point ? new DOMRect(point.x, point.y, 0, 0) : null), [point]);
+  return (
+    <MenuContext value={{ close: () => setPoint(null) }}>
+      {cloneTrigger(children, {
+        ref: m.anchor,
+        onContextMenu: (event: React.MouseEvent) => {
+          event.preventDefault();
+          const r = (event.currentTarget as HTMLElement).getBoundingClientRect();
+          // keyboard-invoked context menu has no pointer coordinates
+          setPoint(
+            event.clientX || event.clientY
+              ? { x: event.clientX, y: event.clientY }
+              : { x: r.left, y: r.bottom },
+          );
+        },
+      })}
+      <Floating
+        ref={m.panel}
+        role="menu"
+        anchor={anchor}
+        open={point !== null}
+        onOpenChange={m.onFloatingChange}
+        placement="bottom-start"
+        offset={2}
+        className={cx("rk-menu", className)}
+        onKeyDown={(event) => onMenuKeyDown(event, () => setPoint(null))}
+      >
+        {content}
+      </Floating>
+    </MenuContext>
+  );
+}
+
+export interface MenuItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onSelect"> {
+  icon?: ReactNode;
+  /** Shortcut hint on the right. */
+  shortcut?: string;
+  /** Right-side content (badge, count). */
+  trailing?: ReactNode;
+  hint?: ReactNode;
+  danger?: boolean;
+  onSelect?: () => void;
+  /** Don't close the menu after selecting. */
+  keepOpen?: boolean;
+}
+
+export function MenuItem({
+  icon,
+  shortcut,
+  trailing,
+  hint,
+  danger,
+  onSelect,
+  keepOpen,
+  disabled,
+  className,
+  children,
+  ...rest
+}: MenuItemProps) {
+  const { close } = useContext(MenuContext);
+  return (
+    <button
+      type="button"
+      role="menuitem"
+      tabIndex={-1}
+      {...rest}
+      aria-disabled={disabled || undefined}
+      data-danger={danger || undefined}
+      className={cx("rk-menu-item", className)}
+      onPointerMove={(event) => !disabled && event.currentTarget.focus()}
+      onClick={() => {
+        if (disabled) return;
+        onSelect?.();
+        if (!keepOpen) close();
+      }}
+    >
+      {icon && <span className="rk-icon rk-menu-icon">{icon}</span>}
+      <span className="rk-menu-text">
+        <span className="rk-truncate">{children}</span>
+        {hint && <span className="rk-menu-hint">{hint}</span>}
+      </span>
+      {trailing}
+      {shortcut && <kbd className="rk-menu-shortcut">{shortcut}</kbd>}
+    </button>
+  );
+}
+
+export interface MenuCheckboxItemProps extends Omit<MenuItemProps, "onSelect" | "icon"> {
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
+}
+
+export function MenuCheckboxItem({
+  checked,
+  onCheckedChange,
+  keepOpen = true,
+  ...rest
+}: MenuCheckboxItemProps) {
+  return (
+    <MenuItem
+      {...rest}
+      role="menuitemcheckbox"
+      aria-checked={checked}
+      keepOpen={keepOpen}
+      icon={<CheckIcon style={{ opacity: checked ? 1 : 0 }} />}
+      onSelect={() => onCheckedChange(!checked)}
+    />
+  );
+}
+
+export function MenuSeparator() {
+  // biome-ignore lint/a11y/useSemanticElements: <hr> is not allowed as a menu child
+  return <div role="separator" className="rk-menu-separator" />;
+}
+
+export function MenuLabel({ children }: { children: ReactNode }) {
+  return <div className="rk-menu-label">{children}</div>;
+}
+
+export interface PopoverProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  trigger: ReactElement;
+  placement?: Placement;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  title?: ReactNode;
+}
+
+/** Non-modal floating panel anchored to a trigger (filters, pickers, details). */
+export function Popover({
+  trigger,
+  placement = "bottom-start",
+  open,
+  onOpenChange,
+  title,
+  className,
+  children,
+  ...rest
+}: PopoverProps) {
+  const [isOpen, setOpen] = useControllable(open, false, onOpenChange);
+  const anchor = useRef<HTMLElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const id = useId();
+  return (
+    <>
+      {cloneTrigger(trigger, {
+        ref: anchor,
+        "aria-haspopup": "dialog",
+        "aria-expanded": isOpen,
+        "aria-controls": id,
+        onClick: () => setOpen(!isOpen),
+      })}
+      <Floating
+        {...rest}
+        ref={panel}
+        id={id}
+        role="dialog"
+        aria-label={typeof title === "string" ? title : undefined}
+        anchor={anchor}
+        open={isOpen}
+        onOpenChange={(next) => {
+          if (!next && panel.current?.contains(document.activeElement)) anchor.current?.focus();
+          if (next !== isOpen) setOpen(next);
+        }}
+        placement={placement}
+        className={cx("rk-popover", className)}
+      >
+        {title && <div className="rk-popover-title">{title}</div>}
+        {children}
+      </Floating>
+    </>
+  );
+}

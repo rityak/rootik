@@ -1,0 +1,176 @@
+.rk-button {
+  --rk-btn-h: var(--rk-h-md);
+  --rk-btn-px: calc(var(--rk-space) * 3.5);
+  --rk-btn-bg: var(--rk-surface-3);
+  --rk-btn-fg: var(--rk-text);
+  --rk-btn-edge: var(--rk-line);
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  height: var(--rk-btn-h);
+  padding: 0 var(--rk-btn-px);
+  margin: 0;
+  border: 0;
+  border-radius: var(--rk-radius-control);
+  background: var(--rk-btn-bg);
+  color: var(--rk-btn-fg);
+  box-shadow: inset 0 0 0 1px var(--rk-btn-edge);
+  font: inherit;
+  font-size: var(--rk-text-md);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    color var(--rk-dur) var(--rk-ease),
+    box-shadow var(--rk-dur) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-ease);
+
+  & .rk-icon {
+    font-size: 1.15em;
+  }
+
+  &:hover:not(:disabled) {
+    --rk-btn-bg: var(--rk-surface-4);
+  }
+
+  &:active:not(:disabled) {
+    scale: 0.97;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  &[aria-busy] {
+    cursor: progress;
+    opacity: 0.8;
+  }
+
+  &[data-block] {
+    width: 100%;
+  }
+
+  &[data-size="sm"] {
+    --rk-btn-h: var(--rk-h-sm);
+    --rk-btn-px: calc(var(--rk-space) * 2.5);
+    font-size: var(--rk-text-sm);
+  }
+
+  &[data-size="lg"] {
+    --rk-btn-h: var(--rk-h-lg);
+    --rk-btn-px: calc(var(--rk-space) * 4.5);
+    font-size: var(--rk-text-md);
+  }
+
+  &[data-variant="primary"] {
+    --rk-btn-bg: var(--rk-accent);
+    --rk-btn-fg: var(--rk-on-accent);
+    --rk-btn-edge: transparent;
+    box-shadow:
+      inset 0 1px 0 oklch(var(--rk-tint) / 0.25),
+      0 0 0 1px color-mix(in oklab, var(--rk-accent) 40%, transparent),
+      0 6px 20px -8px color-mix(in oklab, var(--rk-accent) 60%, transparent);
+    &:hover:not(:disabled) {
+      --rk-btn-bg: var(--rk-accent-hover);
+    }
+  }
+
+  &[data-variant="inverse"] {
+    --rk-btn-bg: var(--rk-inverse);
+    --rk-btn-fg: var(--rk-on-inverse);
+    --rk-btn-edge: transparent;
+    &:hover:not(:disabled) {
+      --rk-btn-bg: oklch(from var(--rk-inverse) calc(l - 0.07) c h);
+    }
+  }
+
+  &[data-variant="ghost"] {
+    --rk-btn-bg: transparent;
+    --rk-btn-fg: var(--rk-text-2);
+    --rk-btn-edge: transparent;
+    &:hover:not(:disabled) {
+      --rk-btn-bg: var(--rk-hover);
+      --rk-btn-fg: var(--rk-text);
+    }
+    &:active:not(:disabled) {
+      --rk-btn-bg: var(--rk-press);
+    }
+  }
+
+  &[data-variant="outline"] {
+    --rk-btn-bg: transparent;
+    --rk-btn-edge: var(--rk-line-strong);
+    &:hover:not(:disabled) {
+      --rk-btn-bg: var(--rk-hover);
+    }
+  }
+
+  &[data-variant="danger"],
+  &[data-variant="warn"] {
+    --rk-tone: var(--rk-danger);
+    --rk-btn-bg: color-mix(in oklab, var(--rk-tone) 14%, transparent);
+    --rk-btn-fg: oklch(from var(--rk-tone) max(l, 0.78) c h);
+    --rk-btn-edge: color-mix(in oklab, var(--rk-tone) 28%, transparent);
+    &:hover:not(:disabled) {
+      --rk-btn-bg: color-mix(in oklab, var(--rk-tone) 24%, transparent);
+    }
+  }
+
+  &[data-variant="warn"] {
+    --rk-tone: var(--rk-warn);
+  }
+
+  &[data-armed] {
+    --rk-btn-bg: var(--rk-danger);
+    --rk-btn-fg: oklch(0.99 0 0);
+    &:hover:not(:disabled) {
+      --rk-btn-bg: oklch(from var(--rk-danger) calc(l + 0.04) c h);
+    }
+  }
+
+  &[aria-pressed="true"] {
+    --rk-btn-bg: var(--rk-accent-soft);
+    --rk-btn-fg: var(--rk-accent-text);
+    --rk-btn-edge: var(--rk-accent-line);
+    &:hover:not(:disabled) {
+      --rk-btn-bg: color-mix(in oklab, var(--rk-accent) 22%, transparent);
+    }
+  }
+}
+
+.rk-button-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rk-icon-button {
+  width: var(--rk-btn-h);
+  padding: 0;
+  & .rk-icon {
+    font-size: 1.2em;
+  }
+  &[data-round] {
+    border-radius: 999px;
+  }
+}
+
+.rk-button-group {
+  display: inline-flex;
+  gap: 1px;
+  & > .rk-button:not(:first-child) {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+  & > .rk-button:not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+}

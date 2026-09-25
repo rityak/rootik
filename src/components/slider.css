@@ -1,0 +1,109 @@
+.rk-slider {
+  --rk-track: 6px;
+  --rk-thumb: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 120px;
+}
+
+.rk-slider-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: var(--rk-text-sm);
+  color: var(--rk-text-2);
+}
+
+.rk-slider-value {
+  margin-inline-start: auto;
+  color: var(--rk-text);
+  font-weight: 500;
+}
+
+.rk-slider-input {
+  appearance: none;
+  width: 100%;
+  height: var(--rk-thumb);
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+
+  &::-webkit-slider-runnable-track {
+    height: var(--rk-track);
+    border-radius: 999px;
+    background:
+      linear-gradient(to right, var(--rk-accent) var(--rk-fill), transparent var(--rk-fill)), var(--rk-hatch),
+      var(--rk-surface-3);
+  }
+  &::-moz-range-track {
+    height: var(--rk-track);
+    border-radius: 999px;
+    background: var(--rk-hatch), var(--rk-surface-3);
+  }
+  &::-moz-range-progress {
+    height: var(--rk-track);
+    border-radius: 999px;
+    background: var(--rk-accent);
+  }
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--rk-thumb);
+    height: var(--rk-thumb);
+    margin-top: calc((var(--rk-track) - var(--rk-thumb)) / 2);
+    border: 0;
+    border-radius: 50%;
+    background: var(--rk-inverse);
+    box-shadow:
+      0 0 0 0 var(--rk-accent-soft),
+      0 2px 6px oklch(var(--rk-shade) / 0.5);
+    transition:
+      box-shadow var(--rk-dur) var(--rk-ease),
+      scale var(--rk-dur) var(--rk-spring);
+  }
+  &::-moz-range-thumb {
+    width: var(--rk-thumb);
+    height: var(--rk-thumb);
+    border: 0;
+    border-radius: 50%;
+    background: var(--rk-inverse);
+    box-shadow: 0 2px 6px oklch(var(--rk-shade) / 0.5);
+  }
+  &:hover::-webkit-slider-thumb {
+    box-shadow:
+      0 0 0 5px var(--rk-accent-soft),
+      0 2px 6px oklch(var(--rk-shade) / 0.5);
+  }
+  &:active::-webkit-slider-thumb {
+    scale: 1.15;
+  }
+  &:focus-visible {
+    outline: none;
+    &::-webkit-slider-thumb {
+      box-shadow:
+        0 0 0 2px var(--rk-bg),
+        0 0 0 4px var(--rk-focus);
+    }
+    &::-moz-range-thumb {
+      box-shadow:
+        0 0 0 2px var(--rk-bg),
+        0 0 0 4px var(--rk-focus);
+    }
+  }
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.rk-slider-marks {
+  position: relative;
+  height: 1.2em;
+  margin: 0 calc(var(--rk-thumb) / 2);
+  font-size: var(--rk-text-2xs);
+  color: var(--rk-text-3);
+  & span {
+    position: absolute;
+    translate: -50% 0;
+  }
+}

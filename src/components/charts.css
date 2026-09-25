@@ -1,0 +1,188 @@
+.rk-chart-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.rk-chart {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+  & svg {
+    display: block;
+    overflow: visible;
+  }
+}
+
+.rk-chart-tick {
+  fill: var(--rk-text-3);
+  font-size: var(--rk-text-2xs);
+  &[data-hot] {
+    fill: var(--rk-text);
+    font-weight: 500;
+  }
+}
+
+.rk-chart-label {
+  fill: var(--rk-text-2);
+  font-size: var(--rk-text-xs);
+}
+
+.rk-chart-value {
+  fill: var(--rk-text);
+  font-size: var(--rk-text-xs);
+  font-weight: 500;
+}
+
+.rk-chart-bar {
+  & path {
+    transition:
+      fill var(--rk-dur) var(--rk-ease),
+      opacity var(--rk-dur) var(--rk-ease);
+  }
+  &[data-hot] path:last-of-type {
+    filter: brightness(1.15);
+  }
+}
+
+.rk-chart-ref {
+  & line {
+    stroke: var(--rk-text-2);
+    stroke-dasharray: 3 4;
+  }
+  & text {
+    fill: var(--rk-text-2);
+    font-size: var(--rk-text-2xs);
+    font-weight: 500;
+  }
+}
+
+.rk-chart-tip {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 80px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--rk-inverse);
+  color: var(--rk-on-inverse);
+  box-shadow: 0 8px 24px -8px oklch(var(--rk-shade) / 0.6);
+  font-size: var(--rk-text-xs);
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  translate: -50% calc(-100% - 10px);
+
+  & strong {
+    font-size: var(--rk-text-md);
+    font-weight: 600;
+  }
+  & > span:not(.rk-chart-tip-row) {
+    opacity: 0.7;
+  }
+}
+
+.rk-chart-tip-head {
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+.rk-chart-tip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  & > span:last-child {
+    opacity: 0.65;
+  }
+}
+
+.rk-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--rk-text-xs);
+  color: var(--rk-text-2);
+
+  & li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.rk-legend-key {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  &[data-shape="line"] {
+    width: 14px;
+    height: 2px;
+    border-radius: 1px;
+  }
+  &[data-shape="dot"] {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+}
+
+.rk-sparkline {
+  width: 100%;
+  min-width: 40px;
+  & svg {
+    display: block;
+    overflow: visible;
+  }
+}
+
+.rk-gauge {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  & svg {
+    display: block;
+  }
+  & line {
+    transition: stroke var(--rk-dur-slow) var(--rk-ease);
+  }
+}
+
+.rk-gauge-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 6%;
+  gap: 2px;
+}
+
+.rk-gauge-value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.rk-gauge-unit {
+  font-size: 0.3em;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--rk-text-3);
+}
+
+.rk-gauge-label {
+  font-size: var(--rk-text-sm);
+  color: var(--rk-text-3);
+}

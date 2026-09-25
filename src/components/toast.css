@@ -1,0 +1,115 @@
+.rk-toaster {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 16px;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(380px, 100vw);
+  pointer-events: none;
+
+  &:not(:popover-open) {
+    display: none;
+  }
+  &[data-position^="bottom"] {
+    bottom: 0;
+    justify-content: flex-end;
+  }
+  &[data-position^="top"] {
+    top: 0;
+  }
+  &[data-position$="right"] {
+    right: 0;
+  }
+  &[data-position$="left"] {
+    left: 0;
+  }
+  &[data-position$="center"] {
+    left: 50%;
+    translate: -50% 0;
+  }
+}
+
+.rk-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 12px 12px 14px;
+  border-radius: var(--rk-radius-md);
+  background: var(--rk-glass-bg);
+  backdrop-filter: blur(var(--rk-blur)) saturate(1.3);
+  box-shadow: var(--rk-shadow-pop);
+  font-size: var(--rk-text-sm);
+  pointer-events: auto;
+  transition:
+    opacity var(--rk-dur-slow) var(--rk-ease),
+    translate var(--rk-dur-slow) var(--rk-ease-out);
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 12px;
+  }
+  [data-position^="top"] > & {
+    @starting-style {
+      translate: 0 -12px;
+    }
+  }
+}
+
+.rk-toast-icon {
+  margin-top: 1px;
+  font-size: 16px;
+  color: var(--rk-tone-text);
+}
+
+.rk-toast-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.rk-toast-title {
+  font-weight: 500;
+  color: var(--rk-text);
+}
+
+.rk-toast-desc {
+  margin-top: 2px;
+  color: var(--rk-text-3);
+  overflow-wrap: anywhere;
+}
+
+.rk-toast-action {
+  flex-shrink: 0;
+  height: 24px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--rk-inverse);
+  color: var(--rk-on-inverse);
+  font: inherit;
+  font-size: var(--rk-text-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rk-toast-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--rk-text-3);
+  cursor: pointer;
+  &:hover {
+    background: var(--rk-hover);
+    color: var(--rk-text);
+  }
+}
