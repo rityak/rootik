@@ -2,9 +2,11 @@ import {
   type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
+  type RefObject,
   type TableHTMLAttributes,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -14,6 +16,7 @@ import { useControllable, useLatest } from "../lib/hooks";
 import { ArrowDownIcon, ArrowUpIcon, ChevronRightIcon, ChevronsUpDownIcon } from "../lib/icons";
 import { useLabels } from "../lib/labels";
 import { useSelection } from "../lib/selection";
+import { useVirtual } from "../lib/virtual";
 import { Checkbox } from "./choice";
 
 export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
@@ -25,6 +28,8 @@ export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   maxHeight?: number | string;
   /** Outline + radius around the table. */
   framed?: boolean;
+  /** The scrolling wrapper (e.g. for `useVirtual`). */
+  wrapRef?: RefObject<HTMLDivElement | null>;
 }
 
 /**
@@ -37,20 +42,28 @@ export function Table({
   zebra,
   maxHeight,
   framed,
+  wrapRef,
   className,
   ...rest
 }: TableProps) {
   const [scrolls, setScrolls] = useState(false);
-  const observe = useCallback((wrap: HTMLDivElement | null) => {
-    if (!wrap) return;
-    const measure = () =>
-      setScrolls(wrap.scrollHeight > wrap.clientHeight + 1 || wrap.scrollWidth > wrap.clientWidth + 1);
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(wrap);
-    if (wrap.firstElementChild) observer.observe(wrap.firstElementChild);
-    return () => observer.disconnect();
-  }, []);
+  const observe = useCallback(
+    (wrap: HTMLDivElement | null) => {
+      if (!wrap) return;
+      if (wrapRef) wrapRef.current = wrap;
+      const measure = () =>
+        setScrolls(wrap.scrollHeight > wrap.clientHeight + 1 || wrap.scrollWidth > wrap.clientWidth + 1);
+      measure();
+      const observer = new ResizeObserver(measure);
+      observer.observe(wrap);
+      if (wrap.firstElementChild) observer.observe(wrap.firstElementChild);
+      return () => {
+        observer.disconnect();
+        if (wrapRef) wrapRef.current = null;
+      };
+    },
+    [wrapRef],
+  );
   const name = rest["aria-label"];
   return (
     <div
@@ -139,6 +152,11 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   onExpandedChange?: (keys: string[]) => void;
   /** Column carrying the toggle and indent (default: the first). */
   treeColumn?: string;
+  /**
+   * Only mount the rows in view (tens of thousands of rows). Needs `maxHeight`; the header sticks and
+   * cells stay on one line, since every row is measured once and assumed the same height.
+   */
+  virtual?: boolean;
 }
 
 interface FlatRow<T> {
@@ -281,6 +299,7 @@ export function DataTable<T>({
   defaultExpanded = [],
   onExpandedChange,
   treeColumn,
+  virtual,
   style,
   ...rest
 }: DataTableProps<T>) {
@@ -377,10 +396,73 @@ export function DataTable<T>({
   const body = useRef<HTMLTableSectionElement>(null);
   const [focusedKey, setFocusedKey] = useState<string | null>(null);
   const tabStop = focusedKey !== null && keys.includes(focusedKey) ? focusedKey : keys[0];
+
+  // virtualization: the table wrapper scrolls; row and header heights are measured from the DOM
+  const wrap = useRef<HTMLDivElement | null>(null);
+  const [rowHeight, setRowHeight] = useState(0);
+  const [headHeight, setHeadHeight] = useState(0);
+  useLayoutEffect(() => {
+    if (!virtual) return;
+    const measured = body.current?.querySelector<HTMLElement>("tr[data-key]")?.offsetHeight ?? 0;
+    if (measured && measured !== rowHeight) setRowHeight(measured);
+    const header = head.current?.offsetHeight ?? 0;
+    if (header !== headHeight) setHeadHeight(header);
+  });
+  const estimate = { compact: 29, default: 37, comfortable: 45 }[rest.density ?? "default"];
+  const win = useVirtual({
+    count: virtual ? flat.length : 0,
+    size: rowHeight || estimate,
+    scrollRef: wrap,
+    overscan: 8,
+    scrollMargin: headHeight,
+  });
+  const shown = virtual
+    ? win.items.flatMap((item) => {
+        const f = flat[item.index];
+        return f ? [{ f, i: item.index }] : [];
+      })
+    : flat.map((f, i) => ({ f, i }));
+
+  const rowEl = (key: string) =>
+    body.current?.querySelector<HTMLElement>(`tr[data-key="${CSS.escape(key)}"]`) ?? null;
+  /** Focus a row and scroll it clear of the sticky header (native focus scrolling ignores what covers it). */
+  const reveal = (el: HTMLElement) => {
+    el.focus({ preventScroll: true });
+    const scroller = wrap.current;
+    if (!scroller) return;
+    const box = scroller.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    const top =
+      box.top + scroller.clientTop + (virtual || rest.sticky ? (head.current?.offsetHeight ?? 0) : 0);
+    const bottom = box.top + scroller.clientTop + scroller.clientHeight;
+    if (r.top < top) scroller.scrollTop -= top - r.top;
+    else if (r.bottom > bottom) scroller.scrollTop += r.bottom - bottom;
+  };
+  // a row outside the window is scrolled in first and focused once it mounts
+  const pendingFocus = useRef<string | null>(null);
+  useEffect(() => {
+    const key = pendingFocus.current;
+    const el = key ? rowEl(key) : null;
+    if (el) {
+      pendingFocus.current = null;
+      reveal(el);
+    }
+  });
   const focusRow = (key: string | null | undefined) => {
     if (!key) return;
     setFocusedKey(key);
-    body.current?.querySelector<HTMLElement>(`tr[data-key="${CSS.escape(key)}"]`)?.focus();
+    const el = rowEl(key);
+    if (el) reveal(el);
+    else if (virtual && wrap.current) {
+      pendingFocus.current = key;
+      // bring the row in view below the sticky header (the scroll margin alone would leave it under it)
+      const scroller = wrap.current;
+      const size = rowHeight || estimate;
+      const top = headHeight + keys.indexOf(key) * size;
+      if (top - headHeight < scroller.scrollTop) scroller.scrollTop = top - headHeight;
+      else if (top + size > scroller.scrollTop + scroller.clientHeight)
+        scroller.scrollTop = top + size - scroller.clientHeight;
+    }
   };
   /** treegrid row keys (APG): ↑/↓/Home/End move, → expands or enters, ← collapses or goes up. */
   const onTreeKey = (event: KeyboardEvent<HTMLTableRowElement>, f: FlatRow<T>, index: number) => {
@@ -441,10 +523,18 @@ export function DataTable<T>({
   return (
     <Table
       role={tree ? "treegrid" : undefined}
+      aria-rowcount={virtual ? flat.length + 1 : undefined}
       {...rest}
-      style={fixed ? { ...style, width: total, tableLayout: "fixed" } : style}
+      sticky={virtual || rest.sticky}
+      wrapRef={wrap}
+      style={{
+        ...style,
+        ...(fixed ? { width: total, tableLayout: "fixed" } : null),
+        ...(virtual ? { "--rk-table-head": `${headHeight}px` } : null),
+      }}
       data-resizable={anyResizable || undefined}
       data-fixed={fixed || undefined}
+      data-virtual={virtual || undefined}
     >
       {fixed && (
         <colgroup>
@@ -506,7 +596,13 @@ export function DataTable<T>({
             </td>
           </tr>
         )}
-        {flat.map((f, i) => {
+        {virtual && win.before > 0 && (
+          // biome-ignore lint/a11y/noAriaHiddenOnFocusable: a spacer row is never focusable
+          <tr aria-hidden="true" className="rk-table-spacer" style={{ height: win.before }}>
+            <td colSpan={columns.length + (selection ? 1 : 0)} />
+          </tr>
+        )}
+        {shown.map(({ f, i }) => {
           const { row, key } = f;
           const isOpen = openSet.has(key);
           const picked = selection ? sel.isSelected(key) : undefined;
@@ -520,6 +616,8 @@ export function DataTable<T>({
             <tr
               key={key}
               data-key={key}
+              data-alt={i % 2 === 1 || undefined}
+              aria-rowindex={virtual ? i + 2 : undefined}
               aria-level={tree ? f.depth + 1 : undefined}
               aria-posinset={tree ? f.pos : undefined}
               aria-setsize={tree ? f.size : undefined}
@@ -551,6 +649,8 @@ export function DataTable<T>({
                   : undefined
               }
               onFocus={tree ? () => setFocusedKey(key) : undefined}
+              // Shift+click extends the row selection, not a text selection
+              onMouseDown={selection ? (event) => event.shiftKey && event.preventDefault() : undefined}
               // a treegrid is one tab stop (arrows move between rows); flat tables keep a stop per row
               tabIndex={tree ? (key === tabStop ? 0 : -1) : activate ? 0 : undefined}
             >
@@ -606,6 +706,12 @@ export function DataTable<T>({
             </tr>
           );
         })}
+        {virtual && win.after > 0 && (
+          // biome-ignore lint/a11y/noAriaHiddenOnFocusable: a spacer row is never focusable
+          <tr aria-hidden="true" className="rk-table-spacer" style={{ height: win.after }}>
+            <td colSpan={columns.length + (selection ? 1 : 0)} />
+          </tr>
+        )}
       </tbody>
     </Table>
   );

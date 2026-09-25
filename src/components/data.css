@@ -81,6 +81,15 @@
   &[data-zebra] tbody tr:nth-child(even):not(:hover):not([aria-selected="true"]) {
     background: oklch(var(--rk-tint) / 0.025);
   }
+  /* virtual tables have spacer rows, so DataTable marks the parity itself */
+  &[data-zebra][data-virtual] tbody tr {
+    &:nth-child(even):not(:hover):not([aria-selected="true"]) {
+      background: none;
+    }
+    &[data-alt]:not(:hover):not([aria-selected="true"]) {
+      background: oklch(var(--rk-tint) / 0.025);
+    }
+  }
   &[data-sticky] thead th {
     position: sticky;
     top: 0;
@@ -195,6 +204,22 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* virtual rows: one line each, measured once; focus scrolls clear of the sticky header */
+.rk-table[data-virtual] {
+  & :is(th, td):not(.rk-table-select) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  & tbody tr {
+    scroll-margin-top: var(--rk-table-head, 0px);
+  }
+  & tr.rk-table-spacer td {
+    padding: 0;
+    border: 0;
+  }
 }
 
 .rk-table td.rk-table-empty {
