@@ -18,7 +18,7 @@ below once the batch is in.
 
 - [ ] Truncate — single/multi-line ellipsis that shows the full text in a Tooltip only when actually truncated — P1 ★ ↗ Primer Truncate · `claude/rk-truncate`
 
-- [ ] Meter — `<meter>` semantics, low/high/optimum pick the tone, stacked sections with hatched rest (disk, quota, CPU) — P1 ↗ Base UI/React Aria/HeroUI Meter, Mantine Progress sections, Tremor CategoryBar · `claude/rk-meter`
+- [x] Meter — `<meter>` semantics, low/high/optimum pick the tone, stacked sections with hatched rest (disk, quota, CPU) — P1 ↗ Base UI/React Aria/HeroUI Meter, Mantine Progress sections, Tremor CategoryBar · `claude/rk-meter`
 
 - [ ] Tracker — row of small status bars (uptime/latency per hour or day) with tooltips — P1 ★ (UR node health) ↗ Tremor Tracker · `claude/rk-tracker`
 
