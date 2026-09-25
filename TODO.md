@@ -35,7 +35,7 @@ on Combobox.
 
 - [x] DataTable tree rows — expandable rows with indent guides (tree with columns, Finder-like) — P1 (candidates: DT TensorTree, UR NodeTree) ↗ React Aria Table · `claude/rk-table-tree`
 
-- [ ] DataTable: row virtualization on `useVirtual` for large tables — P1 · `claude/rk-table-virtual`
+- [x] DataTable: row virtualization on `useVirtual` for large tables — P1 · `claude/rk-table-virtual`
 
 ## Batch 1 — one PR per item
 
