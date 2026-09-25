@@ -79,6 +79,9 @@
   --rk-chart-6: oklch(0.64 0.18 355);
   --rk-chart-grid: oklch(var(--rk-tint) / 0.07);
   --rk-chart-idle: var(--rk-surface-4);
+  /* sequential magnitude (heatmaps): one hue, dark → light on the dark canvas, lightness monotone */
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
 
   /* geometry */
   --rk-space: calc(4px * var(--rk-density));
