@@ -83,6 +83,27 @@ export const LABELS = {
   imageCounter: (index: number, count: number): string => `${index} / ${count}`,
   selectItem: "Select",
   logLevels: "Levels",
+  showPassword: "Show password",
+  hidePassword: "Hide password",
+  /** PinInput cell names. */
+  pinDigit: (index: number, count: number): string => `Digit ${index} of ${count}`,
+  showMore: "Show more",
+  showLess: "Show less",
+  copyValue: "Copy value",
+  copyPath: "Copy path",
+  jsonItems: (count: number): string => `${count} ${count === 1 ? "item" : "items"}`,
+  jsonKeys: (count: number): string => `${count} ${count === 1 ? "key" : "keys"}`,
+  /** Stepper: screen-reader state of a step. */
+  stepComplete: "completed",
+  stepCurrent: "current step",
+  stepError: "has errors",
+  retry: "Retry",
+  loadFailed: "Couldn’t load",
+  /** ColorPicker parts. */
+  colorArea: "Lightness and chroma",
+  hue: "Hue",
+  opacity: "Opacity",
+  pickFromScreen: "Pick a color from the screen",
 };
 
 export type Labels = typeof LABELS;

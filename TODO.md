@@ -7,11 +7,55 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 Magic UI, M3 Expressive) or from new web platform features; component inventories checked against Mantine 9.6, Ark 5.39,
 React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd 6.6, Primer 38. `★` = own idea.
 
+## Batch 3 — one PR per item
+
+Same rules as Batch 1 (stubs registered up front, one line per PR, merge commits). Every item is a new
+module, so any merge order works.
+
+- [x] Foundation: `--rk-on-danger` / `--rk-on-tone` label-on-fill tokens, `useMediaQuery`, `useElementSize`, `useInterval` (pauses while the tab is hidden), `usePersistentState` (cross-tab), `useWindowFocus`, public `readStorage`/`writeStorage`, icons and labels for the batch, module stubs · `claude/dreamy-franklin-e2kev1`
+
+- [ ] PasswordInput (reveal) — P2 · `claude/rk-password-input`
+
+- [ ] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput · `claude/rk-pin-input`
+
+- [ ] Fieldset — native `<fieldset>` + legend, `disabled` covers the whole group; used by SchemaForm — P2 ↗ Base UI/Mantine Fieldset · `claude/rk-fieldset`
+
+- [ ] CheckboxGroup with a parent "select all" (indeterminate) — P2 ↗ Base UI CheckboxGroup · `claude/rk-checkbox-group`
+
+- [ ] InputGroup addons — text prefix/suffix segments (`https://`, `px`, `ms`), attached buttons — P2 ↗ shadcn/HeroUI/Chakra InputGroup · `claude/rk-input-group`
+
+- [ ] ColorPicker in OKLCH — L/C area, hue + alpha sliders, text input, EyeDropper API button; also for the AppearanceSettings accent — P2 ↗ Ark/HeroUI/React Aria ColorPicker · `claude/rk-color-picker`
+
+- [ ] JsonView — collapsible JSON tree, typed colors, copy value/path — P2 ↗ Ark JsonTreeView · `claude/rk-json-view`
+
+- [ ] Indicator — dot/count pinned to the corner of any element (avatar, icon button) — P2 ↗ Mantine Indicator, Chakra Float · `claude/rk-indicator`
+
+- [ ] Spoiler — clamp long text with a fade + "Show more" — P2 ↗ Mantine Spoiler · `claude/rk-spoiler`
+
+- [ ] Prose — `.rk-prose` for markdown help/release notes (headings, lists, code, quotes, links) — P2 ↗ Mantine Typography, Radix Themes · `claude/rk-prose`
+
+- [ ] Timeline — P2 · `claude/rk-timeline`
+
+- [ ] Stepper / Wizard — P2 · `claude/rk-stepper`
+
+- [ ] Splitter (two panes) — P2 · `claude/rk-splitter`
+
+- [ ] DataState — one switch for loading (Skeleton) / error (Callout + retry) / empty (EmptyState) / content — P2 ★ · `claude/rk-data-state`
+
+- [ ] Busy overlay for a region — `inert` + dim + spinner over a card/table while refetching — P2 ↗ Mantine LoadingOverlay · `claude/rk-busy-overlay`
+
+- [ ] QrCode — zero-dep SVG encoder (share a connection/subscription link) — P2 ↗ Ark/Chakra/antd QrCode · `claude/rk-qr-code`
+
+- [ ] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList · `claude/rk-bars-list`
+
+- [ ] HoverCard — interactive popover on hover/focus/long press; `interestfor` where supported, JS delay fallback — P2 ↗ React Aria PreviewTrigger · `claude/rk-hover-card`
+
+- [ ] Text shimmer for pending labels ("Connecting…", "Indexing…") via `background-clip: text` — P2 ↗ AI UIs, Magic UI · `claude/rk-text-shimmer`
+
 ## Batch 2 — one PR per item
 
 Same rules as Batch 1 (stubs registered up front, one line per PR, merge commits). The DataTable PRs all edit
-`data.tsx`, so they are stacked: merge resize → tree rows → virtualization in that order. TokenField is stacked
-on Combobox.
+`data.tsx`, so they are stacked: merge resize → tree rows → virtualization in that order.
 
 - [x] Foundation: `useVirtual` (fixed or per-row sizes, `scrollToIndex`), icons and labels for the batch, module stubs · `claude/dreamy-franklin-e2kev1`
 
@@ -116,7 +160,7 @@ below once the batch is in.
 - [x] Surface materials (Settings → Effects → Surfaces): solid / veil (default) / frost / liquid via `.rk-surface` (cards + layout parts), ambient glow on the AppShell canvas, gradient hairline rim
 - [x] CI (`.github/workflows/ci.yml`): typecheck, `biome ci`, unit tests, Ladle build on push to main and PRs
 - [x] Strict Biome: extra rules on top of `recommended`, kit code may import only peer deps (no dev deps like lucide-react), `noHexColors`, GritQL plugin `biome/untinted-neutral.grit` (translucent `oklch(L 0 0 / a)` overlays)
-- [ ] Label-on-fill token (`--rk-on-danger` or a generic `--rk-on-tone`) instead of hardcoded `oklch(0.99 0 0)` in Button armed and TitleBar close hover, `oklch(0.15 0 0)` on the custom swatch — P2 ★
+- [x] Label-on-fill token (`--rk-on-danger` or a generic `--rk-on-tone`) instead of hardcoded `oklch(0.99 0 0)` in Button armed and TitleBar close hover, `oklch(0.15 0 0)` on the custom swatch — P2 ★
 - [ ] Dist build (`bun build` + d.ts) for npm publishing; now consumed from source — P2
 - [ ] Visual regression (Playwright screenshots of stories), as a CI job on top of the Ladle build — P2
 - [ ] Floating on CSS anchor positioning (`position-anchor`, `position-try-fallbacks`), `computePosition` stays as fallback; anchored container queries so a flipped popover animates from the anchor side — P2 ↗ CSS anchor positioning
@@ -134,12 +178,12 @@ below once the batch is in.
 - [x] `useVirtual` — one windowing hook for LogView, DataTable, Tree, ImageGrid — P1 ↗ React Aria Virtualizer, antd Listy
 - [x] `announce()` — live region for screen readers (copied, saved, "12 results") — P1 ↗ Primer live-region
 - [x] `useClipboard` (copied state + reset); base for CopyButton, CodeBlock, KeyValue `copyable` — P1 ↗ Mantine use-clipboard, Ark Clipboard
-- [ ] `usePersistentState` — public `readStorage`/`writeStorage` with cross-tab sync (`storage` event) — P2 ★
-- [ ] `useInterval` / polling that pauses while the document is hidden (dashboard refresh) — P2 ↗ Mantine use-interval + use-document-visibility
-- [ ] `useMediaQuery`, `useElementSize` — P2 ↗ Mantine hooks
+- [x] `usePersistentState` — public `readStorage`/`writeStorage` with cross-tab sync (`storage` event) — P2 ★
+- [x] `useInterval` / polling that pauses while the document is hidden (dashboard refresh) — P2 ↗ Mantine use-interval + use-document-visibility
+- [x] `useMediaQuery`, `useElementSize` — P2 ↗ Mantine hooks
 - [ ] Export `useIndicator` for consumers' custom controls — P2 ↗ Mantine FloatingIndicator
 - [ ] Hotkey registry: `useHotkey` registers into context → generated shortcuts sheet on `?` and CommandPalette hints from the same source — P2 ★
-- [ ] `useWindowFocus` + inactive shell state (TitleBar and selection dim when the window loses focus, like native apps) — P2 ★ (Tauri)
+- [ ] Inactive shell state: TitleBar and selection dim while the window is unfocused, like native apps (`useWindowFocus` is in) — P2 ★ (Tauri)
 
 ## Actions
 
@@ -162,15 +206,9 @@ below once the batch is in.
 - [x] ChoiceCards — radio cards with description/note — UR Segment
 - [x] ChipGroup — toggle chips multi/single, counts — DT MultiSelectField
 - [x] ColorSwatches — presets + native custom picker — DT color param
-- [ ] InputGroup addons — text prefix/suffix segments (`https://`, `px`, `ms`), attached buttons — P2 ↗ shadcn/HeroUI/Chakra InputGroup
-- [ ] ColorPicker in OKLCH — L/C area, hue + alpha sliders, text input, EyeDropper API button; also for the AppearanceSettings accent — P2 ↗ Ark/HeroUI/React Aria ColorPicker
 - [ ] ChoiceCards `multiple` (checkbox cards) — P2 ↗ Radix Themes CheckboxCards, Chakra CheckboxCard
-- [ ] CheckboxGroup with a parent "select all" (indeterminate) — P2 ↗ Base UI CheckboxGroup
-- [ ] Fieldset — native `<fieldset>` + legend, `disabled` covers the whole group; used by SchemaForm — P2 ↗ Base UI/Mantine Fieldset
 - [ ] Form on the native constraint API — `validity` → Field error, focus the first invalid field on submit — P2 ↗ Base UI Form, React Aria Form
 - [ ] TreeSelect / Cascader — P2 ↗ Mantine 9, antd
-- [ ] PasswordInput (reveal) — P2
-- [ ] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput
 - [ ] Select `native` variant on `appearance: base-select` (real `<select>` in kit styling) for simple cases — P2 ↗ customizable select
 - [ ] PathField — stays in DT (needs its FS API); build on Input + Dialog
 - [ ] DateInput / DateRange presets (Last 1h / 24h / 7d / custom) + TimeInput — P2 (native `<input type=date>` styled first) ↗ Mantine dates, React Aria DatePicker
@@ -190,17 +228,9 @@ below once the batch is in.
 - [x] Nest — nested option group — UR Nest
 - [x] Divider (label, vertical)
 - [x] Progress (hatched rest, indeterminate), ProgressRing, Spinner, Skeleton — DT ProgressBar
-- [ ] Text shimmer for pending labels ("Connecting…", "Indexing…") via `background-clip: text` — P2 ↗ AI UIs, Magic UI
 - [ ] Card `data-state="running"`: light beam travelling along the gradient rim (`@property` angle + conic gradient), status only — P2 ↗ Magic UI Border Beam
 - [ ] Highlight — search matches via CSS Custom Highlight API (`::highlight()`, no DOM wrapping) for CommandPalette, Tree filter, DataTable search — P2 ↗ Mantine/Ark/Chakra Highlight
-- [ ] Indicator — dot/count pinned to the corner of any element (avatar, icon button) — P2 ↗ Mantine Indicator, Chakra Float
-- [ ] JsonView — collapsible JSON tree, typed colors, copy value/path — P2 ↗ Ark JsonTreeView
-- [ ] QrCode — zero-dep SVG encoder (share a connection/subscription link) — P2 ↗ Ark/Chakra/antd QrCode
-- [ ] Prose — `.rk-prose` for markdown help/release notes (headings, lists, code, quotes, links) — P2 ↗ Mantine Typography, Radix Themes
-- [ ] Spoiler — clamp long text with a fade + "Show more" — P2 ↗ Mantine Spoiler
 - [ ] EmptyState presets/tones (success, error, no access, offline) — P2 ↗ antd Result, Primer Blankslate
-- [ ] Busy overlay for a region — `inert` + dim + spinner over a card/table while refetching — P2 ↗ Mantine LoadingOverlay
-- [ ] Timeline — P2
 - [ ] Flag (country) — stays in UR
 
 ## Overlays
@@ -215,7 +245,6 @@ below once the batch is in.
 - [x] Toast / Toaster — tones, action, sticky, loading→done update, pause on hover — DT Tasks notifications
 - [ ] Menu radio items — P2
 - [ ] Menu async loading + empty state — P2 ↗ React Aria 1.21
-- [ ] HoverCard — interactive popover on hover/focus/long press; `interestfor` where supported, JS delay fallback — P2 ↗ React Aria PreviewTrigger
 - [ ] Tooltip on `interestfor` + `popover="hint"` (native hover/focus delays and Esc), current JS as fallback — P2 ↗ interest invokers
 - [ ] Toast stack: collapsed deck that expands on hover/focus, swipe to dismiss — P2 ↗ Sonner
 - [ ] Tour — step-by-step coach marks anchored to elements — P2 ↗ Ark/antd Tour
@@ -226,7 +255,6 @@ below once the batch is in.
 - [x] Sidebar (collapsible rail) + NavGroup + NavItem (depth, trailing, hover actions) — DT NavItem/SideRail, UR SideNav
 - [x] Dock — `icons` (round buttons + tooltips) and `labels` (icon + text pills) variants, fixed item size with a sliding inverted indicator, dot/count badges, `DockSeparator` + extra actions — UR Dock
 - [x] Breadcrumbs, Pagination
-- [ ] Stepper / Wizard — P2
 - [ ] TopNav (pill nav as links, not tabs) — P2
 - [ ] Vertical Tabs (`orientation`) for settings pages — P2 ↗ Radix/Base UI Tabs
 - [ ] TableOfContents + `useScrollSpy` for long settings/docs pages — P2 ↗ Mantine TableOfContents, Ark Toc
@@ -244,8 +272,6 @@ below once the batch is in.
 - [ ] FloatingWindow — draggable/resizable non-modal panel (inspector, log, preview) — P2 ↗ Mantine FloatingWindow, Ark FloatingPanel
 - [ ] Responsive AppShell — below a container width the sidebar turns into a Drawer, header gets a menu button (layout.css has no breakpoints yet) — P2 ★ ↗ Mantine AppShell + Burger
 - [ ] MasterDetail — list + detail side by side, stacked with a back button when narrow — P2 ★
-- [ ] DataState — one switch for loading (Skeleton) / error (Callout + retry) / empty (EmptyState) / content — P2 ★
-- [ ] Splitter (two panes) — P2
 - [ ] PowerButton / hero toggle orb (now a story-only `.vpn-orb`) — P1 when umiray migrates
 - Not planned: Stack/Grid/Box — use CSS/Tailwind in apps
 
@@ -268,7 +294,6 @@ below once the batch is in.
 - [x] Legend, `seriesColor`, `niceTicks`, `formatCompact`
 - [ ] Scatter (log axes) — P2 (DT tag scatter)
 - [ ] StackedBar / Donut — P2
-- [ ] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList
 - [ ] Brush / zoom range on LineChart for long series (training runs) — P2 ↗ Mantine ChartBrush
 - [ ] BulletChart — value vs target + qualitative ranges — P2 ↗ Mantine BulletChart
 - [ ] Waffle — part-of-whole grid with hatched rest — P2 ↗ Mantine WaffleChart
