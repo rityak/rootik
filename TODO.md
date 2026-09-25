@@ -18,7 +18,7 @@ module, so any merge order works.
 
 - [x] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput · `claude/rk-pin-input`
 
-- [ ] Fieldset — native `<fieldset>` + legend, `disabled` covers the whole group; used by SchemaForm — P2 ↗ Base UI/Mantine Fieldset · `claude/rk-fieldset`
+- [x] Fieldset — native `<fieldset>` + legend, `disabled` covers the whole group; used by SchemaForm — P2 ↗ Base UI/Mantine Fieldset · `claude/rk-fieldset`
 
 - [ ] CheckboxGroup with a parent "select all" (indeterminate) — P2 ↗ Base UI CheckboxGroup · `claude/rk-checkbox-group`
 
