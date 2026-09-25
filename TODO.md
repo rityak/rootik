@@ -42,7 +42,7 @@ below once the batch is in.
 
 - [ ] `confirm()` / `prompt()` — promise-based dialogs over Dialog (`await confirm({ title, tone: "danger" })`) — P1 ↗ Base UI AlertDialog, Primer ConfirmationDialog · `claude/rk-confirm`
 
-- [ ] Code / CodeBlock (copy, line numbers) — P1 (UR SourceCode, DT RunLog) · `claude/rk-code-block`
+- [x] Code / CodeBlock (copy, line numbers) — P1 (UR SourceCode, DT RunLog) · `claude/rk-code-block`
 
 - [x] SelectPanel — button-triggered popover: search, checkable list with counts, Clear/Apply footer; for table and chart filters — P1 ↗ Primer SelectPanel · `claude/rk-select-panel`
 

@@ -1,1 +1,102 @@
-/* Placeholder: CodeBlock styles land in its own PR (TODO.md, batch 1). */
+.rk-code {
+  padding: 0.1em 0.4em;
+  border-radius: calc(var(--rk-radius-sm) * 0.6);
+  background: var(--rk-surface-3);
+  color: var(--rk-text);
+  font-family: var(--rk-font-mono);
+  font-size: 0.88em;
+}
+
+.rk-code-block {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--rk-radius-md);
+  background: var(--rk-sunken);
+  box-shadow: inset 0 0 0 1px var(--rk-line);
+}
+
+.rk-code-head {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--rk-space) * 1.5);
+  min-height: 36px;
+  padding: 0 calc(var(--rk-space) * 1.5) 0 calc(var(--rk-space) * 3.5);
+  border-bottom: 1px solid var(--rk-line);
+  font-size: var(--rk-text-xs);
+}
+
+.rk-code-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--rk-text-2);
+  font-family: var(--rk-font-mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rk-code-lang {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--rk-surface-3);
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rk-code-pre {
+  margin: 0;
+  padding: calc(var(--rk-space) * 3) 0;
+  overflow: auto;
+  color: var(--rk-text);
+  font-family: var(--rk-font-mono);
+  font-size: calc(var(--rk-font-size) * 0.9);
+  line-height: 1.65;
+  tab-size: 2;
+  counter-reset: rk-line;
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+  & code {
+    display: block;
+    min-width: max-content;
+    font: inherit;
+  }
+  &[data-wrap] code {
+    min-width: 0;
+  }
+}
+
+.rk-code-line {
+  display: block;
+  padding: 0 calc(var(--rk-space) * 3.5);
+  white-space: pre;
+  counter-increment: rk-line;
+
+  [data-wrap] & {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  [data-numbers] &::before {
+    content: counter(rk-line);
+    display: inline-block;
+    width: 3ch;
+    margin-right: 2ch;
+    color: var(--rk-text-3);
+    text-align: right;
+    user-select: none;
+  }
+  /* wrapped continuation lines align with the code, not under the number */
+  [data-numbers][data-wrap] & {
+    padding-left: calc(var(--rk-space) * 3.5 + 5ch);
+    text-indent: -5ch;
+  }
+  &[data-highlight] {
+    background: var(--rk-accent-soft);
+    box-shadow: inset 2px 0 0 var(--rk-accent);
+  }
+}
