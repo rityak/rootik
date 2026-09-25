@@ -19,7 +19,7 @@ on Combobox.
 
 - [ ] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select) · `claude/rk-combobox`
 
-- [ ] MultiSelect / TagInput as a TokenField — tokens inline with the text, autocomplete, auto-tokenize on separator; also `key:value` filter tokens for SearchInput — P1 (DT caption tags) ↗ React Aria TokenField · `claude/rk-token-field`
+- [x] MultiSelect / TagInput as a TokenField — tokens inline with the text, autocomplete, auto-tokenize on separator; also `key:value` filter tokens for SearchInput — P1 (DT caption tags) ↗ React Aria TokenField · `claude/rk-token-field`
 
 - [ ] SchemaForm (generic ParamsForm: string/text/number/slider/select/multi/color/boolean) — P1, reuse AppearanceSettings renderer — DT ParamsForm · `claude/rk-schema-form`
 
