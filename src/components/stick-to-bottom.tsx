@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import { cx } from "../lib/cx";
+import { mergeRefs } from "../lib/hooks";
 import { ArrowDownIcon } from "../lib/icons";
 import { useLabels } from "../lib/labels";
 
@@ -25,6 +26,10 @@ export interface StickToBottomProps extends HTMLAttributes<HTMLDivElement> {
   jumpLabel?: ReactNode;
   onFollowChange?: (following: boolean) => void;
   ref?: Ref<StickToBottomHandle>;
+  /** The scrolling element, e.g. for `useVirtual`'s `scrollRef`. */
+  viewportRef?: Ref<HTMLDivElement>;
+  /** Attributes for the scrolling element (role, aria-label, tabIndex). */
+  viewportProps?: HTMLAttributes<HTMLDivElement>;
 }
 
 /**
@@ -38,6 +43,8 @@ export function StickToBottom({
   jumpLabel,
   onFollowChange,
   ref,
+  viewportRef,
+  viewportProps,
   className,
   children,
   ...rest
@@ -88,7 +95,15 @@ export function StickToBottom({
 
   return (
     <div {...rest} className={cx("rk-stick", className)} data-following={following || undefined}>
-      <div ref={viewport} className="rk-stick-viewport" onScroll={onScroll}>
+      <div
+        {...viewportProps}
+        ref={mergeRefs(viewport, viewportRef)}
+        className={cx("rk-stick-viewport", viewportProps?.className)}
+        onScroll={(event) => {
+          onScroll();
+          viewportProps?.onScroll?.(event);
+        }}
+      >
         <div ref={content} className="rk-stick-content">
           {children}
         </div>
