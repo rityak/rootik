@@ -1,1 +1,31 @@
-/* Placeholder: Truncate styles land in its own PR (TODO.md, batch 1). */
+.rk-truncate-text {
+  display: inline-block;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+
+  &[data-lines] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--rk-lines);
+    line-clamp: var(--rk-lines);
+    white-space: normal;
+  }
+
+  &[data-middle] {
+    display: inline-flex;
+    & .rk-truncate-start {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    & .rk-truncate-end {
+      flex: none;
+      white-space: pre;
+    }
+  }
+}
