@@ -68,7 +68,7 @@ below once the batch is in.
 
 - [ ] Squircle corners: `--rk-corner-shape` token (`corner-shape: squircle`, progressive — plain radius elsewhere) + Settings → Shape "Corners: round / squircle" — P1 ↗ CSS `corner-shape` · `claude/rk-squircle`
 
-- [ ] Table view toggle for every chart (a11y) — P1 · `claude/rk-chart-table`
+- [x] Table view toggle for every chart (a11y) — P1 · `claude/rk-chart-table`
 
 - [ ] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1 · `claude/rk-logic-tests`
 

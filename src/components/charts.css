@@ -5,6 +5,27 @@
   min-width: 0;
 }
 
+/* legend on the left, chart ⇄ table toggle on the right */
+.rk-chart-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 24px;
+  & .rk-chart-toggle {
+    margin-inline-start: auto;
+  }
+}
+
+/* row headers read as labels, not as the uppercase column captions */
+.rk-chart-table tbody th {
+  color: var(--rk-text-2);
+  font-size: inherit;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 .rk-chart {
   position: relative;
   min-width: 0;
