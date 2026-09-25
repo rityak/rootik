@@ -15,7 +15,7 @@ on Combobox.
 
 - [x] Foundation: `useVirtual` (fixed or per-row sizes, `scrollToIndex`), icons and labels for the batch, module stubs · `claude/dreamy-franklin-e2kev1`
 
-- [ ] SplitButton (button + menu) — P1 ↗ M3 Expressive, shadcn ButtonGroup · `claude/rk-split-button`
+- [x] SplitButton (button + menu) — P1 ↗ M3 Expressive, shadcn ButtonGroup · `claude/rk-split-button`
 
 - [ ] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select) · `claude/rk-combobox`
 
