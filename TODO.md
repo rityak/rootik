@@ -62,7 +62,7 @@ below once the batch is in.
 
 - [x] DataTable row selection checkboxes (`useSelection`, Shift ranges, select all) + keyboard-reachable scroll wrapper for Table (`tabIndex=0` + label when it overflows) — P1 ↗ Primer ScrollableRegion · `claude/rk-data-selection`
 
-- [ ] Submenus in Menu — P1 (Menubar follows in batch 2) · `claude/rk-menu-submenus`
+- [x] Submenus in Menu — P1 (Menubar follows in batch 2) · `claude/rk-menu-submenus`
 
 - [ ] Exit animations for dialog/popover (`allow-discrete`) — P1 · `claude/rk-exit-animations`
 
