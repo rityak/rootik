@@ -40,7 +40,7 @@ src/
   index.ts          public exports
   lib/              cx, inline icons, floating (popover positioning), hooks
   theme/            appearance model, RootikProvider, AppearanceSettings
-  components/       one file per component family: x.tsx + x.css + x.stories.tsx
+  components/       one file per component family (x.tsx + x.css); stories in src/stories/
 ```
 
 ## Rules
@@ -55,7 +55,9 @@ src/
 - Accessibility is not optional: keyboard nav per ARIA APG, labels for icon-only controls,
   `:focus-visible` ring, `prefers-reduced-motion` (tokens zero durations via `--rk-motion`).
 - Every component gets a story; stories double as the visual spec. Check new UI in the browser.
-- New component → update `TODO.md` and export it from `src/index.ts`.
+- New component → update `TODO.md` and export it from `src/index.ts`. Components built in parallel PRs get
+  their own module + story file, registered up front (stub module, `index.ts`/`styles.css` lines) so the PRs
+  never edit the same lines; icons a component alone needs are defined locally with `icon()` from lib/icons.
 - Code comments: short, in English, only for the non-obvious "why".
 
 ## Style — "Graphite & Iris"

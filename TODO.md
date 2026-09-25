@@ -7,6 +7,73 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 Magic UI, M3 Expressive) or from new web platform features; component inventories checked against Mantine 9.6, Ark 5.39,
 React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd 6.6, Primer 38. `★` = own idea.
 
+## Batch 1 — one PR per item
+
+Parallel PRs on top of the foundation PR; each touches only its own module (stubs are registered in
+`index.ts`/`styles.css` up front), a new story file and its own line here — blank lines between items keep
+those one-line edits conflict-free. Merge with merge commits (not squash). Folded back into the sections
+below once the batch is in.
+
+- [x] Foundation: `useHotkey` skips typing targets, `useClipboard`, `announce()`, `format*` parts, `useSelection`, CopyButton, icons (`icon()` exported) and labels for the batch, module stubs · `claude/dreamy-franklin-e2kev1`
+
+- [ ] Truncate — single/multi-line ellipsis that shows the full text in a Tooltip only when actually truncated — P1 ★ ↗ Primer Truncate · `claude/rk-truncate`
+
+- [ ] Meter — `<meter>` semantics, low/high/optimum pick the tone, stacked sections with hatched rest (disk, quota, CPU) — P1 ↗ Base UI/React Aria/HeroUI Meter, Mantine Progress sections, Tremor CategoryBar · `claude/rk-meter`
+
+- [ ] Tracker — row of small status bars (uptime/latency per hour or day) with tooltips — P1 ★ (UR node health) ↗ Tremor Tracker · `claude/rk-tracker`
+
+- [ ] RollingNumber — digits roll on value change (tabular column + translate, CSS only, off with `--rk-motion`); used by Stat/Gauge — P1 ↗ Mantine RollingNumber, Magic UI Number Ticker · `claude/rk-rolling-number`
+
+- [ ] RelativeTime ("5 s ago", live tick) + duration/timer (session uptime) on `Intl.RelativeTimeFormat` — P1 ↗ Primer RelativeTime, Ark Timer · `claude/rk-relative-time`
+
+- [ ] Item — generic row: media/icon + title + description + trailing actions, sizes, interactive, list container — P1 ↗ shadcn Item · `claude/rk-item`
+
+- [ ] Editable — rename in place: click/Enter edits, Enter commits, Esc cancels (dataset, profile, server names) — P1 ★ ↗ Ark/Chakra Editable · `claude/rk-editable`
+
+- [ ] NumberInput — steppers, min/max clamp, wheel, units — P1 (DT number params) ↗ Base UI NumberField, HeroUI v3 · `claude/rk-number-input`
+
+- [ ] OverflowList (priority+) — items that don't fit collapse into a "+N" menu; used by Toolbar, Tabs, Breadcrumbs, ChipGroup, AvatarGroup — P1 ↗ Mantine 9 OverflowList · `claude/rk-overflow-list`
+
+- [ ] Scroller — horizontal overflow with edge fade + arrows only when scrollable (`scroll-state()`, JS fallback); for Tabs/Dock/ChipGroup on phones — P1 ↗ Mantine 9 Scroller · `claude/rk-scroller`
+
+- [ ] `StickToBottom` scroll container — follow tail, "jump to latest", keeps position on prepended history; base for LogView (and a chat later) — P1 ↗ shadcn MessageScroller · `claude/rk-stick-to-bottom`
+
+- [ ] SelectionBar — floating "N selected" bar with bulk actions + clear, appears with DataTable/ImageGrid selection — P1 ↗ Mantine/Chakra ActionBar · `claude/rk-selection-bar`
+
+- [ ] `confirm()` / `prompt()` — promise-based dialogs over Dialog (`await confirm({ title, tone: "danger" })`) — P1 ↗ Base UI AlertDialog, Primer ConfirmationDialog · `claude/rk-confirm`
+
+- [ ] Code / CodeBlock (copy, line numbers) — P1 (UR SourceCode, DT RunLog) · `claude/rk-code-block`
+
+- [ ] SelectPanel — button-triggered popover: search, checkable list with counts, Clear/Apply footer; for table and chart filters — P1 ↗ Primer SelectPanel · `claude/rk-select-panel`
+
+- [ ] FileDrop / DropZone (hatched) — P1 (DT dataset import) · `claude/rk-file-drop`
+
+- [ ] SettingsGroup / SettingsRow — title + description left, control right, divided rows; extract from the AppearanceSettings layout — P1 ★ · `claude/rk-settings-list`
+
+- [ ] Heatmap (sequential ramp) — P1 (DT co-occurrence) · `claude/rk-heatmap`
+
+- [ ] RangeSlider (two thumbs, min distance) + vertical Slider — P1 ↗ Mantine RangeSlider, Radix/Base UI Slider · `claude/rk-range-slider`
+
+- [ ] Toolbar: `role="toolbar"` without arrow-key roving focus (APG) — add it — P1 ★ · `claude/rk-toolbar-roving`
+
+- [ ] Animated open/close for Disclosure (`interpolate-size: allow-keywords` + `::details-content`); collapsible Card on the same technique instead of unmounting the body — P1 · `claude/rk-disclosure-motion`
+
+- [ ] KeyValue `copyable` values (IDs, hashes, IPs) — copy button on hover — P1 ★ · `claude/rk-kv-copyable`
+
+- [ ] DataTable row selection checkboxes (`useSelection`, Shift ranges, select all) + keyboard-reachable scroll wrapper for Table (`tabIndex=0` + label when it overflows) — P1 ↗ Primer ScrollableRegion · `claude/rk-data-selection`
+
+- [ ] Submenus in Menu — P1 (Menubar follows in batch 2) · `claude/rk-menu-submenus`
+
+- [ ] Exit animations for dialog/popover (`allow-discrete`) — P1 · `claude/rk-exit-animations`
+
+- [ ] Squircle corners: `--rk-corner-shape` token (`corner-shape: squircle`, progressive — plain radius elsewhere) + Settings → Shape "Corners: round / squircle" — P1 ↗ CSS `corner-shape` · `claude/rk-squircle`
+
+- [ ] Table view toggle for every chart (a11y) — P1 · `claude/rk-chart-table`
+
+- [ ] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1 · `claude/rk-logic-tests`
+
+- [ ] Light theme recipe/example token override (docs + story) — P1 · `claude/rk-light-theme`
+
 ## Foundation
 
 - [x] Tokens (`tokens.css`): OKLCH neutrals from 2 knobs, accent + derived (soft/line/on-accent via relative color), status, 6-slot validated chart palette, geometry from density, type scale from base size, depth, hatch texture, motion
@@ -20,27 +87,23 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] CI (`.github/workflows/ci.yml`): typecheck, `biome ci`, unit tests, Ladle build on push to main and PRs
 - [x] Strict Biome: extra rules on top of `recommended`, kit code may import only peer deps (no dev deps like lucide-react), `noHexColors`, GritQL plugin `biome/untinted-neutral.grit` (translucent `oklch(L 0 0 / a)` overlays)
 - [ ] Label-on-fill token (`--rk-on-danger` or a generic `--rk-on-tone`) instead of hardcoded `oklch(0.99 0 0)` in Button armed and TitleBar close hover, `oklch(0.15 0 0)` on the custom swatch — P2 ★
-- [ ] Light theme recipe/example token override (docs + story) — P1
 - [ ] Dist build (`bun build` + d.ts) for npm publishing; now consumed from source — P2
 - [ ] Visual regression (Playwright screenshots of stories), as a CI job on top of the Ladle build — P2
-- [ ] Unit checks for pure logic (`niceTicks`, `pageRange`, `computePosition`, `toCssVars`) — P1
-- [ ] Squircle corners: `--rk-corner-shape` token (`corner-shape: squircle`, progressive — plain radius elsewhere) + Settings → Shape "Corners: round / squircle" — P1 ↗ CSS `corner-shape`
 - [ ] Floating on CSS anchor positioning (`position-anchor`, `position-try-fallbacks`), `computePosition` stays as fallback; anchored container queries so a flipped popover animates from the anchor side — P2 ↗ CSS anchor positioning
 - [ ] Sliding indicator (Tabs/SegmentedControl/Dock) anchored to the active item instead of measuring in `lib/indicator.ts` — P2 ↗ CSS anchor positioning
 - [ ] Scroll shadows: sticky table head / PageHeader get a shadow only while content is scrolled under them (`@container scroll-state()`) — P2 ↗ CSS scroll-state queries
 - [ ] Pointer spotlight on interactive cards (glow follows the pointer via `--x/--y`, ≤ 16%), a material option — P2 ↗ Linear/Vercel, Magic UI
 - [ ] `llms.txt` generated from stories (component → props → story example) so AI assistants use the kit correctly during migrations — P2 ↗ HeroUI v3, Mantine 9, shadcn registry
-- [ ] `useHotkey` fires inside inputs: plain and `shift+` combos (e.g. `shift+?`) swallow typing — skip editable targets unless the combo has `mod` — P1 ★
+- [x] `useHotkey` fires inside inputs: plain and `shift+` combos (e.g. `shift+?`) swallow typing — skip editable targets unless the combo has `mod` — P1 ★
 - [ ] Scoped appearance: `<Scope density="compact" accent=…>` writes the same CSS vars on a subtree (dense table inside a roomy page) — P2 ★ ↗ Radix Themes nested Theme
 
 ## Utilities & hooks
 
-- [ ] Format helpers on `Intl` returning parts `{ value, unit }` so Stat/charts render big number + small unit: `formatBytes`, `formatBitrate`, `formatDuration`, `formatPercent`, `formatNumber` — P1 ★ ↗ Ark/Chakra Format, Mantine NumberFormatter
-- [ ] `useSelection` — single/multi, Shift range, Ctrl/⌘ toggle, select all; shared by DataTable, Tree, ImageGrid, Item lists — P1 ↗ Mantine use-selection
+- [x] Format helpers on `Intl` returning parts `{ value, unit }` so Stat/charts render big number + small unit: `formatBytes`, `formatBitrate`, `formatDuration`, `formatPercent`, `formatNumber` — P1 ★ ↗ Ark/Chakra Format, Mantine NumberFormatter
+- [x] `useSelection` — single/multi, Shift range, Ctrl/⌘ toggle, select all; shared by DataTable, Tree, ImageGrid, Item lists — P1 ↗ Mantine use-selection
 - [ ] `useVirtual` — one windowing hook for LogView, DataTable, Tree, ImageGrid — P1 ↗ React Aria Virtualizer, antd Listy
-- [ ] `confirm()` / `prompt()` — promise-based dialogs over Dialog (`await confirm({ title, tone: "danger" })`) — P1 ↗ Base UI AlertDialog, Primer ConfirmationDialog
-- [ ] `announce()` — live region for screen readers (copied, saved, "12 results") — P1 ↗ Primer live-region
-- [ ] `useClipboard` (copied state + reset); base for CopyButton, CodeBlock, KeyValue `copyable` — P1 ↗ Mantine use-clipboard, Ark Clipboard
+- [x] `announce()` — live region for screen readers (copied, saved, "12 results") — P1 ↗ Primer live-region
+- [x] `useClipboard` (copied state + reset); base for CopyButton, CodeBlock, KeyValue `copyable` — P1 ↗ Mantine use-clipboard, Ark Clipboard
 - [ ] `usePersistentState` — public `readStorage`/`writeStorage` with cross-tab sync (`storage` event) — P2 ★
 - [ ] `useInterval` / polling that pauses while the document is hidden (dashboard refresh) — P2 ↗ Mantine use-interval + use-document-visibility
 - [ ] `useMediaQuery`, `useElementSize` — P2 ↗ Mantine hooks
@@ -54,7 +117,7 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] IconButton — label = aria-label + tooltip, round — DT IconButton, UR `size=icon*`
 - [x] ButtonGroup
 - [x] ConfirmButton — two-step destructive (UR `on`/armed `Remove`)
-- [ ] CopyButton — icon swaps to a check on success, `announce()` — P1 (needed by CodeBlock, LogView, KeyValue) ↗ Ark Clipboard, Mantine CopyButton
+- [x] CopyButton — icon swaps to a check on success, `announce()` — P1 (needed by CodeBlock, LogView, KeyValue) ↗ Ark Clipboard, Mantine CopyButton
 - [ ] SplitButton (button + menu) — P1 ↗ M3 Expressive, shadcn ButtonGroup
 
 ## Inputs & forms
@@ -70,9 +133,6 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] ChoiceCards — radio cards with description/note — UR Segment
 - [x] ChipGroup — toggle chips multi/single, counts — DT MultiSelectField
 - [x] ColorSwatches — presets + native custom picker — DT color param
-- [ ] RangeSlider (two thumbs, min distance) + vertical Slider — P1 ↗ Mantine RangeSlider, Radix/Base UI Slider
-- [ ] Editable — rename in place: click/Enter edits, Enter commits, Esc cancels (dataset, profile, server names) — P1 ★ ↗ Ark/Chakra Editable
-- [ ] SelectPanel — button-triggered popover: search, checkable list with counts, Clear/Apply footer; for table and chart filters — P1 ↗ Primer SelectPanel
 - [ ] InputGroup addons — text prefix/suffix segments (`https://`, `px`, `ms`), attached buttons — P2 ↗ shadcn/HeroUI/Chakra InputGroup
 - [ ] ColorPicker in OKLCH — L/C area, hue + alpha sliders, text input, EyeDropper API button; also for the AppearanceSettings accent — P2 ↗ Ark/HeroUI/React Aria ColorPicker
 - [ ] ChoiceCards `multiple` (checkbox cards) — P2 ↗ Radix Themes CheckboxCards, Chakra CheckboxCard
@@ -80,13 +140,11 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [ ] Fieldset — native `<fieldset>` + legend, `disabled` covers the whole group; used by SchemaForm — P2 ↗ Base UI/Mantine Fieldset
 - [ ] Form on the native constraint API — `validity` → Field error, focus the first invalid field on submit — P2 ↗ Base UI Form, React Aria Form
 - [ ] TreeSelect / Cascader — P2 ↗ Mantine 9, antd
-- [ ] NumberInput — steppers, min/max clamp, wheel, units — P1 (DT number params) ↗ Base UI NumberField, HeroUI v3
 - [ ] Combobox / Autocomplete — filterable select, async options (loading + empty state) — P1 (DT dynamic-select)
 - [ ] MultiSelect / TagInput as a TokenField — tokens inline with the text, autocomplete, auto-tokenize on separator; also `key:value` filter tokens for SearchInput — P1 (DT caption tags) ↗ React Aria TokenField
 - [ ] PasswordInput (reveal) — P2
 - [ ] OTP / PinInput — per-cell input, paste, autofill (`autocomplete="one-time-code"`) — P2 ↗ Base UI OTPField, Ark PinInput
 - [ ] Select `native` variant on `appearance: base-select` (real `<select>` in kit styling) for simple cases — P2 ↗ customizable select
-- [ ] FileDrop / DropZone (hatched) — P1 (DT dataset import)
 - [ ] PathField — stays in DT (needs its FS API); build on Input + Dialog
 - [ ] DateInput / DateRange presets (Last 1h / 24h / 7d / custom) + TimeInput — P2 (native `<input type=date>` styled first) ↗ Mantine dates, React Aria DatePicker
 - [ ] SchemaForm (generic ParamsForm: string/text/number/slider/select/multi/color/boolean) — P1, reuse AppearanceSettings renderer — DT ParamsForm
@@ -106,15 +164,8 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] Nest — nested option group — UR Nest
 - [x] Divider (label, vertical)
 - [x] Progress (hatched rest, indeterminate), ProgressRing, Spinner, Skeleton — DT ProgressBar
-- [ ] RollingNumber — digits roll on value change (tabular column + translate, CSS only, off with `--rk-motion`); used by Stat/Gauge — P1 ↗ Mantine RollingNumber, Magic UI Number Ticker
-- [ ] Item — generic row: media/icon + title + description + trailing actions, sizes, interactive, list container — P1 ↗ shadcn Item
-- [ ] RelativeTime ("5 s ago", live tick) + duration/timer (session uptime) on `Intl.RelativeTimeFormat` — P1 ↗ Primer RelativeTime, Ark Timer
 - [ ] Text shimmer for pending labels ("Connecting…", "Indexing…") via `background-clip: text` — P2 ↗ AI UIs, Magic UI
 - [ ] Card `data-state="running"`: light beam travelling along the gradient rim (`@property` angle + conic gradient), status only — P2 ↗ Magic UI Border Beam
-- [ ] Truncate — single/multi-line ellipsis that shows the full text in a Tooltip only when actually truncated — P1 ★ ↗ Primer Truncate
-- [ ] Meter — `<meter>` semantics, low/high/optimum pick the tone, stacked sections with hatched rest (disk, quota, CPU) — P1 ↗ Base UI/React Aria/HeroUI Meter, Mantine Progress sections, Tremor CategoryBar
-- [ ] Tracker — row of small status bars (uptime/latency per hour or day) with tooltips — P1 ★ (UR node health) ↗ Tremor Tracker
-- [ ] KeyValue `copyable` values (IDs, hashes, IPs) — copy button on hover — P1 ★
 - [ ] Lightbox / ImageViewer — fullscreen preview, zoom/pan, prev/next, keyboard; pairs with ImageGrid — P1 (DT gallery) ↗ antd Image preview
 - [ ] Highlight — search matches via CSS Custom Highlight API (`::highlight()`, no DOM wrapping) for CommandPalette, Tree filter, DataTable search — P2 ↗ Mantine/Ark/Chakra Highlight
 - [ ] Indicator — dot/count pinned to the corner of any element (avatar, icon button) — P2 ↗ Mantine Indicator, Chakra Float
@@ -124,7 +175,6 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [ ] Spoiler — clamp long text with a fade + "Show more" — P2 ↗ Mantine Spoiler
 - [ ] EmptyState presets/tones (success, error, no access, offline) — P2 ↗ antd Result, Primer Blankslate
 - [ ] Busy overlay for a region — `inert` + dim + spinner over a card/table while refetching — P2 ↗ Mantine LoadingOverlay
-- [ ] Code / CodeBlock (copy, line numbers) — P1 (UR SourceCode, DT RunLog)
 - [ ] LogView — virtualized, levels, follow-tail — P1 (DT LogDock/RunLog, UR Logs/Console); built on `StickToBottom` (Layout)
 - [ ] Timeline — P2
 - [ ] ImageGrid / Thumbnail (selection, lazy) — P1 (DT gallery)
@@ -140,15 +190,12 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] Drawer / bottom sheet (Dialog placements)
 - [x] CommandPalette — groups, keywords, shortcuts — DT CommandPalette
 - [x] Toast / Toaster — tones, action, sticky, loading→done update, pause on hover — DT Tasks notifications
-- [ ] Submenus in Menu — P1 (blocks Menubar)
 - [ ] Menubar — desktop File/Edit/View bar next to TitleBar, APG menubar keyboard (arrows move between menus, hover-to-switch once open) — P1 ↗ Mantine 9.4, Base UI, Radix
 - [ ] Menu radio items — P2
 - [ ] Menu async loading + empty state — P2 ↗ React Aria 1.21
 - [ ] HoverCard — interactive popover on hover/focus/long press; `interestfor` where supported, JS delay fallback — P2 ↗ React Aria PreviewTrigger
 - [ ] Tooltip on `interestfor` + `popover="hint"` (native hover/focus delays and Esc), current JS as fallback — P2 ↗ interest invokers
-- [ ] Exit animations for dialog/popover (`allow-discrete`) — P1
 - [ ] Toast stack: collapsed deck that expands on hover/focus, swipe to dismiss — P2 ↗ Sonner
-- [ ] SelectionBar — floating "N selected" bar with bulk actions + clear, appears with DataTable/ImageGrid selection — P1 ↗ Mantine/Chakra ActionBar
 - [ ] Tour — step-by-step coach marks anchored to elements — P2 ↗ Ark/antd Tour
 
 ## Navigation
@@ -172,13 +219,7 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] PageHeader (sm/lg), PageBody, Toolbar + Spacer, ActionBar, StatusBar (progress line) — DT Page.tsx, UR Toolbar
 - [x] ResizablePanel — pointer + keyboard, persisted — DT ResizableSidebar, LogDock
 - [x] Disclosure (native details, exclusive accordion via `name`)
-- [ ] Animated open/close for Disclosure (`interpolate-size: allow-keywords` + `::details-content`); collapsible Card on the same technique instead of unmounting the body — P1
-- [ ] OverflowList (priority+) — items that don't fit collapse into a "+N" menu; used by Toolbar, Tabs, Breadcrumbs, ChipGroup, AvatarGroup — P1 ↗ Mantine 9 OverflowList
-- [ ] Scroller — horizontal overflow with edge fade + arrows only when scrollable (`scroll-state()`, JS fallback); for Tabs/Dock/ChipGroup on phones — P1 ↗ Mantine 9 Scroller
-- [ ] `StickToBottom` scroll container — follow tail, "jump to latest", keeps position on prepended history; base for LogView (and a chat later) — P1 ↗ shadcn MessageScroller
 - [ ] FloatingWindow — draggable/resizable non-modal panel (inspector, log, preview) — P2 ↗ Mantine FloatingWindow, Ark FloatingPanel
-- [ ] Toolbar: `role="toolbar"` without arrow-key roving focus (APG) — add it — P1 ★
-- [ ] SettingsGroup / SettingsRow — title + description left, control right, divided rows; extract from the AppearanceSettings layout — P1 ★
 - [ ] Responsive AppShell — below a container width the sidebar turns into a Drawer, header gets a menu button (layout.css has no breakpoints yet) — P2 ★ ↗ Mantine AppShell + Burger
 - [ ] MasterDetail — list + detail side by side, stacked with a back button when narrow — P2 ★
 - [ ] DataState — one switch for loading (Skeleton) / error (Callout + retry) / empty (EmptyState) / content — P2 ★
@@ -191,10 +232,9 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] Table — styled native table, density/sticky/zebra/framed — UR Table
 - [x] DataTable — columns, client/server sort, row click/selection, empty — DT TagTable, UR NodeTable/ReportTable
 - [x] Tree — keyboard per APG, lazy nodes, trailing, indent guides — DT FolderTree/TensorTree, UR NodeTree
-- [ ] DataTable: row selection checkboxes, column resize, virtualization — P1
+- [ ] DataTable: column resize, virtualization — P1
 - [ ] Tree: virtualization for large models, drag & drop — P2
 - [ ] DataTable tree rows — expandable rows with indent guides (tree with columns, Finder-like) — P1 (candidates: DT TensorTree, UR NodeTree) ↗ React Aria Table
-- [ ] Scrollable Table/regions are not keyboard-reachable — focusable wrapper (`tabIndex=0` + label) when content overflows — P1 ↗ Primer ScrollableRegion
 - [ ] Tree: tri-state checkboxes, multi-select, type-to-filter — P2 ↗ Ark TreeView, antd Tree
 - [ ] DataTable: column visibility menu, pinned first column, inline cell edit — P2 ↗ antd, Primer DataTable
 - [ ] Sortable list — reorder by drag and by keyboard (Space lifts, arrows move) — P2 ↗ React Aria useDragAndDrop
@@ -206,7 +246,6 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] LineChart — multi-series, area, gaps, crosshair tooltip, legend — DT RunCharts, UR TrafficChart
 - [x] Gauge — segmented arc
 - [x] Legend, `seriesColor`, `niceTicks`, `formatCompact`
-- [ ] Heatmap (sequential ramp) — P1 (DT co-occurrence)
 - [ ] Scatter (log axes) — P2 (DT tag scatter)
 - [ ] StackedBar / Donut — P2
 - [ ] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList
@@ -215,7 +254,6 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [ ] Waffle — part-of-whole grid with hatched rest — P2 ↗ Mantine WaffleChart
 - [ ] Treemap — composition (dataset classes, disk usage) — P2 ↗ Mantine Treemap
 - [ ] Histogram via a `bin()` helper on top of BarChart — P2 ★ (DT distributions)
-- [ ] Table view toggle for every chart (a11y) — P1
 
 ## Not planned (2026-09 review)
 
