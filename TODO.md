@@ -28,7 +28,7 @@ below once the batch is in.
 
 - [x] Item — generic row: media/icon + title + description + trailing actions, sizes, interactive, list container — P1 ↗ shadcn Item · `claude/rk-item`
 
-- [ ] Editable — rename in place: click/Enter edits, Enter commits, Esc cancels (dataset, profile, server names) — P1 ★ ↗ Ark/Chakra Editable · `claude/rk-editable`
+- [x] Editable — rename in place: click/Enter edits, Enter commits, Esc cancels (dataset, profile, server names) — P1 ★ ↗ Ark/Chakra Editable · `claude/rk-editable`
 
 - [ ] NumberInput — steppers, min/max clamp, wheel, units — P1 (DT number params) ↗ Base UI NumberField, HeroUI v3 · `claude/rk-number-input`
 
