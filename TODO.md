@@ -42,7 +42,7 @@ module, so any merge order works.
 
 - [ ] DataState — one switch for loading (Skeleton) / error (Callout + retry) / empty (EmptyState) / content — P2 ★ · `claude/rk-data-state`
 
-- [ ] Busy overlay for a region — `inert` + dim + spinner over a card/table while refetching — P2 ↗ Mantine LoadingOverlay · `claude/rk-busy-overlay`
+- [x] Busy overlay for a region — `inert` + dim + spinner over a card/table while refetching — P2 ↗ Mantine LoadingOverlay · `claude/rk-busy-overlay`
 
 - [ ] QrCode — zero-dep SVG encoder (share a connection/subscription link) — P2 ↗ Ark/Chakra/antd QrCode · `claude/rk-qr-code`
 
