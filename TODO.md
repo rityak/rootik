@@ -64,7 +64,7 @@ below once the batch is in.
 
 - [x] Submenus in Menu — P1 (Menubar follows in batch 2) · `claude/rk-menu-submenus`
 
-- [ ] Exit animations for dialog/popover (`allow-discrete`) — P1 · `claude/rk-exit-animations`
+- [x] Exit animations for dialog/popover (`allow-discrete`) — P1 · `claude/rk-exit-animations`
 
 - [ ] Squircle corners: `--rk-corner-shape` token (`corner-shape: squircle`, progressive — plain radius elsewhere) + Settings → Shape "Corners: round / squircle" — P1 ↗ CSS `corner-shape` · `claude/rk-squircle`
 

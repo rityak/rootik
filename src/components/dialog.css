@@ -14,16 +14,47 @@ html:has(.rk-dialog[open]) {
   color: var(--rk-text);
   overflow: visible;
   outline: none;
+  /* closed state; transitions run both ways (exit keeps it rendered and in the top layer) */
+  opacity: 0;
+  scale: 0.96;
+  translate: 0 8px;
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-ease),
+    translate var(--rk-dur) var(--rk-ease),
+    display var(--rk-dur) allow-discrete,
+    overlay var(--rk-dur) allow-discrete;
 
   &::backdrop {
     background: var(--rk-scrim);
     backdrop-filter: blur(calc(var(--rk-blur) * 0.2));
-    transition: opacity var(--rk-dur-slow) var(--rk-ease);
+    opacity: 0;
+    transition:
+      opacity var(--rk-dur) var(--rk-ease),
+      display var(--rk-dur) allow-discrete,
+      overlay var(--rk-dur) allow-discrete;
   }
 
   &[open] {
     display: flex;
-    animation: rk-dialog-in var(--rk-dur-slow) var(--rk-ease-out);
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+    /* entry is slower than exit */
+    transition-duration: var(--rk-dur-slow);
+    transition-timing-function: var(--rk-ease-out);
+    @starting-style {
+      opacity: 0;
+      scale: 0.96;
+      translate: 0 8px;
+    }
+    &::backdrop {
+      opacity: 1;
+      transition-duration: var(--rk-dur-slow);
+      @starting-style {
+        opacity: 0;
+      }
+    }
   }
 
   &[data-size="sm"] {
@@ -58,17 +89,37 @@ html:has(.rk-dialog[open]) {
     &[data-size="lg"] {
       --rk-dialog-w: 640px;
     }
+  }
+  /* drawers slide from their edge instead of fading in */
+  &:is([data-placement="right"], [data-placement="left"], [data-placement="bottom"]) {
+    opacity: 1;
+    scale: 1;
     &[open] {
-      animation-name: rk-drawer-right;
+      translate: 0 0;
+      @starting-style {
+        opacity: 1;
+        scale: 1;
+      }
+    }
+  }
+  &[data-placement="right"] {
+    translate: 100% 0;
+    &[open] {
+      @starting-style {
+        translate: 100% 0;
+      }
     }
   }
   &[data-placement="left"] {
     margin: 0 auto 0 0;
+    translate: -100% 0;
     & .rk-dialog-panel {
       border-radius: 0 var(--rk-radius-lg) var(--rk-radius-lg) 0;
     }
     &[open] {
-      animation-name: rk-drawer-left;
+      @starting-style {
+        translate: -100% 0;
+      }
     }
   }
   &[data-placement="bottom"] {
@@ -78,32 +129,12 @@ html:has(.rk-dialog[open]) {
     & .rk-dialog-panel {
       border-radius: var(--rk-radius-xl) var(--rk-radius-xl) 0 0;
     }
-    &[open] {
-      animation-name: rk-drawer-bottom;
-    }
-  }
-}
-
-@keyframes rk-dialog-in {
-  from {
-    opacity: 0;
-    scale: 0.96;
-    translate: 0 8px;
-  }
-}
-@keyframes rk-drawer-right {
-  from {
-    translate: 100% 0;
-  }
-}
-@keyframes rk-drawer-left {
-  from {
-    translate: -100% 0;
-  }
-}
-@keyframes rk-drawer-bottom {
-  from {
     translate: 0 100%;
+    &[open] {
+      @starting-style {
+        translate: 0 100%;
+      }
+    }
   }
 }
 
