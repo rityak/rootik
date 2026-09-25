@@ -26,7 +26,7 @@ below once the batch is in.
 
 - [x] RelativeTime ("5 s ago", live tick) + duration/timer (session uptime) on `Intl.RelativeTimeFormat` — P1 ↗ Primer RelativeTime, Ark Timer · `claude/rk-relative-time`
 
-- [ ] Item — generic row: media/icon + title + description + trailing actions, sizes, interactive, list container — P1 ↗ shadcn Item · `claude/rk-item`
+- [x] Item — generic row: media/icon + title + description + trailing actions, sizes, interactive, list container — P1 ↗ shadcn Item · `claude/rk-item`
 
 - [ ] Editable — rename in place: click/Enter edits, Enter commits, Esc cancels (dataset, profile, server names) — P1 ★ ↗ Ark/Chakra Editable · `claude/rk-editable`
 
