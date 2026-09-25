@@ -49,12 +49,20 @@ html {
 .rk-floating {
   opacity: 0;
   scale: 0.97;
+  /* display/overlay allow-discrete keep a closing popover rendered in the top layer while it fades out */
   transition:
     opacity var(--rk-dur) var(--rk-ease),
-    scale var(--rk-dur) var(--rk-ease-out);
+    scale var(--rk-dur) var(--rk-ease-out),
+    display var(--rk-dur) allow-discrete,
+    overlay var(--rk-dur) allow-discrete;
   &[data-placed] {
     opacity: 1;
     scale: 1;
+  }
+  /* closing starts before the toggle event clears data-placed */
+  &[data-placed]:not(:popover-open) {
+    opacity: 0;
+    scale: 0.97;
   }
   &[data-side="bottom"] {
     transform-origin: top;
