@@ -1,1 +1,92 @@
-/* Placeholder: Editable styles land in its own PR (TODO.md, batch 1). */
+.rk-editable {
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  min-width: 0;
+  vertical-align: top;
+  &[data-mono] {
+    font-family: var(--rk-font-mono);
+  }
+}
+
+.rk-editable-view,
+.rk-editable-input {
+  margin: 0 calc(var(--rk-space) * -1.5);
+  padding: 1px calc(var(--rk-space) * 1.5);
+  border: 0;
+  border-radius: calc(var(--rk-radius-control) * 0.7);
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.rk-editable-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  max-width: calc(100% + var(--rk-space) * 3);
+  background: transparent;
+  cursor: text;
+  text-align: start;
+  transition: background-color var(--rk-dur) var(--rk-ease);
+
+  &:hover:not(:disabled) {
+    background: var(--rk-hover);
+  }
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.rk-editable-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  &[data-empty] {
+    color: var(--rk-text-3);
+  }
+}
+
+.rk-editable-icon {
+  flex-shrink: 0;
+  width: 0.85em;
+  height: 0.85em;
+  color: var(--rk-text-3);
+  opacity: 0;
+  transition: opacity var(--rk-dur) var(--rk-ease);
+  .rk-editable-view:is(:hover, :focus-visible) > & {
+    opacity: 1;
+  }
+}
+
+.rk-editable-input {
+  field-sizing: content;
+  min-width: 4ch;
+  max-width: calc(100% + var(--rk-space) * 3);
+  background: var(--rk-well);
+  outline: none;
+  /* inset only: titles and truncating cells clip anything drawn outside the box */
+  box-shadow: inset 0 0 0 1.5px var(--rk-accent-line);
+  &[aria-invalid="true"] {
+    box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--rk-danger) 75%, transparent);
+  }
+  &::placeholder {
+    color: var(--rk-text-3);
+  }
+}
+
+.rk-editable-error {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1;
+  padding: 3px 8px;
+  border-radius: var(--rk-radius-sm);
+  background: var(--rk-surface-3);
+  box-shadow: var(--rk-shadow-2);
+  color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
+  font-family: var(--rk-font-sans);
+  font-size: var(--rk-text-xs);
+  font-weight: 400;
+  white-space: nowrap;
+}
