@@ -34,7 +34,7 @@ const kebab = (s: string) =>
 
 // Ladle story ids and sources: each component links the shortest story that renders it
 const stories: Array<{ id: string; code: string }> = [];
-for (const file of readdirSync(join(root, "src/stories")).filter((f) => f.endsWith(".stories.tsx"))) {
+for (const file of readdirSync(join(root, "src/stories")).filter((f) => f.endsWith(".stories.tsx")).sort()) {
   const src = read(`src/stories/${file}`);
   const family = /export default \{ title: "([^"]+)" \}/.exec(src)?.[1] ?? basename(file, ".stories.tsx");
   const starts = [...src.matchAll(/^export const (\w+): Story/gm)];
@@ -47,7 +47,7 @@ for (const file of readdirSync(join(root, "src/stories")).filter((f) => f.endsWi
 }
 
 const modules = [
-  ...readdirSync(join(root, "src/components"))
+  ...readdirSync(join(root, "src/components")).sort()
     .filter((f) => f.endsWith(".tsx") && f !== "chart-parts.tsx")
     .map((f) => `src/components/${f}`),
   "src/theme/provider.tsx",
@@ -74,7 +74,7 @@ for (const file of modules) {
 }
 
 let hooks = "";
-for (const file of readdirSync(join(root, "src/lib"))
+for (const file of readdirSync(join(root, "src/lib")).sort()
   .filter((f) => /\.tsx?$/.test(f) && !f.includes(".test."))
   .map((f) => `src/lib/${f}`)) {
   const src = read(file);
