@@ -19,6 +19,7 @@ export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   title?: ReactNode;
   description?: ReactNode;
   icon?: ReactNode;
+  iconTone?: Tone;
   /** Header-right controls. */
   actions?: ReactNode;
   footer?: ReactNode;
@@ -34,6 +35,8 @@ export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   onOpenChange?: (open: boolean) => void;
   /** Hover lift for clickable cards. */
   interactive?: boolean;
+  /** Visually marks the card as the current selection. */
+  selected?: boolean;
   /** Heading level of the title, so cards show up in the page outline (h1 is the page title). */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   /**
@@ -49,6 +52,7 @@ export function Card({
   title,
   description,
   icon,
+  iconTone,
   actions,
   footer,
   variant = "default",
@@ -58,6 +62,7 @@ export function Card({
   defaultOpen = true,
   onOpenChange,
   interactive,
+  selected,
   headingLevel = 2,
   running,
   spotlight,
@@ -74,7 +79,11 @@ export function Card({
   const heading = (
     <>
       {collapsible && <ChevronRightIcon className="rk-card-chevron" data-open={isOpen || undefined} />}
-      {icon && <span className="rk-icon rk-card-icon">{icon}</span>}
+      {icon && (
+        <span className="rk-icon rk-card-icon" data-tone={iconTone}>
+          {icon}
+        </span>
+      )}
       <span className="rk-card-titles">
         {/* inside the collapsible button the heading wraps the button instead (headings can't sit in one) */}
         {title !== undefined &&
@@ -95,6 +104,7 @@ export function Card({
       data-variant={variant}
       data-padding={padding}
       data-interactive={interactive || undefined}
+      data-selected={selected || undefined}
       data-running={running || undefined}
       aria-busy={running || undefined}
       onPointerMove={(event) => {

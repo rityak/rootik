@@ -143,6 +143,20 @@
   }
 }
 
+.rk-tab-media {
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 1.5em;
+  max-width: 2.5em;
+  overflow: hidden;
+  border-radius: calc(var(--rk-radius-sm) * 0.7);
+  & > :is(img, svg, video) {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 .rk-tab-badge {
   min-width: 18px;
   padding: 1px 5px;
@@ -435,7 +449,7 @@
   &:active:not(:disabled) .rk-icon {
     scale: 0.96;
   }
-  &[aria-current="page"] {
+  &:is([aria-current="page"], [aria-selected="true"]) {
     background: transparent;
     color: var(--rk-on-inverse);
   }

@@ -37,6 +37,20 @@
   }
 }
 
+.rk-badge-media {
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 1.35em;
+  max-width: 2em;
+  overflow: hidden;
+  border-radius: 0.3em;
+  & > :is(img, svg, video) {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 .rk-badge-dot {
   width: 6px;
   height: 6px;

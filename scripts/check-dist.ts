@@ -1,5 +1,5 @@
 // After `bun run build`: dist must export exactly what src does, and styles.css must be self-contained.
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 const root = join(import.meta.dir, "..");
@@ -12,7 +12,12 @@ const problems = [
   ...missing.map((k) => `missing in dist: ${k}`),
   ...extra.map((k) => `extra in dist: ${k}`),
   ...(css.includes("@import") ? ["styles.css still has @import"] : []),
-
+  ...(["tokens.css", "base.css", "button.css", "text.css"].flatMap((file) =>
+    existsSync(join(root, "dist/css", file)) ? [] : [`missing CSS export: ${file}`],
+  )),
+  ...(["en.js", "en.d.ts", "ru.js", "ru.d.ts"].flatMap((file) =>
+    existsSync(join(root, "dist/labels", file)) ? [] : [`missing labels export: ${file}`],
+  )),
 ];
 if (problems.length > 0) {
   console.error(problems.join("\n"));

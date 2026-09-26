@@ -6,6 +6,7 @@ import {
   useContext,
 } from "react";
 import { cx } from "../lib/cx";
+import type { Tone } from "./progress";
 
 const InList = createContext(false);
 
@@ -14,6 +15,7 @@ export interface ItemProps extends Omit<HTMLAttributes<HTMLElement>, "title" | "
   description?: ReactNode;
   /** Icon in a tinted well. */
   icon?: ReactNode;
+  iconTone?: Tone;
   /** Raw leading media instead of `icon`: Avatar, flag, thumbnail. */
   media?: ReactNode;
   /** Secondary text on the right: ping, size, date. */
@@ -41,6 +43,7 @@ export function Item({
   title,
   description,
   icon,
+  iconTone,
   media,
   meta,
   actions,
@@ -85,7 +88,11 @@ export function Item({
       data-disabled={disabled || undefined}
     >
       {(icon || media) && (
-        <div className="rk-item-media" data-icon={icon ? "" : undefined}>
+        <div
+          className="rk-item-media"
+          data-icon={icon ? "" : undefined}
+          data-tone={icon ? iconTone : undefined}
+        >
           {icon ?? media}
         </div>
       )}
@@ -102,12 +109,26 @@ export function Item({
 export interface ItemGroupProps extends HTMLAttributes<HTMLUListElement> {
   /** divided — hairlines between rows; cards — separate surface rows with a gap. */
   variant?: "plain" | "divided" | "cards";
+  /** Constrains the list and enables its own vertical scrolling. */
+  maxHeight?: number | string;
 }
 
 /** A list of Items (renders `ul` > `li`). */
-export function ItemGroup({ variant = "plain", className, children, ...rest }: ItemGroupProps) {
+export function ItemGroup({
+  variant = "plain",
+  maxHeight,
+  className,
+  style,
+  children,
+  ...rest
+}: ItemGroupProps) {
   return (
-    <ul {...rest} className={cx("rk-item-group", className)} data-variant={variant}>
+    <ul
+      {...rest}
+      className={cx("rk-item-group", className)}
+      data-variant={variant}
+      style={{ ...style, maxHeight }}
+    >
       <InList value>{children}</InList>
     </ul>
   );

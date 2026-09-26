@@ -4,6 +4,7 @@ import {
   type DetailsHTMLAttributes,
   type HTMLAttributes,
   type ReactNode,
+  type Ref,
   useContext,
   useId,
   useLayoutEffect,
@@ -61,6 +62,8 @@ export interface AppShellProps extends HTMLAttributes<HTMLDivElement> {
    * pills turn grey, like native apps. Off for web pages, where devtools or an iframe steal focus.
    */
   dimWhenInactive?: boolean;
+  /** none leaves the shell transparent for an image, video or canvas behind it. */
+  background?: "default" | "none";
   /**
    * Below this shell width (px) the sidebar leaves the layout and opens as a left drawer from a
    * `ShellMenuButton` (phones). 0 disables.
@@ -87,6 +90,13 @@ const MenuIcon = makeIcon(
   </>,
 );
 
+const RestoreIcon = makeIcon(
+  <>
+    <rect x="7" y="5" width="12" height="12" rx="2" />
+    <path d="M5 9v8a2 2 0 0 0 2 2h8" />
+  </>,
+);
+
 /** Opens the sidebar drawer; renders nothing unless the AppShell is in drawer mode. Put it in the header. */
 export function ShellMenuButton(props: Omit<IconButtonProps, "icon" | "label"> & { label?: string }) {
   const { drawer, openDrawer } = useContext(ShellContext);
@@ -107,6 +117,7 @@ export function AppShell({
   compactBelow = 720,
   variant,
   dimWhenInactive,
+  background = "default",
   drawerBelow = 520,
   className,
   style,
@@ -117,6 +128,7 @@ export function AppShell({
   const setting = useAppearanceValue("layout");
   const strings = useLabels();
   const size = useElementSize<HTMLDivElement>();
+  const dockSize = useElementSize<HTMLDivElement>();
   const compact = size.width > 0 && size.width < compactBelow;
   const drawer = Boolean(sidebar) && size.width > 0 && size.width < drawerBelow;
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -132,7 +144,14 @@ export function AppShell({
         data-variant={mode}
         data-compact={compact || undefined}
         data-inactive={(dimWhenInactive && !focused) || undefined}
-        style={{ "--rk-sidebar-w": `${sidebarWidth}px`, ...style } as CSSProperties}
+        data-background={background}
+        style={
+          {
+            "--rk-sidebar-w": `${sidebarWidth}px`,
+            "--rk-dock-height": `${dockSize.height || 56}px`,
+            ...style,
+          } as CSSProperties
+        }
       >
         {(sidebar || header) && (
           <a className="rk-skip" href={`#${mainId}`}>
@@ -176,7 +195,11 @@ export function AppShell({
               {children}
             </main>
             {aside && <aside className={cx("rk-shell-aside", part)}>{aside}</aside>}
-            {dock && <div className="rk-shell-dock">{dock}</div>}
+            {dock && (
+              <div ref={dockSize.ref} className="rk-shell-dock">
+                {dock}
+              </div>
+            )}
           </div>
           {footer && <div className={cx("rk-shell-footer", part)}>{footer}</div>}
         </div>
@@ -186,6 +209,7 @@ export function AppShell({
 }
 
 export interface TitleBarProps extends HTMLAttributes<HTMLElement> {
+  ref?: Ref<HTMLElement>;
   /** Left: logo, app name, status. */
   start?: ReactNode;
   /** Right: actions before the window controls. */
@@ -193,6 +217,8 @@ export interface TitleBarProps extends HTMLAttributes<HTMLElement> {
   /** Window controls appear when handlers are given (frameless Tauri/Electron windows). */
   onMinimize?: () => void;
   onMaximize?: () => void;
+  /** Switches the maximize control to its restore label and icon. */
+  maximized?: boolean;
   onClose?: () => void;
 }
 
@@ -205,15 +231,17 @@ export function TitleBar({
   end,
   onMinimize,
   onMaximize,
+  maximized,
   onClose,
   className,
+  ref,
   children,
   ...rest
 }: TitleBarProps) {
   const strings = useLabels();
   const controls = onMinimize || onMaximize || onClose;
   return (
-    <header data-tauri-drag-region {...rest} className={cx("rk-titlebar", className)}>
+    <header ref={ref} data-tauri-drag-region {...rest} className={cx("rk-titlebar", className)}>
       <div className="rk-titlebar-start" data-tauri-drag-region>
         {start}
       </div>
@@ -225,17 +253,33 @@ export function TitleBar({
         {controls && (
           <div className="rk-titlebar-controls">
             {onMinimize && (
-              <button type="button" aria-label={strings.minimize} onClick={onMinimize}>
+              <button
+                type="button"
+                aria-label={strings.minimize}
+                title={strings.minimize}
+                onClick={onMinimize}
+              >
                 <MinusIcon />
               </button>
             )}
             {onMaximize && (
-              <button type="button" aria-label={strings.maximize} onClick={onMaximize}>
-                <SquareIcon />
+              <button
+                type="button"
+                aria-label={maximized ? strings.restore : strings.maximize}
+                title={maximized ? strings.restore : strings.maximize}
+                onClick={onMaximize}
+              >
+                {maximized ? <RestoreIcon /> : <SquareIcon />}
               </button>
             )}
             {onClose && (
-              <button type="button" aria-label={strings.close} data-close onClick={onClose}>
+              <button
+                type="button"
+                aria-label={strings.close}
+                title={strings.close}
+                data-close
+                onClick={onClose}
+              >
                 <XIcon />
               </button>
             )}

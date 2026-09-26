@@ -17,6 +17,8 @@ import {
   defaultValues,
   type SettingsSection,
   type SettingValue,
+  THEMES,
+  type ThemeName,
   toCssVars,
 } from "./schema";
 
@@ -39,6 +41,8 @@ export interface RootikProviderProps {
   sections?: ReadonlyArray<SettingsSection>;
   /** Override defaults of any key (brand accent, radius…). */
   defaults?: Partial<AppearanceValues>;
+  /** Named built-in theme preset, switchable with one value. */
+  theme?: ThemeName;
   /** Controlled values (store them wherever — server settings, a store). */
   value?: AppearanceValues;
   onChange?: (values: AppearanceValues) => void;
@@ -59,6 +63,7 @@ export function RootikProvider({
   extensions = [],
   sections: baseSections = APPEARANCE_SECTIONS,
   defaults: overrides,
+  theme = "iris",
   value,
   onChange,
   storageKey,
@@ -68,8 +73,8 @@ export function RootikProvider({
   const sections = useMemo(() => [...baseSections, ...extensions], [baseSections, extensions]);
   const strings = useMemo(() => ({ ...LABELS, ...labels }), [labels]);
   const defaults = useMemo(
-    () => ({ ...defaultValues(sections), ...overrides }) as AppearanceValues,
-    [sections, overrides],
+    () => ({ ...defaultValues(sections), ...THEMES[theme], ...overrides }) as AppearanceValues,
+    [sections, theme, overrides],
   );
   const [stored, setStored] = useControllable(value, readStorage<AppearanceValues>(storageKey, {}), onChange);
   const values = useMemo(() => ({ ...defaults, ...stored }), [defaults, stored]);

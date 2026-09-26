@@ -9,6 +9,8 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: "soft" | "solid" | "outline";
   size?: "sm" | "md";
   icon?: ReactNode;
+  /** Raw leading media instead of the square icon slot. */
+  media?: ReactNode;
   /** Leading status dot. */
   dot?: boolean;
   /** Makes it a removable tag. */
@@ -21,6 +23,7 @@ export function Badge({
   variant = "soft",
   size = "md",
   icon,
+  media,
   dot,
   onRemove,
   removeLabel,
@@ -38,7 +41,11 @@ export function Badge({
       data-size={size}
     >
       {dot && <span className="rk-badge-dot" />}
-      {icon && <span className="rk-icon">{icon}</span>}
+      {media ? (
+        <span className="rk-badge-media">{media}</span>
+      ) : (
+        icon && <span className="rk-icon">{icon}</span>
+      )}
       {children}
       {onRemove && (
         <button

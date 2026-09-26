@@ -4,6 +4,8 @@ import { useControllable } from "../lib/hooks";
 import { icon } from "../lib/icons";
 import type { Size } from "./button";
 
+export type PowerButtonSize = "xs" | Size;
+
 const PowerIcon = icon(
   <>
     <path d="M12 2v10" />
@@ -20,7 +22,9 @@ export interface PowerButtonProps
   onChange?: (on: boolean) => void;
   /** Switching in progress (connecting, stopping): a ring spins, clicks still go through so it can be cancelled. */
   pending?: boolean;
-  size?: Size;
+  size?: PowerButtonSize;
+  /** Semantic color used for the on and pending states. */
+  tone?: "accent" | "danger";
   icon?: ReactNode;
 }
 
@@ -32,6 +36,7 @@ export function PowerButton({
   onChange,
   pending,
   size = "md",
+  tone = "accent",
   icon: glyph,
   className,
   onClick,
@@ -44,6 +49,7 @@ export function PowerButton({
       {...rest}
       className={cx("rk-power", className)}
       data-size={size}
+      data-tone={tone === "danger" ? "danger" : undefined}
       data-on={isOn || undefined}
       data-pending={pending || undefined}
       aria-pressed={isOn}

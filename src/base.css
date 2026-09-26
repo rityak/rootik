@@ -225,9 +225,10 @@ html {
   justify-content: center;
 }
 
-.rk-icon > svg {
+.rk-icon svg {
   width: 1em;
   height: 1em;
+  stroke-width: var(--rk-icon-stroke);
 }
 
 @keyframes rk-spin {

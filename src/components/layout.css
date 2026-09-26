@@ -10,6 +10,10 @@
   overflow: hidden;
 }
 
+.rk-shell[data-background="none"] {
+  background: transparent;
+}
+
 .rk-shell-sidebar {
   display: flex;
   flex-shrink: 0;
@@ -50,7 +54,7 @@
   overflow: auto;
   /* keep the last cards reachable above the floating dock */
   &[data-dock] {
-    padding-bottom: 88px;
+    padding-bottom: calc(var(--rk-dock-height) + var(--rk-shell-gap) * 2);
   }
   /* pages inside the shell align with the surfaces around them */
   & > .rk-page-header {

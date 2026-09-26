@@ -57,10 +57,12 @@ export function filterLog(
   lines: ReadonlyArray<LogLine>,
   levels: ReadonlyArray<LogLevel> | null,
   query: RegExp | null,
+  showUnlevelled = true,
 ): number[] {
   const allowed = levels ? new Set(levels) : null;
   const out: number[] = [];
   lines.forEach((line, i) => {
+    if (!showUnlevelled && !line.level) return;
     if (allowed && line.level && !allowed.has(line.level)) return;
     if (query && !matches(query, line.message) && !(line.source && matches(query, line.source))) return;
     out.push(i);
@@ -111,6 +113,8 @@ export interface LogViewProps extends Omit<HTMLAttributes<HTMLDivElement>, "chil
   actions?: ReactNode;
   showTime?: boolean;
   showSource?: boolean;
+  /** Show raw lines without a level; when shown they receive an explicit RAW marker. */
+  showUnlevelled?: boolean;
   lineNumbers?: boolean;
   /** Row height in px (rows are fixed-height for virtualization; long lines scroll sideways). */
   rowHeight?: number;
@@ -136,6 +140,7 @@ export function LogView({
   actions,
   showTime = true,
   showSource = true,
+  showUnlevelled = true,
   lineNumbers,
   rowHeight = 20,
   timeFormat = formatLogTime,
@@ -151,7 +156,10 @@ export function LogView({
   const scroller = useRef<HTMLDivElement>(null);
 
   const matcher = useMemo(() => parseLogQuery(text), [text]);
-  const visible = useMemo(() => filterLog(lines, shownLevels, matcher), [lines, shownLevels, matcher]);
+  const visible = useMemo(
+    () => filterLog(lines, shownLevels, matcher, showUnlevelled),
+    [lines, shownLevels, matcher, showUnlevelled],
+  );
   const counts = useMemo(() => {
     const c: Record<LogLevel, number> = { trace: 0, debug: 0, info: 0, warn: 0, error: 0 };
     for (const l of lines) if (l.level) c[l.level]++;
@@ -234,7 +242,9 @@ export function LogView({
                       {line.time === undefined ? "" : timeFormat(line.time)}
                     </span>
                   )}
-                  {line.level && <span className="rk-log-level">{LEVEL_TAG[line.level]}</span>}
+                  <span className="rk-log-level" data-empty={!line.level || undefined}>
+                    {line.level ? LEVEL_TAG[line.level] : labels.noLevel}
+                  </span>
                   {showSource && line.source && (
                     <span className="rk-log-source">{highlight(line.source, matcher)}</span>
                   )}

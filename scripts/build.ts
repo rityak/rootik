@@ -1,7 +1,7 @@
 // npm build: per-module ESM + declarations from tsc (tree-shakeable, React stays a peer), and one
 // dist/styles.css with everything in @layer rootik. The "source" export condition still resolves src/.
 import { $ } from "bun";
-import { readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 const root = join(import.meta.dir, "..");
@@ -36,4 +36,13 @@ const css = readFileSync(entry, "utf8").replace(IMPORT, (_, path: string, layer:
 });
 if (css.includes("@import")) throw new Error("unresolved @import in styles.css");
 writeFileSync(join(dist, "styles.css"), css);
-console.log("dist: ESM modules + .d.ts, styles.css");
+
+const cssDir = join(dist, "css");
+mkdirSync(cssDir);
+copyFileSync(join(root, "src/tokens.css"), join(cssDir, "tokens.css"));
+copyFileSync(join(root, "src/base.css"), join(cssDir, "base.css"));
+for (const file of readdirSync(join(root, "src/components")).filter((file) => file.endsWith(".css"))) {
+  copyFileSync(join(root, "src/components", file), join(cssDir, file));
+}
+
+console.log("dist: ESM modules + .d.ts, bundled and per-component CSS");

@@ -185,6 +185,8 @@ export function ContextMenu({ children, content, className }: ContextMenuProps) 
 
 export interface MenuItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onSelect"> {
   icon?: ReactNode;
+  /** Raw leading media instead of the square icon slot. */
+  media?: ReactNode;
   /** Shortcut hint on the right. */
   shortcut?: string;
   /** Right-side content (badge, count). */
@@ -198,6 +200,7 @@ export interface MenuItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonEleme
 
 export function MenuItem({
   icon,
+  media,
   shortcut,
   trailing,
   hint,
@@ -226,7 +229,11 @@ export function MenuItem({
         if (!keepOpen) close();
       }}
     >
-      {icon && <span className="rk-icon rk-menu-icon">{icon}</span>}
+      {media ? (
+        <span className="rk-menu-media">{media}</span>
+      ) : (
+        icon && <span className="rk-icon rk-menu-icon">{icon}</span>
+      )}
       <span className="rk-menu-text">
         <span className="rk-truncate">{children}</span>
         {hint && <span className="rk-menu-hint">{hint}</span>}
@@ -241,6 +248,7 @@ export interface MenuSubProps {
   /** The submenu's own item text. */
   label: ReactNode;
   icon?: ReactNode;
+  media?: ReactNode;
   hint?: ReactNode;
   disabled?: boolean;
   /** Submenu items: MenuItem, MenuCheckboxItem, nested MenuSub. */
@@ -253,7 +261,7 @@ export interface MenuSubProps {
  * ←/Esc close it and return to its item; choosing an item closes the whole menu. The panel is a nested
  * popover, so the parent stays open and light dismiss closes both.
  */
-export function MenuSub({ label, icon, hint, disabled, children, className }: MenuSubProps) {
+export function MenuSub({ label, icon, media, hint, disabled, children, className }: MenuSubProps) {
   const { close } = useContext(MenuContext);
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
@@ -310,7 +318,11 @@ export function MenuSub({ label, icon, hint, disabled, children, className }: Me
           })
         }
       >
-        {icon && <span className="rk-icon rk-menu-icon">{icon}</span>}
+        {media ? (
+          <span className="rk-menu-media">{media}</span>
+        ) : (
+          icon && <span className="rk-icon rk-menu-icon">{icon}</span>
+        )}
         <span className="rk-menu-text">
           <span className="rk-truncate">{label}</span>
           {hint && <span className="rk-menu-hint">{hint}</span>}

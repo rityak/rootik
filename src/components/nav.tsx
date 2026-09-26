@@ -22,6 +22,8 @@ export interface TabItem<T extends string = string> {
   value: T;
   label?: ReactNode;
   icon?: ReactNode;
+  /** Raw leading media instead of the square icon slot. */
+  media?: ReactNode;
   /** Tooltip; accessible name of icon-only tabs. */
   hint?: string;
   /** Counter or mark after the label. */
@@ -123,7 +125,11 @@ export function Tabs<T extends string = string>({
             className="rk-tab"
             onClick={() => set(t.value)}
           >
-            {t.icon && <span className="rk-icon">{t.icon}</span>}
+            {t.media ? (
+              <span className="rk-tab-media">{t.media}</span>
+            ) : (
+              t.icon && <span className="rk-icon">{t.icon}</span>
+            )}
             {t.label}
             {t.badge !== undefined && t.badge !== null && (
               <span className="rk-tab-badge rk-num">{t.badge}</span>
@@ -309,6 +315,7 @@ export function NavItem({
   const { collapsed } = useContext(SidebarContext);
   const common = {
     className: "rk-nav-link",
+    "data-rk-nav-item": "",
     "aria-current": active ? ("page" as const) : undefined,
     title: collapsed ? undefined : title,
     onClick,
@@ -416,6 +423,9 @@ export interface DockItem<T extends string = string> {
   /** Spoken badge ("3 new errors"); defaults to the count, or the `newItems` label for a dot. */
   badgeLabel?: string;
   disabled?: boolean;
+  /** Tab id and controlled panel id when Dock uses tab mode. */
+  id?: string;
+  controls?: string;
 }
 
 export interface DockProps<T extends string = string> {
@@ -424,6 +434,8 @@ export interface DockProps<T extends string = string> {
   onChange?: (value: T) => void;
   /** icons — round icon buttons, labels in tooltips; labels — icon + text pills. */
   variant?: "icons" | "labels";
+  /** tabs uses the APG tablist/tab contract instead of page navigation. */
+  mode?: "navigation" | "tabs";
   /** Extra elements after the items: DockSeparator, a primary action. */
   children?: ReactNode;
   className?: string;
@@ -439,6 +451,7 @@ export function Dock<T extends string = string>({
   value,
   onChange,
   variant = "icons",
+  mode = "navigation",
   children,
   className,
   ...rest
@@ -447,11 +460,16 @@ export function Dock<T extends string = string>({
   // a compact AppShell (phone, narrow window, high zoom) has no room for text pills
   const compact = useShellCompact();
   const withLabels = variant === "labels" && !compact;
-  const box = useIndicator(track, '[aria-current="page"]', `${withLabels}:${value}`);
+  const box = useIndicator(
+    track,
+    mode === "tabs" ? '[aria-selected="true"]' : '[aria-current="page"]',
+    `${withLabels}:${value}`,
+  );
   const strings = useLabels();
   return (
     <nav
       aria-label={rest["aria-label"] ?? strings.navigation}
+      role={mode === "tabs" ? "tablist" : undefined}
       className={cx("rk-dock rk-surface", className)}
       data-variant={withLabels ? "labels" : "icons"}
     >
@@ -464,12 +482,22 @@ export function Dock<T extends string = string>({
           />
         )}
         {items.map((item) => {
+          const current = item.value === value;
+          const semantics =
+            mode === "tabs"
+              ? {
+                  role: "tab" as const,
+                  id: item.id,
+                  "aria-controls": item.controls,
+                  "aria-selected": current,
+                }
+              : { "aria-current": current ? ("page" as const) : undefined };
           const button = (
             <button
               key={item.value}
               type="button"
               className="rk-dock-item"
-              aria-current={item.value === value ? "page" : undefined}
+              {...semantics}
               disabled={item.disabled}
               onClick={() => onChange?.(item.value)}
             >

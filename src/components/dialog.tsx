@@ -1,6 +1,7 @@
 import {
   type HTMLAttributes,
   type ReactNode,
+  type RefObject,
   useId,
   useLayoutEffect,
   useMemo,
@@ -28,6 +29,8 @@ export interface DialogProps extends Omit<HTMLAttributes<HTMLDialogElement>, "ti
   dismissible?: boolean;
   hideClose?: boolean;
   bodyClassName?: string;
+  /** Element or selector to focus after opening; defaults to the first form field. */
+  initialFocus?: RefObject<HTMLElement | null> | string;
 }
 
 /**
@@ -46,6 +49,7 @@ export function Dialog({
   hideClose,
   className,
   bodyClassName,
+  initialFocus,
   children,
   ...rest
 }: DialogProps) {
@@ -58,9 +62,18 @@ export function Dialog({
   useLayoutEffect(() => {
     const d = ref.current;
     if (!d) return;
-    if (open && !d.open) d.showModal();
-    else if (!open && d.open) d.close();
-  }, [open]);
+    if (open && !d.open) {
+      d.showModal();
+      const target =
+        typeof initialFocus === "string"
+          ? d.querySelector<HTMLElement>(initialFocus)
+          : (initialFocus?.current ??
+            d.querySelector<HTMLElement>(
+              "[autofocus], input:not([type=hidden]):not([disabled]), select:not([disabled]), textarea:not([disabled]), [contenteditable=true]",
+            ));
+      target?.focus();
+    } else if (!open && d.open) d.close();
+  }, [open, initialFocus]);
 
   return (
     // biome-ignore lint/a11y/useKeyWithClickEvents: backdrop click only; Esc closes natively

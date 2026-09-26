@@ -1,4 +1,5 @@
 import {
+  type HTMLAttributes,
   type KeyboardEvent,
   type PointerEvent,
   type ReactElement,
@@ -132,6 +133,8 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   rows: ReadonlyArray<T>;
   rowKey: (row: T) => string;
   onRowClick?: (row: T) => void;
+  /** Native attributes for each rendered row (data-*, aria-*, className, context-menu handlers). */
+  rowProps?: (row: T, index: number) => HTMLAttributes<HTMLTableRowElement>;
   selectedKey?: string | null;
   /**
    * Row selection with a checkbox column: select-all (indeterminate when partial), Shift ranges. Without
@@ -299,6 +302,7 @@ export function DataTable<T>({
   rows,
   rowKey,
   onRowClick,
+  rowProps,
   selectedKey,
   selection,
   selected,
@@ -644,6 +648,7 @@ export function DataTable<T>({
           const { row, key } = f;
           const isOpen = openSet.has(key);
           const picked = selection ? sel.isSelected(key) : undefined;
+          const custom = rowProps?.(row, i);
           const activate = onRowClick
             ? () => onRowClick(row)
             : selection
@@ -653,6 +658,9 @@ export function DataTable<T>({
           return (
             <tr
               key={key}
+              {...custom}
+              className={custom?.className}
+              style={custom?.style}
               data-key={key}
               data-alt={i % 2 === 1 || undefined}
               aria-rowindex={virtual ? i + 2 : undefined}

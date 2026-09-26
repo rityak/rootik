@@ -19,6 +19,7 @@
   --rk-corner-shape: round;
   --rk-density: 1;
   --rk-font-size: 13px;
+  --rk-icon-stroke: 1.75;
   --rk-font-sans: "Geist Variable", "Geist", "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
   --rk-font-mono:
     "Geist Mono Variable", "Geist Mono", "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;

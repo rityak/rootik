@@ -100,3 +100,62 @@
     box-shadow: inset 2px 0 0 var(--rk-accent);
   }
 }
+
+.rk-code-editor {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--rk-radius-md);
+  background: var(--rk-sunken);
+  box-shadow: inset 0 0 0 1px var(--rk-line);
+
+  & textarea {
+    width: 100%;
+    max-height: var(--rk-code-editor-max, none);
+    min-height: 8em;
+    resize: vertical;
+    padding: calc(var(--rk-space) * 3);
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--rk-text);
+    caret-color: var(--rk-accent-text);
+    font-family: var(--rk-font-mono);
+    font-size: calc(var(--rk-font-size) * 0.9);
+    line-height: 1.65;
+    tab-size: 2;
+  }
+  &:has(textarea:focus-visible) {
+    outline: 2px solid var(--rk-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* Drop-in visual shell for app-owned CodeMirror 6. */
+.rk-code-editor-theme {
+  --rk-editor-selection: color-mix(in oklab, var(--rk-accent) 28%, transparent);
+  --rk-editor-active-line: var(--rk-hover);
+
+  & .cm-editor {
+    background: var(--rk-sunken);
+    color: var(--rk-text);
+    font-family: var(--rk-font-mono);
+    font-size: calc(var(--rk-font-size) * 0.9);
+  }
+  & .cm-gutters {
+    border: 0;
+    background: var(--rk-well-soft);
+    color: var(--rk-text-3);
+  }
+  & .cm-activeLine,
+  & .cm-activeLineGutter {
+    background: var(--rk-editor-active-line);
+  }
+  & .cm-selectionBackground {
+    background: var(--rk-editor-selection);
+  }
+  & .cm-cursor {
+    border-left-color: var(--rk-accent-text);
+  }
+}

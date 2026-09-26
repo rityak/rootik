@@ -19,6 +19,11 @@ export interface AppearanceSettingsProps {
   /** Show "Reset to defaults". */
   resettable?: boolean;
   className?: string;
+  /**
+   * Translates schema copy. Keys are appearance.<section>.title and
+   * appearance.<field>.label|hint|option.<value>.
+   */
+  t?: (key: string, fallback: ReactNode) => ReactNode;
 }
 
 /** Appearance form rendered from the provider's schema — built-in knobs plus project extensions. */
@@ -27,9 +32,11 @@ export function AppearanceSettings({
   variant = "cards",
   resettable = true,
   className,
+  t,
 }: AppearanceSettingsProps) {
   const strings = useLabels();
   const { sections, values, set, reset } = useAppearance();
+  const translate = (key: string, fallback: ReactNode) => t?.(key, fallback) ?? fallback;
   const shown = only
     ? only.map((id) => sections.find((s) => s.id === id)).filter((s) => s !== undefined)
     : sections;
@@ -42,23 +49,26 @@ export function AppearanceSettings({
         return (
           <SettingsRow
             key={f.key}
-            label={f.label}
-            hint={f.hint}
+            label={translate(`appearance.${f.key}.label`, f.label)}
+            hint={f.hint === undefined ? undefined : translate(`appearance.${f.key}.hint`, f.hint)}
             nested={f.children && v ? renderFields(f.children) : undefined}
           >
-            {control(f, v, (next) => set(f.key, next), values)}
+            {control(f, v, (next) => set(f.key, next), values, translate)}
           </SettingsRow>
         );
       });
-
   return (
     <div className={cx("rk-settings", className)} data-variant={variant}>
       {shown.map((s) => (
         <SettingsGroup
           key={s.id}
           variant={variant === "cards" ? "card" : "plain"}
-          title={s.title}
-          description={s.description}
+          title={translate(`appearance.${s.id}.title`, s.title)}
+          description={
+            s.description === undefined
+              ? undefined
+              : translate(`appearance.${s.id}.description`, s.description)
+          }
         >
           {renderFields(s.fields)}
         </SettingsGroup>
@@ -79,7 +89,12 @@ function control(
   v: SettingValue,
   set: (value: SettingValue) => void,
   values: AppearanceValues,
+  t: (key: string, fallback: ReactNode) => ReactNode,
 ): ReactNode {
+  const optionLabel = (value: string, fallback: string) => {
+    const translated = t(`appearance.${f.key}.option.${value}`, fallback);
+    return typeof translated === "string" ? translated : fallback;
+  };
   switch (f.type) {
     case "toggle":
       return <Switch checked={Boolean(v)} onChange={(e) => set(e.target.checked)} />;
@@ -87,14 +102,27 @@ function control(
       return (
         <Select
           size="sm"
-          options={f.options}
+          options={f.options.map((option) => ({
+            ...option,
+            label: optionLabel(option.value, option.label),
+          }))}
           value={String(v)}
           onChange={set}
           className="rk-settings-select"
         />
       );
     case "segmented":
-      return <SegmentedControl size="sm" options={f.options} value={String(v)} onChange={set} />;
+      return (
+        <SegmentedControl
+          size="sm"
+          options={f.options.map((option) => ({
+            ...option,
+            label: optionLabel(option.value, option.label),
+          }))}
+          value={String(v)}
+          onChange={set}
+        />
+      );
     case "slider":
       return (
         <Slider
@@ -108,7 +136,17 @@ function control(
         />
       );
     case "color":
-      return <ColorSwatches options={f.swatches ?? []} value={String(v)} onChange={set} custom />;
+      return (
+        <ColorSwatches
+          options={(f.swatches ?? []).map((option) => ({
+            ...option,
+            label: optionLabel(option.value, option.label),
+          }))}
+          value={String(v)}
+          onChange={set}
+          custom
+        />
+      );
     case "text":
       return (
         <Input

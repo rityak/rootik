@@ -5,6 +5,15 @@ export type AppearanceValues = Record<string, SettingValue>;
 /** CSS custom properties to write; `null` removes a property (falls back to tokens.css). */
 export type CssVars = Record<string, string | null>;
 
+export const THEMES = {
+  iris: { accent: "oklch(0.57 0.2 277)", neutral: "graphite", material: "veil", radius: 18 },
+  ocean: { accent: "oklch(0.58 0.14 245)", neutral: "slate", material: "frost", radius: 16 },
+  ember: { accent: "oklch(0.6 0.19 35)", neutral: "mocha", material: "solid", radius: 12 },
+  mono: { accent: "oklch(0.94 0 0)", neutral: "zinc", material: "solid", radius: 8 },
+} as const satisfies Record<string, Partial<AppearanceValues>>;
+
+export type ThemeName = keyof typeof THEMES;
+
 interface FieldBase {
   /** Unique key in the values record. Dots are just a naming convention ("editor.fontSize"). */
   key: string;

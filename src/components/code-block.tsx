@@ -1,5 +1,6 @@
-import { type HTMLAttributes, type ReactNode, useState } from "react";
+import { type CSSProperties, type HTMLAttributes, type ReactNode, useEffect, useRef, useState } from "react";
 import { cx } from "../lib/cx";
+import { useControllable } from "../lib/hooks";
 import { icon } from "../lib/icons";
 import { useLabels } from "../lib/labels";
 import { IconButton } from "./button";
@@ -102,6 +103,80 @@ export function CodeBlock({
           ))}
         </code>
       </pre>
+    </div>
+  );
+}
+
+export interface CodeEditorProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "title"> {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  title?: ReactNode;
+  language?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
+  autoFocus?: boolean;
+  rows?: number;
+  maxHeight?: number | string;
+  "aria-label"?: string;
+}
+
+/**
+ * Lightweight token-themed code editor. For IDE features keep CodeMirror/Monaco in the app and wrap it
+ * in rk-code-editor-theme to reuse the same editor colors.
+ */
+export function CodeEditor({
+  value,
+  defaultValue = "",
+  onChange,
+  title,
+  language,
+  placeholder,
+  disabled,
+  readOnly,
+  autoFocus,
+  rows = 10,
+  maxHeight,
+  "aria-label": ariaLabel,
+  className,
+  style,
+  ...rest
+}: CodeEditorProps) {
+  const labels = useLabels();
+  const [current, setCurrent] = useControllable(value, defaultValue, onChange);
+  const editor = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => {
+    if (autoFocus) editor.current?.focus();
+  }, [autoFocus]);
+  return (
+    <div
+      {...rest}
+      className={cx("rk-code-editor rk-code-editor-theme", className)}
+      style={
+        {
+          "--rk-code-editor-max": typeof maxHeight === "number" ? `${maxHeight}px` : maxHeight,
+          ...style,
+        } as CSSProperties
+      }
+    >
+      {(title !== undefined || language !== undefined) && (
+        <div className="rk-code-head">
+          <span className="rk-code-title">{title}</span>
+          {language && <span className="rk-code-lang">{language}</span>}
+        </div>
+      )}
+      <textarea
+        ref={editor}
+        value={current}
+        rows={rows}
+        placeholder={placeholder}
+        disabled={disabled}
+        readOnly={readOnly}
+        spellCheck={false}
+        aria-label={ariaLabel ?? (typeof title === "string" ? title : labels.codeEditor)}
+        onChange={(event) => setCurrent(event.target.value)}
+      />
     </div>
   );
 }

@@ -28,6 +28,7 @@ export const LABELS = {
   moveWithArrows: "Move with arrow keys",
   minimize: "Minimize",
   maximize: "Maximize",
+  restore: "Restore",
   dismiss: "Dismiss",
   remove: "Remove",
   clear: "Clear",
@@ -36,6 +37,7 @@ export const LABELS = {
   /** Accessible name of a SearchInput that has no visible label. */
   searchLabel: "Search",
   select: "Select…",
+  none: "— none —",
   notifications: "Notifications",
   navigation: "Navigation",
   openNavigation: "Open navigation",
@@ -108,6 +110,7 @@ export const LABELS = {
   dropFiles: "Drop files here or",
   browseFiles: "browse",
   wrapLines: "Wrap lines",
+  codeEditor: "Code editor",
   moreActions: "More actions",
   showOptions: "Show options",
   removeToken: (label: string): string => `Remove ${label}`,
@@ -119,6 +122,7 @@ export const LABELS = {
   imageCounter: (index: number, count: number): string => `${index} / ${count}`,
   selectItem: "Select",
   logLevels: "Levels",
+  noLevel: "RAW",
   showPassword: "Show password",
   hidePassword: "Hide password",
   /** PinInput cell names. */
