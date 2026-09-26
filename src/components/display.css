@@ -86,7 +86,7 @@
     inset: 0;
     border-radius: 50%;
     background: var(--rk-tone);
-    animation: rk-halo 1.8s var(--rk-ease-out) infinite;
+    animation: rk-halo calc(var(--rk-dur-slow) * 5.6) var(--rk-ease-out) infinite;
     animation-play-state: var(--rk-anim-state, running);
   }
 }
@@ -170,6 +170,27 @@
   border-radius: 50%;
   background: var(--rk-tone);
   box-shadow: 0 0 0 2px var(--rk-surface-1);
+}
+
+/* presence reads by shape too: dot = available, half = away, minus = busy, ring = offline */
+.rk-avatar-status[data-tone="warn"] {
+  background: linear-gradient(90deg, var(--rk-tone) 50%, var(--rk-surface-1) 0);
+  box-shadow:
+    0 0 0 2px var(--rk-surface-1),
+    inset 0 0 0 1.5px var(--rk-tone);
+}
+.rk-avatar-status[data-tone="neutral"] {
+  background: var(--rk-surface-1);
+  box-shadow:
+    0 0 0 2px var(--rk-surface-1),
+    inset 0 0 0 2px var(--rk-tone);
+}
+.rk-avatar-status[data-tone="danger"]::after {
+  content: "";
+  position: absolute;
+  inset: 42% 22%;
+  border-radius: 1px;
+  background: var(--rk-surface-1);
 }
 
 .rk-avatar-group {

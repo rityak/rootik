@@ -1,9 +1,11 @@
 import { type InputHTMLAttributes, type ReactNode, type Ref, useEffect, useId, useRef } from "react";
 import { cx } from "../lib/cx";
 import { mergeRefs, useControllable } from "../lib/hooks";
+import { CheckIcon } from "../lib/icons";
 import { useIndicator } from "../lib/indicator";
+import { useLabels } from "../lib/labels";
 import type { Size } from "./button";
-import { useField } from "./input";
+import { useField, useFieldLabel } from "./input";
 
 type NativeInput = Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "size">;
 
@@ -108,6 +110,7 @@ export function RadioGroup<T extends string = string>({
   className,
   ...rest
 }: RadioGroupProps<T>) {
+  const fieldLabel = useFieldLabel();
   const [current, set] = useControllable<T | undefined>(
     value,
     defaultValue,
@@ -118,6 +121,7 @@ export function RadioGroup<T extends string = string>({
     <div
       role="radiogroup"
       aria-label={rest["aria-label"]}
+      aria-labelledby={rest["aria-label"] ? undefined : fieldLabel}
       className={cx("rk-radio-group", className)}
       data-orientation={orientation}
     >
@@ -139,14 +143,12 @@ export function RadioGroup<T extends string = string>({
   );
 }
 
-export interface SegmentOption<T extends string = string> {
+/** A segment needs a name: a text `label`, or a `hint` (tooltip + accessible name) when it has none. */
+export type SegmentOption<T extends string = string> = {
   value: T;
-  label?: ReactNode;
   icon?: ReactNode;
-  /** Tooltip; also the accessible name for icon-only segments. */
-  hint?: string;
   disabled?: boolean;
-}
+} & ({ label: string; hint?: string } | { label?: ReactNode; hint: string });
 
 export interface SegmentedControlProps<T extends string = string> {
   options: ReadonlyArray<SegmentOption<T>>;
@@ -178,6 +180,7 @@ export function SegmentedControl<T extends string = string>({
   className,
   ...rest
 }: SegmentedControlProps<T>) {
+  const fieldLabel = useFieldLabel();
   const [current, set] = useControllable<T | undefined>(
     value,
     defaultValue ?? options[0]?.value,
@@ -191,6 +194,7 @@ export function SegmentedControl<T extends string = string>({
       ref={track}
       role="radiogroup"
       aria-label={rest["aria-label"]}
+      aria-labelledby={rest["aria-label"] ? undefined : fieldLabel}
       className={cx("rk-segmented", className)}
       data-size={size}
       data-fill={fill || undefined}
@@ -218,7 +222,7 @@ export function SegmentedControl<T extends string = string>({
             value={o.value}
             checked={o.value === current}
             disabled={disabled || o.disabled}
-            aria-label={o.label ? undefined : o.hint}
+            aria-label={typeof o.label === "string" ? undefined : o.hint}
             onChange={() => set(o.value)}
           />
           {o.icon && <span className="rk-icon">{o.icon}</span>}
@@ -254,14 +258,9 @@ export interface ChoiceCardsProps<T extends string = string> {
 
 /** Radio choices as cards with a description: modes, strategies, plans. */
 export function ChoiceCards<T extends string = string>({
-  options,
   value,
   defaultValue,
   onChange,
-  minWidth = 200,
-  name,
-  disabled,
-  className,
   ...rest
 }: ChoiceCardsProps<T>) {
   const [current, set] = useControllable<T | undefined>(
@@ -269,29 +268,87 @@ export function ChoiceCards<T extends string = string>({
     defaultValue,
     onChange as (v: T | undefined) => void,
   );
+  return <Cards {...rest} type="radio" isChecked={(v) => v === current} toggle={set} />;
+}
+
+export interface CheckboxCardsProps<T extends string = string>
+  extends Omit<ChoiceCardsProps<T>, "value" | "defaultValue" | "onChange"> {
+  value?: ReadonlyArray<T>;
+  defaultValue?: ReadonlyArray<T>;
+  onChange?: (value: T[]) => void;
+}
+
+/** Many-of choices as cards (features to enable, datasets to include). Keeps the options' order. */
+export function CheckboxCards<T extends string = string>({
+  value,
+  defaultValue = [],
+  onChange,
+  ...rest
+}: CheckboxCardsProps<T>) {
+  const [current, set] = useControllable<ReadonlyArray<T>>(
+    value,
+    defaultValue,
+    onChange as (v: ReadonlyArray<T>) => void,
+  );
+  return (
+    <Cards
+      {...rest}
+      type="checkbox"
+      isChecked={(v) => current.includes(v)}
+      toggle={(v) =>
+        set(
+          rest.options
+            .map((o) => o.value)
+            .filter((x) => (x === v ? !current.includes(v) : current.includes(x))),
+        )
+      }
+    />
+  );
+}
+
+function Cards<T extends string>({
+  options,
+  minWidth = 200,
+  name,
+  disabled,
+  className,
+  type,
+  isChecked,
+  toggle,
+  ...rest
+}: Omit<ChoiceCardsProps<T>, "value" | "defaultValue" | "onChange"> & {
+  type: "radio" | "checkbox";
+  isChecked: (value: T) => boolean;
+  toggle: (value: T) => void;
+}) {
+  const fieldLabel = useFieldLabel();
   const auto = useId();
   return (
+    // biome-ignore lint/a11y/useAriaPropsSupportedByRole: both roles (radiogroup, group) take a label
     <div
-      role="radiogroup"
+      role={type === "radio" ? "radiogroup" : "group"}
       aria-label={rest["aria-label"]}
+      aria-labelledby={rest["aria-label"] ? undefined : fieldLabel}
       className={cx("rk-choice-cards", className)}
       style={{ gridTemplateColumns: `repeat(auto-fill, minmax(min(${minWidth}px, 100%), 1fr))` }}
     >
       {options.map((o) => (
         <label key={o.value} className="rk-choice-card" data-disabled={disabled || o.disabled || undefined}>
           <input
-            type="radio"
+            type={type}
             className="rk-sr-only"
             name={name ?? auto}
             value={o.value}
-            checked={o.value === current}
+            checked={isChecked(o.value)}
             disabled={disabled || o.disabled}
-            onChange={() => set(o.value)}
+            onChange={() => toggle(o.value)}
           />
           <span className="rk-choice-card-head">
             {o.icon && <span className="rk-icon rk-choice-card-icon">{o.icon}</span>}
             <span className="rk-choice-card-label">{o.label}</span>
-            <span className="rk-choice-card-dot" aria-hidden="true" />
+            <span className="rk-choice-card-dot" data-type={type} aria-hidden="true">
+              {type === "checkbox" && <CheckIcon strokeWidth={3} />}
+            </span>
           </span>
           {o.description && <span className="rk-choice-card-desc">{o.description}</span>}
           {o.note && <span className="rk-choice-card-note">{o.note}</span>}
@@ -333,6 +390,7 @@ export function ChipGroup<T extends string = string>({
   className,
   ...rest
 }: ChipGroupProps<T>) {
+  const fieldLabel = useFieldLabel();
   const [selected, set] = useControllable(value, defaultValue, onChange);
   const toggle = (v: T) => {
     if (single) return set([v]);
@@ -344,7 +402,12 @@ export function ChipGroup<T extends string = string>({
   };
   return (
     // biome-ignore lint/a11y/useSemanticElements: a fieldset would add a legend/border we don't want
-    <div role="group" aria-label={rest["aria-label"]} className={cx("rk-chip-group", className)}>
+    <div
+      role="group"
+      aria-label={rest["aria-label"]}
+      aria-labelledby={rest["aria-label"] ? undefined : fieldLabel}
+      className={cx("rk-chip-group", className)}
+    >
       {options.map((o) => (
         <button
           key={o.value}
@@ -387,6 +450,8 @@ export function ColorSwatches({
   className,
   ...rest
 }: ColorSwatchesProps) {
+  const fieldLabel = useFieldLabel();
+  const strings = useLabels();
   const [current, set] = useControllable<string | undefined>(
     value,
     defaultValue,
@@ -395,7 +460,12 @@ export function ColorSwatches({
   const auto = useId();
   const isPreset = options.some((o) => o.value === current);
   return (
-    <div role="radiogroup" aria-label={rest["aria-label"]} className={cx("rk-swatches", className)}>
+    <div
+      role="radiogroup"
+      aria-label={rest["aria-label"]}
+      aria-labelledby={rest["aria-label"] ? undefined : fieldLabel}
+      className={cx("rk-swatches", className)}
+    >
       {options.map((o) => (
         <label
           key={o.value}
@@ -419,13 +489,13 @@ export function ColorSwatches({
           className="rk-swatch"
           data-custom
           data-checked={(!isPreset && current !== undefined) || undefined}
-          title="Custom color"
+          title={strings.customColor}
           style={{ "--rk-swatch": !isPreset && current ? current : undefined } as React.CSSProperties}
         >
           <input
             type="color"
             className="rk-sr-only"
-            aria-label="Custom color"
+            aria-label={strings.customColor}
             value={toHex(current)}
             onChange={(event) => set(event.target.value)}
           />

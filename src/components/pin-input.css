@@ -17,7 +17,7 @@
 }
 
 .rk-pin-cell {
-  --rk-ctl-edge: var(--rk-line);
+  --rk-ctl-edge: var(--rk-control-edge);
   width: calc(var(--rk-pin-size) * 1.05);
   height: calc(var(--rk-pin-size) * 1.2);
   padding: 0;
@@ -37,16 +37,18 @@
   transition: box-shadow var(--rk-dur) var(--rk-ease);
 
   &[data-filled] {
-    --rk-ctl-edge: var(--rk-line-strong);
+    --rk-ctl-edge: var(--rk-text-3);
   }
   &:hover:not(:disabled) {
-    --rk-ctl-edge: var(--rk-line-strong);
+    --rk-ctl-edge: var(--rk-text-2);
   }
-  &:focus-visible,
   &:focus {
-    box-shadow:
-      inset 0 0 0 1px var(--rk-accent),
-      0 0 0 3px var(--rk-accent-soft);
+    --rk-ctl-edge: var(--rk-accent-line);
+  }
+  /* the kit ring: a 1px edge + faint glow was too weak to track the active cell */
+  &:focus-visible {
+    outline: 2px solid var(--rk-focus);
+    outline-offset: 1px;
   }
   [data-invalid] & {
     --rk-ctl-edge: color-mix(in oklab, var(--rk-danger) 70%, transparent);

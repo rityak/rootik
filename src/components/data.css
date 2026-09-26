@@ -1,12 +1,18 @@
 .rk-table-wrap {
   min-width: 0;
   overflow: auto;
+  /* sticky head gets its shadow only while rows are scrolled under it (where supported) */
+  container-type: scroll-state;
   &[data-framed] {
     border-radius: var(--rk-radius-md);
     box-shadow: inset 0 0 0 1px var(--rk-line);
   }
   &:focus-visible {
     outline-offset: -2px;
+  }
+  /* the vertical scrollbar starts under a sticky header */
+  &:has(> [data-sticky])::-webkit-scrollbar-track:vertical {
+    margin-top: 34px;
   }
 }
 
@@ -95,6 +101,15 @@
     top: 0;
     z-index: 1;
     background: var(--rk-surface-1);
+    transition: box-shadow var(--rk-dur) var(--rk-ease);
+  }
+}
+
+@container scroll-state(scrollable: top) {
+  .rk-table[data-sticky] thead th {
+    box-shadow:
+      inset 0 -1px 0 var(--rk-line),
+      0 6px 12px -8px oklch(var(--rk-shade) / 0.7);
   }
 }
 
@@ -281,6 +296,66 @@
   }
 }
 
+/* virtualized: the tree is its own scroller, rows sit at measured offsets */
+.rk-tree[data-virtual] {
+  display: block;
+  overflow: auto;
+  & .rk-tree-row {
+    height: calc(var(--rk-h-sm));
+  }
+}
+
+.rk-tree-space {
+  position: relative;
+}
+
+/* drop targets while dragging a row */
+.rk-tree-row[data-drop="inside"] {
+  background: var(--rk-accent-soft);
+  box-shadow: inset 0 0 0 1px var(--rk-accent-line);
+}
+
+.rk-tree-row:is([data-drop="before"], [data-drop="after"])::after {
+  content: "";
+  position: absolute;
+  left: calc(4px + var(--rk-depth) * 16px);
+  right: 4px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--rk-accent);
+}
+
+.rk-tree-row[data-drop="before"]::after {
+  top: -1px;
+}
+
+.rk-tree-row[data-drop="after"]::after {
+  bottom: -1px;
+}
+
+.rk-tree-check {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1.5px var(--rk-control-edge);
+  color: var(--rk-on-accent);
+  font-size: 11px;
+  & svg {
+    stroke-width: 3;
+    opacity: 0;
+  }
+  &[data-state] {
+    background: var(--rk-accent);
+    box-shadow: none;
+    & svg {
+      opacity: 1;
+    }
+  }
+}
+
 .rk-tree-toggle {
   display: grid;
   place-items: center;
@@ -324,4 +399,25 @@
     color: inherit;
     opacity: 0.7;
   }
+}
+
+/* pinned first column: opaque so rows scroll under it; the row tint is layered on top */
+.rk-table .rk-table-pin {
+  --rk-pin-tint: transparent;
+  position: sticky;
+  z-index: 1;
+  background: linear-gradient(var(--rk-pin-tint), var(--rk-pin-tint)), var(--rk-surface-1);
+  &[data-pin-edge] {
+    box-shadow: inset -1px 0 0 var(--rk-line);
+  }
+  tr:hover > & {
+    --rk-pin-tint: var(--rk-hover);
+  }
+  tr[aria-selected="true"] > & {
+    --rk-pin-tint: var(--rk-accent-soft);
+  }
+}
+
+.rk-table thead .rk-table-pin {
+  z-index: 2;
 }

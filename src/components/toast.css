@@ -6,9 +6,6 @@
   border: 0;
   background: transparent;
   overflow: visible;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   width: min(380px, 100vw);
   pointer-events: none;
 
@@ -17,7 +14,6 @@
   }
   &[data-position^="bottom"] {
     bottom: 0;
-    justify-content: flex-end;
   }
   &[data-position^="top"] {
     top: 0;
@@ -34,7 +30,16 @@
   }
 }
 
+.rk-toaster-list {
+  position: relative;
+  transition: height var(--rk-dur-slow) var(--rk-ease-out);
+}
+
 .rk-toast {
+  position: absolute;
+  inset-inline: 0;
+  translate: var(--rk-toast-x, 0) var(--rk-toast-y, 0);
+  scale: var(--rk-toast-scale, 1);
   display: flex;
   align-items: flex-start;
   gap: 10px;
@@ -45,17 +50,40 @@
   box-shadow: var(--rk-shadow-pop);
   font-size: var(--rk-text-sm);
   pointer-events: auto;
+  overflow: hidden;
+  touch-action: pan-y;
   transition:
     opacity var(--rk-dur-slow) var(--rk-ease),
-    translate var(--rk-dur-slow) var(--rk-ease-out);
+    translate var(--rk-dur-slow) var(--rk-ease-out),
+    scale var(--rk-dur-slow) var(--rk-ease-out),
+    height var(--rk-dur-slow) var(--rk-ease-out);
+
+  [data-position^="bottom"] & {
+    bottom: 0;
+    transform-origin: 50% 0;
+  }
+  [data-position^="top"] & {
+    top: 0;
+    transform-origin: 50% 100%;
+  }
+  /* collapsed behind the newest: only its edge shows */
+  &[data-behind] > * {
+    opacity: 0;
+  }
+  & > * {
+    transition: opacity var(--rk-dur) var(--rk-ease);
+  }
+  &[data-swiping] {
+    transition: none;
+  }
 
   @starting-style {
     opacity: 0;
-    translate: 0 12px;
+    translate: 0 calc(var(--rk-toast-y, 0px) + 12px);
   }
-  [data-position^="top"] > & {
+  [data-position^="top"] & {
     @starting-style {
-      translate: 0 -12px;
+      translate: 0 calc(var(--rk-toast-y, 0px) - 12px);
     }
   }
 }

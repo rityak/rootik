@@ -1,0 +1,50 @@
+name: Visual
+
+# Screenshot of every story against the baselines in visual/__screenshots__ (rendered on this runner;
+# fonts differ per OS, so never commit baselines made elsewhere). Run it manually with `update` to
+# (re)write the baselines: the job commits them to the branch it ran on.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      update:
+        description: Rewrite baselines and commit them
+        type: boolean
+        default: false
+
+concurrency:
+  group: visual-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bunx playwright install --with-deps chromium
+      - run: bun run build:stories
+      - name: Compare
+        if: ${{ !inputs.update }}
+        run: bunx playwright test
+      - name: Update baselines
+        if: ${{ inputs.update }}
+        run: |
+          bunx playwright test --update-snapshots
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add visual/__screenshots__
+          git diff --cached --quiet || git commit -m "Update visual baselines"
+          git push
+      - uses: actions/upload-artifact@v4
+        if: ${{ failure() }}
+        with:
+          name: visual-report
+          path: playwright-report
+          retention-days: 7

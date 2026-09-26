@@ -23,8 +23,8 @@ export const KeyboardToolbar: Story = () => (
         aria-label="View"
         defaultValue="grid"
         options={[
-          { value: "grid", label: <Grid2x2 size={14} /> },
-          { value: "list", label: <List size={14} /> },
+          { value: "grid", icon: <Grid2x2 size={14} />, hint: "Grid" },
+          { value: "list", icon: <List size={14} />, hint: "List" },
         ]}
       />
       <Spacer />

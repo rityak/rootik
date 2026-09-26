@@ -142,6 +142,16 @@
   }
 }
 
+/* window in the background: selection goes grey, the title bar steps back */
+.rk-shell[data-inactive] {
+  --rk-inverse: var(--rk-surface-4);
+  --rk-on-inverse: var(--rk-text);
+  & .rk-titlebar {
+    opacity: 0.6;
+    transition: opacity var(--rk-dur) var(--rk-ease);
+  }
+}
+
 /* title bar */
 .rk-titlebar {
   display: grid;
@@ -151,6 +161,24 @@
   min-height: calc(var(--rk-h-md) + 16px);
   padding: 6px 8px 6px 14px;
   user-select: none;
+  container: rk-titlebar / inline-size;
+}
+
+/* narrow: the center (search, tabs) drops to its own row instead of overlapping the sides */
+@container rk-titlebar (width < 32rem) {
+  .rk-titlebar-start {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+  .rk-titlebar-end {
+    grid-area: 1 / 3;
+  }
+  .rk-titlebar-center {
+    grid-area: 2 / 1 / 3 / -1;
+    justify-content: stretch;
+    & > * {
+      flex: 1;
+    }
+  }
 }
 
 .rk-titlebar-start,
@@ -264,6 +292,26 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  container-type: scroll-state;
+  /* a hairline shadow under the PageHeader, only while content is scrolled under it */
+  &::before {
+    content: "";
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: block;
+    height: 1px;
+    margin-bottom: -1px;
+    transition: box-shadow var(--rk-dur) var(--rk-ease);
+  }
+}
+
+@container scroll-state(scrollable: top) {
+  .rk-page-body::before {
+    box-shadow:
+      0 0 0 1px var(--rk-line),
+      0 4px 12px 0 oklch(var(--rk-shade) / 0.5);
+  }
 }
 
 .rk-page-column {
@@ -330,7 +378,8 @@
   height: 6px;
   border-radius: 50%;
   background: var(--rk-accent);
-  animation: rk-pulse 1.2s ease-in-out infinite;
+  /* duration from --rk-motion: 0s (reduced motion, Motion: Off) leaves a static dot */
+  animation: rk-pulse calc(var(--rk-dur-slow) * 3.75) ease-in-out infinite;
 }
 
 .rk-status-bar-end {
@@ -477,4 +526,121 @@
 .rk-disclosure-body {
   padding: 4px 6px 12px 28px;
   color: var(--rk-text-2);
+}
+
+/* skip link: first focusable element of the shell, visible only while focused */
+.rk-skip {
+  position: absolute;
+  top: calc(var(--rk-shell-gap) + 6px);
+  left: calc(var(--rk-shell-gap) + 6px);
+  z-index: 10;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--rk-inverse);
+  color: var(--rk-on-inverse);
+  font-weight: 500;
+  text-decoration: none;
+  translate: 0 calc(-100% - 40px);
+  &:focus-visible {
+    translate: none;
+  }
+}
+
+.rk-shell-content:focus {
+  outline: none;
+}
+
+.rk-shell {
+  position: relative;
+}
+
+.rk-shell-sidebar {
+  width: var(--rk-sidebar-w, auto);
+}
+
+/* compact (narrow window, high zoom): sidebar becomes a rail (Sidebar follows useShellCompact), an aside
+   stacks under the content and the whole body scrolls */
+.rk-shell[data-compact] {
+  & .rk-shell-sidebar {
+    width: auto;
+  }
+  & .rk-shell-body:has(> .rk-shell-aside) {
+    flex-direction: column;
+    overflow-y: auto;
+    & > .rk-shell-content {
+      flex: none;
+      overflow: visible;
+    }
+    & > .rk-shell-aside {
+      width: auto;
+    }
+    & > .rk-shell-dock {
+      position: sticky;
+      left: auto;
+      align-self: center;
+      margin-top: auto;
+      translate: none;
+    }
+  }
+}
+
+/* phone drawer: the sidebar fills the sheet */
+.rk-shell-drawer-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  padding: 0;
+}
+
+.rk-shell-drawer-inner {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  & > * {
+    flex: 1;
+  }
+}
+
+/* master–detail */
+.rk-master-detail {
+  display: grid;
+  grid-template-columns: var(--rk-md-list-w) minmax(0, 1fr);
+  gap: var(--rk-gap, 12px);
+  min-height: 0;
+  &[data-stacked] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.rk-master-detail-list,
+.rk-master-detail-detail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.rk-master-detail-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.rk-master-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: var(--rk-h-sm);
+  padding: 0 10px 0 6px;
+  border: 0;
+  border-radius: var(--rk-radius-control);
+  background: transparent;
+  color: var(--rk-text-2);
+  font: inherit;
+  font-size: var(--rk-text-sm);
+  cursor: pointer;
+  &:hover {
+    background: var(--rk-hover);
+    color: var(--rk-text);
+  }
 }

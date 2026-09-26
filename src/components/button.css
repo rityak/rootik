@@ -41,7 +41,7 @@
   }
 
   &:active:not(:disabled) {
-    scale: 0.97;
+    scale: 0.96;
   }
 
   &:disabled {
@@ -165,11 +165,12 @@
 .rk-button-group {
   display: inline-flex;
   gap: 1px;
-  & > .rk-button:not(:first-child) {
+  /* of-type: a trailing popover (split button menu) is a sibling but not a segment */
+  & > .rk-button:not(:first-of-type) {
     border-start-start-radius: 0;
     border-end-start-radius: 0;
   }
-  & > .rk-button:not(:last-child) {
+  & > .rk-button:not(:last-of-type) {
     border-start-end-radius: 0;
     border-end-end-radius: 0;
   }

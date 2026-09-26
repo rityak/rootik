@@ -7,6 +7,7 @@ import { SettingsGroup, SettingsRow } from "../components/settings-list";
 import { Slider } from "../components/slider";
 import { cx } from "../lib/cx";
 import { RotateIcon } from "../lib/icons";
+import { useLabels } from "../lib/labels";
 import { useAppearance } from "./provider";
 import type { AppearanceValues, SettingsField, SettingValue } from "./schema";
 
@@ -27,6 +28,7 @@ export function AppearanceSettings({
   resettable = true,
   className,
 }: AppearanceSettingsProps) {
+  const strings = useLabels();
   const { sections, values, set, reset } = useAppearance();
   const shown = only
     ? only.map((id) => sections.find((s) => s.id === id)).filter((s) => s !== undefined)
@@ -64,7 +66,7 @@ export function AppearanceSettings({
       {resettable && (
         <div className="rk-settings-footer">
           <Button variant="ghost" size="sm" icon={<RotateIcon />} onClick={() => reset()}>
-            Reset to defaults
+            {strings.resetDefaults}
           </Button>
         </div>
       )}

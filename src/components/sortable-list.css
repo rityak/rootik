@@ -1,0 +1,60 @@
+.rk-sortable {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rk-sortable-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 4px 4px;
+  border-radius: var(--rk-radius-md);
+  background: var(--rk-well-soft);
+  box-shadow: inset 0 0 0 1px var(--rk-line);
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    box-shadow var(--rk-dur) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-spring);
+  &[data-lifted] {
+    position: relative;
+    z-index: 1;
+    background: var(--rk-surface-3);
+    box-shadow:
+      inset 0 0 0 1px var(--rk-accent-line),
+      0 8px 24px -10px oklch(var(--rk-shade) / 0.7);
+    scale: 1.01;
+  }
+}
+
+.rk-sortable-grip {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--rk-text-3);
+  font-size: 16px;
+  cursor: grab;
+  touch-action: none;
+  &:hover {
+    background: var(--rk-hover);
+    color: var(--rk-text);
+  }
+  &[aria-pressed="true"] {
+    color: var(--rk-accent-text);
+    cursor: grabbing;
+  }
+}
+
+.rk-sortable-content {
+  flex: 1;
+  min-width: 0;
+}

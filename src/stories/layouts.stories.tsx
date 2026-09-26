@@ -30,6 +30,7 @@ import {
   IconButton,
   LineChart,
   Nest,
+  PowerButton,
   Progress,
   SearchInput,
   SegmentedControl,
@@ -59,22 +60,6 @@ const up = [2.1, 2.8, 2.4, 3.3, 4.1, 3.6, 3.2, 3.9, 3.5, 3.0, 3.3, 3.1];
 const delayTone = (d: number | null) =>
   d === null ? "danger" : d < 120 ? "success" : d < 220 ? "warn" : "danger";
 
-function Orb({ on, onToggle, size = 132 }: { on: boolean; onToggle: () => void; size?: number }) {
-  return (
-    <button
-      type="button"
-      className="vpn-orb"
-      data-on={on || undefined}
-      aria-pressed={on}
-      aria-label={on ? "Disconnect" : "Connect"}
-      style={{ width: size, height: size }}
-      onClick={onToggle}
-    >
-      <Power />
-    </button>
-  );
-}
-
 function ConnectView({ on, setOn }: { on: boolean; setOn: (v: boolean) => void }) {
   const [node, setNode] = useState("n0");
   const current = NODES.find((n) => n.id === node) ?? NODES[0];
@@ -82,7 +67,7 @@ function ConnectView({ on, setOn }: { on: boolean; setOn: (v: boolean) => void }
     <div className="vpn-grid">
       <Card className="vpn-hero" padding="lg">
         <div className="vpn-hero-row">
-          <Orb on={on} onToggle={() => setOn(!on)} />
+          <PowerButton label="VPN connection" size="lg" on={on} onChange={setOn} />
           <div className="vpn-hero-text">
             <StatusDot
               tone={on ? "success" : "neutral"}
@@ -294,6 +279,7 @@ function VpnDesktopApp() {
   const [mode, setMode] = useState("rule");
   return (
     <AppShell
+      dimWhenInactive
       header={
         <TitleBar
           start={

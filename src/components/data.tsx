@@ -1,6 +1,7 @@
 import {
   type KeyboardEvent,
   type PointerEvent,
+  type ReactElement,
   type ReactNode,
   type RefObject,
   type TableHTMLAttributes,
@@ -13,11 +14,22 @@ import {
 } from "react";
 import { cx } from "../lib/cx";
 import { useControllable, useLatest } from "../lib/hooks";
-import { ArrowDownIcon, ArrowUpIcon, ChevronRightIcon, ChevronsUpDownIcon } from "../lib/icons";
+import { ArrowDownIcon, ArrowUpIcon, ChevronRightIcon, ChevronsUpDownIcon, icon } from "../lib/icons";
 import { useLabels } from "../lib/labels";
 import { useSelection } from "../lib/selection";
 import { useVirtual } from "../lib/virtual";
+import { IconButton } from "./button";
 import { Checkbox } from "./choice";
+import { Editable } from "./editable";
+import { Menu, MenuCheckboxItem, MenuLabel } from "./menu";
+
+const ColumnsIcon = icon(
+  <>
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <path d="M9 4v16" />
+    <path d="M15 4v16" />
+  </>,
+);
 
 export interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
   density?: "compact" | "default" | "comfortable";
@@ -106,6 +118,10 @@ export interface Column<T> {
   /** Resize bounds in px (default 48 – 1200). */
   minWidth?: number;
   maxWidth?: number;
+  /** Inline edit: the cell text becomes an Editable; called with the committed text. */
+  onEdit?: (row: T, value: string) => void;
+  /** Can be hidden from a ColumnsMenu (default true). */
+  hideable?: boolean;
 }
 
 /** Column widths in px by column key; `null` = automatic layout. */
@@ -152,6 +168,10 @@ export interface DataTableProps<T> extends Omit<TableProps, "children"> {
   onExpandedChange?: (keys: string[]) => void;
   /** Column carrying the toggle and indent (default: the first). */
   treeColumn?: string;
+  /** Keys of columns not shown (pair with ColumnsMenu). */
+  hiddenColumns?: ReadonlyArray<string>;
+  /** The first column (and the checkbox column) stays put while the table scrolls sideways. */
+  pinFirstColumn?: boolean;
   /**
    * Only mount the rows in view (tens of thousands of rows). Needs `maxHeight`; the header sticks and
    * cells stay on one line, since every row is measured once and assumed the same height.
@@ -275,7 +295,7 @@ function cellValue<T>(col: Column<T>, row: T) {
 }
 
 export function DataTable<T>({
-  columns,
+  columns: allColumns,
   rows,
   rowKey,
   onRowClick,
@@ -299,11 +319,27 @@ export function DataTable<T>({
   defaultExpanded = [],
   onExpandedChange,
   treeColumn,
+  hiddenColumns,
+  pinFirstColumn,
   virtual,
   style,
   ...rest
 }: DataTableProps<T>) {
   const labels = useLabels();
+  const columns = useMemo(
+    () => (hiddenColumns?.length ? allColumns.filter((c) => !hiddenColumns.includes(c.key)) : allColumns),
+    [allColumns, hiddenColumns],
+  );
+  const firstKey = columns[0]?.key;
+  // pinned cells: sticky on the start edge; the first data column sits after the checkbox column
+  const pin = (key: string | null) =>
+    pinFirstColumn && (key === null || key === firstKey)
+      ? {
+          className: "rk-table-pin",
+          style: { left: key === null || !selection ? 0 : SELECT_COL } as React.CSSProperties,
+          "data-pin-edge": key === firstKey || undefined,
+        }
+      : null;
   const head = useRef<HTMLTableSectionElement>(null);
   const [widths, setWidthsState] = useControllable<ColumnWidths | null>(
     columnWidths,
@@ -533,6 +569,7 @@ export function DataTable<T>({
         ...(virtual ? { "--rk-table-head": `${headHeight}px` } : null),
       }}
       data-resizable={anyResizable || undefined}
+      data-pinned={pinFirstColumn || undefined}
       data-fixed={fixed || undefined}
       data-virtual={virtual || undefined}
     >
@@ -547,7 +584,7 @@ export function DataTable<T>({
       <thead ref={head}>
         <tr>
           {selection && (
-            <th className="rk-table-select">
+            <th {...pin(null)} className={cx("rk-table-select", pin(null)?.className)}>
               {selection === "multiple" && (
                 <Checkbox
                   aria-label={labels.selectAll}
@@ -564,7 +601,8 @@ export function DataTable<T>({
               <th
                 key={col.key}
                 data-col={col.key}
-                style={{ width: fixed ? undefined : col.width, textAlign: col.align }}
+                {...pin(col.key)}
+                style={{ width: fixed ? undefined : col.width, textAlign: col.align, ...pin(col.key)?.style }}
                 aria-sort={dir ? (dir === "asc" ? "ascending" : "descending") : undefined}
               >
                 {canResize(col) ? (
@@ -655,7 +693,7 @@ export function DataTable<T>({
               tabIndex={tree ? (key === tabStop ? 0 : -1) : activate ? 0 : undefined}
             >
               {selection && (
-                <td className="rk-table-select">
+                <td {...pin(null)} className={cx("rk-table-select", pin(null)?.className)}>
                   <Checkbox
                     aria-label={labels.selectRow}
                     checked={Boolean(picked)}
@@ -668,18 +706,38 @@ export function DataTable<T>({
                 </td>
               )}
               {columns.map((col) => {
-                const content = col.cell ? col.cell(row, i) : (cellValue(col, row) as ReactNode);
+                const content = col.cell ? (
+                  col.cell(row, i)
+                ) : col.onEdit ? (
+                  <Editable
+                    value={String(cellValue(col, row) ?? "")}
+                    mono={col.mono}
+                    label={`${labels.edit}: ${typeof col.header === "string" ? col.header : col.key}`}
+                    onChange={(v) => col.onEdit?.(row, v)}
+                  />
+                ) : (
+                  (cellValue(col, row) as ReactNode)
+                );
+                const pinned = pin(col.key);
                 if (!(tree && col.key === treeKey))
                   return (
-                    <td key={col.key} style={{ textAlign: col.align }} data-mono={col.mono || undefined}>
+                    <td
+                      key={col.key}
+                      {...pinned}
+                      style={{ textAlign: col.align, ...pinned?.style }}
+                      data-mono={col.mono || undefined}
+                    >
                       {content}
                     </td>
                   );
                 return (
                   <td
                     key={col.key}
-                    className="rk-table-tree-cell"
-                    style={{ textAlign: col.align, "--rk-depth": f.depth } as React.CSSProperties}
+                    {...pinned}
+                    className={cx("rk-table-tree-cell", pinned?.className)}
+                    style={
+                      { textAlign: col.align, "--rk-depth": f.depth, ...pinned?.style } as React.CSSProperties
+                    }
                     data-mono={col.mono || undefined}
                   >
                     <span className="rk-table-tree-inner">
@@ -717,149 +775,36 @@ export function DataTable<T>({
   );
 }
 
-export interface TreeNode {
-  id: string;
-  label: ReactNode;
-  icon?: ReactNode;
-  children?: TreeNode[];
-  /** Has children not loaded yet (shows a chevron; load in onExpandedChange). */
-  lazy?: boolean;
-  /** Right side: counts, row actions (visible on hover/focus). */
-  trailing?: ReactNode;
-  disabled?: boolean;
+export interface ColumnsMenuProps {
+  columns: ReadonlyArray<Pick<Column<unknown>, "key" | "header" | "hideable">>;
+  hidden: ReadonlyArray<string>;
+  onHiddenChange: (hidden: string[]) => void;
+  /** Trigger; defaults to an icon button. */
+  trigger?: ReactElement;
 }
 
-export interface TreeProps {
-  items: ReadonlyArray<TreeNode>;
-  selected?: string | null;
-  onSelect?: (id: string, node: TreeNode) => void;
-  expanded?: string[];
-  defaultExpanded?: string[];
-  onExpandedChange?: (expanded: string[]) => void;
-  /** Enter / double-click: open the item. */
-  onActivate?: (node: TreeNode) => void;
-  className?: string;
-  "aria-label"?: string;
-}
-
-interface Row {
-  node: TreeNode;
-  depth: number;
-  parent: string | null;
-  pos: number;
-  size: number;
-}
-
-/** Tree view (files, folders, tensors, config nodes). Flat treeitems with aria-level; keyboard per APG. */
-export function Tree({
-  items,
-  selected,
-  onSelect,
-  expanded,
-  defaultExpanded = [],
-  onExpandedChange,
-  onActivate,
-  className,
-  ...rest
-}: TreeProps) {
-  const [open, setOpen] = useControllable(expanded, defaultExpanded, onExpandedChange);
-  const [focused, setFocused] = useState<string | null>(null);
-  const root = useRef<HTMLDivElement>(null);
-  const openSet = useMemo(() => new Set(open), [open]);
-
-  const rows = useMemo(() => {
-    const out: Row[] = [];
-    const walk = (nodes: ReadonlyArray<TreeNode>, depth: number, parent: string | null) => {
-      nodes.forEach((node, i) => {
-        out.push({ node, depth, parent, pos: i + 1, size: nodes.length });
-        if (node.children && openSet.has(node.id)) walk(node.children, depth + 1, node.id);
-      });
-    };
-    walk(items, 0, null);
-    return out;
-  }, [items, openSet]);
-
-  const expandable = (n: TreeNode) => Boolean(n.lazy || n.children?.length);
-  const toggle = (id: string, to = !openSet.has(id)) =>
-    setOpen(to ? [...open, id] : open.filter((x) => x !== id));
-  const tabStop = focused ?? selected ?? rows[0]?.node.id;
-
-  const focusRow = (id: string | undefined) => {
-    if (!id) return;
-    setFocused(id);
-    root.current?.querySelector<HTMLElement>(`[data-id="${CSS.escape(id)}"]`)?.focus();
-  };
-
-  const onKeyDown = (event: React.KeyboardEvent, row: Row, index: number) => {
-    const { node } = row;
-    const key = event.key;
-    const handled = () => event.preventDefault();
-    const jump = (
-      { ArrowDown: index + 1, ArrowUp: index - 1, Home: 0, End: rows.length - 1 } as Record<string, number>
-    )[key];
-    if (jump !== undefined) {
-      handled();
-      focusRow(rows[jump]?.node.id);
-    } else if (key === "ArrowRight") {
-      handled();
-      if (expandable(node) && !openSet.has(node.id)) toggle(node.id, true);
-      else if (openSet.has(node.id)) focusRow(rows[index + 1]?.node.id);
-    } else if (key === "ArrowLeft") {
-      handled();
-      if (openSet.has(node.id)) toggle(node.id, false);
-      else focusRow(row.parent ?? undefined);
-    } else if (key === "Enter" || key === " ") {
-      handled();
-      if (node.disabled) return;
-      onSelect?.(node.id, node);
-      if (key === "Enter") onActivate?.(node);
-    }
-  };
-
+/** Show/hide columns of a DataTable: checkbox menu over `hiddenColumns`. The last visible one stays. */
+export function ColumnsMenu({ columns, hidden, onHiddenChange, trigger }: ColumnsMenuProps) {
+  const labels = useLabels();
+  const visible = columns.filter((c) => !hidden.includes(c.key)).length;
   return (
-    <div ref={root} role="tree" aria-label={rest["aria-label"]} className={cx("rk-tree", className)}>
-      {rows.map((row, index) => {
-        const { node, depth } = row;
-        const isOpen = openSet.has(node.id);
+    <Menu trigger={trigger ?? <IconButton size="sm" icon={<ColumnsIcon />} label={labels.columns} />}>
+      <MenuLabel>{labels.columns}</MenuLabel>
+      {columns.map((c) => {
+        const shown = !hidden.includes(c.key);
         return (
-          <div
-            key={node.id}
-            role="treeitem"
-            data-id={node.id}
-            aria-level={depth + 1}
-            aria-posinset={row.pos}
-            aria-setsize={row.size}
-            aria-expanded={expandable(node) ? isOpen : undefined}
-            aria-selected={selected === node.id}
-            aria-disabled={node.disabled || undefined}
-            tabIndex={node.id === tabStop ? 0 : -1}
-            className="rk-tree-row"
-            style={{ "--rk-depth": depth } as React.CSSProperties}
-            onFocus={() => setFocused(node.id)}
-            onClick={() => !node.disabled && onSelect?.(node.id, node)}
-            onDoubleClick={() => !node.disabled && onActivate?.(node)}
-            onKeyDown={(event) => onKeyDown(event, row, index)}
+          <MenuCheckboxItem
+            key={c.key}
+            checked={shown}
+            disabled={c.hideable === false || (shown && visible === 1)}
+            onCheckedChange={(on) =>
+              onHiddenChange(on ? hidden.filter((k) => k !== c.key) : [...hidden, c.key])
+            }
           >
-            {expandable(node) ? (
-              <span
-                className="rk-tree-toggle"
-                aria-hidden="true"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  toggle(node.id);
-                }}
-              >
-                <ChevronRightIcon data-open={isOpen || undefined} />
-              </span>
-            ) : (
-              <span className="rk-tree-toggle" aria-hidden="true" />
-            )}
-            {node.icon && <span className="rk-icon rk-tree-icon">{node.icon}</span>}
-            <span className="rk-tree-label">{node.label}</span>
-            {node.trailing && <span className="rk-tree-trailing">{node.trailing}</span>}
-          </div>
+            {c.header}
+          </MenuCheckboxItem>
         );
       })}
-    </div>
+    </Menu>
   );
 }

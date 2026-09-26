@@ -433,9 +433,12 @@ function control(f: SchemaField, ctl: SchemaControlProps): ReactNode {
           size={size}
           options={f.options.map((o) => ({
             value: o.value,
-            label: o.label,
             icon: o.icon,
             disabled: o.disabled,
+            // a non-text label still needs a name: the option's text, else its value
+            ...(typeof o.label === "string"
+              ? { label: o.label }
+              : { label: o.label, hint: o.text ?? o.value }),
           }))}
           value={String(value)}
           disabled={disabled}

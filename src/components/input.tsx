@@ -11,24 +11,40 @@ import {
 import { cx } from "../lib/cx";
 import { mergeRefs } from "../lib/hooks";
 import { SearchIcon, XIcon } from "../lib/icons";
+import { useLabels } from "../lib/labels";
 import type { Size } from "./button";
+import { useFormError } from "./form";
 
 interface FieldCtx {
   id: string;
+  /** Id of the visible label, for group controls a <label for> can't name (radiogroups, swatches). */
+  labelId?: string;
   describedBy?: string;
   invalid: boolean;
+  required: boolean;
 }
 
 const FieldContext = createContext<FieldCtx | null>(null);
 
 /** Wires a control to the surrounding <Field>: id for the label, hint/error for aria-describedby. */
-export function useField(props: { id?: string; "aria-describedby"?: string; "aria-invalid"?: unknown }) {
+export function useField(props: {
+  id?: string;
+  "aria-describedby"?: string;
+  "aria-invalid"?: unknown;
+  "aria-required"?: unknown;
+}) {
   const field = useContext(FieldContext);
   return {
     id: props.id ?? field?.id,
     "aria-describedby": cx(props["aria-describedby"], field?.describedBy) || undefined,
     "aria-invalid": (props["aria-invalid"] as boolean | undefined) ?? (field?.invalid || undefined),
+    "aria-required": (props["aria-required"] as boolean | undefined) ?? (field?.required || undefined),
   };
+}
+
+/** The surrounding Field's label id: group controls pass it as aria-labelledby. */
+export function useFieldLabel(): string | undefined {
+  return useContext(FieldContext)?.labelId;
 }
 
 export interface FieldProps {
@@ -48,7 +64,7 @@ export interface FieldProps {
 export function Field({
   label,
   hint,
-  error,
+  error: errorProp,
   required,
   layout = "stack",
   aside,
@@ -58,20 +74,36 @@ export function Field({
 }: FieldProps) {
   const auto = useId();
   const controlId = id ?? auto;
-  const hintId = hint ? `${controlId}-hint` : undefined;
+  const formError = useFormError(controlId);
+  const error = errorProp ?? formError;
+  // a stacked hint gives way to the error, so it is only referenced while shown
+  const hintId = hint && (layout === "inline" || !error) ? `${controlId}-hint` : undefined;
+  const labelId = label ? `${controlId}-label` : undefined;
   const errorId = error ? `${controlId}-error` : undefined;
   return (
     <FieldContext
-      value={{ id: controlId, describedBy: cx(hintId, errorId) || undefined, invalid: Boolean(error) }}
+      value={{
+        id: controlId,
+        labelId,
+        describedBy: cx(hintId, errorId) || undefined,
+        invalid: Boolean(error),
+        required: Boolean(required),
+      }}
     >
       <div className={cx("rk-field", className)} data-layout={layout}>
         {(label || aside || (layout === "inline" && hint)) && (
           <div className="rk-field-text">
             <div className="rk-field-top">
               {label && (
-                <label htmlFor={controlId} className="rk-field-label">
+                <label id={labelId} htmlFor={controlId} className="rk-field-label">
                   {label}
-                  {required && <span className="rk-field-required"> *</span>}
+                  {/* the control carries aria-required; the star is visual */}
+                  {required && (
+                    <span className="rk-field-required" aria-hidden="true">
+                      {" "}
+                      *
+                    </span>
+                  )}
                 </label>
               )}
               {aside && <span className="rk-field-aside">{aside}</span>}
@@ -151,26 +183,23 @@ export interface SearchInputProps extends Omit<InputProps, "type" | "icon"> {
   shortcut?: string;
 }
 
-export function SearchInput({
-  onClear,
-  shortcut,
-  end,
-  value,
-  placeholder = "Search…",
-  ...rest
-}: SearchInputProps) {
+export function SearchInput({ onClear, shortcut, end, value, placeholder, ...rest }: SearchInputProps) {
+  const strings = useLabels();
+  const fieldLabel = useFieldLabel();
   const filled = value !== undefined && value !== "";
   return (
     <Input
+      // a placeholder is not a name: outside a labelled Field the field is named "Search"
+      aria-label={fieldLabel || rest["aria-labelledby"] ? undefined : strings.searchLabel}
       {...rest}
       value={value}
-      placeholder={placeholder}
+      placeholder={placeholder ?? strings.search}
       type="search"
       icon={<SearchIcon />}
       end={
         end ??
         (filled && onClear ? (
-          <button type="button" className="rk-input-clear" aria-label="Clear" onClick={onClear}>
+          <button type="button" className="rk-input-clear" aria-label={strings.clear} onClick={onClear}>
             <XIcon />
           </button>
         ) : shortcut ? (

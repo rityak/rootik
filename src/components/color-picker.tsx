@@ -198,7 +198,8 @@ export function ColorPicker({
       for (let x = 0; x < AREA_W; x++) {
         const c = (x / (AREA_W - 1)) * maxChroma;
         const rgb = oklchToLinearRgb({ l, c, h: color.h });
-        if (!rgb.every((v) => v >= -1e-4 && v <= 1 + 1e-4)) continue;
+        // tight tolerance: near black every channel is tiny, so a loose one lets out-of-gamut pixels through
+        if (!rgb.every((v) => v >= -1e-7 && v <= 1 + 1e-7)) continue;
         const i = (y * AREA_W + x) * 4;
         img.data[i] = Math.round(toGamma(clamp(rgb[0], 0, 1)) * 255);
         img.data[i + 1] = Math.round(toGamma(clamp(rgb[1], 0, 1)) * 255);

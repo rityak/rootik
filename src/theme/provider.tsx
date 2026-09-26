@@ -1,4 +1,14 @@
-import { createContext, type ReactNode, useContext, useLayoutEffect, useMemo, useRef } from "react";
+import {
+  type CSSProperties,
+  createContext,
+  type HTMLAttributes,
+  type ReactNode,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from "react";
+import { cx } from "../lib/cx";
 import { readStorage, useControllable, writeStorage } from "../lib/hooks";
 import { LABELS, type Labels, LabelsContext } from "../lib/labels";
 import {
@@ -119,4 +129,42 @@ export function useAppearance(): AppearanceContext {
   const ctx = useContext(Ctx);
   if (!ctx) throw new Error("useAppearance() needs <RootikProvider> above it");
   return ctx;
+}
+
+/** CSS vars that `overrides` change relative to `base` (null = "use the stylesheet default": left to inherit). */
+export function scopeVars(
+  sections: ReadonlyArray<SettingsSection>,
+  base: AppearanceValues,
+  overrides: Partial<AppearanceValues>,
+): Record<string, string> {
+  const before = toCssVars(sections, base);
+  const after = toCssVars(sections, { ...base, ...overrides } as AppearanceValues);
+  const out: Record<string, string> = {};
+  for (const [name, v] of Object.entries(after)) if (v !== null && v !== before[name]) out[name] = v;
+  return out;
+}
+
+export interface ScopeProps extends HTMLAttributes<HTMLDivElement> {
+  /** Appearance keys to override for this subtree, e.g. `{ density: "compact", accent: "…" }`. */
+  values: Partial<AppearanceValues>;
+}
+
+/**
+ * Appearance for a subtree (a dense table in a roomy page, a differently accented panel): writes the same
+ * CSS vars RootikProvider writes, and `[data-rk-scope]` re-derives every token from them. Layout-neutral
+ * (`display: contents`).
+ */
+export function Scope({ values, className, style, ...rest }: ScopeProps) {
+  const ctx = useContext(Ctx);
+  const sections = ctx?.sections ?? APPEARANCE_SECTIONS;
+  const base = ctx?.values ?? defaultValues(sections);
+  const vars = scopeVars(sections, base, values);
+  return (
+    <div
+      data-rk-scope=""
+      {...rest}
+      className={cx("rk-scope", className)}
+      style={{ ...(vars as CSSProperties), ...style }}
+    />
+  );
 }

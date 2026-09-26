@@ -10,9 +10,20 @@
   }
 }
 
-/* a hairline between the halves reads as one control with two targets */
-.rk-split-button > .rk-button + * {
-  box-shadow:
-    inset 0 0 0 1px var(--rk-btn-edge),
-    inset 1px 0 0 color-mix(in oklab, var(--rk-btn-fg) 22%, transparent);
+/* one control, two targets: no gap, a hairline divider drawn over the toggle so each variant keeps
+   its own fill, rim and glow (overriding box-shadow dropped the primary glow on the toggle half) */
+.rk-split-button {
+  gap: 0;
+}
+
+.rk-split-button > .rk-button + .rk-button {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset-block: 22%;
+    inset-inline-start: 0;
+    width: 1px;
+    background: color-mix(in oklab, var(--rk-btn-fg) 24%, transparent);
+  }
 }

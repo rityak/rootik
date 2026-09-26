@@ -16,6 +16,8 @@ import {
   MenuCheckboxItem,
   MenuItem,
   MenuLabel,
+  MenuRadioGroup,
+  MenuRadioItem,
   MenuSeparator,
   Popover,
   Select,
@@ -45,6 +47,8 @@ export const Tooltips: Story = () => (
 export const Menus: Story = () => {
   const [wrap, setWrap] = useState(true);
   const [grid, setGrid] = useState(false);
+  const [sort, setSort] = useState("name");
+  const [recent, setRecent] = useState<string[] | null>(null);
   return (
     <div className="story-row" style={{ alignItems: "flex-start" }}>
       <Menu trigger={<Button iconEnd={<Ellipsis />}>Actions</Button>}>
@@ -69,6 +73,13 @@ export const Menus: Story = () => {
           Show grid
         </MenuCheckboxItem>
         <MenuSeparator />
+        <MenuLabel>Sort by</MenuLabel>
+        <MenuRadioGroup label="Sort by" value={sort} onValueChange={setSort}>
+          <MenuRadioItem value="name">Name</MenuRadioItem>
+          <MenuRadioItem value="date">Date modified</MenuRadioItem>
+          <MenuRadioItem value="size">Size</MenuRadioItem>
+        </MenuRadioGroup>
+        <MenuSeparator />
         <MenuItem icon={<Trash />} danger onSelect={() => toast.error("Deleted")}>
           Delete
         </MenuItem>
@@ -79,6 +90,26 @@ export const Menus: Story = () => {
       >
         <MenuItem>Aligned to the end</MenuItem>
         <MenuItem>Second item</MenuItem>
+      </Menu>
+      <Menu
+        trigger={<Button>Recent (async)</Button>}
+        loading={recent === null}
+        empty="No recent datasets"
+        onOpenChange={(open) => {
+          if (!open) return setRecent(null);
+          // odd opens come back empty
+          setTimeout(
+            () =>
+              setRecent((r) =>
+                r === null ? (Math.random() > 0.5 ? ["anime-faces-v3", "scenery-mix"] : []) : r,
+              ),
+            900,
+          );
+        }}
+      >
+        {recent?.map((name) => (
+          <MenuItem key={name}>{name}</MenuItem>
+        ))}
       </Menu>
       <ContextMenu
         content={

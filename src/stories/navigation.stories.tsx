@@ -4,9 +4,12 @@ import {
   ChartColumn,
   FileText,
   Folder,
+  Globe,
   Home,
   Images,
+  Info,
   LayoutDashboard,
+  Palette,
   PanelLeft,
   Plus,
   Power,
@@ -28,8 +31,11 @@ import {
   Pagination,
   Sidebar,
   StatusDot,
+  TableOfContents,
   TabPanel,
   Tabs,
+  TopNav,
+  useScrollSpy,
 } from "..";
 
 export default { title: "Navigation" };
@@ -88,6 +94,52 @@ export const TabBars: Story = () => {
   );
 };
 
+export const TopNavBar: Story = () => {
+  const [page, setPage] = useState("/datasets");
+  return (
+    <TopNav
+      current={page}
+      onNavigate={setPage}
+      items={[
+        { href: "/", label: "Overview", icon: <Home /> },
+        { href: "/datasets", label: "Datasets", icon: <Folder /> },
+        { href: "/runs", label: "Runs", icon: <ChartColumn /> },
+        { href: "/settings", label: "Settings", icon: <Settings /> },
+      ]}
+    />
+  );
+};
+
+export const VerticalTabs: Story = () => {
+  const [tab, setTab] = useState("general");
+  const items = [
+    { value: "general", label: "General", icon: <Settings /> },
+    { value: "network", label: "Network", icon: <Globe />, badge: 2 },
+    { value: "appearance", label: "Appearance", icon: <Palette />, dirty: true },
+    { value: "about", label: "About", icon: <Info /> },
+  ];
+  return (
+    <div className="story-row" style={{ alignItems: "flex-start", gap: 40 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 24, width: 480 }}>
+        <Tabs
+          orientation="vertical"
+          aria-label="Settings"
+          idPrefix="settings"
+          value={tab}
+          onChange={setTab}
+          items={items}
+        />
+        <TabPanel idPrefix="settings" value={tab} style={{ color: "var(--rk-text-3)" }}>
+          Panel: {tab}
+        </TabPanel>
+      </div>
+      <div style={{ width: 200 }}>
+        <Tabs orientation="vertical" variant="pill" aria-label="Settings (pill)" items={items} />
+      </div>
+    </div>
+  );
+};
+
 export const Sidebars: Story = () => {
   const [page, setPage] = useState("gallery");
   const [collapsed, setCollapsed] = useState(false);
@@ -118,7 +170,12 @@ export const Sidebars: Story = () => {
           <NavGroup label="Workspace">
             {item("home", "Home", <Home />)}
             {item("gallery", "Gallery", <Images />, <Badge size="sm">2.4K</Badge>)}
-            {item("graph", "Constructor", <Workflow />, <StatusDot tone="accent" pulse />)}
+            {item(
+              "graph",
+              "Constructor",
+              <Workflow />,
+              <StatusDot tone="accent" pulse label="Running" hideLabel />,
+            )}
           </NavGroup>
           <NavGroup
             label="Presets"
@@ -184,6 +241,9 @@ export const DockBar: Story = () => {
 
 export const Crumbs: Story = () => {
   const [page, setPage] = useState(4);
+  const [size, setSize] = useState(25);
+  const total = 480;
+  const pages = Math.ceil(total / size);
   return (
     <div className="story-col">
       <Breadcrumbs
@@ -194,6 +254,48 @@ export const Crumbs: Story = () => {
         ]}
       />
       <Pagination page={page} pageCount={12} onChange={setPage} />
+      <Pagination
+        page={Math.min(page, pages)}
+        pageCount={pages}
+        onChange={setPage}
+        pageSize={size}
+        total={total}
+        onPageSizeChange={(n) => {
+          setSize(n);
+          setPage(1);
+        }}
+      />
+      <Pagination variant="compact" page={page} pageCount={12} onChange={setPage} />
+    </div>
+  );
+};
+
+const SECTIONS = [
+  { id: "toc-general", label: "General" },
+  { id: "toc-network", label: "Network" },
+  { id: "toc-dns", label: "DNS", depth: 1 },
+  { id: "toc-routing", label: "Routing", depth: 1 },
+  { id: "toc-appearance", label: "Appearance" },
+  { id: "toc-about", label: "About" },
+];
+
+export const Contents: Story = () => {
+  const [root, setRoot] = useState<HTMLDivElement | null>(null);
+  const active = useScrollSpy(
+    SECTIONS.map((s) => s.id),
+    { root, offset: 24 },
+  );
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 180px", gap: 24, height: 420 }}>
+      <div ref={setRoot} style={{ overflow: "auto", paddingRight: 8 }}>
+        {SECTIONS.map((s) => (
+          <section key={s.id} id={s.id} style={{ minHeight: 200, scrollMarginTop: 12 }}>
+            <h3 style={{ margin: "0 0 8px" }}>{s.label}</h3>
+            <p style={{ color: "var(--rk-text-3)", margin: 0 }}>Settings for {s.label.toLowerCase()}.</p>
+          </section>
+        ))}
+      </div>
+      <TableOfContents items={SECTIONS} active={active} style={{ alignSelf: "start" }} />
     </div>
   );
 };

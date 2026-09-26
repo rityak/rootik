@@ -4,6 +4,7 @@ import { useState } from "react";
 import {
   ACCENTS,
   Checkbox,
+  CheckboxCards,
   ChipGroup,
   ChoiceCards,
   ColorSwatches,
@@ -104,7 +105,7 @@ export const Segmented: Story = () => {
 };
 
 export const Cards: Story = () => (
-  <div style={{ maxWidth: 640 }}>
+  <div className="story-col" style={{ maxWidth: 640, gap: 24 }}>
     <ChoiceCards
       aria-label="TUN stack"
       defaultValue="mixed"
@@ -128,6 +129,16 @@ export const Cards: Story = () => (
           icon: <Network />,
           note: "Needs a restart to apply",
         },
+      ]}
+    />
+    <CheckboxCards
+      aria-label="Export formats"
+      defaultValue={["captions", "tags"]}
+      minWidth={180}
+      options={[
+        { value: "captions", label: "Captions", description: "One .txt per image." },
+        { value: "tags", label: "Tags", description: "Booru-style, comma separated." },
+        { value: "masks", label: "Masks", description: "PNG alpha masks.", disabled: true },
       ]}
     />
   </div>

@@ -8,7 +8,9 @@ import {
   useState,
 } from "react";
 import { cx } from "../lib/cx";
+import { useHighlight } from "../lib/highlight";
 import { EnterIcon, SearchIcon, XIcon } from "../lib/icons";
+import { useLabels } from "../lib/labels";
 import { formatShortcut } from "./display";
 
 export interface DialogProps extends Omit<HTMLAttributes<HTMLDialogElement>, "title"> {
@@ -47,6 +49,7 @@ export function Dialog({
   children,
   ...rest
 }: DialogProps) {
+  const strings = useLabels();
   const ref = useRef<HTMLDialogElement>(null);
   const downOnBackdrop = useRef(false);
   const titleId = useId();
@@ -97,7 +100,7 @@ export function Dialog({
               )}
             </div>
             {!hideClose && (
-              <button type="button" className="rk-dialog-close" aria-label="Close" onClick={onClose}>
+              <button type="button" className="rk-dialog-close" aria-label={strings.close} onClick={onClose}>
                 <XIcon />
               </button>
             )}
@@ -140,17 +143,13 @@ export interface CommandPaletteProps {
 const WHITESPACE = /\s+/;
 
 /** Ctrl/⌘K launcher: fuzzy-ish word filter, groups, keyboard only. Pair with `useHotkey("mod+k", …)`. */
-export function CommandPalette({
-  open,
-  onClose,
-  commands,
-  placeholder = "Type a command or search…",
-  emptyText = "Nothing found",
-}: CommandPaletteProps) {
+export function CommandPalette({ open, onClose, commands, placeholder, emptyText }: CommandPaletteProps) {
+  const strings = useLabels();
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const list = useRef<HTMLDivElement>(null);
   const listId = useId();
+  useHighlight(list, query, ".rk-menu-text > .rk-truncate");
 
   useLayoutEffect(() => {
     if (!open) return;
@@ -209,14 +208,14 @@ export function CommandPalette({
       size="md"
       hideClose
       className="rk-command"
-      aria-label="Command palette"
+      aria-label={strings.commandPalette}
     >
       <div className="rk-command-search">
         <SearchIcon />
         <input
           autoFocus
           value={query}
-          placeholder={placeholder}
+          placeholder={placeholder ?? strings.commandPlaceholder}
           role="combobox"
           aria-expanded="true"
           aria-controls={listId}
@@ -240,7 +239,9 @@ export function CommandPalette({
         </kbd>
       </div>
       <div ref={list} id={listId} role="listbox" className="rk-command-list">
-        {filtered.length === 0 && <div className="rk-command-empty">{emptyText}</div>}
+        {filtered.length === 0 && (
+          <div className="rk-command-empty">{emptyText ?? strings.noCommands(query.trim())}</div>
+        )}
         {groups.map(([group, items]) => (
           // biome-ignore lint/a11y/useSemanticElements: ARIA listbox group
           <div key={group} role="group" aria-label={group || undefined}>

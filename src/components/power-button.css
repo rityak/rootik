@@ -1,0 +1,69 @@
+.rk-power {
+  --rk-power-size: 112px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--rk-power-size);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--rk-surface-3);
+  color: var(--rk-text-2);
+  font-size: calc(var(--rk-power-size) * 0.3);
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 0 oklch(var(--rk-tint) / 0.12),
+    0 0 0 calc(var(--rk-power-size) * 0.08) oklch(var(--rk-tint) / 0.05);
+  transition:
+    background-color var(--rk-dur-slow) var(--rk-ease),
+    color var(--rk-dur-slow) var(--rk-ease),
+    box-shadow var(--rk-dur-slow) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-spring);
+
+  &[data-size="sm"] {
+    --rk-power-size: 72px;
+  }
+  &[data-size="lg"] {
+    --rk-power-size: 148px;
+  }
+  &:hover {
+    color: var(--rk-text);
+  }
+  &:active {
+    scale: 0.96;
+  }
+  /* outside the halo, so the ring doesn't read as part of the on-state glow */
+  &:focus-visible {
+    outline-offset: calc(var(--rk-power-size) * 0.08 + 3px);
+  }
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  &[data-on] {
+    background: var(--rk-accent);
+    color: var(--rk-on-accent);
+    box-shadow:
+      inset 0 1px 0 oklch(var(--rk-tint) / 0.3),
+      0 0 0 calc(var(--rk-power-size) * 0.08) var(--rk-accent-soft),
+      0 0 calc(var(--rk-power-size) * 0.45) calc(var(--rk-power-size) * -0.05)
+      color-mix(in oklab, var(--rk-accent) 16%, transparent);
+  }
+  /* pending: an arc spins on the halo track */
+  &[data-pending]::after {
+    content: "";
+    position: absolute;
+    inset: calc(var(--rk-power-size) * -0.08);
+    border-radius: 50%;
+    background: conic-gradient(var(--rk-accent-text) 0 18%, transparent 0);
+    mask: radial-gradient(closest-side, transparent calc(100% - 3px), black calc(100% - 2.5px));
+    animation: rk-spin calc(var(--rk-dur-slow) * 3.5) linear infinite;
+    pointer-events: none;
+  }
+}
+
+.rk-power-icon {
+  font-size: inherit;
+}

@@ -52,6 +52,8 @@ export interface FloatingProps extends Omit<HTMLAttributes<HTMLDivElement>, "pop
   offset?: number;
   /** `manual`: no light dismiss (tooltips, toasts). */
   manual?: boolean;
+  /** `popover="hint"`: opened by the browser from an `interestfor` trigger (native tooltips). */
+  hint?: boolean;
   /** min-width = anchor width (selects). */
   matchWidth?: boolean;
   ref?: Ref<HTMLDivElement>;
@@ -69,6 +71,7 @@ export function Floating({
   placement = "bottom-start",
   offset = 6,
   manual,
+  hint,
   matchWidth,
   className,
   ref,
@@ -143,7 +146,7 @@ export function Floating({
     <div
       {...rest}
       ref={mergeRefs(own, ref)}
-      popover={manual ? "manual" : "auto"}
+      popover={hint ? "hint" : manual ? "manual" : "auto"}
       className={cx("rk-floating", className)}
     >
       {children}

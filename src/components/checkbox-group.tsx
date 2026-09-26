@@ -3,6 +3,7 @@ import { cx } from "../lib/cx";
 import { useControllable } from "../lib/hooks";
 import { useLabels } from "../lib/labels";
 import { Checkbox } from "./choice";
+import { useFieldLabel } from "./input";
 
 export interface CheckboxGroupOption<T extends string = string> {
   value: T;
@@ -39,6 +40,7 @@ export function CheckboxGroup<T extends string = string>({
   className,
   ...rest
 }: CheckboxGroupProps<T>) {
+  const fieldLabel = useFieldLabel();
   const labels = useLabels();
   const [checked, setChecked] = useControllable(value, defaultValue, onChange);
   const id = useId();
@@ -81,7 +83,12 @@ export function CheckboxGroup<T extends string = string>({
 
   return (
     // biome-ignore lint/a11y/useSemanticElements: wrap in Fieldset for a legend; the group role names the set
-    <div role="group" aria-label={rest["aria-label"]} className={cx("rk-checkbox-group", className)}>
+    <div
+      role="group"
+      aria-label={rest["aria-label"]}
+      aria-labelledby={rest["aria-label"] ? undefined : fieldLabel}
+      className={cx("rk-checkbox-group", className)}
+    >
       {selectAll === undefined || selectAll === false ? (
         items
       ) : (

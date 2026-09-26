@@ -1,0 +1,76 @@
+/* spotlight: the page dims around the target, which stays visible and clickable-looking */
+.rk-tour-spot {
+  position: fixed;
+  z-index: 2147483646;
+  border-radius: var(--rk-radius-md);
+  box-shadow:
+    0 0 0 2px var(--rk-accent),
+    0 0 0 100vmax oklch(var(--rk-shade) / 0.55);
+  pointer-events: none;
+  transition:
+    left var(--rk-dur-slow) var(--rk-ease-out),
+    top var(--rk-dur-slow) var(--rk-ease-out),
+    width var(--rk-dur-slow) var(--rk-ease-out),
+    height var(--rk-dur-slow) var(--rk-ease-out);
+}
+
+.rk-tour {
+  width: min(320px, calc(100vw - 16px));
+  padding: 14px;
+  border-radius: var(--rk-radius-lg);
+  background: var(--rk-glass-bg);
+  backdrop-filter: blur(var(--rk-blur)) saturate(1.3);
+  box-shadow: var(--rk-shadow-pop);
+  font-size: var(--rk-text-sm);
+  &:focus-visible {
+    outline-offset: 2px;
+  }
+}
+
+.rk-tour-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.rk-tour-title {
+  flex: 1;
+  font-size: var(--rk-text-md);
+  font-weight: 600;
+}
+
+.rk-tour-close {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin: -4px -4px 0 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--rk-text-3);
+  cursor: pointer;
+  &:hover {
+    background: var(--rk-hover);
+    color: var(--rk-text);
+  }
+}
+
+.rk-tour-content {
+  margin-top: 6px;
+  color: var(--rk-text-2);
+  text-wrap: pretty;
+}
+
+.rk-tour-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.rk-tour-count {
+  flex: 1;
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+}

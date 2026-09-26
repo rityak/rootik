@@ -1,9 +1,30 @@
-import { type DetailsHTMLAttributes, type HTMLAttributes, type ReactNode, useRef } from "react";
+import {
+  type CSSProperties,
+  createContext,
+  type DetailsHTMLAttributes,
+  type HTMLAttributes,
+  type ReactNode,
+  useContext,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { cx } from "../lib/cx";
-import { readStorage, useControllable, writeStorage } from "../lib/hooks";
-import { ChevronRightIcon, MinusIcon, SquareIcon, XIcon } from "../lib/icons";
+import { readStorage, useControllable, useElementSize, useWindowFocus, writeStorage } from "../lib/hooks";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MinusIcon,
+  icon as makeIcon,
+  SquareIcon,
+  XIcon,
+} from "../lib/icons";
+import { useLabels } from "../lib/labels";
 import { useRovingFocus } from "../lib/roving";
 import { useAppearanceValue } from "../theme/provider";
+import { IconButton, type IconButtonProps } from "./button";
+import { Drawer } from "./dialog";
 
 export type ShellVariant = "islands" | "inset";
 
@@ -22,12 +43,56 @@ export interface AppShellProps extends HTMLAttributes<HTMLDivElement> {
   aside?: ReactNode;
   /** Floating bottom navigation (Dock); content scrolls underneath it. */
   dock?: ReactNode;
+  /** Sidebar width, px (the rail width comes from its content). */
+  sidebarWidth?: number;
+  /**
+   * Below this shell width (px) the layout compacts: the Sidebar becomes an icon rail and the aside moves
+   * under the content, so a narrow window or 200% zoom still leaves room for the page. 0 disables.
+   */
+  compactBelow?: number;
   /**
    * islands — every part (sidebar, header, aside, footer, dock) is its own surface over the ambient canvas;
    * inset — sidebar and bars sit on the background, content (+aside) is one surface block.
    * Defaults to the `layout` appearance setting.
    */
   variant?: ShellVariant;
+  /**
+   * Desktop windows (Tauri): while the window is in the background the title bar fades and selected
+   * pills turn grey, like native apps. Off for web pages, where devtools or an iframe steal focus.
+   */
+  dimWhenInactive?: boolean;
+  /**
+   * Below this shell width (px) the sidebar leaves the layout and opens as a left drawer from a
+   * `ShellMenuButton` (phones). 0 disables.
+   */
+  drawerBelow?: number;
+}
+
+const ShellContext = createContext({
+  compact: false,
+  drawer: false,
+  openDrawer: () => {
+    // outside an AppShell there is no drawer
+  },
+});
+
+/** True inside a compacted AppShell (narrow window, high zoom). Sidebar reads it to become a rail. */
+export const useShellCompact = () => useContext(ShellContext).compact;
+
+const MenuIcon = makeIcon(
+  <>
+    <path d="M4 6h16" />
+    <path d="M4 12h16" />
+    <path d="M4 18h16" />
+  </>,
+);
+
+/** Opens the sidebar drawer; renders nothing unless the AppShell is in drawer mode. Put it in the header. */
+export function ShellMenuButton(props: Omit<IconButtonProps, "icon" | "label"> & { label?: string }) {
+  const { drawer, openDrawer } = useContext(ShellContext);
+  const strings = useLabels();
+  if (!drawer) return null;
+  return <IconButton icon={<MenuIcon />} label={strings.openNavigation} {...props} onClick={openDrawer} />;
 }
 
 /** Full-viewport frame; the surface material applies to its parts. Content scrolls, the frame doesn't. */
@@ -38,33 +103,85 @@ export function AppShell({
   footer,
   aside,
   dock,
+  sidebarWidth = 232,
+  compactBelow = 720,
   variant,
+  dimWhenInactive,
+  drawerBelow = 520,
   className,
+  style,
   children,
   ...rest
 }: AppShellProps) {
+  const focused = useWindowFocus();
   const setting = useAppearanceValue("layout");
+  const strings = useLabels();
+  const size = useElementSize<HTMLDivElement>();
+  const compact = size.width > 0 && size.width < compactBelow;
+  const drawer = Boolean(sidebar) && size.width > 0 && size.width < drawerBelow;
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const mainId = useId();
   const mode: ShellVariant = variant ?? (setting === "inset" ? "inset" : "islands");
   const part = mode === "islands" ? "rk-surface" : undefined;
   return (
-    <div {...rest} className={cx("rk-shell", className)} data-variant={mode}>
-      {sidebar && <div className={cx("rk-shell-sidebar", part)}>{sidebar}</div>}
-      <div className="rk-shell-main">
-        {header && (
-          <div className={cx("rk-shell-header", headerShape !== "none" && part)} data-shape={headerShape}>
-            {header}
-          </div>
+    <ShellContext value={{ compact, drawer, openDrawer: () => setDrawerOpen(true) }}>
+      <div
+        {...rest}
+        ref={size.ref}
+        className={cx("rk-shell", className)}
+        data-variant={mode}
+        data-compact={compact || undefined}
+        data-inactive={(dimWhenInactive && !focused) || undefined}
+        style={{ "--rk-sidebar-w": `${sidebarWidth}px`, ...style } as CSSProperties}
+      >
+        {(sidebar || header) && (
+          <a className="rk-skip" href={`#${mainId}`}>
+            {strings.skipToContent}
+          </a>
         )}
-        <div className={cx("rk-shell-body", mode === "inset" && "rk-shell-panel")}>
-          <main className="rk-shell-content" data-dock={dock ? "" : undefined}>
-            {children}
-          </main>
-          {aside && <aside className={cx("rk-shell-aside", part)}>{aside}</aside>}
-          {dock && <div className="rk-shell-dock">{dock}</div>}
+        {sidebar && !drawer && <div className={cx("rk-shell-sidebar", part)}>{sidebar}</div>}
+        {drawer && (
+          <Drawer
+            placement="left"
+            size="sm"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            aria-label={strings.navigation}
+            className="rk-shell-drawer"
+            bodyClassName="rk-shell-drawer-body"
+          >
+            {/* full sidebar in the drawer, not the rail; following a link closes it */}
+            <ShellContext value={{ compact: false, drawer: true, openDrawer: () => setDrawerOpen(true) }}>
+              {/* biome-ignore lint/a11y/noStaticElementInteractions: delegation only, links handle keys */}
+              {/* biome-ignore lint/a11y/useKeyWithClickEvents: delegation only, links handle keys */}
+              <div
+                className="rk-shell-drawer-inner"
+                onClick={(event) =>
+                  (event.target as Element).closest("a[href], .rk-nav-item") && setDrawerOpen(false)
+                }
+              >
+                {sidebar}
+              </div>
+            </ShellContext>
+          </Drawer>
+        )}
+        <div className="rk-shell-main">
+          {header && (
+            <div className={cx("rk-shell-header", headerShape !== "none" && part)} data-shape={headerShape}>
+              {header}
+            </div>
+          )}
+          <div className={cx("rk-shell-body", mode === "inset" && "rk-shell-panel")}>
+            <main id={mainId} tabIndex={-1} className="rk-shell-content" data-dock={dock ? "" : undefined}>
+              {children}
+            </main>
+            {aside && <aside className={cx("rk-shell-aside", part)}>{aside}</aside>}
+            {dock && <div className="rk-shell-dock">{dock}</div>}
+          </div>
+          {footer && <div className={cx("rk-shell-footer", part)}>{footer}</div>}
         </div>
-        {footer && <div className={cx("rk-shell-footer", part)}>{footer}</div>}
       </div>
-    </div>
+    </ShellContext>
   );
 }
 
@@ -93,6 +210,7 @@ export function TitleBar({
   children,
   ...rest
 }: TitleBarProps) {
+  const strings = useLabels();
   const controls = onMinimize || onMaximize || onClose;
   return (
     <header data-tauri-drag-region {...rest} className={cx("rk-titlebar", className)}>
@@ -107,17 +225,17 @@ export function TitleBar({
         {controls && (
           <div className="rk-titlebar-controls">
             {onMinimize && (
-              <button type="button" aria-label="Minimize" onClick={onMinimize}>
+              <button type="button" aria-label={strings.minimize} onClick={onMinimize}>
                 <MinusIcon />
               </button>
             )}
             {onMaximize && (
-              <button type="button" aria-label="Maximize" onClick={onMaximize}>
+              <button type="button" aria-label={strings.maximize} onClick={onMaximize}>
                 <SquareIcon />
               </button>
             )}
             {onClose && (
-              <button type="button" aria-label="Close" data-close onClick={onClose}>
+              <button type="button" aria-label={strings.close} data-close onClick={onClose}>
                 <XIcon />
               </button>
             )}
@@ -278,6 +396,7 @@ export function ResizablePanel({
   children,
   ...rest
 }: ResizablePanelProps) {
+  const strings = useLabels();
   const [current, setCurrent] = useControllable(size, readStorage(storageKey, defaultSize), onSizeChange);
   const latest = useRef(current);
   latest.current = current;
@@ -324,7 +443,7 @@ export function ResizablePanel({
         aria-valuenow={current}
         aria-valuemin={min}
         aria-valuemax={max}
-        aria-label="Resize"
+        aria-label={strings.resize}
         className="rk-resize-handle"
         onPointerDown={onPointerDown}
         onDoubleClick={() => commit(clamp(defaultSize))}
@@ -360,5 +479,66 @@ export function Disclosure({ title, aside, className, children, ...rest }: Discl
       </summary>
       <div className="rk-disclosure-body">{children}</div>
     </details>
+  );
+}
+
+export interface MasterDetailProps extends HTMLAttributes<HTMLDivElement> {
+  list: ReactNode;
+  /** The selected item's view; `null`/`undefined` when nothing is selected. */
+  detail?: ReactNode;
+  /** Narrow layout only: the back button's handler (clear the selection). */
+  onBack?: () => void;
+  /** Detail placeholder on wide layouts while nothing is selected. */
+  empty?: ReactNode;
+  listWidth?: number;
+  /** Below this width (px) list and detail stack: one at a time, with a back button. */
+  stackBelow?: number;
+}
+
+/** List + detail side by side; stacked with a back button when narrow (mail, nodes, runs). */
+export function MasterDetail({
+  list,
+  detail,
+  onBack,
+  empty,
+  listWidth = 300,
+  stackBelow = 640,
+  className,
+  style,
+  ...rest
+}: MasterDetailProps) {
+  const size = useElementSize<HTMLDivElement>();
+  const strings = useLabels();
+  const back = useRef<HTMLButtonElement>(null);
+  const stacked = size.width > 0 && size.width < stackBelow;
+  const hasDetail = detail !== null && detail !== undefined;
+  const showDetail = !stacked || hasDetail;
+  // stacked: opening a detail replaces the list, so focus follows to the back button
+  useLayoutEffect(() => {
+    if (stacked && hasDetail) back.current?.focus();
+  }, [stacked, hasDetail]);
+  return (
+    <div
+      {...rest}
+      ref={size.ref}
+      className={cx("rk-master-detail", className)}
+      data-stacked={stacked || undefined}
+      style={{ "--rk-md-list-w": `${listWidth}px`, ...style } as CSSProperties}
+    >
+      {!(stacked && hasDetail) && <div className="rk-master-detail-list">{list}</div>}
+      {showDetail && (
+        <div className="rk-master-detail-detail">
+          {stacked && hasDetail && (
+            <div className="rk-master-detail-bar">
+              <button ref={back} type="button" className="rk-master-detail-back" onClick={onBack}>
+                <ChevronLeftIcon />
+                {strings.back}
+              </button>
+            </div>
+          )}
+          {hasDetail ? detail : empty}
+        </div>
+      )}
+    </div>
   );
 }

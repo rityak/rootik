@@ -34,6 +34,15 @@ export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   onOpenChange?: (open: boolean) => void;
   /** Hover lift for clickable cards. */
   interactive?: boolean;
+  /** Heading level of the title, so cards show up in the page outline (h1 is the page title). */
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
+  /**
+   * Work in progress: a beam of light travels along the rim. Decoration of a status only; say it in text
+   * too (a StatusDot or "Training…" in the header).
+   */
+  running?: boolean;
+  /** A soft accent glow follows the pointer (clickable tiles, pickers). Decoration only. */
+  spotlight?: boolean;
 }
 
 export function Card({
@@ -49,10 +58,15 @@ export function Card({
   defaultOpen = true,
   onOpenChange,
   interactive,
+  headingLevel = 2,
+  running,
+  spotlight,
   className,
   children,
+  onPointerMove,
   ...rest
 }: CardProps) {
+  const H = `h${headingLevel}` as const;
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
   const bodyId = useId();
   const hasHeader = title !== undefined || actions !== undefined;
@@ -62,7 +76,13 @@ export function Card({
       {collapsible && <ChevronRightIcon className="rk-card-chevron" data-open={isOpen || undefined} />}
       {icon && <span className="rk-icon rk-card-icon">{icon}</span>}
       <span className="rk-card-titles">
-        {title !== undefined && <span className="rk-card-title">{title}</span>}
+        {/* inside the collapsible button the heading wraps the button instead (headings can't sit in one) */}
+        {title !== undefined &&
+          (collapsible ? (
+            <span className="rk-card-title">{title}</span>
+          ) : (
+            <H className="rk-card-title">{title}</H>
+          ))}
         {description && <span className="rk-card-desc">{description}</span>}
       </span>
     </>
@@ -75,19 +95,32 @@ export function Card({
       data-variant={variant}
       data-padding={padding}
       data-interactive={interactive || undefined}
+      data-running={running || undefined}
+      aria-busy={running || undefined}
+      onPointerMove={(event) => {
+        onPointerMove?.(event);
+        if (!spotlight) return;
+        // straight to CSS vars: no re-render per pointer move
+        const r = event.currentTarget.getBoundingClientRect();
+        event.currentTarget.style.setProperty("--rk-spot-x", `${event.clientX - r.left}px`);
+        event.currentTarget.style.setProperty("--rk-spot-y", `${event.clientY - r.top}px`);
+      }}
     >
+      {spotlight && <span className="rk-card-spot" aria-hidden="true" />}
       {hasHeader && (
         <header className="rk-card-header">
           {collapsible ? (
-            <button
-              type="button"
-              className="rk-card-toggle"
-              aria-expanded={isOpen}
-              aria-controls={bodyId}
-              onClick={() => setOpen(!isOpen)}
-            >
-              {heading}
-            </button>
+            <H className="rk-card-heading">
+              <button
+                type="button"
+                className="rk-card-toggle"
+                aria-expanded={isOpen}
+                aria-controls={bodyId}
+                onClick={() => setOpen(!isOpen)}
+              >
+                {heading}
+              </button>
+            </H>
           ) : (
             <div className="rk-card-toggle">{heading}</div>
           )}
@@ -194,12 +227,27 @@ export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, "t
   hint?: ReactNode;
   action?: ReactNode;
   size?: "sm" | "md";
+  /**
+   * Result states (done, failed, no access, offline): tints the icon well and, without an `icon`,
+   * picks the tone's own. Default is the neutral hatched "nothing here yet".
+   */
+  tone?: Tone;
 }
 
-export function EmptyState({ icon, title, hint, action, size = "md", className, ...rest }: EmptyStateProps) {
+export function EmptyState({
+  icon,
+  title,
+  hint,
+  action,
+  size = "md",
+  tone,
+  className,
+  ...rest
+}: EmptyStateProps) {
+  const glyph = icon ?? (tone && tone !== "neutral" && tone !== "accent" ? CALLOUT_ICON[tone] : undefined);
   return (
-    <div {...rest} className={cx("rk-empty", className)} data-size={size}>
-      {icon && <span className="rk-empty-icon rk-icon">{icon}</span>}
+    <div {...rest} className={cx("rk-empty", className)} data-size={size} data-tone={tone}>
+      {glyph && <span className="rk-empty-icon rk-icon">{glyph}</span>}
       <div className="rk-empty-title">{title}</div>
       {hint && <div className="rk-empty-hint">{hint}</div>}
       {action && <div className="rk-empty-action">{action}</div>}
@@ -223,6 +271,11 @@ export interface CalloutProps extends Omit<HTMLAttributes<HTMLDivElement>, "titl
   icon?: ReactNode | false;
   actions?: ReactNode;
   onDismiss?: () => void;
+  /**
+   * Announce it: set when the callout appears in response to something (a failed save). Static callouts
+   * stay silent, otherwise every warning on a page interrupts the screen reader when it loads.
+   */
+  live?: boolean;
 }
 
 export function Callout({
@@ -231,13 +284,15 @@ export function Callout({
   icon,
   actions,
   onDismiss,
+  live,
   className,
   children,
   ...rest
 }: CalloutProps) {
+  const strings = useLabels();
   return (
     <div
-      role={tone === "danger" || tone === "warn" ? "alert" : "status"}
+      role={live ? (tone === "danger" ? "alert" : "status") : undefined}
       {...rest}
       className={cx("rk-callout", className)}
       data-tone={tone}
@@ -249,7 +304,7 @@ export function Callout({
         {actions && <div className="rk-callout-actions">{actions}</div>}
       </div>
       {onDismiss && (
-        <button type="button" className="rk-callout-close" aria-label="Dismiss" onClick={onDismiss}>
+        <button type="button" className="rk-callout-close" aria-label={strings.dismiss} onClick={onDismiss}>
           <XIcon />
         </button>
       )}
