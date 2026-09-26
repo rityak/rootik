@@ -27,7 +27,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 - Translate the kit's strings with `<RootikProvider labels>` (`src/lib/labels.tsx`); appearance via `defaults`, `extensions` or `<Scope values>`.
 - Charts take plain arrays; categorical colors come from `seriesColor(i)` in fixed order; accent marks the highlighted datum.
 
-## Components (155)
+## Components (157)
 
 ### src/components/bars-list.tsx
 
@@ -46,14 +46,14 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/card.tsx
 
-- `Card` — src/components/card.tsx:48, story `display--json`
-- `Stat` — src/components/card.tsx:170, story `display--stats`. KPI: the number is the hero (large, light, tabular); label and unit stay small.
-- `SectionLabel` — src/components/card.tsx:210, story `display--structure`
-- `EmptyState` — src/components/card.tsx:237, story `display--empty`
-- `Callout` — src/components/card.tsx:281, story `display--feedback`
-- `Nest` — src/components/card.tsx:316, story `display--structure`. Indented group with a guide line: nested settings, sub-options of a toggle.
-- `Divider` — src/components/card.tsx:320, story `display--structure`
-- `KeyValue` — src/components/card.tsx:354, story `layout--floating-windows`
+- `Card` — src/components/card.tsx:51, story `display--json`
+- `Stat` — src/components/card.tsx:180, story `display--stats`. KPI: the number is the hero (large, light, tabular); label and unit stay small.
+- `SectionLabel` — src/components/card.tsx:220, story `display--structure`
+- `EmptyState` — src/components/card.tsx:247, story `display--empty`
+- `Callout` — src/components/card.tsx:291, story `display--feedback`
+- `Nest` — src/components/card.tsx:326, story `display--structure`. Indented group with a guide line: nested settings, sub-options of a toggle.
+- `Divider` — src/components/card.tsx:330, story `display--structure`
+- `KeyValue` — src/components/card.tsx:364, story `layout--floating-windows`
 
 ### src/components/charts.tsx
 
@@ -80,8 +80,9 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/code-block.tsx
 
-- `Code` — src/components/code-block.tsx:20, story `display--code-blocks`. Inline code: commands, keys, file names inside text.
-- `CodeBlock` — src/components/code-block.tsx:48, story `display--code-blocks`. Monospace block with a header (title, language, wrap toggle, copy), optional line numbers and highlighted lines.
+- `Code` — src/components/code-block.tsx:21, story `display--code-blocks`. Inline code: commands, keys, file names inside text.
+- `CodeBlock` — src/components/code-block.tsx:49, story `display--code-blocks`. Monospace block with a header (title, language, wrap toggle, copy), optional line numbers and highlighted lines.
+- `CodeEditor` — src/components/code-block.tsx:129. Lightweight token-themed code editor.
 
 ### src/components/color-picker.tsx
 
@@ -105,9 +106,9 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/data.tsx
 
-- `Table` — src/components/data.tsx:51, story `data--plain-table`. Styled native table: write thead/tbody/tr/td as usual.
-- `DataTable` — src/components/data.tsx:297, story `data--virtual-tree-rows`
-- `ColumnsMenu` — src/components/data.tsx:787, story `data--columns-and-editing`. Show/hide columns of a DataTable: checkbox menu over `hiddenColumns`.
+- `Table` — src/components/data.tsx:52, story `data--plain-table`. Styled native table: write thead/tbody/tr/td as usual.
+- `DataTable` — src/components/data.tsx:300, story `data--virtual-tree-rows`
+- `ColumnsMenu` — src/components/data.tsx:795, story `data--columns-and-editing`. Show/hide columns of a DataTable: checkbox menu over `hiddenColumns`.
 
 ### src/components/date-range.tsx
 
@@ -115,17 +116,17 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/dialog.tsx
 
-- `Dialog` — src/components/dialog.tsx:37, story `overlays--enter-and-exit`. Native modal <dialog>: top layer, focus trap, inert page and Esc come from the platform.
-- `Drawer` — src/components/dialog.tsx:117, story `overlays--enter-and-exit`. Side sheet: a Dialog docked to an edge.
-- `CommandPalette` — src/components/dialog.tsx:146, story `overlays--commands`. Ctrl/⌘K launcher: fuzzy-ish word filter, groups, keyboard only.
+- `Dialog` — src/components/dialog.tsx:40, story `overlays--enter-and-exit`. Native modal <dialog>: top layer, focus trap, inert page and Esc come from the platform.
+- `Drawer` — src/components/dialog.tsx:130, story `overlays--enter-and-exit`. Side sheet: a Dialog docked to an edge.
+- `CommandPalette` — src/components/dialog.tsx:159, story `overlays--commands`. Ctrl/⌘K launcher: fuzzy-ish word filter, groups, keyboard only.
 
 ### src/components/display.tsx
 
-- `Badge` — src/components/display.tsx:19, story `data--sortable-lists`
-- `StatusDot` — src/components/display.tsx:67, story `display--badges`
-- `Kbd` — src/components/display.tsx:108, story `display--badges`
-- `Avatar` — src/components/display.tsx:134, story `display--avatars`. Image or initials; the initials background hue is derived from the name, so it's stable.
-- `AvatarGroup` — src/components/display.tsx:176, story `display--avatars`
+- `Badge` — src/components/display.tsx:21, story `data--sortable-lists`
+- `StatusDot` — src/components/display.tsx:74, story `display--badges`
+- `Kbd` — src/components/display.tsx:115, story `display--badges`
+- `Avatar` — src/components/display.tsx:141, story `display--avatars`. Image or initials; the initials background hue is derived from the name, so it's stable.
+- `AvatarGroup` — src/components/display.tsx:183, story `display--avatars`
 
 ### src/components/editable.tsx
 
@@ -178,8 +179,8 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/item.tsx
 
-- `Item` — src/components/item.tsx:40, story `layout--master-details`. Generic list row: media, title + description, meta and actions.
-- `ItemGroup` — src/components/item.tsx:108, story `layout--master-details`. A list of Items (renders `ul` > `li`).
+- `Item` — src/components/item.tsx:42, story `layout--master-details`. Generic list row: media, title + description, meta and actions.
+- `ItemGroup` — src/components/item.tsx:117, story `layout--master-details`. A list of Items (renders `ul` > `li`).
 
 ### src/components/json-view.tsx
 
@@ -187,18 +188,18 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/layout.tsx
 
-- `ShellMenuButton` — src/components/layout.tsx:91. Opens the sidebar drawer; renders nothing unless the AppShell is in drawer mode.
-- `AppShell` — src/components/layout.tsx:99, story `layouts--vpn-desktop`. Full-viewport frame; the surface material applies to its parts.
-- `TitleBar` — src/components/layout.tsx:203, story `navigation--menubar-in-title-bar`. App title bar for frameless desktop windows.
-- `PageHeader` — src/components/layout.tsx:260, story `layout--tool-page`
-- `PageBody` — src/components/layout.tsx:282, story `layout--tool-page`. Scrollable page body: centered column of limited width.
-- `Toolbar` — src/components/layout.tsx:305, story `layout--keyboard-toolbar`. Row of controls above a work area (gallery, canvas, table).
-- `Spacer` — src/components/layout.tsx:324, story `layout--keyboard-toolbar`. Spacer that pushes following toolbar items to the right.
-- `ActionBar` — src/components/layout.tsx:336, story `layout--tool-page`. Bottom bar with the page's main actions; primary button last (rightmost).
-- `StatusBar` — src/components/layout.tsx:357, story `layout--tool-page`
-- `ResizablePanel` — src/components/layout.tsx:386, story `layout--tool-page`. Panel with a draggable (and keyboard-resizable) edge: sidebars, inspectors, log docks.
-- `Disclosure` — src/components/layout.tsx:472, story `layout--collapsing`. Collapsible section on native <details>.
-- `MasterDetail` — src/components/layout.tsx:499, story `layout--master-details`. List + detail side by side; stacked with a back button when narrow (mail, nodes, runs).
+- `ShellMenuButton` — src/components/layout.tsx:101. Opens the sidebar drawer; renders nothing unless the AppShell is in drawer mode.
+- `AppShell` — src/components/layout.tsx:109, story `layouts--vpn-desktop`. Full-viewport frame; the surface material applies to its parts.
+- `TitleBar` — src/components/layout.tsx:229, story `navigation--menubar-in-title-bar`. App title bar for frameless desktop windows.
+- `PageHeader` — src/components/layout.tsx:304, story `layout--tool-page`
+- `PageBody` — src/components/layout.tsx:326, story `layout--tool-page`. Scrollable page body: centered column of limited width.
+- `Toolbar` — src/components/layout.tsx:349, story `layout--keyboard-toolbar`. Row of controls above a work area (gallery, canvas, table).
+- `Spacer` — src/components/layout.tsx:368, story `layout--keyboard-toolbar`. Spacer that pushes following toolbar items to the right.
+- `ActionBar` — src/components/layout.tsx:380, story `layout--tool-page`. Bottom bar with the page's main actions; primary button last (rightmost).
+- `StatusBar` — src/components/layout.tsx:401, story `layout--tool-page`
+- `ResizablePanel` — src/components/layout.tsx:430, story `layout--tool-page`. Panel with a draggable (and keyboard-resizable) edge: sidebars, inspectors, log docks.
+- `Disclosure` — src/components/layout.tsx:516, story `layout--collapsing`. Collapsible section on native <details>.
+- `MasterDetail` — src/components/layout.tsx:543, story `layout--master-details`. List + detail side by side; stacked with a back button when narrow (mail, nodes, runs).
 
 ### src/components/lightbox.tsx
 
@@ -206,20 +207,20 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/log-view.tsx
 
-- `LogView` — src/components/log-view.tsx:127, story `data--bare-log`. Log console: virtualized fixed-height rows, level filter with counts, text/regex search with highlights, follow-tail (StickToBottom) with a "N new" jump button while scrolled up.
+- `LogView` — src/components/log-view.tsx:131, story `data--bare-log`. Log console: virtualized fixed-height rows, level filter with counts, text/regex search with highlights, follow-tail (StickToBottom) with a "N new" jump button while scrolled up.
 
 ### src/components/menu.tsx
 
 - `Menu` — src/components/menu.tsx:88, story `overlays--enter-and-exit`
 - `ContextMenu` — src/components/menu.tsx:150, story `overlays--menus`
-- `MenuItem` — src/components/menu.tsx:199, story `overlays--enter-and-exit`
-- `MenuSub` — src/components/menu.tsx:256, story `overlays--submenus`. Nested menu (APG): opens on hover after a short delay, or with →/Enter/Space and focuses its first item; ←/Esc close it and return to its item; choosing an item closes the whole menu.
-- `MenuCheckboxItem` — src/components/menu.tsx:354, story `overlays--submenus`
-- `MenuRadioGroup` — src/components/menu.tsx:383, story `overlays--menus`. One-of-many choice inside a menu (sort order, view mode).
-- `MenuRadioItem` — src/components/menu.tsx:398, story `overlays--menus`
-- `MenuSeparator` — src/components/menu.tsx:412, story `overlays--submenus`
-- `MenuLabel` — src/components/menu.tsx:417, story `overlays--menus`
-- `Popover` — src/components/menu.tsx:430, story `overlays--popovers`. Non-modal floating panel anchored to a trigger (filters, pickers, details).
+- `MenuItem` — src/components/menu.tsx:201, story `overlays--enter-and-exit`
+- `MenuSub` — src/components/menu.tsx:264, story `overlays--submenus`. Nested menu (APG): opens on hover after a short delay, or with →/Enter/Space and focuses its first item; ←/Esc close it and return to its item; choosing an item closes the whole menu.
+- `MenuCheckboxItem` — src/components/menu.tsx:366, story `overlays--submenus`
+- `MenuRadioGroup` — src/components/menu.tsx:395, story `overlays--menus`. One-of-many choice inside a menu (sort order, view mode).
+- `MenuRadioItem` — src/components/menu.tsx:410, story `overlays--menus`
+- `MenuSeparator` — src/components/menu.tsx:424, story `overlays--submenus`
+- `MenuLabel` — src/components/menu.tsx:429, story `overlays--menus`
+- `Popover` — src/components/menu.tsx:442, story `overlays--popovers`. Non-modal floating panel anchored to a trigger (filters, pickers, details).
 
 ### src/components/menubar.tsx
 
@@ -236,17 +237,17 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/nav.tsx
 
-- `Tabs` — src/components/nav.tsx:53, story `layout--scrolling`. Tab list per ARIA APG: one Tab stop, arrows move and activate, Home/End jump.
-- `TopNav` — src/components/nav.tsx:166, story `navigation--top-nav-bar`. Page navigation as a pill bar of real links (Cmd/middle-click work); the current page is the inverted pill.
-- `TableOfContents` — src/components/nav.tsx:216, story `navigation--contents`. In-page section links with the current one marked on a rail (long settings and docs pages).
-- `TabPanel` — src/components/nav.tsx:235, story `navigation--vertical-tabs`
-- `Sidebar` — src/components/nav.tsx:261, story `navigation--sidebars`
-- `NavItem` — src/components/nav.tsx:295, story `navigation--sidebars`. Navigation row: sidebars, lists of presets/runs/files.
-- `NavGroup` — src/components/nav.tsx:366, story `navigation--sidebars`
-- `Dock` — src/components/nav.tsx:437, story `navigation--dock-bar`. Floating bottom navigation (surface material).
-- `DockSeparator` — src/components/nav.tsx:519, story `navigation--dock-bar`
-- `Breadcrumbs` — src/components/nav.tsx:527, story `navigation--crumbs`
-- `Pagination` — src/components/nav.tsx:595, story `navigation--crumbs`
+- `Tabs` — src/components/nav.tsx:55, story `layout--scrolling`. Tab list per ARIA APG: one Tab stop, arrows move and activate, Home/End jump.
+- `TopNav` — src/components/nav.tsx:172, story `navigation--top-nav-bar`. Page navigation as a pill bar of real links (Cmd/middle-click work); the current page is the inverted pill.
+- `TableOfContents` — src/components/nav.tsx:222, story `navigation--contents`. In-page section links with the current one marked on a rail (long settings and docs pages).
+- `TabPanel` — src/components/nav.tsx:241, story `navigation--vertical-tabs`
+- `Sidebar` — src/components/nav.tsx:267, story `navigation--sidebars`
+- `NavItem` — src/components/nav.tsx:301, story `navigation--sidebars`. Navigation row: sidebars, lists of presets/runs/files.
+- `NavGroup` — src/components/nav.tsx:373, story `navigation--sidebars`
+- `Dock` — src/components/nav.tsx:449, story `navigation--dock-bar`. Floating bottom navigation (surface material).
+- `DockSeparator` — src/components/nav.tsx:547, story `navigation--dock-bar`
+- `Breadcrumbs` — src/components/nav.tsx:555, story `navigation--crumbs`
+- `Pagination` — src/components/nav.tsx:623, story `navigation--crumbs`
 
 ### src/components/number-input.tsx
 
@@ -274,7 +275,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/power-button.tsx
 
-- `PowerButton` — src/components/power-button.tsx:28, story `inputs--power-buttons`. Hero toggle orb: the one big on/off of a screen (VPN connect, recording, service start).
+- `PowerButton` — src/components/power-button.tsx:32, story `inputs--power-buttons`. Hero toggle orb: the one big on/off of a screen (VPN connect, recording, service start).
 
 ### src/components/progress.tsx
 
@@ -318,7 +319,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/select.tsx
 
-- `Select` — src/components/select.tsx:44, story `overlays--popovers`. Listbox select.
+- `Select` — src/components/select.tsx:78, story `overlays--popovers`. Listbox select.
 
 ### src/components/selection-bar.tsx
 
@@ -366,6 +367,10 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 - `TextShimmer` — src/components/text-shimmer.tsx:10, story `display--text-shimmers`. Pending label with a light band sweeping across it.
 
+### src/components/text.tsx
+
+- `Text` — src/components/text.tsx:16. Toolkit text with shared size, semantic tone and truncation.
+
 ### src/components/timeline.tsx
 
 - `Timeline` — src/components/timeline.tsx:29, story `display--run-timeline`. Vertical list of events (run history, audit log, pipeline stages) joined by a line.
@@ -404,12 +409,12 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/theme/provider.tsx
 
-- `RootikProvider` — src/theme/provider.tsx:57. Owns appearance values and writes them as CSS custom properties.
-- `Scope` — src/theme/provider.tsx:157, story `utilities--scopes`. Appearance for a subtree (a dense table in a roomy page, a differently accented panel): writes the same CSS vars RootikProvider writes, and `[data-rk-scope]` re-derives every token from them.
+- `RootikProvider` — src/theme/provider.tsx:61. Owns appearance values and writes them as CSS custom properties.
+- `Scope` — src/theme/provider.tsx:162, story `utilities--scopes`. Appearance for a subtree (a dense table in a roomy page, a differently accented panel): writes the same CSS vars RootikProvider writes, and `[data-rk-scope]` re-derives every token from them.
 
 ### src/theme/settings.tsx
 
-- `AppearanceSettings` — src/theme/settings.tsx:25, story `overview--settings`. Appearance form rendered from the provider's schema — built-in knobs plus project extensions.
+- `AppearanceSettings` — src/theme/settings.tsx:30, story `overview--settings`. Appearance form rendered from the provider's schema — built-in knobs plus project extensions.
 
 ### src/lib/highlight.tsx
 
