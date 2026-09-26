@@ -1,4 +1,5 @@
 import {
+  type CSSProperties,
   createContext,
   type HTMLAttributes,
   type MouseEventHandler,
@@ -11,7 +12,10 @@ import { cx } from "../lib/cx";
 import { useControllable } from "../lib/hooks";
 import { ChevronLeftIcon, ChevronRightIcon } from "../lib/icons";
 import { useIndicator } from "../lib/indicator";
+import { useLabels } from "../lib/labels";
 import type { Size } from "./button";
+import { useShellCompact } from "./layout";
+import { Select } from "./select";
 import { Tooltip } from "./tooltip";
 
 export interface TabItem<T extends string = string> {
@@ -39,6 +43,8 @@ export interface TabsProps<T extends string = string> {
   fill?: boolean;
   /** Links tabs to <TabPanel idPrefix=…> via aria-controls. */
   idPrefix?: string;
+  /** `vertical`: a stacked list beside the panel (settings pages); ↑/↓ move. */
+  orientation?: "horizontal" | "vertical";
   "aria-label"?: string;
   className?: string;
 }
@@ -53,21 +59,25 @@ export function Tabs<T extends string = string>({
   size = "md",
   fill,
   idPrefix,
+  orientation = "horizontal",
   className,
   ...rest
 }: TabsProps<T>) {
+  const vertical = orientation === "vertical";
   const [current, set] = useControllable<T | undefined>(
     value,
     defaultValue ?? items[0]?.value,
     onChange as (v: T | undefined) => void,
   );
   const list = useRef<HTMLDivElement>(null);
-  const box = useIndicator(list, '[aria-selected="true"]', current);
+  const box = useIndicator(list, '[aria-selected="true"]', current, vertical ? "y" : "x");
+  const strings = useLabels();
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     const enabled = items.filter((t) => !t.disabled);
     const i = enabled.findIndex((t) => t.value === current);
-    const to = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: enabled.length - 1 }[event.key];
+    const [back, forward] = vertical ? ["ArrowUp", "ArrowDown"] : ["ArrowLeft", "ArrowRight"];
+    const to = { [forward]: i + 1, [back]: i - 1, Home: 0, End: enabled.length - 1 }[event.key];
     if (to === undefined) return;
     event.preventDefault();
     const next = enabled[(to + enabled.length) % enabled.length];
@@ -81,7 +91,9 @@ export function Tabs<T extends string = string>({
       ref={list}
       role="tablist"
       aria-label={rest["aria-label"]}
+      aria-orientation={vertical ? "vertical" : undefined}
       className={cx("rk-tabs", className)}
+      data-orientation={orientation}
       data-variant={variant}
       data-size={size}
       data-fill={fill || undefined}
@@ -91,7 +103,7 @@ export function Tabs<T extends string = string>({
         <span
           className="rk-indicator rk-tabs-indicator"
           data-dir={box.dir}
-          style={{ left: box.left, right: box.right }}
+          style={vertical ? { top: box.left, bottom: box.right } : { left: box.left, right: box.right }}
         />
       )}
       {items.map((t) => {
@@ -116,7 +128,11 @@ export function Tabs<T extends string = string>({
             {t.badge !== undefined && t.badge !== null && (
               <span className="rk-tab-badge rk-num">{t.badge}</span>
             )}
-            {t.dirty && <span className="rk-tab-dirty" title="Unsaved changes" />}
+            {t.dirty && (
+              <span className="rk-tab-dirty" title={strings.unsaved}>
+                <span className="rk-sr-only">{strings.unsaved}</span>
+              </span>
+            )}
           </button>
         );
         return t.hint && t.label ? (
@@ -128,6 +144,91 @@ export function Tabs<T extends string = string>({
         );
       })}
     </div>
+  );
+}
+
+export interface TopNavItem {
+  href: string;
+  label: ReactNode;
+  icon?: ReactNode;
+}
+
+export interface TopNavProps extends Omit<HTMLAttributes<HTMLElement>, "onSelect"> {
+  items: ReadonlyArray<TopNavItem>;
+  /** href of the current page. */
+  current?: string;
+  /** Client-side routing: called instead of following the link (modifier clicks still open normally). */
+  onNavigate?: (href: string) => void;
+  size?: Size;
+}
+
+/** Page navigation as a pill bar of real links (Cmd/middle-click work); the current page is the inverted pill. */
+export function TopNav({ items, current, onNavigate, size = "md", className, ...rest }: TopNavProps) {
+  const list = useRef<HTMLDivElement>(null);
+  const box = useIndicator(list, '[aria-current="page"]', current);
+  const strings = useLabels();
+  return (
+    <nav aria-label={strings.navigation} {...rest} className={cx("rk-topnav", className)}>
+      <div ref={list} className="rk-tabs" data-variant="pill" data-size={size}>
+        {box && (
+          <span
+            className="rk-indicator rk-tabs-indicator"
+            data-dir={box.dir}
+            style={{ left: box.left, right: box.right }}
+          />
+        )}
+        {items.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="rk-tab"
+            aria-current={item.href === current ? "page" : undefined}
+            onClick={(event) => {
+              if (!onNavigate || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0)
+                return;
+              event.preventDefault();
+              onNavigate(item.href);
+            }}
+          >
+            {item.icon && <span className="rk-icon">{item.icon}</span>}
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+export interface TocItem {
+  id: string;
+  label: ReactNode;
+  /** 0 for top-level sections, 1+ for nested ones. */
+  depth?: number;
+}
+
+export interface TableOfContentsProps extends HTMLAttributes<HTMLElement> {
+  items: ReadonlyArray<TocItem>;
+  /** Id of the section being read (from `useScrollSpy`). */
+  active?: string;
+}
+
+/** In-page section links with the current one marked on a rail (long settings and docs pages). */
+export function TableOfContents({ items, active, className, ...rest }: TableOfContentsProps) {
+  const strings = useLabels();
+  return (
+    <nav aria-label={strings.onThisPage} {...rest} className={cx("rk-toc", className)}>
+      {items.map((item) => (
+        <a
+          key={item.id}
+          href={`#${item.id}`}
+          className="rk-toc-link"
+          style={{ "--rk-toc-depth": item.depth ?? 0 } as CSSProperties}
+          aria-current={item.id === active ? "location" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
   );
 }
 
@@ -151,13 +252,16 @@ export function TabPanel({
 const SidebarContext = createContext({ collapsed: false });
 
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
-  /** Icon-only rail; item labels move into tooltips. */
+  /** Icon-only rail; item labels move into tooltips. Unset: follows a compact AppShell. */
   collapsed?: boolean;
   header?: ReactNode;
   footer?: ReactNode;
 }
 
-export function Sidebar({ collapsed = false, header, footer, className, children, ...rest }: SidebarProps) {
+export function Sidebar({ collapsed: forced, header, footer, className, children, ...rest }: SidebarProps) {
+  // unset = follow the AppShell: a rail while the shell is compact
+  const shellCompact = useShellCompact();
+  const collapsed = forced ?? shellCompact;
   return (
     <SidebarContext value={{ collapsed }}>
       <nav {...rest} className={cx("rk-sidebar", className)} data-collapsed={collapsed || undefined}>
@@ -309,6 +413,8 @@ export interface DockItem<T extends string = string> {
   label: string;
   /** `true` — dot; number/string — count. */
   badge?: boolean | number | string;
+  /** Spoken badge ("3 new errors"); defaults to the count, or the `newItems` label for a dot. */
+  badgeLabel?: string;
   disabled?: boolean;
 }
 
@@ -338,13 +444,16 @@ export function Dock<T extends string = string>({
   ...rest
 }: DockProps<T>) {
   const track = useRef<HTMLDivElement>(null);
-  const box = useIndicator(track, '[aria-current="page"]', `${variant}:${value}`);
-  const labels = variant === "labels";
+  // a compact AppShell (phone, narrow window, high zoom) has no room for text pills
+  const compact = useShellCompact();
+  const withLabels = variant === "labels" && !compact;
+  const box = useIndicator(track, '[aria-current="page"]', `${withLabels}:${value}`);
+  const strings = useLabels();
   return (
     <nav
-      aria-label={rest["aria-label"] ?? "Dock"}
+      aria-label={rest["aria-label"] ?? strings.navigation}
       className={cx("rk-dock rk-surface", className)}
-      data-variant={variant}
+      data-variant={withLabels ? "labels" : "icons"}
     >
       <div ref={track} className="rk-dock-track">
         {box && (
@@ -360,17 +469,20 @@ export function Dock<T extends string = string>({
               key={item.value}
               type="button"
               className="rk-dock-item"
-              aria-label={labels ? undefined : item.label}
               aria-current={item.value === value ? "page" : undefined}
               disabled={item.disabled}
               onClick={() => onChange?.(item.value)}
             >
               <span className="rk-icon">{item.icon}</span>
-              {labels && <span className="rk-dock-label">{item.label}</span>}
-              <DockBadge badge={item.badge} />
+              {/* the name comes from content, so it includes the badge (aria-label would drop it) */}
+              <span className={withLabels ? "rk-dock-label" : "rk-sr-only"}>{item.label}</span>
+              <DockBadge
+                badge={item.badge}
+                label={item.badgeLabel ?? (item.badge === true ? strings.newItems : undefined)}
+              />
             </button>
           );
-          return labels ? (
+          return withLabels ? (
             button
           ) : (
             <Tooltip key={item.value} content={item.label}>
@@ -384,10 +496,24 @@ export function Dock<T extends string = string>({
   );
 }
 
-function DockBadge({ badge }: { badge: DockItem["badge"] }) {
-  if (badge === true) return <span className="rk-dock-dot" />;
+function DockBadge({ badge, label }: { badge: DockItem["badge"]; label?: string }) {
+  const spoken = label && <span className="rk-sr-only">, {label}</span>;
+  if (badge === true)
+    return (
+      <>
+        <span className="rk-dock-dot" />
+        {spoken}
+      </>
+    );
   if (badge === undefined || badge === false) return null;
-  return <span className="rk-dock-count rk-num">{badge}</span>;
+  return (
+    <>
+      <span className="rk-dock-count rk-num" aria-hidden={label ? true : undefined}>
+        {badge}
+      </span>
+      {spoken}
+    </>
+  );
 }
 
 export function DockSeparator() {
@@ -399,8 +525,9 @@ export interface BreadcrumbsProps extends HTMLAttributes<HTMLElement> {
 }
 
 export function Breadcrumbs({ items, className, ...rest }: BreadcrumbsProps) {
+  const strings = useLabels();
   return (
-    <nav aria-label="Breadcrumb" {...rest} className={cx("rk-breadcrumbs", className)}>
+    <nav aria-label={strings.breadcrumb} {...rest} className={cx("rk-breadcrumbs", className)}>
       <ol>
         {items.map((item, i) => {
           const last = i === items.length - 1;
@@ -440,6 +567,14 @@ export interface PaginationProps {
   onChange: (page: number) => void;
   /** Pages shown around the current one. */
   siblings?: number;
+  /** `compact`: "3 / 20" between the arrows, for toolbars and narrow panels. */
+  variant?: "full" | "compact";
+  /** With `total`, shows the item range ("26–50 of 480"). */
+  pageSize?: number;
+  total?: number;
+  /** Options for a page-size select; shown with `onPageSizeChange`. */
+  pageSizes?: ReadonlyArray<number>;
+  onPageSizeChange?: (size: number) => void;
   className?: string;
 }
 
@@ -457,37 +592,71 @@ export function pageRange(page: number, count: number, siblings: number): Array<
   return out;
 }
 
-export function Pagination({ page, pageCount, onChange, siblings = 1, className }: PaginationProps) {
+export function Pagination({
+  page,
+  pageCount,
+  onChange,
+  siblings = 1,
+  variant = "full",
+  pageSize,
+  total,
+  pageSizes = [10, 25, 50, 100],
+  onPageSizeChange,
+  className,
+}: PaginationProps) {
+  const strings = useLabels();
+  const from = pageSize && total !== undefined ? Math.min(total, (page - 1) * pageSize + 1) : 0;
+  const to = pageSize && total !== undefined ? Math.min(total, page * pageSize) : 0;
   return (
-    <nav aria-label="Pagination" className={cx("rk-pagination", className)}>
+    <nav aria-label={strings.pagination} className={cx("rk-pagination", className)} data-variant={variant}>
+      {pageSize !== undefined && total !== undefined && (
+        <span className="rk-pagination-info rk-num">{strings.itemRange(from, to, total)}</span>
+      )}
+      {pageSize !== undefined && onPageSizeChange && (
+        <Select
+          size="sm"
+          variant="button"
+          aria-label={strings.pageSize}
+          value={String(pageSize)}
+          onChange={(v) => onPageSizeChange(Number(v))}
+          options={pageSizes.map((n) => ({ value: String(n), label: strings.perPage(n) }))}
+          className="rk-pagination-size"
+        />
+      )}
       <button
         type="button"
-        aria-label="Previous page"
+        aria-label={strings.previousPage}
         disabled={page <= 1}
         onClick={() => onChange(page - 1)}
       >
         <ChevronLeftIcon />
       </button>
-      {pageRange(page, pageCount, siblings).map((p, i) =>
-        p === "…" ? (
-          // biome-ignore lint/suspicious/noArrayIndexKey: ellipsis has no identity
-          <span key={`e${i}`} className="rk-pagination-gap">
-            …
-          </span>
-        ) : (
-          <button
-            key={p}
-            type="button"
-            aria-current={p === page ? "page" : undefined}
-            onClick={() => onChange(p)}
-          >
-            {p}
-          </button>
-        ),
+      {variant === "compact" ? (
+        <span className="rk-pagination-current rk-num" aria-current="page">
+          {page} / {pageCount}
+        </span>
+      ) : (
+        pageRange(page, pageCount, siblings).map((p, i) =>
+          p === "…" ? (
+            // biome-ignore lint/suspicious/noArrayIndexKey: ellipsis has no identity
+            <span key={`e${i}`} className="rk-pagination-gap">
+              …
+            </span>
+          ) : (
+            <button
+              key={p}
+              type="button"
+              aria-current={p === page ? "page" : undefined}
+              onClick={() => onChange(p)}
+            >
+              {p}
+            </button>
+          ),
+        )
       )}
       <button
         type="button"
-        aria-label="Next page"
+        aria-label={strings.nextPage}
         disabled={page >= pageCount}
         onClick={() => onChange(page + 1)}
       >

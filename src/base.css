@@ -19,6 +19,36 @@ html {
   scrollbar-color: var(--rk-surface-4) transparent;
 }
 
+/* WebKit/Blink (WebView2, WKWebView): a slim inset pill without arrow buttons, so a scrollbar never pokes
+   past a rounded container. The standard props above would disable these pseudo-elements, hence the reset. */
+@supports selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    margin: 6px;
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 999px;
+    background: var(--rk-surface-4) padding-box;
+    &:hover {
+      background-color: var(--rk-text-3);
+    }
+  }
+  ::-webkit-scrollbar-button,
+  ::-webkit-scrollbar-corner {
+    display: none;
+    background: transparent;
+  }
+}
+
 :where([class*="rk-"]):focus-visible {
   outline: 2px solid var(--rk-focus);
   outline-offset: 2px;
@@ -143,6 +173,8 @@ html {
       linear-gradient(black 0 0);
     mask-composite: exclude;
     pointer-events: none;
+    /* above sticky table headers and other positioned content that reaches the edge */
+    z-index: 2;
   }
 }
 
@@ -245,4 +277,18 @@ html {
   .rk-surface::before {
     corner-shape: inherit;
   }
+}
+
+/* search matches (lib/highlight.tsx); ::highlight can't pad or round a fill, so it tints and underlines */
+::highlight(rk-match) {
+  color: var(--rk-accent-text);
+  text-decoration: underline 1.5px color-mix(in oklab, var(--rk-accent-text) 70%, transparent);
+  text-underline-offset: 3px;
+}
+
+/* <Scope>: layout-neutral; inherited text settings follow its knobs */
+.rk-scope {
+  display: contents;
+  font-family: var(--rk-font-sans);
+  font-size: var(--rk-font-size);
 }

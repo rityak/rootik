@@ -48,7 +48,7 @@ export const Items: Story = () => {
             icon={<Images />}
             title="scenery-mix"
             description="Importing… 12,400 of 30,000"
-            meta={<StatusDot tone="warn" pulse />}
+            meta={<StatusDot tone="warn" pulse label="Importing" hideLabel />}
             href="#dataset"
           />
         </ItemGroup>

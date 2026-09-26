@@ -66,4 +66,11 @@
 @import "./components/bars-list.css" layer(rootik);
 @import "./components/hover-card.css" layer(rootik);
 @import "./components/text-shimmer.css" layer(rootik);
+@import "./components/power-button.css" layer(rootik);
+@import "./components/part-charts.css" layer(rootik);
+@import "./components/floating-window.css" layer(rootik);
+@import "./components/tour.css" layer(rootik);
+@import "./components/shortcuts-sheet.css" layer(rootik);
+@import "./components/native-select.css" layer(rootik);
+@import "./components/sortable-list.css" layer(rootik);
 @import "./theme/settings.css" layer(rootik);

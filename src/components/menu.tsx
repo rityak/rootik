@@ -1,5 +1,6 @@
 import {
   type ButtonHTMLAttributes,
+  Children,
   createContext,
   type HTMLAttributes,
   type ReactElement,
@@ -14,7 +15,11 @@ import {
 import { cx } from "../lib/cx";
 import { Floating, type Placement } from "../lib/floating";
 import { cloneTrigger, useControllable } from "../lib/hooks";
-import { CheckIcon, ChevronRightIcon } from "../lib/icons";
+import { CheckIcon, ChevronRightIcon, icon as makeIcon } from "../lib/icons";
+import { useLabels } from "../lib/labels";
+import { Spinner } from "./progress";
+
+const DotIcon = makeIcon(<circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />);
 
 /** What MenuItem calls after a pick; custom menu containers (Menubar) provide their own `close`. */
 export const MenuContext = createContext<{ close: () => void }>({
@@ -74,6 +79,10 @@ export interface MenuProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   className?: string;
+  /** Items are being fetched: a spinner row replaces the children. */
+  loading?: boolean;
+  /** Shown when there are no children (nothing recent, no matches). */
+  empty?: ReactNode;
 }
 
 export function Menu({
@@ -83,9 +92,12 @@ export function Menu({
   open,
   onOpenChange,
   className,
+  loading,
+  empty,
 }: MenuProps) {
   const m = useMenuState(open, onOpenChange);
   const id = useId();
+  const labels = useLabels();
   return (
     <MenuContext value={{ close: m.close }}>
       {cloneTrigger(trigger, {
@@ -110,9 +122,19 @@ export function Menu({
         onOpenChange={m.onFloatingChange}
         placement={placement}
         className={cx("rk-menu", className)}
+        aria-busy={loading || undefined}
         onKeyDown={(event) => onMenuKeyDown(event, m.close)}
       >
-        {children}
+        {loading ? (
+          <div className="rk-menu-status">
+            <Spinner size={14} />
+            {labels.loading}
+          </div>
+        ) : Children.count(children) === 0 && empty !== undefined ? (
+          <div className="rk-menu-status">{empty}</div>
+        ) : (
+          children
+        )}
       </Floating>
     </MenuContext>
   );
@@ -343,6 +365,46 @@ export function MenuCheckboxItem({
       keepOpen={keepOpen}
       icon={<CheckIcon style={{ opacity: checked ? 1 : 0 }} />}
       onSelect={() => onCheckedChange(!checked)}
+    />
+  );
+}
+
+const RadioCtx = createContext<{ value?: string; onValueChange: (value: string) => void } | null>(null);
+
+export interface MenuRadioGroupProps {
+  value?: string;
+  onValueChange: (value: string) => void;
+  /** Accessible name of the group; pair it with a visible MenuLabel. */
+  label?: string;
+  children: ReactNode;
+}
+
+/** One-of-many choice inside a menu (sort order, view mode). */
+export function MenuRadioGroup({ value, onValueChange, label, children }: MenuRadioGroupProps) {
+  return (
+    <RadioCtx value={{ value, onValueChange }}>
+      {/* biome-ignore lint/a11y/useSemanticElements: a fieldset is not an allowed menu child */}
+      <div role="group" aria-label={label}>
+        {children}
+      </div>
+    </RadioCtx>
+  );
+}
+
+export interface MenuRadioItemProps extends Omit<MenuItemProps, "onSelect" | "icon"> {
+  value: string;
+}
+
+export function MenuRadioItem({ value, ...rest }: MenuRadioItemProps) {
+  const group = useContext(RadioCtx);
+  const checked = group?.value === value;
+  return (
+    <MenuItem
+      {...rest}
+      role="menuitemradio"
+      aria-checked={checked}
+      icon={<DotIcon style={{ opacity: checked ? 1 : 0 }} />}
+      onSelect={() => group?.onValueChange(value)}
     />
   );
 }

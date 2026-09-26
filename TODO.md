@@ -48,9 +48,9 @@ module, so any merge order works.
 
 - [x] BarsList — top-N list of horizontal bars with name + value, hatched rest — P2 ↗ Mantine 9 BarsList · `claude/rk-bars-list`
 
-- [ ] HoverCard — interactive popover on hover/focus/long press; `interestfor` where supported, JS delay fallback — P2 ↗ React Aria PreviewTrigger · `claude/rk-hover-card`
+- [x] HoverCard — interactive preview on hover / keyboard focus, Tab moves into it, Esc returns focus (JS delays; `interestfor` moves together with Tooltip) ↗ React Aria PreviewTrigger
 
-- [ ] Text shimmer for pending labels ("Connecting…", "Indexing…") via `background-clip: text` — P2 ↗ AI UIs, Magic UI · `claude/rk-text-shimmer`
+- [x] TextShimmer for pending labels ("Connecting…", "Indexing…") via `background-clip: text`, `active` to settle ↗ AI UIs, Magic UI
 
 ## Batch 2 — one PR per item
 
@@ -161,15 +161,15 @@ below once the batch is in.
 - [x] CI (`.github/workflows/ci.yml`): typecheck, `biome ci`, unit tests, Ladle build on push to main and PRs
 - [x] Strict Biome: extra rules on top of `recommended`, kit code may import only peer deps (no dev deps like lucide-react), `noHexColors`, GritQL plugin `biome/untinted-neutral.grit` (translucent `oklch(L 0 0 / a)` overlays)
 - [x] Label-on-fill token (`--rk-on-danger` or a generic `--rk-on-tone`) instead of hardcoded `oklch(0.99 0 0)` in Button armed and TitleBar close hover, `oklch(0.15 0 0)` on the custom swatch — P2 ★
-- [ ] Dist build (`bun build` + d.ts) for npm publishing; now consumed from source — P2
-- [ ] Visual regression (Playwright screenshots of stories), as a CI job on top of the Ladle build — P2
+- [x] Dist build: tsc per-module ESM + d.ts, bundled `styles.css`, export parity check; `source` condition keeps src/ for linked dev
+- [x] Visual regression: Playwright screenshots of every story on the Ladle build (fake clock, reduced motion), `visual.yml` with an `update` input for baselines
 - [ ] Floating on CSS anchor positioning (`position-anchor`, `position-try-fallbacks`), `computePosition` stays as fallback; anchored container queries so a flipped popover animates from the anchor side — P2 ↗ CSS anchor positioning
 - [ ] Sliding indicator (Tabs/SegmentedControl/Dock) anchored to the active item instead of measuring in `lib/indicator.ts` — P2 ↗ CSS anchor positioning
-- [ ] Scroll shadows: sticky table head / PageHeader get a shadow only while content is scrolled under them (`@container scroll-state()`) — P2 ↗ CSS scroll-state queries
-- [ ] Pointer spotlight on interactive cards (glow follows the pointer via `--x/--y`, ≤ 16%), a material option — P2 ↗ Linear/Vercel, Magic UI
-- [ ] `llms.txt` generated from stories (component → props → story example) so AI assistants use the kit correctly during migrations — P2 ↗ HeroUI v3, Mantine 9, shadcn registry
+- [x] Scroll shadows: sticky table head / PageHeader get a shadow only while content is scrolled under them (`@container scroll-state()`, no-op where unsupported) ↗ CSS scroll-state queries
+- [x] Card `spotlight`: accent glow follows the pointer via CSS vars (14%, no re-render) ↗ Linear/Vercel, Magic UI
+- [x] `llms.txt` generated from the sources: rules + component → file:line, story, JSDoc summary; CI checks it's fresh ↗ HeroUI v3, Mantine 9, shadcn registry
 - [x] `useHotkey` fires inside inputs: plain and `shift+` combos (e.g. `shift+?`) swallow typing — skip editable targets unless the combo has `mod` — P1 ★
-- [ ] Scoped appearance: `<Scope density="compact" accent=…>` writes the same CSS vars on a subtree (dense table inside a roomy page) — P2 ★ ↗ Radix Themes nested Theme
+- [x] Scoped appearance: `<Scope values={{ density: "compact", accent: … }}>` writes the changed CSS vars on a subtree, `[data-rk-scope]` re-derives tokens ↗ Radix Themes nested Theme
 
 ## Utilities & hooks
 
@@ -181,9 +181,9 @@ below once the batch is in.
 - [x] `usePersistentState` — public `readStorage`/`writeStorage` with cross-tab sync (`storage` event) — P2 ★
 - [x] `useInterval` / polling that pauses while the document is hidden (dashboard refresh) — P2 ↗ Mantine use-interval + use-document-visibility
 - [x] `useMediaQuery`, `useElementSize` — P2 ↗ Mantine hooks
-- [ ] Export `useIndicator` for consumers' custom controls — P2 ↗ Mantine FloatingIndicator
-- [ ] Hotkey registry: `useHotkey` registers into context → generated shortcuts sheet on `?` and CommandPalette hints from the same source — P2 ★
-- [ ] Inactive shell state: TitleBar and selection dim while the window is unfocused, like native apps (`useWindowFocus` is in) — P2 ★ (Tauri)
+- [x] Export `useIndicator` (+ `axis: "y"`) for consumers' custom controls ↗ Mantine FloatingIndicator
+- [x] Hotkey registry: `useHotkey(…, { description, group })` registers → `ShortcutsSheet` on `?`, `useHotkeys()` for CommandPalette hints
+- [x] AppShell `dimWhenInactive`: TitleBar fades and selected pills turn grey while the window is unfocused (Tauri)
 
 ## Actions
 
@@ -206,12 +206,12 @@ below once the batch is in.
 - [x] ChoiceCards — radio cards with description/note — UR Segment
 - [x] ChipGroup — toggle chips multi/single, counts — DT MultiSelectField
 - [x] ColorSwatches — presets + native custom picker — DT color param
-- [ ] ChoiceCards `multiple` (checkbox cards) — P2 ↗ Radix Themes CheckboxCards, Chakra CheckboxCard
-- [ ] Form on the native constraint API — `validity` → Field error, focus the first invalid field on submit — P2 ↗ Base UI Form, React Aria Form
-- [ ] TreeSelect / Cascader — P2 ↗ Mantine 9, antd
-- [ ] Select `native` variant on `appearance: base-select` (real `<select>` in kit styling) for simple cases — P2 ↗ customizable select
+- [x] CheckboxCards — many-of cards sharing ChoiceCards' look ↗ Radix Themes CheckboxCards, Chakra CheckboxCard
+- [x] Form on the native constraint API — browser messages → Field error, `validate` for custom rules, focus the first invalid control, errors clear as values become valid ↗ Base UI Form, React Aria Form
+- [x] TreeSelect — select-like field over a searchable Tree, single or checkable `multiple` (covers Cascader use) ↗ Mantine 9, antd
+- [x] NativeSelect — real `<select>` in kit styling, popup styled via `appearance: base-select` where supported ↗ customizable select
 - [ ] PathField — stays in DT (needs its FS API); build on Input + Dialog
-- [ ] DateInput / DateRange presets (Last 1h / 24h / 7d / custom) + TimeInput — P2 (native `<input type=date>` styled first) ↗ Mantine dates, React Aria DatePicker
+- [x] DateRange presets (Last 1h / 24h / 7d / 30d / custom on `datetime-local`) + `resolveRange`; date/time use the styled native Input ↗ Mantine dates, React Aria DatePicker
 
 ## Display
 
@@ -228,9 +228,9 @@ below once the batch is in.
 - [x] Nest — nested option group — UR Nest
 - [x] Divider (label, vertical)
 - [x] Progress (hatched rest, indeterminate), ProgressRing, Spinner, Skeleton — DT ProgressBar
-- [ ] Card `data-state="running"`: light beam travelling along the gradient rim (`@property` angle + conic gradient), status only — P2 ↗ Magic UI Border Beam
-- [ ] Highlight — search matches via CSS Custom Highlight API (`::highlight()`, no DOM wrapping) for CommandPalette, Tree filter, DataTable search — P2 ↗ Mantine/Ark/Chakra Highlight
-- [ ] EmptyState presets/tones (success, error, no access, offline) — P2 ↗ antd Result, Primer Blankslate
+- [x] Card `running`: light beam travelling along the rim (`@property` angle + conic gradient), `aria-busy` ↗ Magic UI Border Beam
+- [x] Highlight / `useHighlight` — search matches via CSS Custom Highlight API (no DOM wrapping); CommandPalette uses it ↗ Mantine/Ark/Chakra Highlight
+- [x] EmptyState `tone` (success, error, no access, offline) with default icons ↗ antd Result, Primer Blankslate
 - [ ] Flag (country) — stays in UR
 
 ## Overlays
@@ -243,11 +243,11 @@ below once the batch is in.
 - [x] Drawer / bottom sheet (Dialog placements)
 - [x] CommandPalette — groups, keywords, shortcuts — DT CommandPalette
 - [x] Toast / Toaster — tones, action, sticky, loading→done update, pause on hover — DT Tasks notifications
-- [ ] Menu radio items — P2
-- [ ] Menu async loading + empty state — P2 ↗ React Aria 1.21
-- [ ] Tooltip on `interestfor` + `popover="hint"` (native hover/focus delays and Esc), current JS as fallback — P2 ↗ interest invokers
-- [ ] Toast stack: collapsed deck that expands on hover/focus, swipe to dismiss — P2 ↗ Sonner
-- [ ] Tour — step-by-step coach marks anchored to elements — P2 ↗ Ark/antd Tour
+- [x] Menu radio items — `MenuRadioGroup` + `MenuRadioItem`
+- [x] Menu `loading` + `empty` ↗ React Aria 1.21
+- [x] Tooltip on `interestfor` + `popover="hint"` for button/link triggers where supported (native delays, long press, Esc), JS fallback elsewhere ↗ interest invokers
+- [x] Toast stack: collapsed deck (`stack`) that fans out on hover/focus, swipe to dismiss ↗ Sonner
+- [x] Tour — spotlit target + anchored card, ←/→ and Esc, focus follows the step ↗ Ark/antd Tour
 
 ## Navigation
 
@@ -255,11 +255,11 @@ below once the batch is in.
 - [x] Sidebar (collapsible rail) + NavGroup + NavItem (depth, trailing, hover actions) — DT NavItem/SideRail, UR SideNav
 - [x] Dock — `icons` (round buttons + tooltips) and `labels` (icon + text pills) variants, fixed item size with a sliding inverted indicator, dot/count badges, `DockSeparator` + extra actions — UR Dock
 - [x] Breadcrumbs, Pagination
-- [ ] TopNav (pill nav as links, not tabs) — P2
-- [ ] Vertical Tabs (`orientation`) for settings pages — P2 ↗ Radix/Base UI Tabs
-- [ ] TableOfContents + `useScrollSpy` for long settings/docs pages — P2 ↗ Mantine TableOfContents, Ark Toc
-- [ ] Pagination: page-size select, compact variant ("3 / 20" + prev/next), total — P2 ★
-- [ ] SkipLink ("Skip to content") in AppShell — P2 ↗ Chakra SkipNav
+- [x] TopNav — pill nav of real links, `onNavigate` for client routing
+- [x] Vertical Tabs (`orientation`) for settings pages ↗ Radix/Base UI Tabs
+- [x] TableOfContents + `useScrollSpy` for long settings/docs pages ↗ Mantine TableOfContents, Ark Toc
+- [x] Pagination: page-size select, compact variant ("3 / 20"), item range
+- [x] SkipLink ("Skip to content") in AppShell — P2 ↗ Chakra SkipNav
 
 ## Layout
 
@@ -269,10 +269,10 @@ below once the batch is in.
 - [x] PageHeader (sm/lg), PageBody, Toolbar + Spacer, ActionBar, StatusBar (progress line) — DT Page.tsx, UR Toolbar
 - [x] ResizablePanel — pointer + keyboard, persisted — DT ResizableSidebar, LogDock
 - [x] Disclosure (native details, exclusive accordion via `name`)
-- [ ] FloatingWindow — draggable/resizable non-modal panel (inspector, log, preview) — P2 ↗ Mantine FloatingWindow, Ark FloatingPanel
-- [ ] Responsive AppShell — below a container width the sidebar turns into a Drawer, header gets a menu button (layout.css has no breakpoints yet) — P2 ★ ↗ Mantine AppShell + Burger
-- [ ] MasterDetail — list + detail side by side, stacked with a back button when narrow — P2 ★
-- [ ] PowerButton / hero toggle orb (now a story-only `.vpn-orb`) — P1 when umiray migrates
+- [x] FloatingWindow — non-modal top-layer panel, drag by the bar (arrow keys on the title), native corner resize ↗ Mantine FloatingWindow, Ark FloatingPanel
+- [x] Responsive AppShell — `compactBelow`: Sidebar becomes an icon rail, aside stacks, TitleBar wraps, labelled Dock → icons; `drawerBelow`: sidebar in a left Drawer opened by `ShellMenuButton` ↗ Mantine AppShell + Burger
+- [x] MasterDetail — list + detail side by side, stacked with a back button when narrow
+- [x] PowerButton — hero toggle orb (`aria-pressed`, `pending` ring, sm/md/lg)
 - Not planned: Stack/Grid/Box — use CSS/Tailwind in apps
 
 ## Data
@@ -280,10 +280,10 @@ below once the batch is in.
 - [x] Table — styled native table, density/sticky/zebra/framed — UR Table
 - [x] DataTable — columns, client/server sort, row click/selection, empty — DT TagTable, UR NodeTable/ReportTable
 - [x] Tree — keyboard per APG, lazy nodes, trailing, indent guides — DT FolderTree/TensorTree, UR NodeTree
-- [ ] Tree: virtualization for large models, drag & drop — P2
-- [ ] Tree: tri-state checkboxes, multi-select, type-to-filter — P2 ↗ Ark TreeView, antd Tree
-- [ ] DataTable: column visibility menu, pinned first column, inline cell edit — P2 ↗ antd, Primer DataTable
-- [ ] Sortable list — reorder by drag and by keyboard (Space lifts, arrows move) — P2 ↗ React Aria useDragAndDrop
+- [x] Tree: virtualization (`height`), drag & drop (`onMove` before/after/inside, pointer only)
+- [x] Tree: tri-state checkboxes, multi-select, `filter` with highlight, typeahead ↗ Ark TreeView, antd Tree
+- [x] DataTable: `hiddenColumns` + ColumnsMenu, `pinFirstColumn`, inline edit via `Column.onEdit` (Editable) ↗ antd, Primer DataTable
+- [x] SortableList — reorder by drag and by keyboard (Space lifts, arrows move, Esc cancels), announced ↗ React Aria useDragAndDrop
 
 ## Charts
 
@@ -292,13 +292,13 @@ below once the batch is in.
 - [x] LineChart — multi-series, area, gaps, crosshair tooltip, legend — DT RunCharts, UR TrafficChart
 - [x] Gauge — segmented arc
 - [x] Legend, `seriesColor`, `niceTicks`, `formatCompact`
-- [ ] Scatter (log axes) — P2 (DT tag scatter)
-- [ ] StackedBar / Donut — P2
-- [ ] Brush / zoom range on LineChart for long series (training runs) — P2 ↗ Mantine ChartBrush
-- [ ] BulletChart — value vs target + qualitative ranges — P2 ↗ Mantine BulletChart
-- [ ] Waffle — part-of-whole grid with hatched rest — P2 ↗ Mantine WaffleChart
-- [ ] Treemap — composition (dataset classes, disk usage) — P2 ↗ Mantine Treemap
-- [ ] Histogram via a `bin()` helper on top of BarChart — P2 ★ (DT distributions)
+- [x] ScatterChart — linear/log axes, nearest-point tip, table view (DT tag scatter)
+- [x] StackedBarChart (`normalize` for 100%) / DonutChart (total in the hole, hover legend)
+- [x] LineChart `brush` — overview strip + RangeSlider window (keyboard-accessible) ↗ Mantine ChartBrush
+- [x] BulletChart — value vs target + qualitative ranges, hatched rest ↗ Mantine BulletChart
+- [x] WaffleChart — part-of-whole grid with hatched rest ↗ Mantine WaffleChart
+- [x] Treemap — squarified, parts past 6 share one grey ↗ Mantine Treemap
+- [x] Histogram via `bin()` on a `dense` BarChart; BarChart thins crowded axis labels (DT distributions)
 
 ## Not planned (2026-09 review)
 

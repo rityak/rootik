@@ -197,7 +197,7 @@
 }
 
 .rk-gauge-unit {
-  font-size: 0.3em;
+  font-size: max(11px, 0.3em);
   font-weight: 400;
   letter-spacing: 0;
   color: var(--rk-text-3);
@@ -206,4 +206,24 @@
 .rk-gauge-label {
   font-size: var(--rk-text-sm);
   color: var(--rk-text-3);
+}
+
+/* brush: overview strip aligned with the range slider's thumb travel */
+.rk-chart-brush {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rk-chart-brush-overview {
+  margin-inline: 8px;
+  & svg {
+    display: block;
+    overflow: visible;
+  }
+}
+
+.rk-chart-brush-shade {
+  fill: var(--rk-bg);
+  opacity: 0.7;
 }

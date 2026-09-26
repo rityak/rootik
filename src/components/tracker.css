@@ -1,5 +1,6 @@
 .rk-tracker {
   --rk-tracker-h: 28px;
+  container: rk-tracker / inline-size;
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 1.5);
@@ -55,5 +56,16 @@
   }
   &:focus-visible {
     outline-offset: 1px;
+  }
+}
+
+/* narrow (90 days on a phone): 2px bars + 2px gaps no longer fit, halve both */
+@container rk-tracker (width < 26rem) {
+  .rk-tracker-bars {
+    gap: 1px;
+  }
+  .rk-tracker-bar {
+    min-width: 1px;
+    border-radius: 1px;
   }
 }

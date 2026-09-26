@@ -41,6 +41,7 @@ import {
   PageHeader,
   SearchInput,
   Select,
+  ShellMenuButton,
   Sidebar,
   Sparkline,
   Stat,
@@ -86,39 +87,42 @@ function DashboardApp() {
   return (
     <AppShell
       sidebar={
-        <div style={{ width: 232, display: "flex" }}>
-          <Sidebar
-            header={
-              <>
-                <span className="demo-logo">
-                  <Sparkles size={16} />
-                </span>
-                <strong style={{ fontSize: 15, letterSpacing: "-0.02em" }}>rootik</strong>
-              </>
-            }
-            footer={nav("settings", "Settings", <Settings />)}
+        <Sidebar
+          header={
+            <>
+              <span className="demo-logo">
+                <Sparkles size={16} />
+              </span>
+              <strong style={{ fontSize: 15, letterSpacing: "-0.02em" }}>rootik</strong>
+            </>
+          }
+          footer={nav("settings", "Settings", <Settings />)}
+        >
+          <NavGroup label="Workspace">
+            {nav("dashboard", "Dashboard", <LayoutDashboard />)}
+            {nav("gallery", "Gallery", <Images />, <Badge size="sm">2.4K</Badge>)}
+            {nav("constructor", "Constructor", <Workflow />)}
+            {nav("analysis", "Analysis", <ChartColumn />)}
+          </NavGroup>
+          <NavGroup
+            label="Training"
+            collapsible
+            action={<IconButton size="sm" icon={<Plus />} label="New run" />}
           >
-            <NavGroup label="Workspace">
-              {nav("dashboard", "Dashboard", <LayoutDashboard />)}
-              {nav("gallery", "Gallery", <Images />, <Badge size="sm">2.4K</Badge>)}
-              {nav("constructor", "Constructor", <Workflow />)}
-              {nav("analysis", "Analysis", <ChartColumn />)}
-            </NavGroup>
-            <NavGroup
-              label="Training"
-              collapsible
-              action={<IconButton size="sm" icon={<Plus />} label="New run" />}
-            >
-              {nav("runs", "Runs", <Activity />, <StatusDot tone="accent" pulse />)}
-              {nav("models", "Models", <Boxes />)}
-              {nav("datasets", "Datasets", <Database />)}
-            </NavGroup>
-          </Sidebar>
-        </div>
+            {nav("runs", "Runs", <Activity />, <StatusDot tone="accent" pulse label="Running" hideLabel />)}
+            {nav("models", "Models", <Boxes />)}
+            {nav("datasets", "Datasets", <Database />)}
+          </NavGroup>
+        </Sidebar>
       }
       header={
         <TitleBar
-          start={<Breadcrumbs items={[{ label: "Workspace", onClick: () => {} }, { label: "Dashboard" }]} />}
+          start={
+            <>
+              <ShellMenuButton />
+              <Breadcrumbs items={[{ label: "Workspace", onClick: () => {} }, { label: "Dashboard" }]} />
+            </>
+          }
           end={
             <>
               <IconButton icon={<Bell />} label="Notifications" />

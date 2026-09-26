@@ -8,6 +8,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 
 /** Controlled when `value` is defined, otherwise keeps its own state. */
@@ -103,8 +104,45 @@ export function isTypingTarget(target: EventTarget | null): boolean {
  * Global keyboard shortcut. `combo` like "mod+k", "shift+?", "escape"; mod = Ctrl or ⌘.
  * Combos without `mod` are ignored while typing in a field, so "shift+?" never swallows a "?".
  */
-export function useHotkey(combo: string, handler: (event: KeyboardEvent) => void, enabled = true) {
+export interface HotkeyInfo {
+  combo: string;
+  /** Listed in the shortcuts sheet (ShortcutsSheet) when given. */
+  description: string;
+  group?: string;
+}
+
+// registered hotkeys that describe themselves: the shortcuts sheet and command hints read this
+let registry: HotkeyInfo[] = [];
+const registryListeners = new Set<() => void>();
+const subscribeRegistry = (listener: () => void) => {
+  registryListeners.add(listener);
+  return () => registryListeners.delete(listener);
+};
+
+/** Every mounted `useHotkey` that has a description, in registration order. */
+export function useHotkeys(): ReadonlyArray<HotkeyInfo> {
+  return useSyncExternalStore(
+    subscribeRegistry,
+    () => registry,
+    () => registry,
+  );
+}
+
+/**
+ * Global shortcut ("mod+k", "shift+?"; `mod` = Ctrl or ⌘). Plain keys are ignored while typing in a field.
+ * The third argument is `enabled`, or options with a `description` that lists it in the shortcuts sheet.
+ */
+export function useHotkey(
+  combo: string,
+  handler: (event: KeyboardEvent) => void,
+  options: boolean | { enabled?: boolean; description?: string; group?: string } = true,
+) {
   const latest = useLatest(handler);
+  const {
+    enabled = true,
+    description,
+    group,
+  } = typeof options === "boolean" ? { enabled: options } : options;
   useEffect(() => {
     if (!enabled) return;
     const parts = combo.toLowerCase().split("+");
@@ -119,8 +157,19 @@ export function useHotkey(combo: string, handler: (event: KeyboardEvent) => void
       latest.current(event);
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [combo, enabled, latest]);
+    const info = description ? { combo, description, group } : null;
+    if (info) {
+      registry = [...registry, info];
+      for (const l of registryListeners) l();
+    }
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      if (info) {
+        registry = registry.filter((h) => h !== info);
+        for (const l of registryListeners) l();
+      }
+    };
+  }, [combo, enabled, latest, description, group]);
 }
 
 /**
@@ -265,4 +314,47 @@ export function useWindowFocus(): boolean {
     };
   }, []);
   return focused;
+}
+
+/**
+ * Id of the section currently being read: the last one whose top has passed `offset` px below the top of
+ * `root` (the viewport by default). Recomputed on scroll, rAF-throttled.
+ */
+export function useScrollSpy(
+  ids: ReadonlyArray<string>,
+  { root, offset = 80 }: { root?: HTMLElement | null; offset?: number } = {},
+) {
+  const [active, setActive] = useState<string | undefined>(ids[0]);
+  const key = ids.join("|");
+  // biome-ignore lint/correctness/useExhaustiveDependencies: `key` stands for `ids`
+  useEffect(() => {
+    let frame = 0;
+    const measure = () => {
+      const top = (root?.getBoundingClientRect().top ?? 0) + offset;
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= top) current = id;
+      }
+      // scrolled to the very end: the last section counts even if it's too short to reach the top
+      const scroller = root ?? document.scrollingElement;
+      if (scroller && scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 2)
+        current = ids.at(-1);
+      setActive(current);
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(measure);
+    };
+    measure();
+    const target: HTMLElement | Window = root ?? window;
+    target.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      target.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [key, root, offset]);
+  return active;
 }

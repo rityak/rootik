@@ -1,4 +1,12 @@
-import { type ReactElement, type ReactNode, useEffect, useId, useRef, useState } from "react";
+import {
+  type ReactElement,
+  type ReactNode,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { Floating, type Placement } from "../lib/floating";
 import { cloneTrigger } from "../lib/hooks";
 
@@ -27,6 +35,17 @@ export function Tooltip({
   const anchor = useRef<HTMLElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const id = useId();
+  // interest invokers: where supported and the trigger is a button or link, the browser shows/hides the
+  // hint on hover, focus and long press with its own delays and Esc; the JS below stays as the fallback
+  const [native, setNative] = useState(false);
+  useLayoutEffect(() => {
+    const el = anchor.current;
+    setNative(
+      !disabled &&
+        "interestForElement" in HTMLButtonElement.prototype &&
+        (el instanceof HTMLButtonElement || el instanceof HTMLAnchorElement),
+    );
+  }, [disabled]);
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
@@ -39,8 +58,33 @@ export function Tooltip({
     if (open) warmUntil = Date.now() + 500;
     setOpen(false);
   };
+  // leaving the trigger waits a moment, so the pointer can cross the gap onto the tooltip (WCAG 1.4.13)
+  const leave = () => {
+    clearTimeout(timer.current);
+    timer.current = setTimeout(hide, 120);
+  };
+  const stay = () => clearTimeout(timer.current);
+
+  // Esc dismisses a hover-opened tooltip too, wherever focus is
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && hide();
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  });
 
   if (disabled || content === undefined || content === null || content === "") return children;
+
+  if (native)
+    return (
+      <>
+        {cloneTrigger(children, { ref: anchor, interestfor: id, "aria-describedby": id })}
+        <Floating hint id={id} role="tooltip" anchor={anchor} placement={placement} className="rk-tooltip">
+          {content}
+          {shortcut && <kbd className="rk-tooltip-kbd">{shortcut}</kbd>}
+        </Floating>
+      </>
+    );
 
   return (
     <>
@@ -48,13 +92,12 @@ export function Tooltip({
         ref: anchor,
         "aria-describedby": open ? id : undefined,
         onPointerEnter: show,
-        onPointerLeave: hide,
+        onPointerLeave: leave,
         onFocus: (event: React.FocusEvent<HTMLElement>) => {
           if (event.currentTarget.matches(":focus-visible")) show();
         },
         onBlur: hide,
         onPointerDown: hide,
-        onKeyDown: (event: React.KeyboardEvent) => event.key === "Escape" && hide(),
       })}
       {open && (
         <Floating
@@ -65,6 +108,8 @@ export function Tooltip({
           anchor={anchor}
           placement={placement}
           className="rk-tooltip"
+          onPointerEnter={stay}
+          onPointerLeave={leave}
         >
           {content}
           {shortcut && <kbd className="rk-tooltip-kbd">{shortcut}</kbd>}

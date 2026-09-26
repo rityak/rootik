@@ -1,7 +1,7 @@
 import type { Story } from "@ladle/react";
 import { DownloadIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
-import { IconButton, Lightbox, type LightboxImage } from "..";
+import { IconButton, Lightbox, type LightboxImage, Thumbnail } from "..";
 
 export default { title: "Overlays" };
 
@@ -63,7 +63,8 @@ export const Gallery: Story = () => {
               cursor: "zoom-in",
             }}
           >
-            <img src={im.src} alt={im.alt} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            {/* Thumbnail shows an icon instead of the browser broken-image glyph for the missing file */}
+            <Thumbnail src={im.src} alt={im.alt} style={{ width: "100%", height: "100%" }} />
           </button>
         ))}
       </div>

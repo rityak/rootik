@@ -5,9 +5,11 @@ import {
   FolderOpen,
   Globe,
   HeartPulse,
+  Lock,
   MapPin,
   Upload,
   Users,
+  WifiOff,
   Wind,
 } from "lucide-react";
 import {
@@ -66,7 +68,7 @@ export const Badges: Story = () => (
       <StatusDot tone="warn" pulse label="Connecting" />
       <StatusDot tone="danger" label="Error" />
       <StatusDot tone="neutral" label="Off" />
-      <StatusDot tone="accent" pulse />
+      <StatusDot tone="accent" pulse label="Live" hideLabel />
     </div>
     <div className="story-row">
       <Kbd keys="mod+k" />
@@ -79,7 +81,10 @@ export const Badges: Story = () => (
 
 export const Avatars: Story = () => (
   <div className="story-row">
-    <Avatar name="Biromon Junior" size={40} status="success" />
+    <Avatar name="Biromon Junior" size={40} status="success" statusLabel="Online" />
+    <Avatar name="Robert Sanchez" size={40} status="warn" statusLabel="Away" />
+    <Avatar name="Lily Alexander" size={40} status="danger" statusLabel="Do not disturb" />
+    <Avatar name="Ann Lee" size={40} status="neutral" statusLabel="Offline" />
     <Avatar name="Robert Sanchez" />
     <Avatar name="Lily Alexander" size={28} square />
     <AvatarGroup max={3}>
@@ -119,6 +124,17 @@ export const Cards: Story = () => (
     </Card>
     <Card title="Collapsible" collapsible description="Click the header">
       Hidden content.
+    </Card>
+    <Card title="Spotlight" spotlight interactive description="spotlight — glow follows the pointer">
+      Move the pointer across this card.
+    </Card>
+    <Card
+      title="Training"
+      running
+      description="running — beam on the rim"
+      actions={<StatusDot tone="accent" pulse label="Running" />}
+    >
+      <Progress value={42} showValue label="Epoch 4 / 10" />
     </Card>
   </div>
 );
@@ -205,6 +221,38 @@ export const Empty: Story = () => (
     </Card>
     <Card>
       <EmptyState size="sm" icon={<Users />} title="No subscriptions" hint="Add a link to import nodes." />
+    </Card>
+    <Card>
+      <EmptyState
+        tone="success"
+        title="Export finished"
+        hint="48,210 captions written to D:/datasets/anime-faces-v3."
+        action={<Button>Open folder</Button>}
+      />
+    </Card>
+    <Card>
+      <EmptyState
+        tone="danger"
+        title="Unable to load nodes"
+        hint="The subscription server didn’t answer. Check your connection and try again."
+        action={<Button>Retry</Button>}
+      />
+    </Card>
+    <Card>
+      <EmptyState
+        tone="warn"
+        icon={<Lock />}
+        title="No access"
+        hint="Ask an admin to share this project with you."
+      />
+    </Card>
+    <Card>
+      <EmptyState
+        tone="info"
+        icon={<WifiOff />}
+        title="You’re offline"
+        hint="Changes are saved locally and sync when you reconnect."
+      />
     </Card>
   </div>
 );

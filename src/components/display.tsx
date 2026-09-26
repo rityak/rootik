@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { cx } from "../lib/cx";
 import { XIcon } from "../lib/icons";
+import { useLabels } from "../lib/labels";
 import type { Tone } from "./progress";
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
@@ -22,11 +23,12 @@ export function Badge({
   icon,
   dot,
   onRemove,
-  removeLabel = "Remove",
+  removeLabel,
   className,
   children,
   ...rest
 }: BadgeProps) {
+  const strings = useLabels();
   return (
     <span
       {...rest}
@@ -39,7 +41,12 @@ export function Badge({
       {icon && <span className="rk-icon">{icon}</span>}
       {children}
       {onRemove && (
-        <button type="button" className="rk-badge-remove" aria-label={removeLabel} onClick={onRemove}>
+        <button
+          type="button"
+          className="rk-badge-remove"
+          aria-label={removeLabel ?? strings.remove}
+          onClick={onRemove}
+        >
           <XIcon />
         </button>
       )}
@@ -51,18 +58,22 @@ export interface StatusDotProps extends HTMLAttributes<HTMLSpanElement> {
   tone?: Tone;
   /** Animated halo: live / connecting. */
   pulse?: boolean;
-  label?: ReactNode;
+  /** What the dot means ("Online", "Running"). Required: a dot alone is color only. */
+  label: ReactNode;
+  /** Label for screen readers only (plus a hover title), for dense rows and nav badges. */
+  hideLabel?: boolean;
 }
 
-export function StatusDot({ tone = "success", pulse, label, className, ...rest }: StatusDotProps) {
+export function StatusDot({ tone = "success", pulse, label, hideLabel, className, ...rest }: StatusDotProps) {
   return (
-    <span {...rest} className={cx("rk-status", className)} data-tone={tone}>
-      <span
-        className="rk-status-dot"
-        data-pulse={pulse || undefined}
-        aria-hidden={label ? true : undefined}
-      />
-      {label}
+    <span
+      title={hideLabel && typeof label === "string" ? label : undefined}
+      {...rest}
+      className={cx("rk-status", className)}
+      data-tone={tone}
+    >
+      <span className="rk-status-dot" data-pulse={pulse || undefined} aria-hidden="true" />
+      <span className={hideLabel ? "rk-sr-only" : undefined}>{label}</span>
     </span>
   );
 }
@@ -102,13 +113,20 @@ export function Kbd({ keys, size = "md", className, children, ...rest }: KbdProp
   );
 }
 
-export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
+export type AvatarProps = HTMLAttributes<HTMLSpanElement> & {
   name?: string;
   src?: string;
   size?: number;
   square?: boolean;
-  status?: Tone;
-}
+} & (
+    | { status?: undefined; statusLabel?: undefined }
+    | {
+        /** Presence mark; its shape differs per tone (dot, half, minus, ring), not just its color. */
+        status: Tone;
+        /** Spoken presence ("Online", "Away"), appended to the accessible name. */
+        statusLabel: string;
+      }
+  );
 
 const WHITESPACE = /\s+/;
 
@@ -119,6 +137,7 @@ export function Avatar({
   size = 32,
   square,
   status,
+  statusLabel,
   className,
   style,
   ...rest
@@ -134,7 +153,7 @@ export function Avatar({
   return (
     <span
       role="img"
-      aria-label={name || undefined}
+      aria-label={[name, statusLabel].filter(Boolean).join(", ") || undefined}
       {...rest}
       className={cx("rk-avatar", className)}
       data-square={square || undefined}
@@ -142,14 +161,14 @@ export function Avatar({
         {
           width: size,
           height: size,
-          fontSize: size * 0.38,
+          fontSize: Math.max(11, size * 0.38),
           "--rk-avatar-h": hue,
           ...style,
         } as React.CSSProperties
       }
     >
       {src ? <img src={src} alt="" /> : initials}
-      {status && <span className="rk-avatar-status" data-tone={status} />}
+      {status && <span className="rk-avatar-status" data-tone={status} title={statusLabel} />}
     </span>
   );
 }

@@ -64,6 +64,48 @@
   }
 }
 
+/* top nav reuses the pill tab bar; links instead of tabs */
+.rk-topnav {
+  min-width: 0;
+  & .rk-tab {
+    text-decoration: none;
+  }
+  & .rk-tab[aria-current="page"] {
+    color: var(--rk-on-inverse);
+  }
+}
+
+/* vertical: settings-page list; the line becomes a rail on the start edge */
+.rk-tabs[data-orientation="vertical"] {
+  flex-direction: column;
+  overflow: visible;
+  & .rk-tab {
+    justify-content: flex-start;
+    padding-inline: calc(var(--rk-space) * 3);
+  }
+  & .rk-tabs-indicator {
+    transition-property: top, bottom;
+  }
+  &[data-variant="line"] {
+    gap: 2px;
+    box-shadow: inset 1px 0 0 var(--rk-line);
+    & .rk-tabs-indicator {
+      left: 0;
+      width: 2px;
+      height: auto;
+      border-radius: 0 2px 2px 0;
+    }
+  }
+  &[data-variant="pill"] {
+    display: flex;
+    width: auto;
+    & .rk-tabs-indicator {
+      left: 3px;
+      right: 3px;
+    }
+  }
+}
+
 .rk-tab {
   position: relative;
   z-index: 1;
@@ -172,8 +214,21 @@
     justify-content: center;
     padding: 0;
   }
+  /* hidden visually only: the label stays the link's accessible name (icons are aria-hidden) */
   & .rk-nav-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  /* the rail keeps the header's first element (logo, toggle) */
+  & .rk-sidebar-header > :not(:first-child) {
     display: none;
+  }
+  & .rk-sidebar-footer .rk-nav-item {
+    justify-content: center;
   }
 }
 
@@ -312,6 +367,7 @@
 
 /* dock */
 .rk-dock {
+  max-width: 100%;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -327,11 +383,19 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  /* wider than its container: scroll the items instead of clipping the first ones; the padding keeps
+     focus rings and badges inside the scroll box */
+  min-width: 0;
+  padding: 4px;
+  margin: -4px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
 .rk-dock-indicator {
-  top: 0;
-  bottom: 0;
+  /* the track has 4px padding (room for focus rings while it scrolls): match the item box */
+  top: 4px;
+  bottom: 4px;
   border-radius: 999px;
   background: var(--rk-inverse);
   box-shadow: 0 4px 14px -4px oklch(var(--rk-shade) / 0.6);
@@ -369,7 +433,7 @@
     color: var(--rk-text);
   }
   &:active:not(:disabled) .rk-icon {
-    scale: 0.9;
+    scale: 0.96;
   }
   &[aria-current="page"] {
     background: transparent;
@@ -484,10 +548,11 @@
 /* pagination */
 .rk-pagination {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4px;
 
-  & button {
+  & > button:not(.rk-select-trigger) {
     display: inline-grid;
     place-items: center;
     min-width: var(--rk-h-sm);
@@ -517,8 +582,63 @@
   }
 }
 
+.rk-pagination-info {
+  margin-inline-end: 8px;
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-sm);
+  white-space: nowrap;
+}
+
+.rk-pagination-size {
+  width: auto;
+  margin-inline-end: 8px;
+}
+
+.rk-pagination-current {
+  min-width: 56px;
+  text-align: center;
+  font-size: var(--rk-text-sm);
+  color: var(--rk-text-2);
+  white-space: nowrap;
+}
+
 .rk-pagination-gap {
   min-width: 20px;
   text-align: center;
   color: var(--rk-text-3);
+}
+
+/* table of contents */
+.rk-toc {
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 1px 0 0 var(--rk-line);
+  font-size: var(--rk-text-sm);
+}
+
+.rk-toc-link {
+  position: relative;
+  padding: 4px 10px 4px calc(12px + var(--rk-toc-depth) * 12px);
+  border-radius: 0 var(--rk-radius-sm) var(--rk-radius-sm) 0;
+  color: var(--rk-text-3);
+  text-decoration: none;
+  transition: color var(--rk-dur) var(--rk-ease);
+  &:hover {
+    color: var(--rk-text);
+  }
+  &[aria-current] {
+    color: var(--rk-text);
+    font-weight: 500;
+  }
+  &[aria-current]::before {
+    content: "";
+    position: absolute;
+    inset: 4px auto 4px 0;
+    width: 2px;
+    border-radius: 0 2px 2px 0;
+    background: var(--rk-text);
+  }
+  &:focus-visible {
+    outline-offset: -2px;
+  }
 }

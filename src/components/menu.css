@@ -95,6 +95,14 @@
   flex-shrink: 0;
 }
 
+.rk-menu-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  color: var(--rk-text-3);
+}
+
 .rk-menu-label {
   padding: 6px 10px 2px;
   font-size: var(--rk-text-2xs);
@@ -193,4 +201,14 @@
   flex-shrink: 0;
   margin-inline-start: auto;
   color: var(--rk-text-3);
+}
+
+/* TreeSelect panel: search on top, the tree scrolls */
+.rk-tree-select {
+  gap: 6px;
+  max-width: min(420px, calc(100vw - 16px));
+  & .rk-tree {
+    overflow-y: auto;
+    min-height: 0;
+  }
 }

@@ -78,7 +78,7 @@
 .rk-input,
 .rk-textarea,
 .rk-select-trigger {
-  --rk-ctl-edge: var(--rk-line);
+  --rk-ctl-edge: var(--rk-control-edge);
   background: var(--rk-well);
   border-radius: var(--rk-radius-control);
   box-shadow: inset 0 0 0 1px var(--rk-ctl-edge);
@@ -88,16 +88,16 @@
     background-color var(--rk-dur) var(--rk-ease);
 
   &:hover {
-    --rk-ctl-edge: var(--rk-line-strong);
+    --rk-ctl-edge: var(--rk-text-3);
   }
   &:focus-within,
-  &:focus-visible,
   &[aria-expanded="true"] {
     --rk-ctl-edge: var(--rk-accent-line);
-    outline: none;
-    box-shadow:
-      inset 0 0 0 1px var(--rk-ctl-edge),
-      0 0 0 3px var(--rk-accent-soft);
+  }
+  /* keyboard focus: the kit ring (2px, 4:1), not a faint glow; a text field always matches :focus-visible */
+  &:is(:focus-visible, :has(:focus-visible)) {
+    outline: 2px solid var(--rk-focus);
+    outline-offset: 2px;
   }
   &[data-invalid],
   &[aria-invalid="true"] {
@@ -216,5 +216,29 @@
     field-sizing: content;
     resize: none;
     max-height: 40vh;
+  }
+}
+
+/* date range */
+.rk-date-range {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  & .rk-input {
+    width: auto;
+  }
+}
+
+.rk-date-range-sep {
+  color: var(--rk-text-3);
+}
+
+/* native date/time pickers: the indicator follows the text color */
+.rk-input input::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
   }
 }

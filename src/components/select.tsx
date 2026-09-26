@@ -3,6 +3,7 @@ import { cx } from "../lib/cx";
 import { Floating } from "../lib/floating";
 import { useControllable } from "../lib/hooks";
 import { CheckIcon, ChevronDownIcon } from "../lib/icons";
+import { useLabels } from "../lib/labels";
 import type { Size } from "./button";
 import { useField } from "./input";
 
@@ -45,7 +46,7 @@ export function Select<T extends string = string>({
   value,
   defaultValue,
   onChange,
-  placeholder = "Select…",
+  placeholder,
   size = "md",
   variant = "field",
   disabled,
@@ -55,6 +56,7 @@ export function Select<T extends string = string>({
   style,
   ...rest
 }: SelectProps<T>) {
+  const strings = useLabels();
   const [current, setCurrent] = useControllable<T | undefined>(
     value,
     defaultValue,
@@ -151,7 +153,7 @@ export function Select<T extends string = string>({
       >
         {chosen?.icon && <span className="rk-icon">{chosen.icon}</span>}
         <span className="rk-select-value" data-placeholder={!chosen || undefined}>
-          {chosen ? chosen.label : placeholder}
+          {chosen ? chosen.label : (placeholder ?? strings.select)}
         </span>
         <ChevronDownIcon className="rk-select-chevron" />
       </button>

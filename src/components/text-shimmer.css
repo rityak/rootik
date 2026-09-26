@@ -1,1 +1,22 @@
-/* Placeholder: TextShimmer styles land in its own PR (TODO.md, batch 3). */
+.rk-text-shimmer[data-active] {
+  /* the band sits mid-gradient; both ends of the sweep show only the dim part, so a stopped animation is static */
+  background:
+    linear-gradient(90deg, var(--rk-text-3) 42%, var(--rk-text) 50%, var(--rk-text-3) 58%) 100% 0 / 250% 100%;
+  background-clip: text;
+  color: transparent;
+  animation: rk-text-shimmer 2s linear infinite;
+  animation-duration: calc(2s / max(var(--rk-motion), 0.001));
+}
+
+@keyframes rk-text-shimmer {
+  to {
+    background-position: 0 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .rk-text-shimmer[data-active] {
+    color: CanvasText;
+    background: none;
+  }
+}

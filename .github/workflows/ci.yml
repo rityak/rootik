@@ -30,6 +30,22 @@ jobs:
         run: bunx biome ci .
       - name: Unit tests
         run: bun test
+      # `bun run format` regenerates it; a stale file means the index points at moved code
+      - name: llms.txt up to date
+        run: bun scripts/llms.ts --check
+
+  package:
+    name: npm build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      # builds dist/ and checks it exports what src does, with a self-contained styles.css
+      - run: bun run build
+      - name: Pack
+        run: npm pack --dry-run
 
   stories:
     name: Build stories

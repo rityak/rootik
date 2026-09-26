@@ -54,7 +54,7 @@ export const Lines: Story = () => (
         ]}
       />
     </Card>
-    <Card title="Loss" description="Gaps are drawn as breaks">
+    <Card title="Loss" description="Missing points: a dashed bridge, no invented values">
       <LineChart
         zero={false}
         format={(v) => v.toFixed(2)}

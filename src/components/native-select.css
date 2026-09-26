@@ -1,0 +1,63 @@
+.rk-native-select-wrap {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  min-width: 0;
+}
+
+.rk-native-select {
+  appearance: none;
+  padding-inline-end: calc(var(--rk-space) * 8);
+  text-overflow: ellipsis;
+}
+
+.rk-native-select-chevron {
+  position: absolute;
+  inset-inline-end: calc(var(--rk-space) * 2.5);
+  top: 50%;
+  translate: 0 -50%;
+  color: var(--rk-text-3);
+  pointer-events: none;
+}
+
+/* customizable select: the popup gets the menu look */
+@supports (appearance: base-select) {
+  .rk-native-select,
+  .rk-native-select::picker(select) {
+    appearance: base-select;
+  }
+  .rk-native-select::picker-icon {
+    display: none;
+  }
+  .rk-native-select::picker(select) {
+    margin-block: 6px;
+    padding: 5px;
+    border: 0;
+    border-radius: var(--rk-radius-md);
+    background: var(--rk-glass-bg);
+    backdrop-filter: blur(var(--rk-blur)) saturate(1.3);
+    box-shadow: var(--rk-shadow-pop);
+    color: var(--rk-text);
+  }
+  .rk-native-select option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: calc(var(--rk-h-sm) + 2px);
+    padding: 4px calc(var(--rk-space) * 2.5);
+    border-radius: calc(var(--rk-radius-md) - 5px);
+    font-size: var(--rk-text-md);
+    &:is(:hover, :focus-visible) {
+      background: var(--rk-press);
+      outline: none;
+    }
+    &:checked {
+      font-weight: 500;
+    }
+    &::checkmark {
+      order: 1;
+      margin-inline-start: auto;
+      color: var(--rk-accent-text);
+    }
+  }
+}

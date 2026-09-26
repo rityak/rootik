@@ -64,11 +64,12 @@
   min-width: 4ch;
   max-width: calc(100% + var(--rk-space) * 3);
   background: var(--rk-well);
-  outline: none;
-  /* inset only: titles and truncating cells clip anything drawn outside the box */
-  box-shadow: inset 0 0 0 1.5px var(--rk-accent-line);
+  /* inset only: titles and truncating cells clip anything drawn outside the box. The editor is always
+     focused while shown, so it wears the full kit ring */
+  outline: 2px solid var(--rk-focus);
+  outline-offset: -2px;
   &[aria-invalid="true"] {
-    box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--rk-danger) 75%, transparent);
+    outline-color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
   }
   &::placeholder {
     color: var(--rk-text-3);

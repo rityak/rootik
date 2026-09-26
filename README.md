@@ -3,10 +3,32 @@
 Dark-first React UI toolkit — "Graphite & Iris". Zero runtime deps besides React 19.
 
 ```bash
+npm install rootik
+```
+
+```tsx
+import "rootik/styles.css";
+import { Button } from "rootik";
+```
+
+Development:
+
+```bash
 bun install
 bun run dev     # stories on http://localhost:61000
-bun run check   # tsc + biome
+bun run check   # tsc + biome + tests
+bun run build   # dist/ for npm (ESM + .d.ts + styles.css)
 ```
+
+Linked from source during development (a monorepo or `file:` dependency), let the bundler resolve `src/`
+instead of `dist/`:
+
+```ts
+// vite.config.ts
+export default defineConfig({ resolve: { conditions: ["source"] } });
+```
+
+AI assistants: point them at `llms.txt` — an index of every component with its source location and story.
 
 ## Use
 

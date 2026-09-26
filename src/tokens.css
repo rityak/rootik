@@ -42,6 +42,18 @@
   --rk-tint: 0.92 calc(var(--rk-neutral-c) * 2.5) var(--rk-neutral-h);
   --rk-line: oklch(var(--rk-tint) / 0.08);
   --rk-line-strong: oklch(var(--rk-tint) / 0.15);
+  /* boundary of a control that is only a shape (checkbox, radio, input rim, switch track): 3:1 on
+     bg / surfaces / wells (WCAG 1.4.11). --rk-line stays for dividers. */
+  --rk-control-edge: oklch(var(--rk-tint) / 0.4);
+  /* hue wheel (custom color swatch) */
+  --rk-spectrum: conic-gradient(
+    from 0deg,
+    oklch(0.75 0.18 0),
+    oklch(0.75 0.18 90),
+    oklch(0.75 0.18 180),
+    oklch(0.75 0.18 270),
+    oklch(0.75 0.18 360)
+  );
   --rk-hover: oklch(var(--rk-tint) / 0.05);
   --rk-press: oklch(var(--rk-tint) / 0.09);
   /* recessed wells: inputs, segment/tab tracks, footers */
@@ -99,7 +111,8 @@
   --rk-pad: calc(var(--rk-space) * 4);
 
   /* type */
-  --rk-text-2xs: calc(var(--rk-font-size) * 0.77);
+  /* floor at 11px: this step carries table headers and axis ticks */
+  --rk-text-2xs: max(11px, calc(var(--rk-font-size) * 0.8));
   --rk-text-xs: calc(var(--rk-font-size) * 0.85);
   --rk-text-sm: calc(var(--rk-font-size) * 0.93);
   --rk-text-md: var(--rk-font-size);

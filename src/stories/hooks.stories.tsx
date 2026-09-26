@@ -1,10 +1,11 @@
 import type { Story } from "@ladle/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Button,
   Card,
   KeyValue,
   useElementSize,
+  useIndicator,
   useInterval,
   useMediaQuery,
   usePersistentState,
@@ -68,6 +69,29 @@ export const Hooks: Story = () => {
         <PersistentCounter label="A" />
         <PersistentCounter label="B" />
       </Card>
+    </div>
+  );
+};
+
+/** A consumer's own control with the kit's sliding indicator. */
+export const IndicatorHook: Story = () => {
+  const [value, setValue] = useState("week");
+  const bar = useRef<HTMLDivElement>(null);
+  const box = useIndicator(bar, "[aria-pressed=true]", value);
+  return (
+    <div ref={bar} style={{ position: "relative", display: "inline-flex", gap: 4 }}>
+      {box && (
+        <span
+          className="rk-indicator"
+          data-dir={box.dir}
+          style={{ left: box.left, right: box.right, bottom: -6, height: 2, background: "var(--rk-accent)" }}
+        />
+      )}
+      {["day", "week", "month"].map((v) => (
+        <Button key={v} size="sm" variant="ghost" active={v === value} onClick={() => setValue(v)}>
+          {v}
+        </Button>
+      ))}
     </div>
   );
 };

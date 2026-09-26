@@ -41,6 +41,10 @@
   grid-template-columns: max-content repeat(var(--rk-cols), minmax(16px, 1fr));
   gap: 2px;
   outline: none;
+  /* more columns than room (24 hours on a phone): scroll inside the chart, not past the card */
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
 
 .rk-heatmap-row {
