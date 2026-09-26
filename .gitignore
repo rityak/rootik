@@ -1,68 +1,19 @@
-# Dependencies
 node_modules/
-.pnp
-.pnp.js
-
-# Build outputs
 dist/
 build/
-out/
-.next/
-.nuxt/
-.cache/
-.parcel-cache/
-.turbo/
-*.tsbuildinfo
-
-# Bun
-.bun/
-
-# Environment variables
-.env
-.env.*
-!.env.example
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-bun-debug.log*
-
-# OS files
-.DS_Store
-Thumbs.db
-Desktop.ini
-
-# IDE / editors
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-.project
-.classpath
-.settings/
-
-# Test & coverage
-coverage/
-.nyc_output/
-*.lcov
-
-# Ladle
 .ladle/build/
+*.tsbuildinfo
+*.tgz
 
-# Claude / AI helpers (optional — keep if you want to share)
-# .claude/
-
-# Misc
-*.local
-*.tmp
-*.temp
-.temp/
-.tmp/
-# Playwright
+# Playwright: baselines are per machine
+visual/__screenshots__/
 test-results/
 playwright-report/
+
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
