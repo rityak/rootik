@@ -162,7 +162,8 @@ below once the batch is in.
 - [x] Strict Biome: extra rules on top of `recommended`, kit code may import only peer deps (no dev deps like lucide-react), `noHexColors`, GritQL plugin `biome/untinted-neutral.grit` (translucent `oklch(L 0 0 / a)` overlays)
 - [x] Label-on-fill token (`--rk-on-danger` or a generic `--rk-on-tone`) instead of hardcoded `oklch(0.99 0 0)` in Button armed and TitleBar close hover, `oklch(0.15 0 0)` on the custom swatch — P2 ★
 - [x] Dist build: tsc per-module ESM + d.ts, bundled `styles.css`, export parity check; `source` condition keeps src/ for linked dev
-- [x] Visual regression: Playwright screenshots of every story on the Ladle build (fake clock, reduced motion), `visual.yml` with an `update` input for baselines
+- ~ Visual regression: Playwright screenshots of every story on the Ladle build (fake clock, reduced motion), run locally with `bun run visual`; the CI workflow was dropped (cloud baselines were noise)
+- [ ] Playwright tests on the client: per-machine visual baselines as a pre-release check, plus interaction tests for the tricky widgets (combobox/listbox keyboard nav, dialogs and focus return, toasts, drag in SortableList/Splitter)
 - [ ] Floating on CSS anchor positioning (`position-anchor`, `position-try-fallbacks`), `computePosition` stays as fallback; anchored container queries so a flipped popover animates from the anchor side — P2 ↗ CSS anchor positioning
 - [ ] Sliding indicator (Tabs/SegmentedControl/Dock) anchored to the active item instead of measuring in `lib/indicator.ts` — P2 ↗ CSS anchor positioning
 - [x] Scroll shadows: sticky table head / PageHeader get a shadow only while content is scrolled under them (`@container scroll-state()`, no-op where unsupported) ↗ CSS scroll-state queries

@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
-// Screenshot of every story from the static Ladle build (`bun run build:stories`). Baselines are
-// rendered on Linux in CI (fonts differ per OS); refresh them with the Visual workflow's `update` input.
+// Screenshot of every story from the static Ladle build (`bun run build:stories`). Run locally:
+// `bun run visual -- --update-snapshots` writes baselines (per machine, not committed), `bun run visual` compares.
 export default defineConfig({
   testDir: "visual",
   testMatch: "*.pw.ts",

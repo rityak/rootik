@@ -74,7 +74,6 @@ export function FloatingWindow({
         }
       }}
     >
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: drag handle; the keyboard path is the focusable title */}
       <div
         className="rk-floating-window-bar"
         onPointerDown={(event) => {
