@@ -22,7 +22,7 @@ one of them needs it or because a mainstream toolkit (Radix/Mantine/shadcn) has 
 - Visual regression is local only: `bun run visual` (Playwright) screenshots every story from the Ladle build
   against per-machine baselines in `visual/__screenshots__` (gitignored); `-- --update-snapshots` rewrites them.
 - Release: `npm version <patch|minor>`, `git push --follow-tags`, publish a GitHub Release → `publish.yml`
-  runs `npm publish` (needs the `NPM_TOKEN` secret).
+  runs `npm publish` (npm Trusted Publishing, no token).
 - Ladle's own types don't compile under TS 7: tsconfig `paths` maps `@ladle/react` to `.ladle/ladle-types.d.ts`.
 - Stories live in `src/stories/*.stories.tsx` (one file per family); preview a single story with
   `?story=<family>--<name>&mode=preview`. Layout stories use `Stage` (stories/stage.tsx): material
