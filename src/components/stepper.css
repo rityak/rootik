@@ -95,9 +95,11 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     box-shadow var(--rk-dur) var(--rk-ease);
+  /* an even size keeps the icon on whole pixels inside the even marker: 55% gave 11px in a
+     20px marker (4.5px inset) and the check rendered up-left by about a pixel */
   & > svg {
-    width: 55%;
-    height: 55%;
+    width: round(calc(var(--rk-step-marker) * 0.6), 2px);
+    height: round(calc(var(--rk-step-marker) * 0.6), 2px);
     stroke-width: 2.5;
   }
   [data-state="complete"] & {
