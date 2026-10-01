@@ -17,6 +17,11 @@
   position: relative;
   flex: 1;
   min-width: 0;
+  /* the last step has no connector to stretch: sized to its content, it ends the row at the
+     right edge instead of leaving an empty share after its label */
+  [data-orientation="horizontal"] > &:last-child {
+    flex: none;
+  }
 
   /* connector to the next step: solid while done, hatched for what's left */
   &:not(:last-child)::after {
@@ -58,6 +63,9 @@
   [data-orientation="horizontal"] & {
     flex-direction: column;
     padding-inline-end: calc(var(--rk-space) * 4);
+  }
+  [data-orientation="horizontal"] > .rk-step:last-child > & {
+    padding-inline-end: 0;
   }
   &:is(button) {
     border-radius: var(--rk-radius-control);
