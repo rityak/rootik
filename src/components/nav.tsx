@@ -466,14 +466,31 @@ export function Dock<T extends string = string>({
     `${withLabels}:${value}`,
   );
   const strings = useLabels();
+  const label = rest["aria-label"] ?? strings.navigation;
+  const tabStop =
+    items.find((item) => item.value === value && !item.disabled)?.value ??
+    items.find((item) => !item.disabled)?.value;
+  const onTabKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    const target = (event.target as HTMLElement).closest<HTMLButtonElement>(".rk-dock-item");
+    if (mode !== "tabs" || !target || !event.currentTarget.contains(target)) return;
+    const enabled = items.filter((item) => !item.disabled);
+    const at = enabled.findIndex((item) => item.value === target.dataset.value);
+    const to = { ArrowRight: at + 1, ArrowLeft: at - 1, Home: 0, End: enabled.length - 1 }[event.key];
+    if (at < 0 || to === undefined || enabled.length === 0) return;
+    const next = enabled[(to + enabled.length) % enabled.length];
+    if (!next) return;
+    event.preventDefault();
+    onChange?.(next.value);
+    event.currentTarget.querySelector<HTMLButtonElement>(`[data-value="${CSS.escape(next.value)}"]`)?.focus();
+  };
+  const trackProps = mode === "tabs" ? { role: "tablist", "aria-label": label, onKeyDown: onTabKeyDown } : {};
   return (
     <nav
-      aria-label={rest["aria-label"] ?? strings.navigation}
-      role={mode === "tabs" ? "tablist" : undefined}
+      aria-label={label}
       className={cx("rk-dock rk-surface", className)}
       data-variant={withLabels ? "labels" : "icons"}
     >
-      <div ref={track} className="rk-dock-track">
+      <div ref={track} className="rk-dock-track" {...trackProps}>
         {box && (
           <span
             className="rk-indicator rk-dock-indicator"
@@ -498,6 +515,8 @@ export function Dock<T extends string = string>({
               type="button"
               className="rk-dock-item"
               {...semantics}
+              data-value={item.value}
+              tabIndex={mode === "tabs" ? (item.value === tabStop ? 0 : -1) : undefined}
               disabled={item.disabled}
               onClick={() => onChange?.(item.value)}
             >
