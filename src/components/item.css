@@ -44,6 +44,8 @@
     /* inverted row: re-point text and hover tokens so ghost actions stay visible on the light fill */
     --rk-text: var(--rk-on-inverse);
     --rk-text-2: color-mix(in oklab, var(--rk-on-inverse) 75%, transparent);
+    /* neutral fills (badge, chip) sit on surface-3: left dark, they read dark-on-dark here */
+    --rk-surface-3: oklch(var(--rk-shade) / 0.08);
     --rk-hover: oklch(var(--rk-shade) / 0.08);
     --rk-press: oklch(var(--rk-shade) / 0.14);
     background: var(--rk-inverse);
@@ -55,6 +57,10 @@
     & .rk-item-media[data-icon] {
       background: oklch(var(--rk-shade) / 0.08);
       color: inherit;
+    }
+    /* tone text is a light step made for dark surfaces; pull it toward the row's text so it reads on either fill */
+    & .rk-badge:not([data-tone="neutral"], [data-variant="solid"]) {
+      color: color-mix(in oklab, var(--rk-tone) 55%, var(--rk-on-inverse));
     }
   }
   &[data-disabled] {
