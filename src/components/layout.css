@@ -112,7 +112,7 @@
   & .rk-shell-content {
     padding: var(--rk-pad);
     &[data-dock] {
-      padding-bottom: 88px;
+      padding-bottom: calc(var(--rk-dock-height) + var(--rk-shell-gap) * 2);
     }
   }
   & .rk-shell-aside {
