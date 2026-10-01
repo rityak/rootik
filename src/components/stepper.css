@@ -17,11 +17,6 @@
   position: relative;
   flex: 1;
   min-width: 0;
-  /* the last step has no connector to stretch: sized to its content, it ends the row at the
-     right edge instead of leaving an empty share after its label */
-  [data-orientation="horizontal"] > &:last-child {
-    flex: none;
-  }
 
   /* connector to the next step: solid while done, hatched for what's left */
   &:not(:last-child)::after {
@@ -33,10 +28,13 @@
   &[data-done]:not(:last-child)::after {
     background: var(--rk-accent);
   }
+  /* horizontal: every step takes an equal share with its marker centered over the label, so
+     the row is symmetric; the connector runs from this marker to the next one, which sits
+     at 150% of this step's width */
   [data-orientation="horizontal"] > &:not(:last-child)::after {
     top: calc(var(--rk-step-marker) / 2 - 1px);
-    left: calc(var(--rk-step-marker) + var(--rk-space) * 2);
-    right: calc(var(--rk-space) * 2);
+    left: calc(50% + var(--rk-step-marker) / 2 + var(--rk-space) * 2);
+    right: calc(var(--rk-step-marker) / 2 + var(--rk-space) * 2 - 50%);
     height: 2px;
   }
   [data-orientation="vertical"] > & {
@@ -62,10 +60,10 @@
   text-align: start;
   [data-orientation="horizontal"] & {
     flex-direction: column;
-    padding-inline-end: calc(var(--rk-space) * 4);
-  }
-  [data-orientation="horizontal"] > .rk-step:last-child > & {
-    padding-inline-end: 0;
+    align-items: center;
+    width: 100%;
+    padding-inline: calc(var(--rk-space) * 2);
+    text-align: center;
   }
   &:is(button) {
     border-radius: var(--rk-radius-control);
@@ -127,6 +125,7 @@
   min-width: 0;
   padding-top: calc((var(--rk-step-marker) - 1.45em) / 2);
   [data-orientation="horizontal"] & {
+    align-items: center;
     padding-top: 0;
   }
 }
