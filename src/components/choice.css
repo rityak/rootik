@@ -395,7 +395,7 @@
     color var(--rk-dur) var(--rk-ease),
     box-shadow var(--rk-dur) var(--rk-ease);
 
-  &:hover:not(:disabled) {
+  &:hover:not([aria-pressed="true"], :disabled) {
     background: var(--rk-hover);
     color: var(--rk-text);
   }
