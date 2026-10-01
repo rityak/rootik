@@ -442,7 +442,7 @@
   & .rk-icon {
     font-size: 18px;
   }
-  &:hover:not([aria-current]):not(:disabled) {
+  &:hover:not([aria-current]):not([aria-selected="true"]):not(:disabled) {
     background: var(--rk-press);
     color: var(--rk-text);
   }
@@ -462,7 +462,7 @@
     width: auto;
     padding: 0 18px 0 15px;
     background: transparent;
-    &:hover:not([aria-current]):not(:disabled) {
+    &:hover:not([aria-current]):not([aria-selected="true"]):not(:disabled) {
       background: var(--rk-hover);
     }
   }

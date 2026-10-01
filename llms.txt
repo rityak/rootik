@@ -245,9 +245,9 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 - `NavItem` — src/components/nav.tsx:301, story `navigation--sidebars`. Navigation row: sidebars, lists of presets/runs/files.
 - `NavGroup` — src/components/nav.tsx:373, story `navigation--sidebars`
 - `Dock` — src/components/nav.tsx:449, story `navigation--dock-bar`. Floating bottom navigation (surface material).
-- `DockSeparator` — src/components/nav.tsx:547, story `navigation--dock-bar`
-- `Breadcrumbs` — src/components/nav.tsx:555, story `navigation--crumbs`
-- `Pagination` — src/components/nav.tsx:623, story `navigation--crumbs`
+- `DockSeparator` — src/components/nav.tsx:566, story `navigation--dock-bar`
+- `Breadcrumbs` — src/components/nav.tsx:574, story `navigation--crumbs`
+- `Pagination` — src/components/nav.tsx:642, story `navigation--crumbs`
 
 ### src/components/number-input.tsx
 

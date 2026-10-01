@@ -54,13 +54,18 @@ test("Dock exposes a tab contract when requested", () => {
     <Dock
       mode="tabs"
       value="logs"
-      items={[{ value: "logs", label: "Logs", icon: "L", id: "logs-tab", controls: "logs-panel" }]}
+      items={[
+        { value: "logs", label: "Logs", icon: "L", id: "logs-tab", controls: "logs-panel" },
+        { value: "settings", label: "Settings", icon: "S", id: "settings-tab", controls: "settings-panel" },
+      ]}
     />,
   );
   expect(html).toContain('role="tablist"');
   expect(html).toContain('role="tab"');
   expect(html).toContain('aria-controls="logs-panel"');
   expect(html).toContain('aria-selected="true"');
+  expect(html).toContain('data-value="logs" tabindex="0"');
+  expect(html).toContain('data-value="settings" tabindex="-1"');
 });
 
 test("Select supports groups, null and values outside options", () => {

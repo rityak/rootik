@@ -222,6 +222,7 @@ export const DockBar: Story = () => {
         ]}
       />
       <Dock
+        mode="tabs"
         variant="labels"
         value={section}
         onChange={setSection}
@@ -230,11 +231,15 @@ export const DockBar: Story = () => {
           { value: "nodes", icon: <Share2 />, label: "Nodes" },
           { value: "alerts", icon: <Bell />, label: "Alerts", badge: 3 },
           { value: "settings", icon: <Settings />, label: "Settings" },
-        ]}
+        ].map((item) => ({ ...item, id: `dock-tab-${item.value}`, controls: "dock-panel" }))}
       >
         <DockSeparator />
         <IconButton icon={<Plus />} label="Add node" variant="primary" round size="lg" />
       </Dock>
+      {/* biome-ignore lint/a11y/noNoninteractiveTabindex: APG focuses a panel with no focusable content */}
+      <div id="dock-panel" role="tabpanel" aria-labelledby={`dock-tab-${section}`} tabIndex={0}>
+        {section}
+      </div>
     </div>
   );
 };
