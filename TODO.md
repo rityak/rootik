@@ -7,6 +7,17 @@ P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.
 Magic UI, M3 Expressive) or from new web platform features; component inventories checked against Mantine 9.6, Ark 5.39,
 React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd 6.6, Primer 38. `★` = own idea.
 
+## umiray feedback (docs/ROOTIK.md, 0.4.1)
+
+- [x] Corners → Square: `--rk-roundness: 0` zeroes every fixed radius (pills, circles, chips), radius tokens go to 0, buttons included; Scope-able
+- [x] Nested Card is concentric: outer radius − padding, not below `--rk-radius-sm` (`--rk-card-r-in`)
+- [x] PowerButton: the halo is part of the layout box (`--rk-power-halo` margin)
+- [x] ChoiceCards: `auto-fit`, no empty right-hand track
+- [x] Tailwind v4 preset `rootik/tailwind.css` (`--spacing: var(--rk-space)`, radii, fonts, text sizes)
+- [x] Card `onAction` / `activate="double"`: stretched button with `aria-pressed`, `actions` above it
+- [x] Card `media` slot: raw leading media without the round well
+- [x] Progress: `aria-label` lands on the `progressbar`; `variant="edge"` bottom-edge bar clipped to the card
+
 ## Batch 3 — one PR per item
 
 Same rules as Batch 1 (stubs registered up front, one line per PR, merge commits). Every item is a new

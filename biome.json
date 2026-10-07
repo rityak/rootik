@@ -4,6 +4,7 @@
     "includes": ["src/**", ".ladle/**", "*.json"]
   },
   "plugins": ["./biome/untinted-neutral.grit"],
+  "css": { "parser": { "tailwindDirectives": true } },
   "formatter": {
     "indentStyle": "space",
     "indentWidth": 2,

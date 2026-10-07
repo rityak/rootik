@@ -33,6 +33,10 @@
       "source": "./src/styles.css",
       "default": "./dist/styles.css"
     },
+    "./tailwind.css": {
+      "source": "./src/tailwind.css",
+      "default": "./dist/tailwind.css"
+    },
     "./css/tokens.css": {
       "source": "./src/tokens.css",
       "default": "./dist/css/tokens.css"

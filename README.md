@@ -60,6 +60,9 @@ With Tailwind v4, put the kit between Tailwind's base and utilities:
 @import "rootik/styles.css";
 ```
 
+Tailwind utilities can count in kit steps too: add `@import "rootik/tailwind.css";` after the kit, and
+`gap-3` is three `--rk-space` steps while `rounded-lg`, `text-sm` and `font-sans` follow the appearance knobs.
+
 ## Components
 
 | Group | Components |

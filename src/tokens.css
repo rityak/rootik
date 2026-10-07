@@ -17,6 +17,9 @@
   --rk-radius-control: 10px;
   /* corner-shape where supported: round (default) or squircle */
   --rk-corner-shape: round;
+  /* 1 = soft, 0 = square: scales every fixed radius (pills, circles, small chips); see Corners → Square */
+  --rk-roundness: 1;
+  --rk-linecap: round;
   --rk-density: 1;
   --rk-font-size: 13px;
   --rk-icon-stroke: 1.75;
@@ -109,6 +112,8 @@
   --rk-radius-md: calc(var(--rk-radius) * 0.7);
   --rk-radius-lg: var(--rk-radius);
   --rk-radius-xl: calc(var(--rk-radius) * 1.4);
+  --rk-radius-pill: calc(999px * var(--rk-roundness));
+  --rk-radius-round: calc(50% * var(--rk-roundness));
   --rk-pad: calc(var(--rk-space) * 4);
 
   /* type */

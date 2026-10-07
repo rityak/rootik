@@ -1,21 +1,24 @@
 .rk-power {
   --rk-power-size: 112px;
+  /* the ring is drawn outside the button, so the layout box includes it: neighbours measure from the ring */
+  --rk-power-halo: calc(var(--rk-power-size) * 0.08);
   position: relative;
   display: grid;
   place-items: center;
   flex-shrink: 0;
   width: var(--rk-power-size);
   aspect-ratio: 1;
+  margin: var(--rk-power-halo);
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: var(--rk-surface-3);
   color: var(--rk-text-2);
   font-size: calc(var(--rk-power-size) * 0.3);
   cursor: pointer;
   box-shadow:
     inset 0 1px 0 oklch(var(--rk-tint) / 0.12),
-    0 0 0 calc(var(--rk-power-size) * 0.08) oklch(var(--rk-tint) / 0.05);
+    0 0 0 var(--rk-power-halo) oklch(var(--rk-tint) / 0.05);
   transition:
     background-color var(--rk-dur-slow) var(--rk-ease),
     color var(--rk-dur-slow) var(--rk-ease),
@@ -39,7 +42,7 @@
   }
   /* outside the halo, so the ring doesn't read as part of the on-state glow */
   &:focus-visible {
-    outline-offset: calc(var(--rk-power-size) * 0.08 + 3px);
+    outline-offset: calc(var(--rk-power-halo) + 3px);
   }
   &:disabled {
     opacity: 0.45;
@@ -50,15 +53,14 @@
     color: var(--rk-tone-text);
     box-shadow:
       inset 0 1px 0 oklch(var(--rk-tint) / 0.12),
-      0 0 0 calc(var(--rk-power-size) * 0.08) color-mix(in oklab, var(--rk-danger) 10%, transparent);
+      0 0 0 var(--rk-power-halo) color-mix(in oklab, var(--rk-danger) 10%, transparent);
   }
   &[data-on] {
     background: var(--rk-tone, var(--rk-accent));
     color: var(--rk-on-tone, var(--rk-on-accent));
     box-shadow:
       inset 0 1px 0 oklch(var(--rk-tint) / 0.3),
-      0 0 0 calc(var(--rk-power-size) * 0.08)
-      color-mix(in oklab, var(--rk-tone, var(--rk-accent)) 16%, transparent),
+      0 0 0 var(--rk-power-halo) color-mix(in oklab, var(--rk-tone, var(--rk-accent)) 16%, transparent),
       0 0 calc(var(--rk-power-size) * 0.45) calc(var(--rk-power-size) * -0.05)
       color-mix(in oklab, var(--rk-tone, var(--rk-accent)) 16%, transparent);
   }
@@ -66,8 +68,8 @@
   &[data-pending]::after {
     content: "";
     position: absolute;
-    inset: calc(var(--rk-power-size) * -0.08);
-    border-radius: 50%;
+    inset: calc(var(--rk-power-halo) * -1);
+    border-radius: var(--rk-radius-round);
     background: conic-gradient(var(--rk-tone-text, var(--rk-accent-text)) 0 18%, transparent 0);
     mask: radial-gradient(closest-side, transparent calc(100% - 3px), black calc(100% - 2.5px));
     animation: rk-spin calc(var(--rk-dur-slow) * 3.5) linear infinite;

@@ -158,7 +158,8 @@ export const ruAppearance: Record<string, ReactNode> = {
   "appearance.pill.label": "Круглые элементы",
   "appearance.pill.hint": "Полностью скруглённые кнопки и поля",
   "appearance.corners.label": "Углы",
-  "appearance.corners.hint": "Squircle использует плавные кривые, если браузер поддерживает corner-shape",
+  "appearance.corners.hint":
+    "Squircle использует плавные кривые, если браузер поддерживает corner-shape; квадратные — без скруглений вообще, включая кнопки и круги",
   "appearance.layout.label": "Компоновка",
   "appearance.layout.hint": "Острова разделяют части на панели; встроенный режим объединяет содержимое",
   "appearance.density.label": "Плотность",
@@ -172,6 +173,7 @@ export const ruAppearance: Record<string, ReactNode> = {
   "appearance.motion.label": "Анимация",
   "appearance.corners.option.round": "Круглые",
   "appearance.corners.option.squircle": "Squircle",
+  "appearance.corners.option.square": "Квадратные",
   "appearance.layout.option.islands": "Острова",
   "appearance.layout.option.inset": "Встроенный",
   "appearance.density.option.compact": "Компактно",

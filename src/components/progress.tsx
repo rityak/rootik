@@ -34,6 +34,11 @@ export interface ProgressProps extends Omit<HTMLAttributes<HTMLDivElement>, "chi
   label?: ReactNode;
   /** Value text above the bar (right). `true` shows a percentage. */
   showValue?: boolean | ReactNode;
+  /**
+   * edge — a thin bar along the bottom edge of the nearest positioned parent (a card, a tile), clipped to its
+   * corners, no hatch, no caption. Name it with `aria-label`.
+   */
+  variant?: "default" | "edge";
 }
 
 /** Linear progress. The remainder is hatched — "the rest" in Rootik's visual language. */
@@ -44,14 +49,23 @@ export function Progress({
   size = "md",
   label,
   showValue,
+  variant = "default",
   className,
+  "aria-label": ariaLabel,
+  "aria-labelledby": labelledBy,
   ...rest
 }: ProgressProps) {
   const pct = value === undefined ? undefined : max > 0 ? Math.min(100, Math.max(0, (value / max) * 100)) : 0;
   const text = showValue === true && pct !== undefined ? `${Math.round(pct)}%` : showValue || null;
   return (
-    <div {...rest} className={cx("rk-progress", className)} data-size={size} data-tone={tone}>
-      {(label || text) && (
+    <div
+      {...rest}
+      className={cx("rk-progress", className)}
+      data-size={size}
+      data-tone={tone}
+      data-variant={variant === "edge" ? "edge" : undefined}
+    >
+      {(label || text) && variant !== "edge" && (
         <div className="rk-progress-head">
           <span>{label}</span>
           <span className="rk-num">{text}</span>
@@ -62,7 +76,8 @@ export function Progress({
         aria-valuemin={0}
         aria-valuemax={max}
         aria-valuenow={value}
-        aria-label={typeof label === "string" ? label : undefined}
+        aria-label={ariaLabel ?? (typeof label === "string" ? label : undefined)}
+        aria-labelledby={labelledBy}
         className="rk-progress-track"
         data-indeterminate={pct === undefined || undefined}
       >

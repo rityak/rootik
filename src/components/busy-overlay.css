@@ -32,7 +32,7 @@
   align-items: center;
   gap: calc(var(--rk-space) * 2);
   padding: calc(var(--rk-space) * 1.5) calc(var(--rk-space) * 3);
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-glass-bg);
   backdrop-filter: blur(var(--rk-blur));
   box-shadow: var(--rk-shadow-pop);

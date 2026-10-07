@@ -46,7 +46,7 @@
   height: 24px;
   padding: 0;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-glass-bg);
   backdrop-filter: blur(var(--rk-blur));
   box-shadow: var(--rk-shadow-2);

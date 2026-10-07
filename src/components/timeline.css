@@ -32,7 +32,7 @@
     bottom: 2px;
     left: calc(var(--rk-tl-marker) / 2 - 1px);
     width: 2px;
-    border-radius: 1px;
+    border-radius: calc(1px * var(--rk-roundness));
     background: var(--rk-line-strong);
   }
   /* the stretch still to come is hatched */
@@ -61,7 +61,7 @@
     content: "";
     width: var(--rk-tl-dot);
     height: var(--rk-tl-dot);
-    border-radius: 50%;
+    border-radius: var(--rk-radius-round);
     background: var(--rk-tone);
   }
   [data-status="pending"] > &:not([data-icon])::after {
@@ -74,7 +74,7 @@
 
   /* icon in a circle */
   &[data-icon] {
-    border-radius: 50%;
+    border-radius: var(--rk-radius-round);
     background: color-mix(in oklab, var(--rk-tone) 16%, var(--rk-surface-2));
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--rk-tone) 35%, transparent);
     & > svg {

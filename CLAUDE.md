@@ -61,6 +61,8 @@ src/
   `appearance: none`, `<details>`. JS only where the platform has nothing (listbox, positioning).
 - Accessibility is not optional: keyboard nav per ARIA APG, labels for icon-only controls,
   `:focus-visible` ring, `prefers-reduced-motion` (tokens zero durations via `--rk-motion`).
+- Fixed radii go through `--rk-radius-pill` / `--rk-radius-round` or `calc(Npx * var(--rk-roundness))`, never a bare
+  `border-radius: 4px`: Corners → Square sets `--rk-roundness: 0` and must leave nothing rounded.
 - Every component gets a story; stories double as the visual spec. Check new UI in the browser.
 - New component → update `TODO.md` and export it from `src/index.ts`. Components built in parallel PRs get
   their own module + story file, registered up front (stub module, `index.ts`/`styles.css` lines) so the PRs

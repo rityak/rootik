@@ -23,7 +23,7 @@
   height: 28px;
   padding: 0 12px 0 10px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-inverse);
   box-shadow: 0 8px 24px -8px oklch(var(--rk-shade) / 0.7);
   color: var(--rk-on-inverse);
@@ -48,7 +48,7 @@
 .rk-stick-unseen {
   min-width: 18px;
   padding: 0 5px;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-accent);
   color: var(--rk-on-accent);
   font-size: var(--rk-text-2xs);

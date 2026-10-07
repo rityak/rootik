@@ -32,7 +32,7 @@
   position: absolute;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   translate: -50% -50%;
   background: var(--rk-cp-opaque);
   box-shadow:
@@ -76,7 +76,7 @@
   width: 100%;
   height: 12px;
   margin: 0;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   box-shadow: inset 0 0 0 1px var(--rk-line);
   cursor: pointer;
   &[data-kind="hue"] {
@@ -89,7 +89,7 @@
     appearance: none;
     width: 14px;
     height: 14px;
-    border-radius: 50%;
+    border-radius: var(--rk-radius-round);
     background: transparent;
     box-shadow:
       0 0 0 2px var(--rk-inverse),
@@ -99,7 +99,7 @@
     width: 14px;
     height: 14px;
     border: 0;
-    border-radius: 50%;
+    border-radius: var(--rk-radius-round);
     background: transparent;
     box-shadow:
       0 0 0 2px var(--rk-inverse),

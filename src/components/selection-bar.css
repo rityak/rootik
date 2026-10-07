@@ -8,7 +8,7 @@
   margin: 0;
   padding: 6px 6px 6px 14px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   color: var(--rk-text);
   translate: -50% 0;
   transition:
@@ -37,7 +37,7 @@
   height: 22px;
   padding: 0;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-surface-4);
   color: var(--rk-text-2);
   font-size: 13px;
@@ -66,6 +66,6 @@
   align-items: center;
   gap: 4px;
   & .rk-button {
-    border-radius: 999px;
+    border-radius: var(--rk-radius-pill);
   }
 }

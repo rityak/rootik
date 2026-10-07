@@ -12,6 +12,7 @@ import {
   WifiOff,
   Wind,
 } from "lucide-react";
+import { useState } from "react";
 import {
   Avatar,
   AvatarGroup,
@@ -138,6 +139,55 @@ export const Cards: Story = () => (
     </Card>
   </div>
 );
+
+export const CardsNested: Story = () => {
+  const [picked, setPicked] = useState("auto");
+  const [double, setDouble] = useState("tokyo");
+  return (
+    <div className="story-col" style={{ maxWidth: 720, gap: 24 }}>
+      <Card title="Source" description="A card inside a card takes outer radius − padding" padding="sm">
+        <div className="story-grid">
+          <Card title="Tile" padding="sm" variant="sunken">
+            Concentric corners
+          </Card>
+          <Card title="Tile" padding="sm" variant="sunken">
+            Concentric corners
+          </Card>
+        </div>
+      </Card>
+      <div className="story-grid">
+        {["auto", "direct", "tokyo"].map((id) => (
+          <Card
+            key={id}
+            title={id}
+            description="onAction: one stretched button, no nesting"
+            padding="sm"
+            selected={picked === id}
+            onAction={() => setPicked(id)}
+            actions={<IconButton size="sm" icon={<Check />} label={`Pin ${id}`} />}
+          >
+            <Progress variant="edge" value={id === "auto" ? 30 : 70} aria-label="Load" />
+            <Switch label="Inside content stays clickable" />
+          </Card>
+        ))}
+      </div>
+      <div className="story-grid">
+        {["tokyo", "oslo"].map((id) => (
+          <Card
+            key={id}
+            title={id}
+            description="activate=&quot;double&quot;: double click or Enter"
+            padding="sm"
+            media={<Avatar name={id} />}
+            selected={double === id}
+            activate="double"
+            onAction={() => setDouble(id)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export const Stats: Story = () => (
   <div className="story-col">

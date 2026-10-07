@@ -5,7 +5,7 @@
   gap: 5px;
   height: 22px;
   padding: 0 8px;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: color-mix(in oklab, var(--rk-tone) 15%, transparent);
   color: var(--rk-tone-text);
   font-size: var(--rk-text-xs);
@@ -43,7 +43,7 @@
   height: 1.35em;
   max-width: 2em;
   overflow: hidden;
-  border-radius: 0.3em;
+  border-radius: calc(0.3em * var(--rk-roundness));
   & > :is(img, svg, video) {
     width: auto;
     height: 100%;
@@ -54,7 +54,7 @@
 .rk-badge-dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: currentColor;
 }
 
@@ -66,7 +66,7 @@
   margin-inline: 1px -4px;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: transparent;
   color: inherit;
   opacity: 0.7;
@@ -90,7 +90,7 @@
   flex-shrink: 0;
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: var(--rk-tone);
   box-shadow: 0 0 8px -1px var(--rk-tone);
 
@@ -98,7 +98,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 50%;
+    border-radius: var(--rk-radius-round);
     background: var(--rk-tone);
     animation: rk-halo calc(var(--rk-dur-slow) * 5.6) var(--rk-ease-out) infinite;
     animation-play-state: var(--rk-anim-state, running);
@@ -129,7 +129,7 @@
   min-width: 20px;
   height: 20px;
   padding: 0 5px;
-  border-radius: 5px;
+  border-radius: calc(5px * var(--rk-roundness));
   background: var(--rk-surface-3);
   box-shadow:
     inset 0 -1px 0 oklch(var(--rk-shade) / 0.4),
@@ -145,7 +145,7 @@
     min-width: 17px;
     height: 17px;
     padding: 0 4px;
-    border-radius: 4px;
+    border-radius: calc(4px * var(--rk-roundness));
   }
 }
 
@@ -156,7 +156,7 @@
   flex-shrink: 0;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: oklch(0.45 0.09 var(--rk-avatar-h, 260));
   color: oklch(0.95 0.03 var(--rk-avatar-h, 260));
   font-weight: 600;
@@ -171,7 +171,7 @@
     object-fit: cover;
   }
   &[data-square] {
-    border-radius: 28%;
+    border-radius: calc(28% * var(--rk-roundness));
   }
 }
 
@@ -181,7 +181,7 @@
   bottom: 0;
   width: 28%;
   height: 28%;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: var(--rk-tone);
   box-shadow: 0 0 0 2px var(--rk-surface-1);
 }
@@ -203,7 +203,7 @@
   content: "";
   position: absolute;
   inset: 42% 22%;
-  border-radius: 1px;
+  border-radius: calc(1px * var(--rk-roundness));
   background: var(--rk-surface-1);
 }
 

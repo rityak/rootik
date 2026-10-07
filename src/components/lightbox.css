@@ -62,7 +62,7 @@ html:has(.rk-lightbox[open]) {
   align-items: center;
   gap: 2px;
   padding: 3px;
-  border-radius: calc(var(--rk-radius-control) + 3px);
+  border-radius: calc(var(--rk-radius-control) + 3px * var(--rk-roundness));
   background: var(--rk-glass-bg);
   backdrop-filter: blur(var(--rk-blur)) saturate(1.1);
   box-shadow: var(--rk-shadow-pop);

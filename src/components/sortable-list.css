@@ -38,7 +38,7 @@
   height: 28px;
   padding: 0;
   border: 0;
-  border-radius: 6px;
+  border-radius: calc(6px * var(--rk-roundness));
   background: transparent;
   color: var(--rk-text-3);
   font-size: 16px;

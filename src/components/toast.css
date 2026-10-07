@@ -115,7 +115,7 @@
   height: 24px;
   padding: 0 10px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-inverse);
   color: var(--rk-on-inverse);
   font: inherit;
@@ -132,7 +132,7 @@
   height: 22px;
   padding: 0;
   border: 0;
-  border-radius: 6px;
+  border-radius: calc(6px * var(--rk-roundness));
   background: transparent;
   color: var(--rk-text-3);
   cursor: pointer;

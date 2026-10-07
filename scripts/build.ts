@@ -37,6 +37,8 @@ const css = readFileSync(entry, "utf8").replace(IMPORT, (_, path: string, layer:
 if (css.includes("@import")) throw new Error("unresolved @import in styles.css");
 writeFileSync(join(dist, "styles.css"), css);
 
+copyFileSync(join(root, "src/tailwind.css"), join(dist, "tailwind.css"));
+
 const cssDir = join(dist, "css");
 mkdirSync(cssDir);
 copyFileSync(join(root, "src/tokens.css"), join(cssDir, "tokens.css"));
