@@ -1,13 +1,23 @@
 .rk-shell {
-  --rk-shell-gap: calc(var(--rk-space) * 2.5);
+  /* Panel spacing setting scales it; 0 = flush */
+  --rk-shell-gap: calc(var(--rk-space) * 2.5 * var(--rk-shell-space, 1));
+  /* 1 while panels float apart, 0 when flush: touching panels drop their outer radius */
+  --rk-shell-round: clamp(0, var(--rk-shell-space, 1) * 1000, 1);
   display: flex;
   gap: var(--rk-shell-gap);
   height: 100dvh;
   min-height: 0;
   padding: var(--rk-shell-gap);
-  /* ambient glow stays put while content scrolls: what the layout surfaces refract */
-  background: var(--rk-ambient, none), var(--rk-bg);
+  /* ambient glow stays put while content scrolls: what the layout surfaces refract; the optional
+     Background image (already dimmed by its own scrim) sits under it */
+  background: var(--rk-ambient, none), var(--rk-backdrop, none), var(--rk-bg);
+  background-position: center;
+  background-size: cover;
   overflow: hidden;
+}
+
+.rk-shell :is(.rk-shell-sidebar, .rk-shell-aside, .rk-shell-panel, .rk-shell-dockbar > .rk-dock) {
+  border-radius: calc(var(--rk-radius-lg) * var(--rk-shell-round));
 }
 
 .rk-shell[data-background="none"] {
@@ -31,9 +41,12 @@
 
 .rk-shell-header {
   flex-shrink: 0;
-  border-radius: var(--rk-radius-md);
+}
+
+.rk-shell :is(.rk-shell-header, .rk-shell-footer) {
+  border-radius: calc(var(--rk-radius-md) * var(--rk-shell-round));
   &[data-shape="pill"] {
-    border-radius: var(--rk-radius-pill);
+    border-radius: calc(var(--rk-radius-pill) * var(--rk-shell-round));
   }
 }
 
@@ -52,6 +65,8 @@
   min-width: 0;
   min-height: 0;
   overflow: auto;
+  /* flush islands: cards would touch the panels around them */
+  padding: calc(var(--rk-pad) * (1 - var(--rk-shell-round)));
   /* keep the last cards reachable above the floating dock */
   &[data-dock] {
     padding-bottom: calc(var(--rk-dock-height) + var(--rk-shell-gap) * 2);
@@ -80,10 +95,19 @@
   translate: -50% 0;
 }
 
+/* dock as a taskbar: a row under the content instead of floating over it */
+.rk-shell-dockbar {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 0;
+  & > .rk-dock {
+    flex: 1;
+  }
+}
+
 .rk-shell-footer {
   flex-shrink: 0;
   overflow: hidden;
-  border-radius: var(--rk-radius-md);
   & .rk-status-bar {
     border-top: 0;
   }
@@ -91,7 +115,7 @@
 
 /* inset: the frame (sidebar, header, footer) merges with the background; content + aside form one block */
 .rk-shell[data-variant="inset"] {
-  background: var(--rk-ambient, none), var(--rk-sunken);
+  background-color: var(--rk-sunken);
 
   & .rk-shell-main {
     gap: 0;

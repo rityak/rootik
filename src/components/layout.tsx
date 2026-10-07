@@ -42,8 +42,13 @@ export interface AppShellProps extends HTMLAttributes<HTMLDivElement> {
   footer?: ReactNode;
   /** Right panel (details, inspector). */
   aside?: ReactNode;
-  /** Floating bottom navigation (Dock); content scrolls underneath it. */
+  /** Bottom navigation (Dock); content scrolls underneath it while it floats. */
   dock?: ReactNode;
+  /**
+   * float — capsule over the content; bar — taskbar row along the bottom edge (Dock stretches, `start`
+   * slot on the left). Defaults to the `dock` appearance setting.
+   */
+  dockPlacement?: "float" | "bar";
   /** Sidebar width, px (the rail width comes from its content). */
   sidebarWidth?: number;
   /**
@@ -74,6 +79,7 @@ export interface AppShellProps extends HTMLAttributes<HTMLDivElement> {
 const ShellContext = createContext({
   compact: false,
   drawer: false,
+  dockBar: false,
   openDrawer: () => {
     // outside an AppShell there is no drawer
   },
@@ -81,6 +87,9 @@ const ShellContext = createContext({
 
 /** True inside a compacted AppShell (narrow window, high zoom). Sidebar reads it to become a rail. */
 export const useShellCompact = () => useContext(ShellContext).compact;
+
+/** True for a Dock rendered as the AppShell taskbar (`dockPlacement="bar"`). */
+export const useShellDockBar = () => useContext(ShellContext).dockBar;
 
 const MenuIcon = makeIcon(
   <>
@@ -113,6 +122,7 @@ export function AppShell({
   footer,
   aside,
   dock,
+  dockPlacement,
   sidebarWidth = 232,
   compactBelow = 720,
   variant,
@@ -126,6 +136,8 @@ export function AppShell({
 }: AppShellProps) {
   const focused = useWindowFocus();
   const setting = useAppearanceValue("layout");
+  const dockSetting = useAppearanceValue("dock");
+  const dockBar = Boolean(dock) && (dockPlacement ?? (dockSetting === "bar" ? "bar" : "float")) === "bar";
   const strings = useLabels();
   const size = useElementSize<HTMLDivElement>();
   const dockSize = useElementSize<HTMLDivElement>();
@@ -136,7 +148,7 @@ export function AppShell({
   const mode: ShellVariant = variant ?? (setting === "inset" ? "inset" : "islands");
   const part = mode === "islands" ? "rk-surface" : undefined;
   return (
-    <ShellContext value={{ compact, drawer, openDrawer: () => setDrawerOpen(true) }}>
+    <ShellContext value={{ compact, drawer, dockBar, openDrawer: () => setDrawerOpen(true) }}>
       <div
         {...rest}
         ref={size.ref}
@@ -170,7 +182,9 @@ export function AppShell({
             bodyClassName="rk-shell-drawer-body"
           >
             {/* full sidebar in the drawer, not the rail; following a link closes it */}
-            <ShellContext value={{ compact: false, drawer: true, openDrawer: () => setDrawerOpen(true) }}>
+            <ShellContext
+              value={{ compact: false, drawer: true, dockBar: false, openDrawer: () => setDrawerOpen(true) }}
+            >
               {/* biome-ignore lint/a11y/noStaticElementInteractions: delegation only, links handle keys */}
               {/* biome-ignore lint/a11y/useKeyWithClickEvents: delegation only, links handle keys */}
               <div
@@ -191,16 +205,22 @@ export function AppShell({
             </div>
           )}
           <div className={cx("rk-shell-body", mode === "inset" && "rk-shell-panel")}>
-            <main id={mainId} tabIndex={-1} className="rk-shell-content" data-dock={dock ? "" : undefined}>
+            <main
+              id={mainId}
+              tabIndex={-1}
+              className="rk-shell-content"
+              data-dock={dock && !dockBar ? "" : undefined}
+            >
               {children}
             </main>
             {aside && <aside className={cx("rk-shell-aside", part)}>{aside}</aside>}
-            {dock && (
+            {dock && !dockBar && (
               <div ref={dockSize.ref} className="rk-shell-dock">
                 {dock}
               </div>
             )}
           </div>
+          {dockBar && <div className="rk-shell-dockbar">{dock}</div>}
           {footer && <div className={cx("rk-shell-footer", part)}>{footer}</div>}
         </div>
       </div>

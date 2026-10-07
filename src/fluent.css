@@ -1,0 +1,77 @@
+/*
+ * Style → Fluent (data-rk-style="fluent", written by RootikProvider / Scope): Windows 10 (UWP) spirit in
+ * the kit's own colors. The schema already flattens geometry and material (4px / 2px radii, solid
+ * surfaces, no glass); this file swaps depth for hairlines and the inverted pill for accent marks:
+ * a bar on the start edge of nav items, an underline in tabs and the dock, an accent fill in segments.
+ * List and tree selection keep the inverted pill.
+ */
+:where([data-rk-style="fluent"]),
+:where([data-rk-style="fluent"] [data-rk-scope]) {
+  --rk-highlight: inset 0 0 0 0 transparent;
+  --rk-shadow-1: 0 0 0 1px var(--rk-line);
+  --rk-shadow-2: 0 0 0 1px var(--rk-line-strong), 0 8px 24px -12px oklch(var(--rk-shade) / 0.6);
+  --rk-shadow-pop: 0 0 0 1px var(--rk-line-strong), 0 16px 40px -12px oklch(var(--rk-shade) / 0.7);
+}
+
+[data-rk-style="fluent"] {
+  /* sidebar: subtle fill + accent bar */
+  & .rk-nav-item[data-active] {
+    background: var(--rk-press);
+    color: var(--rk-text);
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 22%;
+      inset-inline-start: 0;
+      width: 3px;
+      border-radius: calc(2px * var(--rk-roundness));
+      background: var(--rk-accent);
+    }
+    & .rk-nav-icon {
+      color: var(--rk-accent-text);
+    }
+  }
+
+  /* tabs: accent underline / accent fill */
+  & .rk-tabs[data-variant="line"] .rk-tabs-indicator {
+    background: var(--rk-accent);
+  }
+  & .rk-tabs[data-variant="pill"] .rk-tabs-indicator,
+  & .rk-segmented-thumb {
+    background: var(--rk-accent);
+    box-shadow: none;
+  }
+  & :is(.rk-tabs[data-variant="pill"] .rk-tab[aria-selected="true"], .rk-topnav .rk-tab[aria-current="page"]),
+  & .rk-segmented-item[aria-pressed="true"] {
+    color: var(--rk-on-accent);
+  }
+  & .rk-segmented-item[aria-pressed="true"],
+  & .rk-pagination [aria-current] {
+    background: var(--rk-accent);
+    color: var(--rk-on-accent);
+  }
+  /* a segment track reads as a bordered row of buttons */
+  & :is(.rk-segmented, .rk-tabs[data-variant="pill"]) {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--rk-control-edge);
+  }
+
+  /* dock: square-ish items, the current one underlined */
+  & .rk-dock {
+    border-radius: var(--rk-radius-lg);
+  }
+  & .rk-dock-item {
+    border-radius: var(--rk-radius-control);
+    &:is([aria-current="page"], [aria-selected="true"]) {
+      background: var(--rk-hover);
+      color: var(--rk-text);
+    }
+  }
+  & .rk-dock-indicator {
+    top: auto;
+    height: 3px;
+    border-radius: calc(2px * var(--rk-roundness));
+    background: var(--rk-accent);
+    box-shadow: none;
+  }
+}

@@ -4,7 +4,9 @@ import {
   ArrowUp,
   Bell,
   ChartSpline,
+  Ellipsis,
   Globe,
+  LayoutGrid,
   Power,
   RefreshCw,
   Route,
@@ -29,12 +31,16 @@ import {
   Gauge,
   IconButton,
   LineChart,
+  NavItem,
   Nest,
+  PageHeader,
+  Popover,
   PowerButton,
   Progress,
   SearchInput,
   SegmentedControl,
   Select,
+  Sidebar,
   Sparkline,
   Stat,
   StatusDot,
@@ -431,3 +437,86 @@ export const VpnCompact: Story = () => (
   </Stage>
 );
 VpnCompact.storyName = "VPN compact";
+
+function VpnTaskbarApp() {
+  const [view, setView] = useState("connect");
+  const [on, setOn] = useState(true);
+  const [launcher, setLauncher] = useState(false);
+  const go = (v: string) => {
+    setView(v);
+    setLauncher(false);
+  };
+  const current = DOCK.find((d) => d.value === view);
+  return (
+    <AppShell
+      dimWhenInactive
+      dockPlacement="bar"
+      header={
+        <TitleBar
+          start={<strong>umiray</strong>}
+          onMinimize={() => {}}
+          onMaximize={() => {}}
+          onClose={() => {}}
+        />
+      }
+      sidebar={
+        <Sidebar>
+          {DOCK.map((d) => (
+            <NavItem
+              key={d.value}
+              icon={d.icon}
+              label={d.label}
+              active={d.value === view}
+              onClick={() => go(d.value)}
+            />
+          ))}
+        </Sidebar>
+      }
+      dock={
+        <Dock
+          aria-label="Sections"
+          variant="labels"
+          items={DOCK}
+          value={view}
+          onChange={setView}
+          start={
+            <Popover
+              open={launcher}
+              onOpenChange={setLauncher}
+              placement="top-start"
+              title="All sections"
+              trigger={<IconButton icon={<LayoutGrid />} label="All sections" size="lg" />}
+            >
+              <div className="demo-launcher">
+                {DOCK.map((d) => (
+                  <Button key={d.value} variant="ghost" icon={d.icon} onClick={() => go(d.value)}>
+                    {d.label}
+                  </Button>
+                ))}
+              </div>
+            </Popover>
+          }
+        >
+          <IconButton icon={<Ellipsis />} label="More" size="lg" />
+        </Dock>
+      }
+    >
+      <PageHeader title={current?.label} />
+      {view === "connect" && <ConnectView on={on} setOn={setOn} />}
+      {view === "nodes" && <NodesView />}
+      {view === "logs" && <LogsView />}
+      {view === "settings" && <SettingsView />}
+    </AppShell>
+  );
+}
+
+/**
+ * Dock as a taskbar (`dockPlacement="bar"`, a launcher in `start`): try Style → Fluent and Spacing → Flush
+ * in the bar above for the Windows 10 take; `theme="fluent"` sets the whole combination.
+ */
+export const VpnTaskbar: Story = () => (
+  <Stage frame="window">
+    <VpnTaskbarApp />
+  </Stage>
+);
+VpnTaskbar.storyName = "VPN taskbar";

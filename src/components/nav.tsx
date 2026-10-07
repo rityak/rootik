@@ -14,7 +14,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "../lib/icons";
 import { useIndicator } from "../lib/indicator";
 import { useLabels } from "../lib/labels";
 import type { Size } from "./button";
-import { useShellCompact } from "./layout";
+import { useShellCompact, useShellDockBar } from "./layout";
 import { Select } from "./select";
 import { Tooltip } from "./tooltip";
 
@@ -436,8 +436,16 @@ export interface DockProps<T extends string = string> {
   variant?: "icons" | "labels";
   /** tabs uses the APG tablist/tab contract instead of page navigation. */
   mode?: "navigation" | "tabs";
-  /** Extra elements after the items: DockSeparator, a primary action. */
+  /** Extra elements after the items: DockSeparator, a primary action. In a bar they sit at the far end. */
   children?: ReactNode;
+  /** Before the items: a start button that opens a launcher menu, a logo. */
+  start?: ReactNode;
+  /**
+   * float — capsule; bar — full-width taskbar. Defaults to bar inside an AppShell with `dockPlacement="bar"`.
+   */
+  shape?: "float" | "bar";
+  /** Where items sit in a bar: start (Windows 10) or center (Windows 11). */
+  align?: "start" | "center";
   className?: string;
   "aria-label"?: string;
 }
@@ -453,12 +461,17 @@ export function Dock<T extends string = string>({
   variant = "icons",
   mode = "navigation",
   children,
+  start,
+  shape,
+  align = "start",
   className,
   ...rest
 }: DockProps<T>) {
   const track = useRef<HTMLDivElement>(null);
   // a compact AppShell (phone, narrow window, high zoom) has no room for text pills
   const compact = useShellCompact();
+  const shellBar = useShellDockBar();
+  const bar = (shape ?? (shellBar ? "bar" : "float")) === "bar";
   const withLabels = variant === "labels" && !compact;
   const box = useIndicator(
     track,
@@ -489,7 +502,10 @@ export function Dock<T extends string = string>({
       aria-label={label}
       className={cx("rk-dock rk-surface", className)}
       data-variant={withLabels ? "labels" : "icons"}
+      data-shape={bar ? "bar" : undefined}
+      data-align={bar ? align : undefined}
     >
+      {start}
       <div ref={track} className="rk-dock-track" {...trackProps}>
         {box && (
           <span

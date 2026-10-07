@@ -104,6 +104,7 @@ html:not(:has(.ladle-main)) body {
   gap: 14px;
   font-size: var(--rk-text-sm);
   color: var(--rk-text-3);
+  flex-wrap: wrap;
   white-space: nowrap;
 }
 
@@ -282,4 +283,14 @@ html:not(:has(.ladle-main)) body {
 
 body:has(.stage) {
   overflow: hidden;
+}
+
+.demo-launcher {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px;
+  padding: 8px;
+  & .rk-button {
+    justify-content: flex-start;
+  }
 }

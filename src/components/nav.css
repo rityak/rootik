@@ -392,6 +392,32 @@
     0 16px 40px -16px oklch(var(--rk-shade) / 0.7);
 }
 
+/* bar: taskbar along the bottom edge; start slot, items, then the extras pushed to the far end */
+.rk-dock[data-shape="bar"] {
+  display: flex;
+  width: 100%;
+  padding: 4px;
+  border-radius: var(--rk-radius-lg);
+  box-shadow: var(--rk-surface-shadow, var(--rk-shadow-1));
+  & .rk-dock-track {
+    flex: 1;
+  }
+  &[data-align="center"] .rk-dock-track {
+    justify-content: safe center;
+  }
+  & .rk-dock-item {
+    height: var(--rk-h-lg);
+    border-radius: var(--rk-radius-control);
+  }
+  &[data-variant="icons"] .rk-dock-item {
+    width: calc(var(--rk-h-lg) + 8px);
+    background: transparent;
+  }
+  & .rk-dock-indicator {
+    border-radius: var(--rk-radius-control);
+  }
+}
+
 .rk-dock-track {
   position: relative;
   display: flex;
