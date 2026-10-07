@@ -21,6 +21,14 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] Card `onAction`: `media` and interactive title content sit above the stretched button, a nested card keeps its own hit; `aria-label` moves from the card to the button
 - [x] Card `dense`: header as tall as its content, body follows closely (tiles, list cards)
 
+## Appearance: Fluent, taskbar, background
+
+- [x] Style → Fluent (`data-rk-style="fluent"`, `src/fluent.css`): Windows 10 spirit in the same colors — 4/2px radii, solid, no glass, hairline depth, accent bar / underline / fill instead of the inverted pill (lists keep the pill); `theme="fluent"` = Fluent + Flush + Inset + Bar
+- [x] Panel spacing (Flush / Tight / Default / Roomy → `--rk-shell-space`); flush panels drop their outer radius
+- [x] Dock as a taskbar: AppShell `dockPlacement="bar"` / setting Dock → Bar, Dock `start` slot, `shape`, `align`
+- [x] Background: glow color (Accent / Neutral / Custom / Off) + strength; surface transparency and blur; glass transparency; background image with dim (`--rk-backdrop`)
+- [ ] Scope can't turn a material off (null vars are left to inherit), so `<Scope values={{ style: "fluent" }}>` keeps the root's glass
+
 ## Batch 3 — one PR per item
 
 Same rules as Batch 1 (stubs registered up front, one line per PR, merge commits). Every item is a new

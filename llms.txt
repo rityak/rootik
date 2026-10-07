@@ -188,18 +188,18 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/layout.tsx
 
-- `ShellMenuButton` — src/components/layout.tsx:101. Opens the sidebar drawer; renders nothing unless the AppShell is in drawer mode.
-- `AppShell` — src/components/layout.tsx:109, story `layouts--vpn-desktop`. Full-viewport frame; the surface material applies to its parts.
-- `TitleBar` — src/components/layout.tsx:229, story `navigation--menubar-in-title-bar`. App title bar for frameless desktop windows.
-- `PageHeader` — src/components/layout.tsx:304, story `layout--tool-page`
-- `PageBody` — src/components/layout.tsx:326, story `layout--tool-page`. Scrollable page body: centered column of limited width.
-- `Toolbar` — src/components/layout.tsx:349, story `layout--keyboard-toolbar`. Row of controls above a work area (gallery, canvas, table).
-- `Spacer` — src/components/layout.tsx:368, story `layout--keyboard-toolbar`. Spacer that pushes following toolbar items to the right.
-- `ActionBar` — src/components/layout.tsx:380, story `layout--tool-page`. Bottom bar with the page's main actions; primary button last (rightmost).
-- `StatusBar` — src/components/layout.tsx:401, story `layout--tool-page`
-- `ResizablePanel` — src/components/layout.tsx:430, story `layout--tool-page`. Panel with a draggable (and keyboard-resizable) edge: sidebars, inspectors, log docks.
-- `Disclosure` — src/components/layout.tsx:516, story `layout--collapsing`. Collapsible section on native <details>.
-- `MasterDetail` — src/components/layout.tsx:543, story `layout--master-details`. List + detail side by side; stacked with a back button when narrow (mail, nodes, runs).
+- `ShellMenuButton` — src/components/layout.tsx:110. Opens the sidebar drawer; renders nothing unless the AppShell is in drawer mode.
+- `AppShell` — src/components/layout.tsx:118, story `layouts--vpn-compact`. Full-viewport frame; the surface material applies to its parts.
+- `TitleBar` — src/components/layout.tsx:249, story `navigation--menubar-in-title-bar`. App title bar for frameless desktop windows.
+- `PageHeader` — src/components/layout.tsx:324, story `layouts--vpn-compact`
+- `PageBody` — src/components/layout.tsx:346, story `layout--tool-page`. Scrollable page body: centered column of limited width.
+- `Toolbar` — src/components/layout.tsx:369, story `layout--keyboard-toolbar`. Row of controls above a work area (gallery, canvas, table).
+- `Spacer` — src/components/layout.tsx:388, story `layout--keyboard-toolbar`. Spacer that pushes following toolbar items to the right.
+- `ActionBar` — src/components/layout.tsx:400, story `layout--tool-page`. Bottom bar with the page's main actions; primary button last (rightmost).
+- `StatusBar` — src/components/layout.tsx:421, story `layout--tool-page`
+- `ResizablePanel` — src/components/layout.tsx:450, story `layout--tool-page`. Panel with a draggable (and keyboard-resizable) edge: sidebars, inspectors, log docks.
+- `Disclosure` — src/components/layout.tsx:536, story `layout--collapsing`. Collapsible section on native <details>.
+- `MasterDetail` — src/components/layout.tsx:563, story `layout--master-details`. List + detail side by side; stacked with a back button when narrow (mail, nodes, runs).
 
 ### src/components/lightbox.tsx
 
@@ -244,10 +244,10 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 - `Sidebar` — src/components/nav.tsx:267, story `navigation--sidebars`
 - `NavItem` — src/components/nav.tsx:301, story `navigation--sidebars`. Navigation row: sidebars, lists of presets/runs/files.
 - `NavGroup` — src/components/nav.tsx:373, story `navigation--sidebars`
-- `Dock` — src/components/nav.tsx:449, story `navigation--dock-bar`. Floating bottom navigation (surface material).
-- `DockSeparator` — src/components/nav.tsx:566, story `navigation--dock-bar`
-- `Breadcrumbs` — src/components/nav.tsx:574, story `navigation--crumbs`
-- `Pagination` — src/components/nav.tsx:642, story `navigation--crumbs`
+- `Dock` — src/components/nav.tsx:457, story `navigation--dock-bar`. Floating bottom navigation (surface material).
+- `DockSeparator` — src/components/nav.tsx:582, story `navigation--dock-bar`
+- `Breadcrumbs` — src/components/nav.tsx:590, story `navigation--crumbs`
+- `Pagination` — src/components/nav.tsx:658, story `navigation--crumbs`
 
 ### src/components/number-input.tsx
 
@@ -409,8 +409,8 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/theme/provider.tsx
 
-- `RootikProvider` — src/theme/provider.tsx:61. Owns appearance values and writes them as CSS custom properties.
-- `Scope` — src/theme/provider.tsx:162, story `utilities--scopes`. Appearance for a subtree (a dense table in a roomy page, a differently accented panel): writes the same CSS vars RootikProvider writes, and `[data-rk-scope]` re-derives every token from them.
+- `RootikProvider` — src/theme/provider.tsx:62. Owns appearance values and writes them as CSS custom properties.
+- `Scope` — src/theme/provider.tsx:169, story `utilities--scopes`. Appearance for a subtree (a dense table in a roomy page, a differently accented panel): writes the same CSS vars RootikProvider writes, and `[data-rk-scope]` re-derives every token from them.
 
 ### src/theme/settings.tsx
 

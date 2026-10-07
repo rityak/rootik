@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { MATERIALS, SegmentedControl, useAppearance } from "..";
+import { APPEARANCE_SECTIONS, MATERIALS, SegmentedControl, useAppearance, walkFields } from "..";
 
 const NOTES: Record<string, string> = {
   solid: "Opaque surfaces, no ambient light",
@@ -9,6 +9,11 @@ const NOTES: Record<string, string> = {
 };
 
 const title = (s: string) => s[0]?.toUpperCase() + s.slice(1);
+
+const FIELD_OPTIONS: Record<string, { value: string; label: string }[]> = {};
+walkFields(APPEARANCE_SECTIONS, (f) => {
+  if (f.type === "segmented") FIELD_OPTIONS[f.key] = [...f.options];
+});
 
 /**
  * Story frame: quick controls for the real appearance settings (layout, surfaces) on top, the app below
@@ -43,7 +48,17 @@ export function Stage({
           onChange={(v) => set("material", v)}
           options={Object.keys(MATERIALS).map((m) => ({ value: m, label: title(m) }))}
         />
-        <span>{NOTES[material]}</span>
+        {(["style", "spacing", "dock"] as const).map((key) => (
+          <SegmentedControl
+            key={key}
+            size="sm"
+            aria-label={title(key)}
+            value={String(values[key])}
+            onChange={(v) => set(key, v)}
+            options={FIELD_OPTIONS[key] ?? []}
+          />
+        ))}
+        <span>{values.style === "fluent" ? "Fluent: solid, no glass" : NOTES[material]}</span>
       </div>
       <div className="stage-frame">
         <div className="stage-device">{children}</div>

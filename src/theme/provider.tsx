@@ -20,6 +20,7 @@ import {
   THEMES,
   type ThemeName,
   toCssVars,
+  toDataAttrs,
 } from "./schema";
 
 interface AppearanceContext {
@@ -79,6 +80,7 @@ export function RootikProvider({
   const [stored, setStored] = useControllable(value, readStorage<AppearanceValues>(storageKey, {}), onChange);
   const values = useMemo(() => ({ ...defaults, ...stored }), [defaults, stored]);
   const written = useRef<string[]>([]);
+  const writtenAttrs = useRef<string[]>([]);
 
   useLayoutEffect(() => {
     const el = target ?? document.documentElement;
@@ -92,12 +94,17 @@ export function RootikProvider({
       next.push(name);
     }
     written.current = next;
+    const attrs = toDataAttrs(sections, values);
+    for (const name of writtenAttrs.current) if (!(name in attrs)) el.removeAttribute(name);
+    for (const [name, v] of Object.entries(attrs)) el.setAttribute(name, v);
+    writtenAttrs.current = Object.keys(attrs);
   }, [sections, values, target]);
 
   useLayoutEffect(
     () => () => {
       const el = target ?? document.documentElement;
       for (const name of written.current) el.style.removeProperty(name);
+      for (const name of writtenAttrs.current) el.removeAttribute(name);
     },
     [target],
   );
@@ -164,9 +171,11 @@ export function Scope({ values, className, style, ...rest }: ScopeProps) {
   const sections = ctx?.sections ?? APPEARANCE_SECTIONS;
   const base = ctx?.values ?? defaultValues(sections);
   const vars = scopeVars(sections, base, values);
+  const attrs = toDataAttrs(sections, { ...base, ...values } as AppearanceValues);
   return (
     <div
       data-rk-scope=""
+      {...attrs}
       {...rest}
       className={cx("rk-scope", className)}
       style={{ ...(vars as CSSProperties), ...style }}
