@@ -92,7 +92,7 @@
   }
 
   & mark {
-    border-radius: 2px;
+    border-radius: calc(2px * var(--rk-roundness));
     background: color-mix(in oklab, var(--rk-accent) 40%, transparent);
     color: var(--rk-text);
   }

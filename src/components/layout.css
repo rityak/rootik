@@ -33,7 +33,7 @@
   flex-shrink: 0;
   border-radius: var(--rk-radius-md);
   &[data-shape="pill"] {
-    border-radius: 999px;
+    border-radius: var(--rk-radius-pill);
   }
 }
 
@@ -380,7 +380,7 @@
 .rk-status-bar-dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: var(--rk-accent);
   /* duration from --rk-motion: 0s (reduced motion, Motion: Off) leaves a static dot */
   animation: rk-pulse calc(var(--rk-dur-slow) * 3.75) ease-in-out infinite;
@@ -422,7 +422,7 @@
   &::after {
     content: "";
     position: absolute;
-    border-radius: 2px;
+    border-radius: calc(2px * var(--rk-roundness));
     background: var(--rk-accent);
     opacity: 0;
     transition: opacity var(--rk-dur) var(--rk-ease);
@@ -539,7 +539,7 @@
   left: calc(var(--rk-shell-gap) + 6px);
   z-index: 10;
   padding: 8px 14px;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-inverse);
   color: var(--rk-on-inverse);
   font-weight: 500;

@@ -188,7 +188,7 @@ html:has(.rk-dialog[open]) {
   margin: -4px -6px 0 0;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: var(--rk-hover);
   color: var(--rk-text-2);
   font-size: 16px;

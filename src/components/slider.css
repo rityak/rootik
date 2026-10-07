@@ -31,19 +31,19 @@
 
   &::-webkit-slider-runnable-track {
     height: var(--rk-track);
-    border-radius: 999px;
+    border-radius: var(--rk-radius-pill);
     background:
       linear-gradient(to right, var(--rk-accent) var(--rk-fill), transparent var(--rk-fill)), var(--rk-hatch),
       var(--rk-surface-3);
   }
   &::-moz-range-track {
     height: var(--rk-track);
-    border-radius: 999px;
+    border-radius: var(--rk-radius-pill);
     background: var(--rk-hatch), var(--rk-surface-3);
   }
   &::-moz-range-progress {
     height: var(--rk-track);
-    border-radius: 999px;
+    border-radius: var(--rk-radius-pill);
     background: var(--rk-accent);
   }
   &::-webkit-slider-thumb {
@@ -52,7 +52,7 @@
     height: var(--rk-thumb);
     margin-top: calc((var(--rk-track) - var(--rk-thumb)) / 2);
     border: 0;
-    border-radius: 50%;
+    border-radius: var(--rk-radius-round);
     background: var(--rk-inverse);
     box-shadow:
       0 0 0 0 var(--rk-accent-soft),
@@ -65,7 +65,7 @@
     width: var(--rk-thumb);
     height: var(--rk-thumb);
     border: 0;
-    border-radius: 50%;
+    border-radius: var(--rk-radius-round);
     background: var(--rk-inverse);
     box-shadow: 0 2px 6px oklch(var(--rk-shade) / 0.5);
   }
@@ -145,7 +145,7 @@
 .rk-range-track {
   position: absolute;
   inset: calc((var(--rk-thumb) - var(--rk-track)) / 2) 0;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background:
     linear-gradient(
       to right,

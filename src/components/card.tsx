@@ -1,4 +1,4 @@
-import { type HTMLAttributes, type ReactNode, useId } from "react";
+import { type HTMLAttributes, type MouseEvent, type ReactNode, useId } from "react";
 import { cx } from "../lib/cx";
 import { useControllable } from "../lib/hooks";
 import {
@@ -20,6 +20,8 @@ export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   description?: ReactNode;
   icon?: ReactNode;
   iconTone?: Tone;
+  /** Raw leading media instead of `icon`, without the round well: Avatar, thumbnail, a button (icon picker). */
+  media?: ReactNode;
   /** Header-right controls. */
   actions?: ReactNode;
   footer?: ReactNode;
@@ -35,8 +37,16 @@ export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   onOpenChange?: (open: boolean) => void;
   /** Hover lift for clickable cards. */
   interactive?: boolean;
-  /** Visually marks the card as the current selection. */
+  /** Visually marks the card as the current selection; with `onAction` it is also `aria-pressed`. */
   selected?: boolean;
+  /**
+   * The card's own action (select, open): a button stretched over the whole card, named by the title (or
+   * `aria-label`). `actions` and interactive content stay clickable above it, so nothing nests inside a
+   * button. Not for `collapsible` cards.
+   */
+  onAction?: (event: MouseEvent<HTMLButtonElement>) => void;
+  /** `double`: a pointer needs a double click (the keyboard still activates with Enter/Space). */
+  activate?: "click" | "double";
   /** Heading level of the title, so cards show up in the page outline (h1 is the page title). */
   headingLevel?: 2 | 3 | 4 | 5 | 6;
   /**
@@ -53,6 +63,7 @@ export function Card({
   description,
   icon,
   iconTone,
+  media,
   actions,
   footer,
   variant = "default",
@@ -63,6 +74,8 @@ export function Card({
   onOpenChange,
   interactive,
   selected,
+  onAction,
+  activate = "click",
   headingLevel = 2,
   running,
   spotlight,
@@ -74,15 +87,18 @@ export function Card({
   const H = `h${headingLevel}` as const;
   const [isOpen, setOpen] = useControllable(open, defaultOpen, onOpenChange);
   const bodyId = useId();
+  const titleId = useId();
   const hasHeader = title !== undefined || actions !== undefined;
 
   const heading = (
     <>
       {collapsible && <ChevronRightIcon className="rk-card-chevron" data-open={isOpen || undefined} />}
-      {icon && (
+      {icon ? (
         <span className="rk-icon rk-card-icon" data-tone={iconTone}>
           {icon}
         </span>
+      ) : (
+        media && <span className="rk-card-media">{media}</span>
       )}
       <span className="rk-card-titles">
         {/* inside the collapsible button the heading wraps the button instead (headings can't sit in one) */}
@@ -90,7 +106,9 @@ export function Card({
           (collapsible ? (
             <span className="rk-card-title">{title}</span>
           ) : (
-            <H className="rk-card-title">{title}</H>
+            <H id={titleId} className="rk-card-title">
+              {title}
+            </H>
           ))}
         {description && <span className="rk-card-desc">{description}</span>}
       </span>
@@ -105,6 +123,7 @@ export function Card({
       data-padding={padding}
       data-interactive={interactive || undefined}
       data-selected={selected || undefined}
+      data-action={onAction ? "" : undefined}
       data-running={running || undefined}
       aria-busy={running || undefined}
       onPointerMove={(event) => {
@@ -117,6 +136,17 @@ export function Card({
       }}
     >
       {spotlight && <span className="rk-card-spot" aria-hidden="true" />}
+      {onAction && (
+        <button
+          type="button"
+          className="rk-card-hit"
+          aria-labelledby={title !== undefined && !collapsible ? titleId : undefined}
+          aria-pressed={selected === undefined ? undefined : selected}
+          // detail 0 = keyboard: Enter/Space always activate
+          onClick={(event) => (activate === "click" || event.detail === 0) && onAction(event)}
+          onDoubleClick={activate === "double" ? onAction : undefined}
+        />
+      )}
       {hasHeader && (
         <header className="rk-card-header">
           {collapsible ? (

@@ -183,7 +183,7 @@
   height: 20px;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   background: var(--rk-hover);
   color: var(--rk-text-2);
   cursor: pointer;

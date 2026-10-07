@@ -30,3 +30,11 @@ test("appearance schema maps values to CSS vars", () => {
   expect(vars["--rk-motion"]).toBeNull();
   expect(vars["--rk-font-size"]).toBe("13px");
 });
+
+test("square corners zero every radius, pill included", () => {
+  const values = { ...defaultValues(APPEARANCE_SECTIONS), pill: true, radius: 20, corners: "square" };
+  const vars = toCssVars(APPEARANCE_SECTIONS, values);
+  expect(vars["--rk-radius"]).toBe("0px");
+  expect(vars["--rk-radius-control"]).toBe("0px");
+  expect(vars["--rk-roundness"]).toBe("0");
+});

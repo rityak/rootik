@@ -197,10 +197,15 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         min: 0,
         max: 28,
         format: (v) => `${v}px`,
-        apply: (v, all) => ({
-          "--rk-radius": `${v}px`,
-          "--rk-radius-control": all.pill ? "999px" : `${Math.round(Number(v) * 0.55)}px`,
-        }),
+        visible: (all) => all.corners !== "square",
+        apply: (v, all) => {
+          const square = all.corners === "square";
+          const r = square ? 0 : Number(v);
+          return {
+            "--rk-radius": `${r}px`,
+            "--rk-radius-control": all.pill && !square ? "999px" : `${Math.round(r * 0.55)}px`,
+          };
+        },
       },
       {
         key: "pill",
@@ -208,18 +213,24 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         label: "Pill controls",
         hint: "Fully rounded buttons and inputs",
         default: false,
+        visible: (all) => all.corners !== "square",
       },
       {
         key: "corners",
         type: "segmented",
         label: "Corners",
-        hint: "Squircle: smoother, continuous curves where the browser supports corner-shape",
+        hint: "Squircle: smoother curves where the browser supports corner-shape. Square: no rounding at all, buttons and circles included",
         default: "round",
         options: [
           { value: "round", label: "Round" },
           { value: "squircle", label: "Squircle" },
+          { value: "square", label: "Square" },
         ],
-        cssVar: "--rk-corner-shape",
+        apply: (v) => ({
+          "--rk-corner-shape": v === "squircle" ? "squircle" : "round",
+          "--rk-roundness": v === "square" ? "0" : null,
+          "--rk-linecap": v === "square" ? "butt" : null,
+        }),
       },
       {
         key: "layout",

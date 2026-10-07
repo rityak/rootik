@@ -12,6 +12,7 @@ const problems = [
   ...missing.map((k) => `missing in dist: ${k}`),
   ...extra.map((k) => `extra in dist: ${k}`),
   ...(css.includes("@import") ? ["styles.css still has @import"] : []),
+  ...(existsSync(join(root, "dist/tailwind.css")) ? [] : ["missing tailwind.css"]),
   ...(["tokens.css", "base.css", "button.css", "text.css"].flatMap((file) =>
     existsSync(join(root, "dist/css", file)) ? [] : [`missing CSS export: ${file}`],
   )),

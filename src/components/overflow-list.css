@@ -30,7 +30,7 @@
   height: 22px;
   padding: 0 8px;
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-surface-3);
   color: var(--rk-text-2);
   font: inherit;

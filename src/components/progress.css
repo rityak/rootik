@@ -4,7 +4,7 @@
   flex-shrink: 0;
   width: var(--rk-size);
   height: var(--rk-size);
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   border: 2px solid color-mix(in oklab, currentColor 22%, transparent);
   border-top-color: currentColor;
   /* reduced motion slows the turn instead of stopping it: a frozen arc no longer reads as "busy" */
@@ -25,6 +25,28 @@
   }
 }
 
+/* edge: the wrapper covers the parent and clips to its corners; the track sits on the bottom edge */
+.rk-progress[data-variant="edge"] {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  overflow: clip;
+  border-radius: var(--rk-card-r, var(--rk-radius-lg));
+  pointer-events: none;
+  & .rk-progress-track {
+    position: absolute;
+    inset: auto 0 0;
+    height: 3px;
+    border-radius: 0;
+    background: none;
+  }
+  & .rk-progress-bar {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
 .rk-progress-head {
   display: flex;
   justify-content: space-between;
@@ -37,7 +59,7 @@
   position: relative;
   height: var(--rk-progress-h);
   overflow: hidden;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-hatch), color-mix(in oklab, var(--rk-surface-3) 70%, transparent);
 }
 
@@ -86,7 +108,7 @@
 
 .rk-ring-bar {
   stroke: var(--rk-tone);
-  stroke-linecap: round;
+  stroke-linecap: var(--rk-linecap);
   transition: stroke-dashoffset var(--rk-dur-slow) var(--rk-ease-out);
 }
 
@@ -104,7 +126,7 @@
   animation: rk-shimmer 1.6s linear infinite;
   animation-duration: calc(1.6s / max(var(--rk-motion), 0.001));
   &[data-round] {
-    border-radius: 999px;
+    border-radius: var(--rk-radius-pill);
   }
 }
 

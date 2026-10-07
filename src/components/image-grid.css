@@ -60,7 +60,7 @@
   align-items: center;
   gap: 4px;
   padding: 1px 6px;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   font-size: var(--rk-text-2xs);
   font-variant-numeric: tabular-nums;
   color: var(--rk-text);
@@ -131,7 +131,7 @@
   place-items: center;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: var(--rk-radius-round);
   color: transparent;
   background: oklch(var(--rk-shade) / 0.45);
   box-shadow: inset 0 0 0 1.5px oklch(var(--rk-tint) / 0.7);

@@ -46,14 +46,14 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/card.tsx
 
-- `Card` — src/components/card.tsx:51, story `display--json`
-- `Stat` — src/components/card.tsx:180, story `display--stats`. KPI: the number is the hero (large, light, tabular); label and unit stay small.
-- `SectionLabel` — src/components/card.tsx:220, story `display--structure`
-- `EmptyState` — src/components/card.tsx:247, story `display--empty`
-- `Callout` — src/components/card.tsx:291, story `display--feedback`
-- `Nest` — src/components/card.tsx:326, story `display--structure`. Indented group with a guide line: nested settings, sub-options of a toggle.
-- `Divider` — src/components/card.tsx:330, story `display--structure`
-- `KeyValue` — src/components/card.tsx:364, story `layout--floating-windows`
+- `Card` — src/components/card.tsx:61, story `display--json`
+- `Stat` — src/components/card.tsx:210, story `display--stats`. KPI: the number is the hero (large, light, tabular); label and unit stay small.
+- `SectionLabel` — src/components/card.tsx:250, story `display--structure`
+- `EmptyState` — src/components/card.tsx:277, story `display--empty`
+- `Callout` — src/components/card.tsx:321, story `display--feedback`
+- `Nest` — src/components/card.tsx:356, story `display--structure`. Indented group with a guide line: nested settings, sub-options of a toggle.
+- `Divider` — src/components/card.tsx:360, story `display--structure`
+- `KeyValue` — src/components/card.tsx:394, story `layout--floating-windows`
 
 ### src/components/charts.tsx
 
@@ -280,9 +280,9 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 ### src/components/progress.tsx
 
 - `Spinner` — src/components/progress.tsx:7, story `display--text-shimmers`
-- `Progress` — src/components/progress.tsx:40, story `display--feedback`. Linear progress.
-- `ProgressRing` — src/components/progress.tsx:85, story `display--feedback`
-- `Skeleton` — src/components/progress.tsx:135, story `display--feedback`
+- `Progress` — src/components/progress.tsx:45, story `display--feedback`. Linear progress.
+- `ProgressRing` — src/components/progress.tsx:100, story `display--feedback`
+- `Skeleton` — src/components/progress.tsx:150, story `display--feedback`
 
 ### src/components/prose.tsx
 

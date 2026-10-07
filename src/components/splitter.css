@@ -37,7 +37,7 @@
   &::after {
     content: "";
     position: absolute;
-    border-radius: 2px;
+    border-radius: calc(2px * var(--rk-roundness));
     background: var(--rk-accent);
     opacity: 0;
     transition: opacity var(--rk-dur) var(--rk-ease);

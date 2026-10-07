@@ -1,13 +1,12 @@
 import type { Story } from "@ladle/react";
-import type { CSSProperties } from "react";
-import { Avatar, Button, Card, IconButton, Input, SegmentedControl } from "..";
+import { Avatar, Button, Card, IconButton, Input, Scope, SegmentedControl } from "..";
 
 export default { title: "Overview" };
 
 const sample = (shape: string) => (
-  <div style={{ "--rk-corner-shape": shape } as CSSProperties}>
+  <Scope values={{ corners: shape }}>
     <Card
-      title={shape === "squircle" ? "Squircle" : "Round"}
+      title={shape === "squircle" ? "Squircle" : shape === "square" ? "Square" : "Round"}
       description={`corner-shape: ${shape}`}
       style={{ width: 300 }}
     >
@@ -29,18 +28,20 @@ const sample = (shape: string) => (
         />
       </div>
     </Card>
-  </div>
+  </Scope>
 );
 
 export const Corners: Story = () => (
   <div className="story-col">
     <p style={{ margin: 0, color: "var(--rk-text-2)" }}>
-      Settings → Shape → Corners sets this for the app; circles stay circles. Needs corner-shape support
-      (Chromium 139+); elsewhere both look round.
+      Settings → Shape → Corners sets this for the app. Squircle keeps circles round and needs corner-shape
+      support (Chromium 139+); elsewhere it looks round. Square removes every radius, circles and pills
+      included.
     </p>
     <div className="story-row" style={{ alignItems: "flex-start", gap: 24 }}>
       {sample("round")}
       {sample("squircle")}
+      {sample("square")}
     </div>
   </div>
 );

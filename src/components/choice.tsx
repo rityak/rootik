@@ -330,7 +330,7 @@ function Cards<T extends string>({
       aria-label={rest["aria-label"]}
       aria-labelledby={rest["aria-label"] ? undefined : fieldLabel}
       className={cx("rk-choice-cards", className)}
-      style={{ gridTemplateColumns: `repeat(auto-fill, minmax(min(${minWidth}px, 100%), 1fr))` }}
+      style={{ gridTemplateColumns: `repeat(auto-fit, minmax(min(${minWidth}px, 100%), 1fr))` }}
     >
       {options.map((o) => (
         <label key={o.value} className="rk-choice-card" data-disabled={disabled || o.disabled || undefined}>

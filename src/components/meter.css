@@ -24,7 +24,7 @@
   display: flex;
   height: var(--rk-meter-h);
   overflow: hidden;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-hatch), color-mix(in oklab, var(--rk-surface-3) 70%, transparent);
 }
 
@@ -36,13 +36,13 @@
     width var(--rk-dur-slow) var(--rk-ease-out),
     background-color var(--rk-dur) var(--rk-ease);
   &:first-child {
-    border-radius: 999px 0 0 999px;
+    border-radius: var(--rk-radius-pill) 0 0 var(--rk-radius-pill);
   }
   &:last-child {
-    border-radius: 0 999px 999px 0;
+    border-radius: 0 var(--rk-radius-pill) var(--rk-radius-pill) 0;
   }
   &:only-child {
-    border-radius: 999px;
+    border-radius: var(--rk-radius-pill);
   }
   /* hairline gap between stacked parts */
   &[data-section] + & {

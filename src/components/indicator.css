@@ -13,7 +13,7 @@
   place-items: center;
   width: 10px;
   height: 10px;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-tone);
   color: var(--rk-on-tone);
   /* a ring of the surrounding surface separates the mark from the target */

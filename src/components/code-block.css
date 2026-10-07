@@ -39,7 +39,7 @@
 
 .rk-code-lang {
   padding: 1px 6px;
-  border-radius: 999px;
+  border-radius: var(--rk-radius-pill);
   background: var(--rk-surface-3);
   color: var(--rk-text-3);
   font-size: var(--rk-text-2xs);

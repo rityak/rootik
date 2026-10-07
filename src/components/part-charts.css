@@ -89,7 +89,7 @@
 
 .rk-waffle-cell {
   aspect-ratio: 1;
-  border-radius: 3px;
+  border-radius: calc(3px * var(--rk-roundness));
   &[data-rest] {
     background: var(--rk-hatch), var(--rk-well);
   }
@@ -152,7 +152,7 @@
 .rk-bullet-track {
   position: relative;
   height: 18px;
-  border-radius: 5px;
+  border-radius: calc(5px * var(--rk-roundness));
   overflow: hidden;
   & svg {
     position: absolute;
@@ -166,7 +166,7 @@
   top: 6px;
   bottom: 6px;
   left: 0;
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 calc(3px * var(--rk-roundness)) calc(3px * var(--rk-roundness)) 0;
   background: var(--rk-accent);
   transition: width var(--rk-dur-slow) var(--rk-ease-out);
 }
@@ -177,6 +177,6 @@
   bottom: 2px;
   width: 2px;
   margin-left: -1px;
-  border-radius: 1px;
+  border-radius: calc(1px * var(--rk-roundness));
   background: var(--rk-text);
 }
