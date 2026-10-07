@@ -46,14 +46,14 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/card.tsx
 
-- `Card` — src/components/card.tsx:61, story `display--json`
-- `Stat` — src/components/card.tsx:210, story `display--stats`. KPI: the number is the hero (large, light, tabular); label and unit stay small.
-- `SectionLabel` — src/components/card.tsx:250, story `display--structure`
-- `EmptyState` — src/components/card.tsx:277, story `display--empty`
-- `Callout` — src/components/card.tsx:321, story `display--feedback`
-- `Nest` — src/components/card.tsx:356, story `display--structure`. Indented group with a guide line: nested settings, sub-options of a toggle.
-- `Divider` — src/components/card.tsx:360, story `display--structure`
-- `KeyValue` — src/components/card.tsx:394, story `layout--floating-windows`
+- `Card` — src/components/card.tsx:64, story `display--json`
+- `Stat` — src/components/card.tsx:222, story `display--stats`. KPI: the number is the hero (large, light, tabular); label and unit stay small.
+- `SectionLabel` — src/components/card.tsx:262, story `display--structure`
+- `EmptyState` — src/components/card.tsx:289, story `display--empty`
+- `Callout` — src/components/card.tsx:333, story `display--feedback`
+- `Nest` — src/components/card.tsx:368, story `display--structure`. Indented group with a guide line: nested settings, sub-options of a toggle.
+- `Divider` — src/components/card.tsx:372, story `display--structure`
+- `KeyValue` — src/components/card.tsx:406, story `layout--floating-windows`
 
 ### src/components/charts.tsx
 

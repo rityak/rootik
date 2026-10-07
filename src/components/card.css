@@ -152,10 +152,12 @@
     outline: 2px solid var(--rk-focus);
     outline-offset: 2px;
   }
-  /* actions and interactive content sit above the stretched button */
+  /* actions, media and interactive content sit above the stretched button; a nested card's own hit stays put */
   &[data-action] {
     & .rk-card-actions,
-    & :is(.rk-card-body, .rk-card-footer) :is(a, button, input, select, textarea, summary, [tabindex]) {
+    &
+      :is(.rk-card-media, .rk-card-titles, .rk-card-body, .rk-card-footer)
+      :is(a, button, input, select, textarea, summary, [tabindex]):not(.rk-card-hit) {
       position: relative;
       z-index: 1;
     }
@@ -192,6 +194,13 @@
   /* a collapsible header keeps its bottom padding: closed, it is the whole card */
   &:is(:last-child, :has(+ .rk-card-collapse)) {
     padding-bottom: calc(var(--rk-card-pad) * 0.75);
+  }
+}
+
+.rk-card[data-dense] > .rk-card-header {
+  min-height: 0;
+  & + .rk-card-body {
+    padding-top: calc(var(--rk-space) * 1.5);
   }
 }
 

@@ -41,10 +41,13 @@ export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, "title"> {
   selected?: boolean;
   /**
    * The card's own action (select, open): a button stretched over the whole card, named by the title (or
-   * `aria-label`). `actions` and interactive content stay clickable above it, so nothing nests inside a
-   * button. Not for `collapsible` cards.
+   * `aria-label`, which then moves from the card to that button). `actions`, `media` and interactive
+   * content in the title or body stay clickable above it, so nothing nests inside a button. Not for
+   * `collapsible` cards.
    */
   onAction?: (event: MouseEvent<HTMLButtonElement>) => void;
+  /** Compact header: as tall as its content, the body follows closely. For tiles and list cards. */
+  dense?: boolean;
   /** `double`: a pointer needs a double click (the keyboard still activates with Enter/Space). */
   activate?: "click" | "double";
   /** Heading level of the title, so cards show up in the page outline (h1 is the page title). */
@@ -76,12 +79,15 @@ export function Card({
   selected,
   onAction,
   activate = "click",
+  dense,
   headingLevel = 2,
   running,
   spotlight,
   className,
   children,
   onPointerMove,
+  "aria-label": ariaLabel,
+  "aria-labelledby": labelledBy,
   ...rest
 }: CardProps) {
   const H = `h${headingLevel}` as const;
@@ -118,12 +124,15 @@ export function Card({
   return (
     <section
       {...rest}
+      aria-label={onAction ? undefined : ariaLabel}
+      aria-labelledby={onAction ? undefined : labelledBy}
       className={cx("rk-card rk-surface", className)}
       data-variant={variant}
       data-padding={padding}
       data-interactive={interactive || undefined}
       data-selected={selected || undefined}
       data-action={onAction ? "" : undefined}
+      data-dense={dense || undefined}
       data-running={running || undefined}
       aria-busy={running || undefined}
       onPointerMove={(event) => {
@@ -140,7 +149,10 @@ export function Card({
         <button
           type="button"
           className="rk-card-hit"
-          aria-labelledby={title !== undefined && !collapsible ? titleId : undefined}
+          aria-label={ariaLabel}
+          aria-labelledby={
+            labelledBy ?? (ariaLabel === undefined && title !== undefined ? titleId : undefined)
+          }
           aria-pressed={selected === undefined ? undefined : selected}
           // detail 0 = keyboard: Enter/Space always activate
           onClick={(event) => (activate === "click" || event.detail === 0) && onAction(event)}
