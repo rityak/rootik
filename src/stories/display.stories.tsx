@@ -171,6 +171,30 @@ export const CardsNested: Story = () => {
           </Card>
         ))}
       </div>
+      <Card
+        title="Group"
+        description="onAction on the group; its media button, title and the tiles inside stay clickable"
+        padding="sm"
+        selected={picked === "group"}
+        onAction={() => setPicked("group")}
+        media={<IconButton icon={<Globe />} label="Pick icon" />}
+      >
+        <div className="story-grid">
+          {["a", "b"].map((id) => (
+            <Card
+              key={id}
+              dense
+              padding="sm"
+              variant="sunken"
+              aria-label={`Node ${id}`}
+              selected={picked === id}
+              onAction={() => setPicked(id)}
+            >
+              dense, named by aria-label
+            </Card>
+          ))}
+        </div>
+      </Card>
       <div className="story-grid">
         {["tokyo", "oslo"].map((id) => (
           <Card

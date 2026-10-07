@@ -18,6 +18,9 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 - [x] Card `media` slot: raw leading media without the round well
 - [x] Progress: `aria-label` lands on the `progressbar`; `variant="edge"` bottom-edge bar clipped to the card
 
+- [x] Card `onAction`: `media` and interactive title content sit above the stretched button, a nested card keeps its own hit; `aria-label` moves from the card to the button
+- [x] Card `dense`: header as tall as its content, body follows closely (tiles, list cards)
+
 ## Batch 3 — one PR per item
 
 Same rules as Batch 1 (stubs registered up front, one line per PR, merge commits). Every item is a new
