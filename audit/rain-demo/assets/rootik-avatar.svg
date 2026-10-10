@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 256 256">
+  <title>Rootik avatar</title>
+  <rect width="256" height="256" fill="#101720"/>
+  <g transform="translate(4 15) scale(.88)">
+    <path fill="#6965ef" fill-rule="evenodd" d="M68 208a20 20 0 0 1-20-20V72a24 24 0 0 1 24-24h58c42 0 64 24 64 58 0 25-12 44-33 53l33 49h-42l-32-48H88v28a20 20 0 0 1-20 20Zm20-124v44h38c20 0 32-8 32-22s-12-22-32-22Z"/>
+    <circle cx="218" cy="194" r="14" fill="#6965ef"/>
+  </g>
+</svg>

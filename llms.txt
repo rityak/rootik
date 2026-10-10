@@ -1,6 +1,6 @@
 # rootik
 
-> Dark-first React UI toolkit for dashboards, panels and desktop clients. React 19, zero runtime dependencies besides React, plain CSS with `--rk-*` custom properties in `@layer rootik`. Dark-first ("Graphite & Iris").
+> Dark-first React UI toolkit for dashboards, panels and desktop clients. React 19, zero runtime dependencies besides React. Vanilla Extract authoring in `styles/*.css.ts`, static CSS with `--rk-*` custom properties in `@layer rootik`; no consumer plugin. Dark-first ("Graphite & Iris"), opt-in Rain.
 
 The source is the reference: each entry below points at the component (read its `…Props` interface and JSDoc there) and at a story (`src/stories/*.stories.tsx`, open in Ladle with `?story=<id>`) that shows real usage.
 
@@ -27,7 +27,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 - Translate the kit's strings with `<RootikProvider labels>` (`src/lib/labels.tsx`); appearance via `defaults`, `extensions` or `<Scope values>`.
 - Charts take plain arrays; categorical colors come from `seriesColor(i)` in fixed order; accent marks the highlighted datum.
 
-## Components (157)
+## Components (159)
 
 ### src/components/bars-list.tsx
 
@@ -86,11 +86,13 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/color-picker.tsx
 
-- `ColorPicker` — src/components/color-picker.tsx:149, story `inputs--color-pickers`. OKLCH color picker: a lightness × chroma area for the current hue (the part outside sRGB is hatched, the kit's "rest" texture), hue and alpha sliders, a text field that takes oklch / hex / rgb, preset swatches and the EyeDropper API where the browser has it.
+- `ColorPicker` — src/components/color-picker.tsx:58, story `inputs--color-pickers`. OKLCH color picker: a lightness × chroma area for the current hue (the part outside sRGB is hatched, the kit's "rest" texture), hue and alpha sliders, a text field that takes oklch / hex / rgb, preset swatches and the EyeDropper API where the browser has it.
 
 ### src/components/combobox.tsx
 
-- `Combobox` — src/components/combobox.tsx:76, story `inputs--comboboxes`. Editable select (APG combobox + listbox): type to filter static options or load them async, ↑/↓ move, Enter picks, Esc closes (and clears when already closed), blur restores the chosen label unless `allowCustom`.
+- `Combobox` — src/components/combobox.tsx:82, story `inputs--comboboxes`. Editable select (APG combobox + listbox): type to filter static options or load them async, ↑/↓ move, Enter picks, Esc closes (and clears when already closed), blur restores the chosen label unless `allowCustom`.
+- `Combobox` — src/components/combobox.tsx:85, story `inputs--comboboxes`
+- `Combobox` — src/components/combobox.tsx:86, story `inputs--comboboxes`
 
 ### src/components/confirm.tsx
 
@@ -107,12 +109,12 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 ### src/components/data.tsx
 
 - `Table` — src/components/data.tsx:52, story `data--plain-table`. Styled native table: write thead/tbody/tr/td as usual.
-- `DataTable` — src/components/data.tsx:300, story `data--virtual-tree-rows`
-- `ColumnsMenu` — src/components/data.tsx:795, story `data--columns-and-editing`. Show/hide columns of a DataTable: checkbox menu over `hiddenColumns`.
+- `DataTable` — src/components/data.tsx:321, story `data--virtual-tree-rows`
+- `ColumnsMenu` — src/components/data.tsx:815, story `data--columns-and-editing`. Show/hide columns of a DataTable: checkbox menu over `hiddenColumns`.
 
 ### src/components/date-range.tsx
 
-- `DateRange` — src/components/date-range.tsx:49, story `inputs--dates`. Time window picker for logs and charts: quick presets, or a custom range on native date-time inputs.
+- `DateRange` — src/components/date-range.tsx:52, story `inputs--dates`. Time window picker for logs and charts: quick presets, or a custom range on native date-time inputs.
 
 ### src/components/dialog.tsx
 
@@ -134,7 +136,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/fieldset.tsx
 
-- `Fieldset` — src/components/fieldset.tsx:18, story `inputs--fieldsets`. Native <fieldset>: the legend names the group for screen readers and `disabled` switches off every control inside (inputs, selects, buttons, switches), so a whole section can be locked at once.
+- `Fieldset` — src/components/fieldset.tsx:18, story `navigation--focus-recovery`. Native <fieldset>: the legend names the group for screen readers and `disabled` switches off every control inside (inputs, selects, buttons, switches), so a whole section can be locked at once.
 
 ### src/components/file-drop.tsx
 
@@ -237,21 +239,21 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/nav.tsx
 
-- `Tabs` — src/components/nav.tsx:55, story `layout--scrolling`. Tab list per ARIA APG: one Tab stop, arrows move and activate, Home/End jump.
-- `TopNav` — src/components/nav.tsx:172, story `navigation--top-nav-bar`. Page navigation as a pill bar of real links (Cmd/middle-click work); the current page is the inverted pill.
-- `TableOfContents` — src/components/nav.tsx:222, story `navigation--contents`. In-page section links with the current one marked on a rail (long settings and docs pages).
-- `TabPanel` — src/components/nav.tsx:241, story `navigation--vertical-tabs`
-- `Sidebar` — src/components/nav.tsx:267, story `navigation--sidebars`
-- `NavItem` — src/components/nav.tsx:301, story `navigation--sidebars`. Navigation row: sidebars, lists of presets/runs/files.
-- `NavGroup` — src/components/nav.tsx:373, story `navigation--sidebars`
-- `Dock` — src/components/nav.tsx:457, story `navigation--dock-bar`. Floating bottom navigation (surface material).
-- `DockSeparator` — src/components/nav.tsx:582, story `navigation--dock-bar`
-- `Breadcrumbs` — src/components/nav.tsx:590, story `navigation--crumbs`
-- `Pagination` — src/components/nav.tsx:658, story `navigation--crumbs`
+- `Tabs` — src/components/nav.tsx:56, story `layout--scrolling`. Tab list per ARIA APG: one Tab stop, arrows move and activate, Home/End jump.
+- `TopNav` — src/components/nav.tsx:176, story `navigation--top-nav-bar`. Page navigation as a pill bar of real links (Cmd/middle-click work); the current page is the inverted pill.
+- `TableOfContents` — src/components/nav.tsx:226, story `navigation--contents`. In-page section links with the current one marked on a rail (long settings and docs pages).
+- `TabPanel` — src/components/nav.tsx:245, story `navigation--vertical-tabs`
+- `Sidebar` — src/components/nav.tsx:271, story `navigation--sidebars`
+- `NavItem` — src/components/nav.tsx:305, story `navigation--sidebars`. Navigation row: sidebars, lists of presets/runs/files.
+- `NavGroup` — src/components/nav.tsx:377, story `navigation--sidebars`
+- `Dock` — src/components/nav.tsx:461, story `navigation--dock-bar`. Floating bottom navigation (surface material).
+- `DockSeparator` — src/components/nav.tsx:586, story `navigation--dock-bar`
+- `Breadcrumbs` — src/components/nav.tsx:594, story `navigation--crumbs`
+- `Pagination` — src/components/nav.tsx:662, story `navigation--crumbs`
 
 ### src/components/number-input.tsx
 
-- `NumberInput` — src/components/number-input.tsx:53, story `inputs--numbers`. Numeric field: type freely, commit on blur/Enter (clamped, rounded to the step), ↑/↓ step (Shift ×10, PageUp/PageDown ×10, Home/End to the bounds), wheel steps while focused, stepper buttons repeat while held.
+- `NumberInput` — src/components/number-input.tsx:57, story `inputs--numbers`. Numeric field: type freely, commit on blur/Enter (clamped, rounded to the step), ↑/↓ step (Shift ×10, PageUp/PageDown ×10, Home/End to the bounds), wheel steps while focused, stepper buttons repeat while held.
 
 ### src/components/overflow-list.tsx
 
@@ -307,7 +309,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/schema-form.tsx
 
-- `SchemaForm` — src/components/schema-form.tsx:256, story `forms--disabled-form`. Form rendered from a schema: text, numbers, sliders, selects, chips, colors and switches with nested sub-fields, conditional visibility and validation.
+- `SchemaForm` — src/components/schema-form.tsx:277, story `forms--disabled-form`. Form rendered from a schema: text, numbers, sliders, selects, chips, colors and switches with nested sub-fields, conditional visibility and validation.
 
 ### src/components/scroller.tsx
 
@@ -315,7 +317,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/select-panel.tsx
 
-- `SelectPanel` — src/components/select-panel.tsx:55, story `inputs--filter-panels`. Filter picker behind a button: search, checkable options with counts, Clear (and Apply in `deferred` mode).
+- `SelectPanel` — src/components/select-panel.tsx:57, story `inputs--filter-panels`. Filter picker behind a button: search, checkable options with counts, Clear (and Apply in `deferred` mode).
 
 ### src/components/select.tsx
 
@@ -377,7 +379,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/toast.tsx
 
-- `Toaster` — src/components/toast.tsx:88. Mount once.
+- `Toaster` — src/components/toast.tsx:122. Mount once.
 
 ### src/components/token-field.tsx
 
@@ -401,7 +403,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/components/tree.tsx
 
-- `Tree` — src/components/tree.tsx:69, story `data--tree-view`. Tree view (files, folders, tensors, config nodes).
+- `Tree` — src/components/tree.tsx:70, story `data--tree-view`. Tree view (files, folders, tensors, config nodes).
 
 ### src/components/truncate.tsx
 
@@ -409,8 +411,8 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 ### src/theme/provider.tsx
 
-- `RootikProvider` — src/theme/provider.tsx:62. Owns appearance values and writes them as CSS custom properties.
-- `Scope` — src/theme/provider.tsx:169, story `utilities--scopes`. Appearance for a subtree (a dense table in a roomy page, a differently accented panel): writes the same CSS vars RootikProvider writes, and `[data-rk-scope]` re-derives every token from them.
+- `RootikProvider` — src/theme/provider.tsx:65, story `contracts--lifecycle`. Owns appearance values and writes them as CSS custom properties.
+- `Scope` — src/theme/provider.tsx:200, story `utilities--scopes`. Appearance for a subtree (a dense table in a roomy page, a differently accented panel): writes the same CSS vars RootikProvider writes, and `[data-rk-scope]` re-derives every token from them.
 
 ### src/theme/settings.tsx
 
@@ -423,6 +425,12 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 ## Hooks and utilities
 
 - `announce` — src/lib/announce.ts:26. Speak a message to screen readers without moving focus: "Copied", "Saved", "12 results".
+- `oklchToLinearRgb` — src/lib/color.ts:17. OKLCH → linear sRGB (Björn Ottosson's OKLab matrices); values outside 0–1 are out of gamut.
+- `rgbToOklch` — src/lib/color.ts:31. sRGB channels 0–1 → OKLCH (hue 0 for greys).
+- `inSrgbGamut` — src/lib/color.ts:44
+- `oklchToHex` — src/lib/color.ts:49. #rrggbb (gamut-clipped).
+- `formatOklch` — src/lib/color.ts:60. `oklch(0.57 0.2 277)`, with ` / 0.5` when translucent.
+- `parseColor` — src/lib/color.ts:77. Parse `oklch(…)`, `#rgb[a]`, `#rrggbb[aa]` or `rgb[a](…)`; null when it isn't one of those.
 - `cx` — src/lib/cx.ts:1
 - `computePosition` — src/lib/floating.tsx:21
 - `formatNumber` — src/lib/format.ts:34. Plain or compact ("1.2K") number; the compact suffix goes to `unit`.
@@ -434,22 +442,23 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 - `useHighlight` — src/lib/highlight.tsx:42. Marks matches of `query` under `ref` with the CSS Custom Highlight API: no DOM wrapping, so React's tree and text selection stay intact.
 - `useControllable` — src/lib/hooks.ts:15. Controlled when `value` is defined, otherwise keeps its own state.
 - `mergeRefs` — src/lib/hooks.ts:32
-- `cloneTrigger` — src/lib/hooks.ts:44. Clone a trigger element, chaining its own handlers and ref with ours.
-- `useLatest` — src/lib/hooks.ts:65. Latest value in a ref: for callbacks used inside long-lived listeners.
-- `readStorage` — src/lib/hooks.ts:74. Persist a value in localStorage; storage failures (private mode, quota) are ignored.
-- `writeStorage` — src/lib/hooks.ts:84
-- `isTypingTarget` — src/lib/hooks.ts:96. The event target takes typed text: plain-key shortcuts must not steal its keystrokes.
-- `useHotkeys` — src/lib/hooks.ts:123. Every mounted `useHotkey` that has a description, in registration order.
-- `useHotkey` — src/lib/hooks.ts:135. Global shortcut ("mod+k", "shift+?"; `mod` = Ctrl or ⌘).
-- `useClipboard` — src/lib/hooks.ts:179. Copy text to the clipboard.
-- `useMediaQuery` — src/lib/hooks.ts:199. Live media query match: `useMediaQuery("(max-width: 640px)")`.
-- `useElementSize` — src/lib/hooks.ts:214. Content-box size of an element: `const { ref, width, height } = useElementSize()`.
-- `useInterval` — src/lib/hooks.ts:233. Run `callback` every `ms` (null stops).
-- `usePersistentState` — src/lib/hooks.ts:265. useState persisted in localStorage (JSON).
-- `useWindowFocus` — src/lib/hooks.ts:303. Whether the app window has focus (native apps dim their chrome and selection when it doesn't).
-- `useScrollSpy` — src/lib/hooks.ts:323. Id of the section currently being read: the last one whose top has passed `offset` px below the top of `root` (the viewport by default).
+- `cloneTrigger` — src/lib/hooks.ts:58. Clone a trigger element, chaining its own handlers and ref with ours.
+- `useLatest` — src/lib/hooks.ts:91. Latest value in a ref: for callbacks used inside long-lived listeners.
+- `readStorage` — src/lib/hooks.ts:100. Persist a value in localStorage; storage failures (private mode, quota) are ignored.
+- `writeStorage` — src/lib/hooks.ts:110
+- `isTypingTarget` — src/lib/hooks.ts:122. The event target takes typed text: plain-key shortcuts must not steal its keystrokes.
+- `useHotkeys` — src/lib/hooks.ts:149. Every mounted `useHotkey` that has a description, in registration order.
+- `useHotkey` — src/lib/hooks.ts:161. Global shortcut ("mod+k", "shift+?"; `mod` = Ctrl or ⌘).
+- `useClipboard` — src/lib/hooks.ts:205. Copy text to the clipboard.
+- `useMediaQuery` — src/lib/hooks.ts:225. Live media query match: `useMediaQuery("(max-width: 640px)")`.
+- `useElementSize` — src/lib/hooks.ts:240. Content-box size of an element: `const { ref, width, height } = useElementSize()`.
+- `useInterval` — src/lib/hooks.ts:259. Run `callback` every `ms` (null stops).
+- `usePersistentState` — src/lib/hooks.ts:291. useState persisted in localStorage (JSON).
+- `useWindowFocus` — src/lib/hooks.ts:329. Whether the app window has focus (native apps dim their chrome and selection when it doesn't).
+- `useScrollSpy` — src/lib/hooks.ts:349. Id of the section currently being read: the last one whose top has passed `offset` px below the top of `root` (the viewport by default).
 - `useIndicator` — src/lib/indicator.ts:12. Measures the element matching `selector` inside `container` for a sliding selection indicator.
-- `useRovingFocus` — src/lib/roving.ts:38. Roving tab stop for a composite widget (APG toolbar): one Tab stop for the group, arrows move between items, Home/End jump to the ends, and the last focused item is remembered.
+- `useFocusRecovery` — src/lib/roving.ts:21. Restore focus after a focused roving item is removed or natively disabled, without stealing it.
+- `useRovingFocus` — src/lib/roving.ts:75. Roving tab stop for a composite widget (APG toolbar): one Tab stop for the group, arrows move between items, Home/End jump to the ends, and the last focused item is remembered.
 - `nextSelection` — src/lib/selection.ts:18. Next selection after activating `key` (pure; `useSelection` wires it to state).
 - `useSelection` — src/lib/selection.ts:55. Selection state for lists, tables, trees and grids: single or multiple, Shift ranges, Ctrl/⌘ toggles, select all.
 - `prefixOffsets` — src/lib/virtual.ts:11. Start offsets for per-index sizes (prefix sums); `offsets[count]` is the total size.

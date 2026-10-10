@@ -1,0 +1,16 @@
+{
+  "consumer": "umiray-client",
+  "date": "2026-10-10",
+  "rootikInput": "packed tarball dist",
+  "consumerChanges": false,
+  "typecheck": "passed",
+  "viteBuild": "passed",
+  "viteVersion": "7.3.6",
+  "tailwindVersion": "4.3.3",
+  "cssBytesRounded": 195230,
+  "cssGzipBytesRounded": 34470,
+  "jsBytesRounded": 1991090,
+  "jsGzipBytesRounded": 597290,
+  "warnings": ["Tailwind highlight pseudo-element parser", "zod annotation placement", "CodeMirror mixed imports", "large application chunk"],
+  "notVerified": ["native Tauri runtime", "live networking flows", "dataset-toolkit integration"]
+}

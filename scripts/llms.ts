@@ -86,7 +86,7 @@ for (const file of readdirSync(join(root, "src/lib")).sort()
 
 const text = `# ${pkg.name}
 
-> ${pkg.description}. React 19, zero runtime dependencies besides React, plain CSS with \`--rk-*\` custom properties in \`@layer rootik\`. Dark-first ("Graphite & Iris").
+> ${pkg.description}. React 19, zero runtime dependencies besides React. Vanilla Extract authoring in \`styles/*.css.ts\`, static CSS with \`--rk-*\` custom properties in \`@layer rootik\`; no consumer plugin. Dark-first ("Graphite & Iris"), opt-in Rain.
 
 The source is the reference: each entry below points at the component (read its \`…Props\` interface and JSDoc there) and at a story (\`src/stories/*.stories.tsx\`, open in Ladle with \`?story=<id>\`) that shows real usage.
 

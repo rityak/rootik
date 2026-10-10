@@ -1,3 +1,4 @@
+/* Generated from styles/overflow-list.css.ts. Run bun run styles; do not edit. */
 .rk-overflow-list {
   position: relative;
   display: flex;
@@ -5,13 +6,10 @@
   gap: calc(var(--rk-space) * 1.5);
   min-width: 0;
 }
-
 .rk-overflow-item {
   display: flex;
   flex-shrink: 0;
 }
-
-/* an off-screen copy of every item: its widths drive the fit */
 .rk-overflow-measure {
   position: absolute;
   top: 0;
@@ -22,7 +20,6 @@
   visibility: hidden;
   pointer-events: none;
 }
-
 .rk-overflow-more {
   display: inline-flex;
   flex-shrink: 0;
@@ -40,13 +37,12 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     color var(--rk-dur) var(--rk-ease);
-  &:hover,
-  &[aria-expanded="true"] {
-    background: var(--rk-surface-4);
-    color: var(--rk-text);
-  }
 }
-
+.rk-overflow-more:hover,
+.rk-overflow-more[aria-expanded="true"] {
+  background: var(--rk-surface-4);
+  color: var(--rk-text);
+}
 .rk-overflow-menu {
   display: flex;
   flex-direction: column;

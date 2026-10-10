@@ -1,77 +1,45 @@
-/*
- * Style → Fluent (data-rk-style="fluent", written by RootikProvider / Scope): Windows 10 (UWP) spirit in
- * the kit's own colors. The schema already flattens geometry and material (4px / 2px radii, solid
- * surfaces, no glass); this file swaps depth for hairlines and the inverted pill for accent marks:
- * a bar on the start edge of nav items, an underline in tabs and the dock, an accent fill in segments.
- * List and tree selection keep the inverted pill.
- */
-:where([data-rk-style="fluent"]),
-:where([data-rk-style="fluent"] [data-rk-scope]) {
+/* Generated from styles/fluent.css.ts. Run bun run styles; do not edit. */
+:where(:root, [data-rk-scope], [data-rk-style="rootik"]) {
+  --rk-selected-bg: initial;
+  --rk-selected-fg: initial;
+  --rk-selected-shadow: initial;
+  --rk-track-bg: initial;
+  --rk-track-shadow: initial;
+  --rk-tab-line: initial;
+  --rk-nav-active-bg: initial;
+  --rk-nav-active-fg: initial;
+  --rk-nav-active-icon: initial;
+  --rk-nav-marker: initial;
+  --rk-dock-radius: initial;
+  --rk-dock-active-bg: initial;
+  --rk-dock-active-fg: initial;
+  --rk-dock-indicator-top: initial;
+  --rk-dock-indicator-height: initial;
+  --rk-dock-indicator-radius: initial;
+  --rk-dock-indicator-bg: initial;
+  --rk-dock-indicator-shadow: initial;
+}
+:where([data-rk-style="fluent"]) {
   --rk-highlight: inset 0 0 0 0 transparent;
   --rk-shadow-1: 0 0 0 1px var(--rk-line);
   --rk-shadow-2: 0 0 0 1px var(--rk-line-strong), 0 8px 24px -12px oklch(var(--rk-shade) / 0.6);
   --rk-shadow-pop: 0 0 0 1px var(--rk-line-strong), 0 16px 40px -12px oklch(var(--rk-shade) / 0.7);
-}
-
-[data-rk-style="fluent"] {
-  /* sidebar: subtle fill + accent bar */
-  & .rk-nav-item[data-active] {
-    background: var(--rk-press);
-    color: var(--rk-text);
-    &::before {
-      content: "";
-      position: absolute;
-      inset-block: 22%;
-      inset-inline-start: 0;
-      width: 3px;
-      border-radius: calc(2px * var(--rk-roundness));
-      background: var(--rk-accent);
-    }
-    & .rk-nav-icon {
-      color: var(--rk-accent-text);
-    }
-  }
-
-  /* tabs: accent underline / accent fill */
-  & .rk-tabs[data-variant="line"] .rk-tabs-indicator {
-    background: var(--rk-accent);
-  }
-  & .rk-tabs[data-variant="pill"] .rk-tabs-indicator,
-  & .rk-segmented-thumb {
-    background: var(--rk-accent);
-    box-shadow: none;
-  }
-  & :is(.rk-tabs[data-variant="pill"] .rk-tab[aria-selected="true"], .rk-topnav .rk-tab[aria-current="page"]),
-  & .rk-segmented-item[aria-pressed="true"] {
-    color: var(--rk-on-accent);
-  }
-  & .rk-segmented-item[aria-pressed="true"],
-  & .rk-pagination [aria-current] {
-    background: var(--rk-accent);
-    color: var(--rk-on-accent);
-  }
-  /* a segment track reads as a bordered row of buttons */
-  & :is(.rk-segmented, .rk-tabs[data-variant="pill"]) {
-    background: transparent;
-    box-shadow: inset 0 0 0 1px var(--rk-control-edge);
-  }
-
-  /* dock: square-ish items, the current one underlined */
-  & .rk-dock {
-    border-radius: var(--rk-radius-lg);
-  }
-  & .rk-dock-item {
-    border-radius: var(--rk-radius-control);
-    &:is([aria-current="page"], [aria-selected="true"]) {
-      background: var(--rk-hover);
-      color: var(--rk-text);
-    }
-  }
-  & .rk-dock-indicator {
-    top: auto;
-    height: 3px;
-    border-radius: calc(2px * var(--rk-roundness));
-    background: var(--rk-accent);
-    box-shadow: none;
-  }
+  --rk-selected-bg: var(--rk-accent);
+  --rk-selected-fg: var(--rk-on-accent);
+  --rk-selected-shadow: none;
+  --rk-track-bg: transparent;
+  --rk-track-shadow: inset 0 0 0 1px var(--rk-control-edge);
+  --rk-tab-line: var(--rk-accent);
+  --rk-nav-active-bg: var(--rk-press);
+  --rk-nav-active-fg: var(--rk-text);
+  --rk-nav-active-icon: var(--rk-accent-text);
+  --rk-nav-marker: "";
+  --rk-dock-radius: var(--rk-radius-lg);
+  --rk-dock-active-bg: var(--rk-hover);
+  --rk-dock-active-fg: var(--rk-text);
+  --rk-dock-indicator-top: auto;
+  --rk-dock-indicator-height: 3px;
+  --rk-dock-indicator-radius: calc(2px * var(--rk-roundness));
+  --rk-dock-indicator-bg: var(--rk-accent);
+  --rk-dock-indicator-shadow: none;
 }

@@ -1,35 +1,28 @@
+/* Generated from styles/layout.css.ts. Run bun run styles; do not edit. */
 .rk-shell {
-  /* Panel spacing setting scales it; 0 = flush */
   --rk-shell-gap: calc(var(--rk-space) * 2.5 * var(--rk-shell-space, 1));
-  /* 1 while panels float apart, 0 when flush: touching panels drop their outer radius */
   --rk-shell-round: clamp(0, var(--rk-shell-space, 1) * 1000, 1);
   display: flex;
   gap: var(--rk-shell-gap);
   height: 100dvh;
   min-height: 0;
   padding: var(--rk-shell-gap);
-  /* ambient glow stays put while content scrolls: what the layout surfaces refract; the optional
-     Background image (already dimmed by its own scrim) sits under it */
   background: var(--rk-ambient, none), var(--rk-backdrop, none), var(--rk-bg);
   background-position: center;
   background-size: cover;
   overflow: hidden;
 }
-
 .rk-shell :is(.rk-shell-sidebar, .rk-shell-aside, .rk-shell-panel, .rk-shell-dockbar > .rk-dock) {
   border-radius: calc(var(--rk-radius-lg) * var(--rk-shell-round));
 }
-
 .rk-shell[data-background="none"] {
   background: transparent;
 }
-
 .rk-shell-sidebar {
   display: flex;
   flex-shrink: 0;
   min-height: 0;
 }
-
 .rk-shell-main {
   display: flex;
   flex: 1;
@@ -38,18 +31,15 @@
   min-width: 0;
   min-height: 0;
 }
-
 .rk-shell-header {
   flex-shrink: 0;
 }
-
 .rk-shell :is(.rk-shell-header, .rk-shell-footer) {
   border-radius: calc(var(--rk-radius-md) * var(--rk-shell-round));
-  &[data-shape="pill"] {
-    border-radius: calc(var(--rk-radius-pill) * var(--rk-shell-round));
-  }
 }
-
+.rk-shell :is(.rk-shell-header, .rk-shell-footer)[data-shape="pill"] {
+  border-radius: calc(var(--rk-radius-pill) * var(--rk-shell-round));
+}
 .rk-shell-body {
   position: relative;
   display: flex;
@@ -57,7 +47,6 @@
   gap: var(--rk-shell-gap);
   min-height: 0;
 }
-
 .rk-shell-content {
   display: flex;
   flex: 1;
@@ -65,28 +54,23 @@
   min-width: 0;
   min-height: 0;
   overflow: auto;
-  /* flush islands: cards would touch the panels around them */
   padding: calc(var(--rk-pad) * (1 - var(--rk-shell-round)));
-  /* keep the last cards reachable above the floating dock */
-  &[data-dock] {
-    padding-bottom: calc(var(--rk-dock-height) + var(--rk-shell-gap) * 2);
-  }
-  /* pages inside the shell align with the surfaces around them */
-  & > .rk-page-header {
-    padding-inline: 4px;
-  }
-  & .rk-page-column {
-    padding-inline: 0;
-    padding-top: calc(var(--rk-space) * 1);
-  }
 }
-
+.rk-shell-content[data-dock] {
+  padding-bottom: calc(var(--rk-dock-height) + var(--rk-shell-gap) * 2);
+}
+.rk-shell-content > .rk-page-header {
+  padding-inline: 4px;
+}
+.rk-shell-content .rk-page-column {
+  padding-inline: 0;
+  padding-top: calc(var(--rk-space) * 1);
+}
 .rk-shell-aside {
   display: flex;
   flex-shrink: 0;
   min-height: 0;
 }
-
 .rk-shell-dock {
   position: absolute;
   bottom: calc(var(--rk-shell-gap) + 4px);
@@ -94,57 +78,49 @@
   z-index: 3;
   translate: -50% 0;
 }
-
-/* dock as a taskbar: a row under the content instead of floating over it */
 .rk-shell-dockbar {
   display: flex;
   flex-shrink: 0;
   min-width: 0;
-  & > .rk-dock {
-    flex: 1;
-  }
 }
-
+.rk-shell-dockbar > .rk-dock {
+  flex: 1;
+}
 .rk-shell-footer {
   flex-shrink: 0;
   overflow: hidden;
-  & .rk-status-bar {
-    border-top: 0;
-  }
 }
-
-/* inset: the frame (sidebar, header, footer) merges with the background; content + aside form one block */
+.rk-shell-footer .rk-status-bar {
+  border-top: 0;
+}
 .rk-shell[data-variant="inset"] {
   background-color: var(--rk-sunken);
-
-  & .rk-shell-main {
-    gap: 0;
-  }
-  & .rk-shell-header,
-  & .rk-shell-footer {
-    border-radius: 0;
-  }
-  & .rk-shell-header {
-    padding-bottom: calc(var(--rk-shell-gap) * 0.6);
-  }
-  & .rk-shell-footer {
-    margin-top: calc(var(--rk-shell-gap) * 0.4);
-  }
-  & .rk-shell-body {
-    gap: 0;
-  }
-  & .rk-shell-content {
-    padding: var(--rk-pad);
-    &[data-dock] {
-      padding-bottom: calc(var(--rk-dock-height) + var(--rk-shell-gap) * 2);
-    }
-  }
-  & .rk-shell-aside {
-    border-inline-start: 1px solid var(--rk-line);
-  }
 }
-
-/* the content block: surface material on the page background step (cards inside stay one step lighter) */
+.rk-shell[data-variant="inset"] .rk-shell-main {
+  gap: 0;
+}
+.rk-shell[data-variant="inset"] .rk-shell-header,
+.rk-shell[data-variant="inset"] .rk-shell-footer {
+  border-radius: 0;
+}
+.rk-shell[data-variant="inset"] .rk-shell-header {
+  padding-bottom: calc(var(--rk-shell-gap) * 0.6);
+}
+.rk-shell[data-variant="inset"] .rk-shell-footer {
+  margin-top: calc(var(--rk-shell-gap) * 0.4);
+}
+.rk-shell[data-variant="inset"] .rk-shell-body {
+  gap: 0;
+}
+.rk-shell[data-variant="inset"] .rk-shell-content {
+  padding: var(--rk-pad);
+}
+.rk-shell[data-variant="inset"] .rk-shell-content[data-dock] {
+  padding-bottom: calc(var(--rk-dock-height) + var(--rk-shell-gap) * 2);
+}
+.rk-shell[data-variant="inset"] .rk-shell-aside {
+  border-inline-start: 1px solid var(--rk-line);
+}
 .rk-shell-panel {
   overflow: hidden;
   border-radius: var(--rk-radius-lg);
@@ -153,34 +129,29 @@
     color-mix(in oklab, var(--rk-bg) var(--rk-surface-alpha, 100%), transparent);
   backdrop-filter: var(--rk-surface-filter, none);
   box-shadow: var(--rk-surface-shadow, var(--rk-shadow-1));
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    padding: 1px;
-    border-radius: inherit;
-    background: var(--rk-surface-edge, none);
-    mask:
-      linear-gradient(black 0 0) content-box,
-      linear-gradient(black 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-  }
 }
-
-/* window in the background: selection goes grey, the title bar steps back */
+.rk-shell-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--rk-surface-edge, none);
+  mask:
+    linear-gradient(black 0 0) content-box,
+    linear-gradient(black 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
 .rk-shell[data-inactive] {
   --rk-inverse: var(--rk-surface-4);
   --rk-on-inverse: var(--rk-text);
-  & .rk-titlebar {
-    opacity: 0.6;
-    transition: opacity var(--rk-dur) var(--rk-ease);
-  }
 }
-
-/* title bar */
+.rk-shell[data-inactive] .rk-titlebar {
+  opacity: 0.6;
+  transition: opacity var(--rk-dur) var(--rk-ease);
+}
 .rk-titlebar {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -191,24 +162,6 @@
   user-select: none;
   container: rk-titlebar / inline-size;
 }
-
-/* narrow: the center (search, tabs) drops to its own row instead of overlapping the sides */
-@container rk-titlebar (width < 32rem) {
-  .rk-titlebar-start {
-    grid-area: 1 / 1 / 2 / 3;
-  }
-  .rk-titlebar-end {
-    grid-area: 1 / 3;
-  }
-  .rk-titlebar-center {
-    grid-area: 2 / 1 / 3 / -1;
-    justify-content: stretch;
-    & > * {
-      flex: 1;
-    }
-  }
-}
-
 .rk-titlebar-start,
 .rk-titlebar-end {
   display: flex;
@@ -216,50 +169,44 @@
   gap: 10px;
   min-width: 0;
 }
-
 .rk-titlebar-end {
   justify-content: flex-end;
 }
-
 .rk-titlebar-center {
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
 }
-
 .rk-titlebar-controls {
   display: flex;
   gap: 2px;
   margin-inline-start: 4px;
-
-  & button {
-    display: grid;
-    place-items: center;
-    width: 32px;
-    height: 28px;
-    padding: 0;
-    border: 0;
-    border-radius: var(--rk-radius-control);
-    background: transparent;
-    color: var(--rk-text-3);
-    font-size: 14px;
-    cursor: pointer;
-    transition:
-      background-color var(--rk-dur) var(--rk-ease),
-      color var(--rk-dur) var(--rk-ease);
-    &:hover {
-      background: var(--rk-hover);
-      color: var(--rk-text);
-    }
-    &[data-close]:hover {
-      background: var(--rk-danger);
-      color: var(--rk-on-danger);
-    }
-  }
 }
-
-/* page */
+.rk-titlebar-controls button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--rk-radius-control);
+  background: transparent;
+  color: var(--rk-text-3);
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    color var(--rk-dur) var(--rk-ease);
+}
+.rk-titlebar-controls button:hover {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
+.rk-titlebar-controls button[data-close]:hover {
+  background: var(--rk-danger);
+  color: var(--rk-on-danger);
+}
 .rk-page-header {
   display: flex;
   align-items: center;
@@ -268,32 +215,28 @@
   min-height: 56px;
   padding: 10px calc(var(--rk-pad) * 1.25);
   flex-shrink: 0;
-
-  &[data-size="lg"] {
-    align-items: flex-end;
-    padding-block: calc(var(--rk-pad) * 1.5) var(--rk-pad);
-    & .rk-page-title {
-      font-size: var(--rk-text-3xl);
-      font-weight: 400;
-      letter-spacing: -0.035em;
-      line-height: 1.05;
-    }
-    & .rk-page-desc {
-      margin-top: 6px;
-      font-size: var(--rk-text-md);
-    }
-  }
 }
-
+.rk-page-header[data-size="lg"] {
+  align-items: flex-end;
+  padding-block: calc(var(--rk-pad) * 1.5) var(--rk-pad);
+}
+.rk-page-header[data-size="lg"] .rk-page-title {
+  font-size: var(--rk-text-3xl);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+.rk-page-header[data-size="lg"] .rk-page-desc {
+  margin-top: 6px;
+  font-size: var(--rk-text-md);
+}
 .rk-page-titles {
   flex: 1 1 240px;
   min-width: 0;
 }
-
 .rk-page-eyebrow {
   margin-bottom: 6px;
 }
-
 .rk-page-title {
   margin: 0;
   font-size: var(--rk-text-lg);
@@ -301,47 +244,34 @@
   letter-spacing: -0.015em;
   line-height: 1.25;
 }
-
 .rk-page-desc {
   margin: 2px 0 0;
   font-size: var(--rk-text-sm);
   color: var(--rk-text-3);
   text-wrap: pretty;
 }
-
 .rk-page-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 }
-
 .rk-page-body {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   container-type: scroll-state;
-  /* a hairline shadow under the PageHeader, only while content is scrolled under it */
-  &::before {
-    content: "";
-    position: sticky;
-    top: 0;
-    z-index: 3;
-    display: block;
-    height: 1px;
-    margin-bottom: -1px;
-    transition: box-shadow var(--rk-dur) var(--rk-ease);
-  }
 }
-
-@container scroll-state(scrollable: top) {
-  .rk-page-body::before {
-    box-shadow:
-      0 0 0 1px var(--rk-line),
-      0 4px 12px 0 oklch(var(--rk-shade) / 0.5);
-  }
+.rk-page-body::before {
+  content: "";
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: block;
+  height: 1px;
+  margin-bottom: -1px;
+  transition: box-shadow var(--rk-dur) var(--rk-ease);
 }
-
 .rk-page-column {
   display: flex;
   flex-direction: column;
@@ -349,7 +279,6 @@
   margin: 0 auto;
   padding: var(--rk-pad) calc(var(--rk-pad) * 1.25) calc(var(--rk-pad) * 2);
 }
-
 .rk-toolbar {
   display: flex;
   align-items: center;
@@ -361,25 +290,21 @@
   overflow-x: auto;
   scrollbar-width: none;
 }
-
 .rk-spacer {
   flex: 1;
 }
-
 .rk-action-bar {
   flex-shrink: 0;
   padding: 10px calc(var(--rk-pad) * 1.25);
   border-top: 1px solid var(--rk-line);
   background: var(--rk-well-soft);
 }
-
 .rk-action-bar-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
 }
-
 .rk-action-bar-status {
   flex: 1;
   min-width: 0;
@@ -387,7 +312,6 @@
   font-size: var(--rk-text-sm);
   color: var(--rk-text-2);
 }
-
 .rk-status-bar {
   position: relative;
   display: flex;
@@ -400,23 +324,20 @@
   color: var(--rk-text-3);
   flex-shrink: 0;
 }
-
 .rk-status-bar-dot {
   width: 6px;
   height: 6px;
   border-radius: var(--rk-radius-round);
   background: var(--rk-accent);
-  /* duration from --rk-motion: 0s (reduced motion, Motion: Off) leaves a static dot */
   animation: rk-pulse calc(var(--rk-dur-slow) * 3.75) ease-in-out infinite;
+  animation-play-state: var(--rk-animation-state);
 }
-
 .rk-status-bar-end {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-inline-start: auto;
 }
-
 .rk-status-bar-progress {
   position: absolute;
   top: -1px;
@@ -426,8 +347,6 @@
   box-shadow: 0 0 8px var(--rk-accent);
   transition: width var(--rk-dur-slow) var(--rk-ease-out);
 }
-
-/* resizable */
 .rk-resizable {
   position: relative;
   display: flex;
@@ -436,127 +355,115 @@
   min-width: 0;
   min-height: 0;
 }
-
 .rk-resize-handle {
   position: absolute;
   z-index: 2;
   touch-action: none;
   outline: none;
-
-  &::after {
-    content: "";
-    position: absolute;
-    border-radius: calc(2px * var(--rk-roundness));
-    background: var(--rk-accent);
-    opacity: 0;
-    transition: opacity var(--rk-dur) var(--rk-ease);
-  }
-  &:hover::after,
-  &:focus-visible::after,
-  &:active::after {
-    opacity: 0.8;
-  }
-
-  [data-handle="right"] > &,
-  [data-handle="left"] > & {
-    top: 0;
-    bottom: 0;
-    width: 9px;
-    cursor: col-resize;
-    &::after {
-      top: 0;
-      bottom: 0;
-      left: 4px;
-      width: 2px;
-    }
-  }
-  [data-handle="right"] > & {
-    right: -5px;
-  }
-  [data-handle="left"] > & {
-    left: -5px;
-  }
-  [data-handle="top"] > &,
-  [data-handle="bottom"] > & {
-    left: 0;
-    right: 0;
-    height: 9px;
-    cursor: row-resize;
-    &::after {
-      left: 0;
-      right: 0;
-      top: 4px;
-      height: 2px;
-    }
-  }
-  [data-handle="top"] > & {
-    top: -5px;
-  }
-  [data-handle="bottom"] > & {
-    bottom: -5px;
-  }
 }
-
-/* disclosure */
+.rk-resize-handle::after {
+  content: "";
+  position: absolute;
+  border-radius: calc(2px * var(--rk-roundness));
+  background: var(--rk-accent);
+  opacity: 0;
+  transition: opacity var(--rk-dur) var(--rk-ease);
+}
+.rk-resize-handle:hover::after,
+.rk-resize-handle:focus-visible::after,
+.rk-resize-handle:active::after {
+  opacity: 0.8;
+}
+[data-handle="right"] > .rk-resize-handle,
+[data-handle="left"] > .rk-resize-handle {
+  top: 0;
+  bottom: 0;
+  width: 9px;
+  cursor: col-resize;
+}
+:is([data-handle="right"] > .rk-resize-handle, [data-handle="left"] > .rk-resize-handle)::after {
+  top: 0;
+  bottom: 0;
+  left: 4px;
+  width: 2px;
+}
+[data-handle="right"] > .rk-resize-handle {
+  right: -5px;
+}
+[data-handle="left"] > .rk-resize-handle {
+  left: -5px;
+}
+[data-handle="top"] > .rk-resize-handle,
+[data-handle="bottom"] > .rk-resize-handle {
+  left: 0;
+  right: 0;
+  height: 9px;
+  cursor: row-resize;
+}
+:is([data-handle="top"] > .rk-resize-handle, [data-handle="bottom"] > .rk-resize-handle)::after {
+  left: 0;
+  right: 0;
+  top: 4px;
+  height: 2px;
+}
+[data-handle="top"] > .rk-resize-handle {
+  top: -5px;
+}
+[data-handle="bottom"] > .rk-resize-handle {
+  bottom: -5px;
+}
 .rk-disclosure {
   border-radius: var(--rk-radius-md);
-  /* animate open/close where ::details-content and interpolate-size exist; instant elsewhere */
   interpolate-size: allow-keywords;
-  &::details-content {
-    block-size: 0;
-    overflow-y: clip;
-    transition:
-      block-size var(--rk-dur-slow) var(--rk-ease-out),
-      content-visibility var(--rk-dur-slow) allow-discrete;
-  }
-  &[open]::details-content {
-    block-size: auto;
-  }
-
-  & > summary {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: var(--rk-h-md);
-    padding: 0 6px;
-    border-radius: var(--rk-radius-control);
-    list-style: none;
-    font-weight: 500;
-    cursor: pointer;
-    user-select: none;
-    &::-webkit-details-marker {
-      display: none;
-    }
-    &:hover {
-      background: var(--rk-hover);
-    }
-  }
-  &[open] > summary .rk-disclosure-chevron {
-    rotate: 90deg;
-  }
-  & + & {
-    border-top: 1px solid var(--rk-line);
-    border-radius: 0;
-  }
 }
-
+.rk-disclosure::details-content {
+  block-size: 0;
+  overflow-y: clip;
+  transition:
+    block-size var(--rk-dur-slow) var(--rk-ease-out),
+    content-visibility var(--rk-dur-slow) allow-discrete;
+}
+.rk-disclosure[open]::details-content {
+  block-size: auto;
+}
+.rk-disclosure > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--rk-h-md);
+  padding: 0 6px;
+  border-radius: var(--rk-radius-control);
+  list-style: none;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+.rk-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+.rk-disclosure > summary:hover {
+  background: var(--rk-hover);
+}
+.rk-disclosure[open] > summary .rk-disclosure-chevron {
+  rotate: 90deg;
+}
+.rk-disclosure + .rk-disclosure {
+  border-top: 1px solid var(--rk-line);
+  border-radius: 0;
+}
 .rk-disclosure-chevron {
   flex-shrink: 0;
   color: var(--rk-text-3);
   transition: rotate var(--rk-dur) var(--rk-ease);
 }
-
 .rk-disclosure-title {
   flex: 1;
   min-width: 0;
 }
-
 .rk-disclosure-body {
   padding: 4px 6px 12px 28px;
   color: var(--rk-text-2);
 }
-
-/* skip link: first focusable element of the shell, visible only while focused */
 .rk-skip {
   position: absolute;
   top: calc(var(--rk-shell-gap) + 6px);
@@ -569,77 +476,63 @@
   font-weight: 500;
   text-decoration: none;
   translate: 0 calc(-100% - 40px);
-  &:focus-visible {
-    translate: none;
-  }
 }
-
+.rk-skip:focus-visible {
+  translate: none;
+}
 .rk-shell-content:focus {
   outline: none;
 }
-
 .rk-shell {
   position: relative;
 }
-
 .rk-shell-sidebar {
   width: var(--rk-sidebar-w, auto);
 }
-
-/* compact (narrow window, high zoom): sidebar becomes a rail (Sidebar follows useShellCompact), an aside
-   stacks under the content and the whole body scrolls */
-.rk-shell[data-compact] {
-  & .rk-shell-sidebar {
-    width: auto;
-  }
-  & .rk-shell-body:has(> .rk-shell-aside) {
-    flex-direction: column;
-    overflow-y: auto;
-    & > .rk-shell-content {
-      flex: none;
-      overflow: visible;
-    }
-    & > .rk-shell-aside {
-      width: auto;
-    }
-    & > .rk-shell-dock {
-      position: sticky;
-      left: auto;
-      align-self: center;
-      margin-top: auto;
-      translate: none;
-    }
-  }
+.rk-shell[data-compact] .rk-shell-sidebar {
+  width: auto;
 }
-
-/* phone drawer: the sidebar fills the sheet */
+.rk-shell[data-compact] .rk-shell-body:has(> .rk-shell-aside) {
+  flex-direction: column;
+  overflow-y: auto;
+}
+.rk-shell[data-compact] .rk-shell-body:has(> .rk-shell-aside) > .rk-shell-content {
+  flex: none;
+  overflow: visible;
+}
+.rk-shell[data-compact] .rk-shell-body:has(> .rk-shell-aside) > .rk-shell-aside {
+  width: auto;
+}
+.rk-shell[data-compact] .rk-shell-body:has(> .rk-shell-aside) > .rk-shell-dock {
+  position: sticky;
+  left: auto;
+  align-self: center;
+  margin-top: auto;
+  translate: none;
+}
 .rk-shell-drawer-body {
   display: flex;
   flex: 1;
   min-height: 0;
   padding: 0;
 }
-
 .rk-shell-drawer-inner {
   display: flex;
   flex: 1;
   min-height: 0;
-  & > * {
-    flex: 1;
-  }
 }
-
-/* master–detail */
+.rk-shell-drawer-inner > * {
+  flex: 1;
+}
 .rk-master-detail {
   display: grid;
   grid-template-columns: var(--rk-md-list-w) minmax(0, 1fr);
   gap: var(--rk-gap, 12px);
   min-height: 0;
-  &[data-stacked] {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
-
+.rk-master-detail[data-stacked] {
+  grid-template-columns: minmax(0, 1fr);
+}
 .rk-master-detail-list,
 .rk-master-detail-detail {
   display: flex;
@@ -647,13 +540,11 @@
   min-width: 0;
   min-height: 0;
 }
-
 .rk-master-detail-bar {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
 }
-
 .rk-master-detail-back {
   display: inline-flex;
   align-items: center;
@@ -667,8 +558,30 @@
   font: inherit;
   font-size: var(--rk-text-sm);
   cursor: pointer;
-  &:hover {
-    background: var(--rk-hover);
-    color: var(--rk-text);
+}
+.rk-master-detail-back:hover {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
+@container rk-titlebar (width < 32rem) {
+  .rk-titlebar-start {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+  .rk-titlebar-end {
+    grid-area: 1 / 3;
+  }
+  .rk-titlebar-center {
+    grid-area: 2 / 1 / 3 / -1;
+    justify-content: stretch;
+  }
+  .rk-titlebar-center > * {
+    flex: 1;
+  }
+}
+@container scroll-state(scrollable: top) {
+  .rk-page-body::before {
+    box-shadow:
+      0 0 0 1px var(--rk-line),
+      0 4px 12px 0 oklch(var(--rk-shade) / 0.5);
   }
 }

@@ -1,5 +1,24 @@
 # Rootik — progress
 
+## 2.0 / dev: implemented foundation
+
+- [x] Flexible canvas gradients and independent surface reflection; opt-in Rain appearance
+- [x] Effective nested Scope, profile resets, nested Fluent isolation and target cleanup
+- [x] Known appearance types, schema normalization, portable color parsing and SSR hydration
+- [x] React 19 refs, Form/schema validation, Tabs/Tree focus recovery and reduced-motion states
+- [x] DataTable handler composition, strict opt-in columns and translated internal defaults
+- [x] Combobox custom-value contracts, async failure states and dynamic label updates
+- [x] Floating resize/layout-shift observation, Confirm cancellation, number/date validation and toast lifetime
+- [x] Opaque accent/text/control contrast regressions; composited glass remains a release gate
+- [x] All 74 stylesheets authored with Vanilla Extract; stable public hooks, static consumer CSS
+- [x] 81 selective CSS exports with layer/dependency closure; packed source/dist/Tailwind/SSR fixtures
+- [x] Unit/SSR and DOM contract suites in CI; real packed umiray-client integration build
+- [ ] Browser/WebView/NVDA/forced-colors matrix, five dense Rain screens and composited glass approval
+- [ ] Reference-machine performance/cold-start comparisons, 10 000 rows and dataset-toolkit integration
+
+Findings, evidence and release gates: `AUDIT-2.0.md`. Consumer changes: `MIGRATION-2.0.md`.
+This branch does not declare a stable 2.0 release.
+
 Legend: `[x]` done (component + story, checked in browser) · `[ ]` planned · `~` partial.
 Sources: **DT** = dataset-toolkit/client, **UR** = umiray-client. Priority: P0 needed by a consumer now,
 P1 parity with mainstream kits (Radix/Mantine/shadcn), P2 nice to have.

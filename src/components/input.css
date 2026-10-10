@@ -1,80 +1,70 @@
+/* Generated from styles/input.css.ts. Run bun run styles; do not edit. */
 .rk-field {
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 1.5);
   min-width: 0;
-
-  &[data-layout="inline"] {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    column-gap: calc(var(--rk-space) * 6);
-    row-gap: var(--rk-space);
-    & .rk-field-text {
-      flex: 1 1 200px;
-    }
-    & .rk-field-control {
-      flex: 0 1 auto;
-      display: flex;
-      justify-content: flex-end;
-    }
-    & .rk-field-error {
-      flex-basis: 100%;
-    }
-  }
 }
-
+.rk-field[data-layout="inline"] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: calc(var(--rk-space) * 6);
+  row-gap: var(--rk-space);
+}
+.rk-field[data-layout="inline"] .rk-field-text {
+  flex: 1 1 200px;
+}
+.rk-field[data-layout="inline"] .rk-field-control {
+  flex: 0 1 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+.rk-field[data-layout="inline"] .rk-field-error {
+  flex-basis: 100%;
+}
 .rk-field-text {
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
 }
-
 .rk-field-top {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: var(--rk-space);
 }
-
 .rk-field-label {
   font-size: var(--rk-text-sm);
   font-weight: 500;
   color: var(--rk-text);
-  [data-layout="stack"] > .rk-field-text & {
-    color: var(--rk-text-2);
-  }
 }
-
+[data-layout="stack"] > .rk-field-text .rk-field-label {
+  color: var(--rk-text-2);
+}
 .rk-field-required {
   color: var(--rk-danger);
 }
-
 .rk-field-aside {
   font-size: var(--rk-text-xs);
   color: var(--rk-text-3);
   font-variant-numeric: tabular-nums;
 }
-
 .rk-field-control {
   min-width: 0;
 }
-
 .rk-field-hint {
   font-size: var(--rk-text-xs);
   line-height: 1.4;
   color: var(--rk-text-3);
   text-wrap: pretty;
 }
-
 .rk-field-error {
   font-size: var(--rk-text-xs);
   color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
 }
-
-/* Shared control box: inputs, select triggers, textareas. A tinted well works on any surface. */
 .rk-input,
 .rk-textarea,
 .rk-select-trigger {
@@ -86,30 +76,43 @@
   transition:
     box-shadow var(--rk-dur) var(--rk-ease),
     background-color var(--rk-dur) var(--rk-ease);
-
-  &:hover {
-    --rk-ctl-edge: var(--rk-text-3);
-  }
-  &:focus-within,
-  &[aria-expanded="true"] {
-    --rk-ctl-edge: var(--rk-accent-line);
-  }
-  /* keyboard focus: the kit ring (2px, 4:1), not a faint glow; a text field always matches :focus-visible */
-  &:is(:focus-visible, :has(:focus-visible)) {
-    outline: 2px solid var(--rk-focus);
-    outline-offset: 2px;
-  }
-  &[data-invalid],
-  &[aria-invalid="true"] {
-    --rk-ctl-edge: color-mix(in oklab, var(--rk-danger) 70%, transparent);
-  }
-  &[data-disabled],
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 }
-
+.rk-input:hover,
+.rk-textarea:hover,
+.rk-select-trigger:hover {
+  --rk-ctl-edge: var(--rk-text-3);
+}
+.rk-input:focus-within,
+.rk-textarea:focus-within,
+.rk-select-trigger:focus-within,
+.rk-input[aria-expanded="true"],
+.rk-textarea[aria-expanded="true"],
+.rk-select-trigger[aria-expanded="true"] {
+  --rk-ctl-edge: var(--rk-accent-line);
+}
+.rk-input:is(:focus-visible, :has(:focus-visible)),
+.rk-textarea:is(:focus-visible, :has(:focus-visible)),
+.rk-select-trigger:is(:focus-visible, :has(:focus-visible)) {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: 2px;
+}
+.rk-input[data-invalid],
+.rk-textarea[data-invalid],
+.rk-select-trigger[data-invalid],
+.rk-input[aria-invalid="true"],
+.rk-textarea[aria-invalid="true"],
+.rk-select-trigger[aria-invalid="true"] {
+  --rk-ctl-edge: color-mix(in oklab, var(--rk-danger) 70%, transparent);
+}
+.rk-input[data-disabled],
+.rk-textarea[data-disabled],
+.rk-select-trigger[data-disabled],
+.rk-input:disabled,
+.rk-textarea:disabled,
+.rk-select-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .rk-input {
   --rk-input-h: var(--rk-h-md);
   display: flex;
@@ -120,18 +123,16 @@
   min-width: 0;
   cursor: text;
   font-size: var(--rk-text-md);
-
-  &[data-size="sm"] {
-    --rk-input-h: var(--rk-h-sm);
-    padding: 0 calc(var(--rk-space) * 2.5);
-    font-size: var(--rk-text-sm);
-  }
-  &[data-size="lg"] {
-    --rk-input-h: var(--rk-h-lg);
-    padding: 0 calc(var(--rk-space) * 4);
-  }
 }
-
+.rk-input[data-size="sm"] {
+  --rk-input-h: var(--rk-h-sm);
+  padding: 0 calc(var(--rk-space) * 2.5);
+  font-size: var(--rk-text-sm);
+}
+.rk-input[data-size="lg"] {
+  --rk-input-h: var(--rk-h-lg);
+  padding: 0 calc(var(--rk-space) * 4);
+}
 .rk-input-el {
   flex: 1;
   min-width: 0;
@@ -143,30 +144,27 @@
   background: transparent;
   color: inherit;
   font: inherit;
-
-  &::placeholder {
-    color: var(--rk-text-3);
-  }
-  &[data-mono] {
-    font-family: var(--rk-font-mono);
-    font-size: 0.94em;
-  }
-  &::-webkit-search-cancel-button {
-    appearance: none;
-  }
-  &:disabled {
-    cursor: not-allowed;
-  }
 }
-
+.rk-input-el::placeholder {
+  color: var(--rk-text-3);
+}
+.rk-input-el[data-mono] {
+  font-family: var(--rk-font-mono);
+  font-size: 0.94em;
+}
+.rk-input-el::-webkit-search-cancel-button {
+  appearance: none;
+}
+.rk-input-el:disabled {
+  cursor: not-allowed;
+}
 .rk-input-icon {
   color: var(--rk-text-3);
   font-size: 1.1em;
-  .rk-input:focus-within & {
-    color: var(--rk-text-2);
-  }
 }
-
+.rk-input:focus-within .rk-input-icon {
+  color: var(--rk-text-2);
+}
 .rk-input-end {
   display: flex;
   align-items: center;
@@ -175,7 +173,6 @@
   color: var(--rk-text-3);
   font-size: var(--rk-text-sm);
 }
-
 .rk-input-clear {
   display: grid;
   place-items: center;
@@ -187,12 +184,11 @@
   background: var(--rk-hover);
   color: var(--rk-text-2);
   cursor: pointer;
-  &:hover {
-    background: var(--rk-press);
-    color: var(--rk-text);
-  }
 }
-
+.rk-input-clear:hover {
+  background: var(--rk-press);
+  color: var(--rk-text);
+}
 .rk-textarea {
   display: block;
   width: 100%;
@@ -205,41 +201,35 @@
   font-size: var(--rk-text-md);
   line-height: 1.5;
   resize: vertical;
-
-  &::placeholder {
-    color: var(--rk-text-3);
-  }
-  &[data-mono] {
-    font-family: var(--rk-font-mono);
-    font-size: var(--rk-text-sm);
-  }
-  &[data-autosize] {
-    field-sizing: content;
-    resize: none;
-    max-height: 40vh;
-  }
 }
-
-/* date range */
+.rk-textarea::placeholder {
+  color: var(--rk-text-3);
+}
+.rk-textarea[data-mono] {
+  font-family: var(--rk-font-mono);
+  font-size: var(--rk-text-sm);
+}
+.rk-textarea[data-autosize] {
+  field-sizing: content;
+  resize: none;
+  max-height: 40vh;
+}
 .rk-date-range {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  & .rk-input {
-    width: auto;
-  }
 }
-
+.rk-date-range .rk-input {
+  width: auto;
+}
 .rk-date-range-sep {
   color: var(--rk-text-3);
 }
-
-/* native date/time pickers: the indicator follows the text color */
 .rk-input input::-webkit-calendar-picker-indicator {
   opacity: 0.6;
   cursor: pointer;
-  &:hover {
-    opacity: 1;
-  }
+}
+.rk-input input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }

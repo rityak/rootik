@@ -1,38 +1,35 @@
+/* Generated from styles/settings-list.css.ts. Run bun run styles; do not edit. */
 .rk-settings-rows {
   display: flex;
   flex-direction: column;
 }
-
 .rk-settings-row {
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 3);
   padding-block: calc(var(--rk-space) * 3);
   border-bottom: 1px solid var(--rk-line);
-  &:first-child {
-    padding-top: 0;
-  }
-  &:last-child {
-    padding-bottom: 0;
-    border-bottom: 0;
-  }
-  /* nested sub-options sit tight under their parent */
-  .rk-nest & {
-    padding-block: 0;
-    border-bottom: 0;
-  }
 }
-
+.rk-settings-row:first-child {
+  padding-top: 0;
+}
+.rk-settings-row:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.rk-nest .rk-settings-row {
+  padding-block: 0;
+  border-bottom: 0;
+}
 .rk-settings-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  & + & {
-    padding-top: calc(var(--rk-space) * 4);
-    border-top: 1px solid var(--rk-line);
-  }
 }
-
+.rk-settings-group + .rk-settings-group {
+  padding-top: calc(var(--rk-space) * 4);
+  border-top: 1px solid var(--rk-line);
+}
 .rk-settings-title {
   margin: 0 0 4px;
   font-size: var(--rk-text-2xs);
@@ -40,22 +37,20 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--rk-text-3);
-  [data-tone="danger"] > & {
-    color: var(--rk-tone-text);
-  }
 }
-
+[data-tone="danger"] > .rk-settings-title {
+  color: var(--rk-tone-text);
+}
 .rk-settings-desc {
   margin: -4px 0 4px;
   font-size: var(--rk-text-xs);
   color: var(--rk-text-3);
 }
-
 .rk-settings-card[data-tone="danger"] {
   box-shadow:
     var(--rk-surface-shadow, var(--rk-shadow-1)),
     inset 0 0 0 1px color-mix(in oklab, var(--rk-danger) 45%, transparent);
-  & .rk-card-title {
-    color: var(--rk-tone-text);
-  }
+}
+.rk-settings-card[data-tone="danger"] .rk-card-title {
+  color: var(--rk-tone-text);
 }

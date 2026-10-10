@@ -1,3 +1,4 @@
+/* Generated from styles/image-grid.css.ts. Run bun run styles; do not edit. */
 .rk-thumb {
   display: flex;
   flex-direction: column;
@@ -5,7 +6,6 @@
   margin: 0;
   min-width: 0;
 }
-
 .rk-thumb-frame {
   position: relative;
   aspect-ratio: var(--rk-thumb-aspect, 1);
@@ -15,35 +15,33 @@
   box-shadow: inset 0 0 0 1px var(--rk-line);
   display: grid;
   place-items: center;
-
-  & > img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity var(--rk-dur) var(--rk-ease);
-  }
-  [data-fit="contain"] > & > img {
-    object-fit: contain;
-  }
-  [data-status="ready"] > & > img {
-    opacity: 1;
-  }
-  /* shimmer until the image decodes */
-  [data-status="loading"] > & {
-    background-image: linear-gradient(
-      100deg,
-      transparent 30%,
-      oklch(var(--rk-tint) / 0.05) 50%,
-      transparent 70%
-    );
-    background-size: 200% 100%;
-    animation: rk-shimmer calc(var(--rk-dur-slow) * 5) linear infinite;
-  }
 }
-
+.rk-thumb-frame > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--rk-dur) var(--rk-ease);
+}
+[data-fit="contain"] > .rk-thumb-frame > img {
+  object-fit: contain;
+}
+[data-status="ready"] > .rk-thumb-frame > img {
+  opacity: 1;
+}
+[data-status="loading"] > .rk-thumb-frame {
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    oklch(var(--rk-tint) / 0.05) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: rk-shimmer calc(var(--rk-dur-slow) * 5) linear infinite;
+  animation-play-state: var(--rk-animation-state);
+}
 .rk-thumb-missing {
   width: 28%;
   max-width: 32px;
@@ -51,7 +49,6 @@
   color: var(--rk-text-3);
   stroke-width: 1.5;
 }
-
 .rk-thumb-badge {
   position: absolute;
   top: calc(var(--rk-space) * 1.5);
@@ -67,62 +64,53 @@
   background: oklch(var(--rk-shade) / 0.6);
   backdrop-filter: blur(6px);
 }
-
 .rk-thumb-label {
   font-size: var(--rk-text-xs);
   color: var(--rk-text-2);
   line-height: 1.4;
 }
-
-/* selected: accent ring inside the frame, the image pulls in a little */
 .rk-thumb[data-selected] > .rk-thumb-frame {
   box-shadow: inset 0 0 0 2px var(--rk-accent);
-  & > img {
-    scale: 0.94;
-    border-radius: calc(var(--rk-radius-md) * 0.7);
-  }
+}
+.rk-thumb[data-selected] > .rk-thumb-frame > img {
+  scale: 0.94;
+  border-radius: calc(var(--rk-radius-md) * 0.7);
 }
 .rk-thumb[data-selected] > .rk-thumb-label {
   color: var(--rk-text);
 }
-
 .rk-image-grid {
   min-width: 0;
   outline: none;
-  &[data-virtual] {
-    overflow: auto;
-    /* room for the focus ring of the edge cells */
-    padding: 4px;
-  }
 }
-
+.rk-image-grid[data-virtual] {
+  overflow: auto;
+  padding: 4px;
+}
 .rk-image-grid-cells {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--rk-grid-size, 160px), 1fr));
   gap: calc(var(--rk-space) * 3) calc(var(--rk-space) * 2);
 }
-
 .rk-image-grid-item {
   position: relative;
   min-width: 0;
   border-radius: var(--rk-radius-md);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  & img {
-    transition:
-      opacity var(--rk-dur) var(--rk-ease),
-      scale var(--rk-dur) var(--rk-ease-out);
-  }
-  &:hover .rk-thumb-frame::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: oklch(var(--rk-tint) / 0.06);
-    pointer-events: none;
-  }
 }
-
-/* corner check: shown on hover, focus and while anything is selected */
+.rk-image-grid-item img {
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-ease-out);
+}
+.rk-image-grid-item:hover .rk-thumb-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: oklch(var(--rk-tint) / 0.06);
+  pointer-events: none;
+}
 .rk-image-grid-check {
   position: absolute;
   top: calc(var(--rk-space) * 1.5);
@@ -139,22 +127,21 @@
   transition:
     opacity var(--rk-dur) var(--rk-ease),
     background-color var(--rk-dur) var(--rk-ease);
-  & > svg {
-    width: 12px;
-    height: 12px;
-    stroke-width: 3;
-  }
-  .rk-image-grid-item:is(:hover, :focus-visible) > &,
-  .rk-image-grid:has([aria-selected="true"]) & {
-    opacity: 1;
-  }
-  &[data-checked] {
-    color: var(--rk-on-accent);
-    background: var(--rk-accent);
-    box-shadow: none;
-  }
 }
-
+.rk-image-grid-check > svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 3;
+}
+.rk-image-grid-item:is(:hover, :focus-visible) > .rk-image-grid-check,
+.rk-image-grid:has([aria-selected="true"]) .rk-image-grid-check {
+  opacity: 1;
+}
+.rk-image-grid-check[data-checked] {
+  color: var(--rk-on-accent);
+  background: var(--rk-accent);
+  box-shadow: none;
+}
 .rk-image-grid-empty {
   padding: calc(var(--rk-space) * 8);
   text-align: center;

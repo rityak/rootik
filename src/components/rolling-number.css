@@ -1,32 +1,30 @@
+/* Generated from styles/rolling-number.css.ts. Run bun run styles; do not edit. */
 .rk-rolling {
   display: inline-flex;
   white-space: nowrap;
 }
-
 .rk-rolling-track {
   display: inline-flex;
 }
-
 .rk-rolling-digit {
   display: inline-block;
   height: 1lh;
   overflow: hidden;
 }
-
 .rk-rolling-strip {
   display: flex;
   flex-direction: column;
   translate: 0 calc(var(--rk-digit) * -1lh);
   transition: translate var(--rk-dur-slow) var(--rk-ease-out);
-  /* a column that appears (99 → 100) rolls in from 0 */
-  @starting-style {
-    translate: 0 0;
-  }
-  & > span {
-    height: 1lh;
-  }
 }
-
+.rk-rolling-strip > span {
+  height: 1lh;
+}
 .rk-rolling-sign {
   white-space: pre;
+}
+@starting-style {
+  .rk-rolling-strip {
+    translate: 0 0;
+  }
 }

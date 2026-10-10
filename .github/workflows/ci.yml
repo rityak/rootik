@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
   workflow_dispatch:
 
@@ -20,16 +20,19 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
       # Bun version comes from `packageManager` in package.json.
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - name: Typecheck
-        run: bun run typecheck
+        run: bun run styles:check && bun run typecheck
       # `biome ci` is read-only and emits GitHub annotations on the diff.
       - name: Biome
         run: bunx biome ci .
       - name: Unit tests
-        run: bun test
+        run: bun run test
       # `bun run format` regenerates it; a stale file means the index points at moved code
       - name: llms.txt up to date
         run: bun scripts/llms.ts --check
@@ -40,10 +43,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       # builds dist/ and checks it exports what src does, with a self-contained styles.css
-      - run: bun run build
+      - run: bun run check:pilot
       - name: Pack
         run: npm pack --dry-run
 
@@ -53,6 +59,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - name: Ladle build

@@ -28,6 +28,10 @@ describe("parseColor", () => {
   test("garbage is null", () => {
     expect(parseColor("blue-ish")).toBeNull();
     expect(parseColor("#12")).toBeNull();
+    expect(parseColor("oklch(. . .)")).toBeNull();
+    expect(parseColor("oklch(1e999 0 0)")).toBeNull();
+    expect(parseColor("rgb(. 0 0)")).toBeNull();
+    expect(parseColor("rgb(100% 0% 0%)")).toEqual(parseColor("#ff0000"));
   });
 });
 

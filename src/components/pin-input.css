@@ -1,21 +1,20 @@
+/* Generated from styles/pin-input.css.ts. Run bun run styles; do not edit. */
 .rk-pin {
   --rk-pin-size: var(--rk-h-md);
   display: inline-flex;
   align-items: center;
   gap: calc(var(--rk-space) * 3);
-  &[data-size="sm"] {
-    --rk-pin-size: var(--rk-h-sm);
-  }
-  &[data-size="lg"] {
-    --rk-pin-size: var(--rk-h-lg);
-  }
 }
-
+.rk-pin[data-size="sm"] {
+  --rk-pin-size: var(--rk-h-sm);
+}
+.rk-pin[data-size="lg"] {
+  --rk-pin-size: var(--rk-h-lg);
+}
 .rk-pin-group {
   display: inline-flex;
   gap: calc(var(--rk-space) * 1.5);
 }
-
 .rk-pin-cell {
   --rk-ctl-edge: var(--rk-control-edge);
   width: calc(var(--rk-pin-size) * 1.05);
@@ -35,31 +34,27 @@
   outline: none;
   appearance: none;
   transition: box-shadow var(--rk-dur) var(--rk-ease);
-
-  &[data-filled] {
-    --rk-ctl-edge: var(--rk-text-3);
-  }
-  &:hover:not(:disabled) {
-    --rk-ctl-edge: var(--rk-text-2);
-  }
-  &:focus {
-    --rk-ctl-edge: var(--rk-accent-line);
-  }
-  /* the kit ring: a 1px edge + faint glow was too weak to track the active cell */
-  &:focus-visible {
-    outline: 2px solid var(--rk-focus);
-    outline-offset: 1px;
-  }
-  [data-invalid] & {
-    --rk-ctl-edge: color-mix(in oklab, var(--rk-danger) 70%, transparent);
-  }
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
 }
-
-/* dash between groups */
+.rk-pin-cell[data-filled] {
+  --rk-ctl-edge: var(--rk-text-3);
+}
+.rk-pin-cell:hover:not(:disabled) {
+  --rk-ctl-edge: var(--rk-text-2);
+}
+.rk-pin-cell:focus {
+  --rk-ctl-edge: var(--rk-accent-line);
+}
+.rk-pin-cell:focus-visible {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: 1px;
+}
+[data-invalid] .rk-pin-cell {
+  --rk-ctl-edge: color-mix(in oklab, var(--rk-danger) 70%, transparent);
+}
+.rk-pin-cell:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .rk-pin-group + .rk-pin-group::before {
   content: "";
   align-self: center;

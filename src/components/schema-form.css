@@ -1,37 +1,31 @@
+/* Generated from styles/schema-form.css.ts. Run bun run styles; do not edit. */
 .rk-schema-form {
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 3);
   min-width: 0;
 }
-
-/* layout-neutral wrapper: only here to lock its controls when disabled */
 .rk-schema-control {
   display: contents;
-  &:disabled .rk-swatches {
-    opacity: 0.45;
-  }
 }
-
-/* inline rows: controls get a steady width so the right edge lines up */
-.rk-schema-row > [data-layout="inline"] > .rk-field-control {
-  & :is(.rk-input, .rk-select-trigger, .rk-slider) {
-    width: var(--rk-schema-control-width, 200px);
-  }
-  & .rk-textarea {
-    width: calc(var(--rk-schema-control-width, 200px) * 1.4);
-  }
-  & .rk-chip-group {
-    justify-content: flex-end;
-  }
+.rk-schema-control:disabled .rk-swatches {
+  opacity: 0.45;
 }
-
-.rk-schema-row > [data-layout="stack"] > .rk-field-control {
-  & :is(.rk-input, .rk-select-trigger, .rk-slider, .rk-textarea) {
-    width: 100%;
-  }
+.rk-schema-row > [data-layout="inline"] > .rk-field-control :is(.rk-input, .rk-select-trigger, .rk-slider) {
+  width: var(--rk-schema-control-width, 200px);
 }
-
+.rk-schema-row > [data-layout="inline"] > .rk-field-control .rk-textarea {
+  width: calc(var(--rk-schema-control-width, 200px) * 1.4);
+}
+.rk-schema-row > [data-layout="inline"] > .rk-field-control .rk-chip-group {
+  justify-content: flex-end;
+}
+.rk-schema-row
+  > [data-layout="stack"]
+  > .rk-field-control
+  :is(.rk-input, .rk-select-trigger, .rk-slider, .rk-textarea) {
+  width: 100%;
+}
 .rk-schema-actions {
   display: flex;
   justify-content: flex-end;

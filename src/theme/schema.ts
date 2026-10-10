@@ -1,7 +1,45 @@
 import type { ReactNode } from "react";
+import { formatOklch, type Oklch, oklchToLinearRgb, parseColor } from "../lib/color";
 
 export type SettingValue = string | number | boolean;
-export type AppearanceValues = Record<string, SettingValue>;
+export interface BuiltinAppearanceValues {
+  palette: "legacy" | "rain";
+  accent: string;
+  neutral: string;
+  style: "rootik" | "fluent";
+  radius: number;
+  pill: boolean;
+  corners: "round" | "squircle" | "square";
+  layout: "islands" | "inset";
+  spacing: "flush" | "tight" | "default" | "roomy";
+  dock: "float" | "bar";
+  density: "compact" | "default" | "comfortable";
+  font: "geist" | "inter" | "system" | "mono";
+  fontSize: number;
+  glow: "accent" | "neutral" | "custom" | "off";
+  "glow.color": string;
+  "glow.secondary": string;
+  "glow.strength": number;
+  "glow.gradient": "material" | "clouds" | "linear";
+  "glow.angle": number;
+  "glow.x": number;
+  "glow.y": number;
+  "glow.spread": number;
+  "glow.softness": number;
+  backdrop: string;
+  "backdrop.dim": number;
+  material: "solid" | "veil" | "frost" | "liquid";
+  "material.transparency": number;
+  "material.blur": number;
+  "material.reflection": number;
+  "material.reflectionAngle": number;
+  glass: boolean;
+  "glass.transparency": number;
+  "glass.blur": number;
+  motion: "system" | "full" | "off";
+}
+/** Known keys are typed; consumer extension keys remain supported. */
+export type AppearanceValues = Partial<BuiltinAppearanceValues> & Record<string, SettingValue>;
 /** CSS custom properties to write; `null` removes a property (falls back to tokens.css). */
 export type CssVars = Record<string, string | null>;
 
@@ -10,6 +48,23 @@ export const THEMES = {
   ocean: { accent: "oklch(0.58 0.14 245)", neutral: "slate", material: "frost", radius: 16 },
   ember: { accent: "oklch(0.6 0.19 35)", neutral: "mocha", material: "solid", radius: 12 },
   mono: { accent: "oklch(0.94 0 0)", neutral: "zinc", material: "solid", radius: 8 },
+  rain: {
+    palette: "rain",
+    accent: "oklch(0.53 0.1 275)",
+    neutral: "rain",
+    material: "frost",
+    radius: 16,
+    glow: "custom",
+    "glow.color": "oklch(0.58 0.09 255)",
+    "glow.secondary": "oklch(0.5 0.08 285)",
+    "glow.gradient": "clouds",
+    "glow.strength": 70,
+    "glow.x": 75,
+    "glow.y": 10,
+    "glow.spread": 130,
+    "glow.softness": 85,
+    "material.reflection": 35,
+  },
   // Windows 10 (UWP) spirit in the kit's own colors: flat solid panels edge to edge, taskbar dock
   fluent: { style: "fluent", spacing: "flush", layout: "inset", dock: "bar" },
 } as const satisfies Record<string, Partial<AppearanceValues>>;
@@ -72,10 +127,7 @@ export interface SettingsSection {
   fields: SettingsField[];
 }
 
-/**
- * Accent presets. Mid-lightness ones carry white labels, light ones dark labels (--rk-on-accent flips at
- * L 0.73); every preset keeps its label at WCAG >= 4.1 / APCA |Lc| >= 71 on the fill.
- */
+/** Accent presets; the provider chooses light/dark labels from the actual sRGB luminance. */
 export const ACCENTS = [
   { value: "oklch(0.57 0.2 277)", label: "Iris" },
   { value: "oklch(0.58 0.14 245)", label: "Tide" },
@@ -89,6 +141,7 @@ export const ACCENTS = [
 ] as const;
 
 const NEUTRALS: Record<string, [hue: number, chroma: number]> = {
+  rain: [255, 0.012],
   graphite: [260, 0.012],
   slate: [250, 0.02],
   zinc: [0, 0],
@@ -195,25 +248,62 @@ export interface MaterialOptions {
   transparency?: number;
   /** Surface blur, % of the material's own. */
   blur?: number;
+  gradient?: BuiltinAppearanceValues["glow.gradient"];
+  secondaryColor?: string;
+  angle?: number;
+  x?: number;
+  y?: number;
+  spread?: number;
+  softness?: number;
+  /** Reflection strength, %; independent of canvas glow. */
+  reflection?: number;
+  reflectionAngle?: number;
+}
+
+const bounded = (value: number | undefined, fallback: number, min: number, max: number) =>
+  value === undefined || !Number.isFinite(value) ? fallback : Math.min(max, Math.max(min, value));
+
+function ambientGradient(m: (typeof MATERIAL_SPECS)[string], o: MaterialOptions): string | null {
+  const k = bounded(o.glowStrength, 100, 0, 250) / 100;
+  if (o.glow === "off" || k === 0) return null;
+  const colors = glowColors(o.glow ?? "accent", o.glowColor ?? "var(--rk-accent)");
+  if (o.glow === "custom" && o.secondaryColor) colors[1] = o.secondaryColor;
+  if (!o.gradient || o.gradient === "material")
+    return (
+      m.glows.map(([slot, pct, at, size]) => glow(colors[slot], round(pct * k), at, size)).join(", ") || null
+    );
+  const angle = bounded(o.angle, 145, 0, 360);
+  const softness = bounded(o.softness, 70, 20, 100);
+  const first = `color-mix(in oklab, ${colors[0]} ${round(16 * k)}%, transparent)`;
+  const second = `color-mix(in oklab, ${colors[1]} ${round(12 * k)}%, transparent)`;
+  if (o.gradient === "linear")
+    return `linear-gradient(${angle}deg, ${first}, transparent ${softness}%, ${second})`;
+  const x = bounded(o.x, 85, 0, 100);
+  const y = bounded(o.y, 0, 0, 100);
+  const spread = bounded(o.spread, 100, 40, 200) / 100;
+  return `radial-gradient(${round(60 * spread)}% ${round(50 * spread)}% at ${x}% ${y}%, ${first}, transparent ${softness}%), radial-gradient(${round(55 * spread)}% ${round(45 * spread)}% at ${100 - x}% ${100 - y}%, ${second}, transparent ${softness}%)`;
 }
 
 /** CSS vars of a surface material, tuned by the Background / Surfaces settings. Unknown names fall back to solid. */
 export function materialVars(name: string, o: MaterialOptions = {}): CssVars {
   const m = MATERIAL_SPECS[name];
-  if (!m || m.alpha === 100) return { ...SOLID };
-  const t = (o.transparency ?? 100) / 100;
-  const b = (o.blur ?? 100) / 100;
-  const k = (o.glowStrength ?? 100) / 100;
-  const colors = glowColors(o.glow ?? "accent", o.glowColor ?? "var(--rk-accent)");
-  const ambient =
-    o.glow === "off" || k <= 0
-      ? null
-      : m.glows.map(([slot, pct, at, size]) => glow(colors[slot], round(pct * k), at, size)).join(", ");
+  if (!m) return { ...SOLID };
+  const ambient = ambientGradient(m, o);
+  if (m.alpha === 100) return { ...SOLID, "--rk-ambient": ambient };
+  const t = bounded(o.transparency, 100, 0, 150) / 100;
+  const b = bounded(o.blur, 100, 0, 200) / 100;
+  const reflection = bounded(o.reflection, 100, 0, 200) / 100;
   return {
     "--rk-surface-alpha": `${round(100 - (100 - m.alpha) * t)}%`,
     "--rk-surface-filter": `blur(${round(m.blur * b)}px) saturate(${m.saturate})`,
     "--rk-surface-edge": m.edge,
-    "--rk-surface-sheen": m.sheen,
+    "--rk-surface-sheen":
+      (o.reflection === undefined || o.reflection === 100) &&
+      (o.reflectionAngle === undefined || o.reflectionAngle === 145)
+        ? m.sheen
+        : reflection === 0
+          ? "none"
+          : `linear-gradient(${bounded(o.reflectionAngle, 145, 0, 360)}deg, ${tint(round(0.05 * reflection))}, transparent 65%)`,
     "--rk-surface-shadow": m.shadow,
     "--rk-ambient": ambient,
   };
@@ -232,6 +322,19 @@ const fluent = (all: AppearanceValues) => all.style === "fluent";
 const glassy = (all: AppearanceValues) => !fluent(all) && all.material !== "solid";
 // quotes, backslashes and newlines would end the url() token early
 const cssUrl = (src: string) => `url("${src.replace(/[\n\r]/g, "").replace(/["\\]/g, "\\$&")}")`;
+const UNSAFE_COLOR = /[;{}\\]|url\s*\(|[\r\n]/i;
+
+function accentLabel(color: Oklch): string {
+  const [r, g, b] = oklchToLinearRgb(color).map((channel) => Math.max(0, Math.min(1, channel))) as [
+    number,
+    number,
+    number,
+  ];
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  const light = 1.05 / (luminance + 0.05);
+  const dark = (luminance + 0.05) / (0.08 ** 3 + 0.05);
+  return light >= dark ? "var(--rk-label-light)" : "var(--rk-label-dark)";
+}
 
 /** Built-in appearance schema. Projects append their own sections via `extensions`. */
 export const APPEARANCE_SECTIONS: SettingsSection[] = [
@@ -240,12 +343,35 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
     title: "Color",
     fields: [
       {
+        key: "palette",
+        type: "segmented",
+        label: "Palette",
+        default: "legacy",
+        options: [
+          { value: "legacy", label: "Graphite & Iris" },
+          { value: "rain", label: "Rain" },
+        ],
+        dataAttr: "rk-palette",
+      },
+      {
         key: "accent",
         type: "color",
         label: "Accent",
         default: ACCENTS[0].value,
         swatches: ACCENTS,
         cssVar: "--rk-accent",
+        apply: (v, all) => {
+          const color = parseColor(String(v));
+          const hover = color && {
+            ...color,
+            l: Math.max(0, color.l - (all.palette === "rain" ? 0.01 : 0.02)),
+          };
+          return {
+            "--rk-accent": String(v),
+            "--rk-accent-label": color ? accentLabel(color) : null,
+            "--rk-accent-hover-label": hover ? accentLabel(hover) : null,
+          };
+        },
       },
       {
         key: "neutral",
@@ -426,10 +552,22 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
           { value: "custom", label: "Custom" },
           { value: "off", label: "Off" },
         ],
-        visible: glassy,
+        visible: (all) => !fluent(all),
         // material reads it
         apply: () => ({}),
         children: [
+          {
+            key: "glow.gradient",
+            type: "segmented",
+            label: "Gradient",
+            default: "material",
+            options: [
+              { value: "material", label: "Material" },
+              { value: "clouds", label: "Clouds" },
+              { value: "linear", label: "Linear" },
+            ],
+            visible: (all) => all.glow !== "off",
+          },
           {
             key: "glow.color",
             type: "color",
@@ -437,6 +575,14 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
             default: ACCENTS[0].value,
             swatches: ACCENTS,
             visible: (all) => all.glow === "custom",
+          },
+          {
+            key: "glow.secondary",
+            type: "color",
+            label: "Second color",
+            default: "oklch(0.5 0.08 285)",
+            swatches: ACCENTS,
+            visible: (all) => all.glow === "custom" && all["glow.gradient"] !== "material",
           },
           {
             key: "glow.strength",
@@ -448,6 +594,47 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
             step: 10,
             format: (v) => `${v}%`,
             visible: (all) => all.glow !== "off",
+          },
+          {
+            key: "glow.angle",
+            type: "slider",
+            label: "Direction",
+            default: 145,
+            min: 0,
+            max: 360,
+            step: 5,
+            format: (v) => `${v}°`,
+            visible: (all) => all.glow !== "off" && all["glow.gradient"] === "linear",
+          },
+          ...(
+            [
+              ["x", "Horizontal origin", 85, 0, 100],
+              ["y", "Vertical origin", 0, 0, 100],
+              ["spread", "Spread", 100, 40, 200],
+            ] as const
+          ).map(
+            ([key, label, value, min, max]): SettingsField => ({
+              key: `glow.${key}`,
+              type: "slider",
+              label,
+              default: value,
+              min,
+              max,
+              step: 5,
+              format: (v) => `${v}%`,
+              visible: (all) => all.glow !== "off" && all["glow.gradient"] === "clouds",
+            }),
+          ),
+          {
+            key: "glow.softness",
+            type: "slider",
+            label: "Falloff",
+            default: 70,
+            min: 20,
+            max: 100,
+            step: 5,
+            format: (v) => `${v}%`,
+            visible: (all) => all.glow !== "off" && all["glow.gradient"] !== "material",
           },
         ],
       },
@@ -505,8 +692,41 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
                 glowStrength: Number(all["glow.strength"] ?? 100),
                 transparency: Number(all["material.transparency"] ?? 100),
                 blur: Number(all["material.blur"] ?? 100),
+                gradient: all["glow.gradient"],
+                secondaryColor: String(all["glow.secondary"] ?? "oklch(0.5 0.08 285)"),
+                angle: Number(all["glow.angle"]),
+                x: Number(all["glow.x"]),
+                y: Number(all["glow.y"]),
+                spread: Number(all["glow.spread"]),
+                softness: Number(all["glow.softness"]),
+                reflection: Number(all["material.reflection"]),
+                reflectionAngle: Number(all["material.reflectionAngle"]),
               }),
         children: [
+          {
+            key: "material.reflection",
+            type: "slider",
+            label: "Reflection",
+            default: 100,
+            min: 0,
+            max: 200,
+            step: 5,
+            hint: "Soft tinted light on the surface; independent of the background",
+            format: (v) => `${v}%`,
+            visible: glassy,
+            children: [
+              {
+                key: "material.reflectionAngle",
+                type: "slider",
+                label: "Reflection direction",
+                default: 145,
+                min: 0,
+                max: 360,
+                step: 5,
+                format: (v) => `${v}°`,
+              },
+            ],
+          },
           {
             key: "material.transparency",
             type: "slider",
@@ -579,7 +799,10 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
           { value: "off", label: "Off" },
         ],
         // "system" leaves --rk-motion to the prefers-reduced-motion rule in tokens.css
-        apply: (v) => ({ "--rk-motion": v === "full" ? "1" : v === "off" ? "0" : null }),
+        apply: (v) => ({
+          "--rk-motion": v === "full" ? "1" : v === "off" ? "0" : null,
+          "--rk-animation-state": v === "full" ? "running" : v === "off" ? "paused" : null,
+        }),
       },
     ],
   },
@@ -605,10 +828,54 @@ export function defaultValues(sections: ReadonlyArray<SettingsSection>): Appeara
 
 export function toCssVars(sections: ReadonlyArray<SettingsSection>, values: AppearanceValues): CssVars {
   const out: CssVars = {};
+  const effective = { ...defaultValues(sections), ...normalizeAppearanceValues(sections, values) };
   walkFields(sections, (f) => {
-    const v = values[f.key] ?? f.default;
-    if (f.apply) Object.assign(out, f.apply(v, values));
+    const v = effective[f.key] ?? f.default;
+    if (f.apply) Object.assign(out, f.apply(v, effective));
     else if (f.cssVar) out[f.cssVar] = typeof v === "number" ? `${v}${f.unit ?? ""}` : String(v);
+  });
+  return out;
+}
+
+/** Validate untrusted appearance values against the active schema, including consumer extensions. */
+export function normalizeAppearanceValues(
+  sections: ReadonlyArray<SettingsSection>,
+  input: unknown,
+): AppearanceValues {
+  const out: AppearanceValues = {};
+  if (!input || typeof input !== "object" || Array.isArray(input)) return out;
+  const source = input as Record<string, unknown>;
+  walkFields(sections, (field) => {
+    if (!Object.hasOwn(source, field.key)) return;
+    const value = source[field.key];
+    switch (field.type) {
+      case "toggle":
+        if (typeof value === "boolean") out[field.key] = value;
+        break;
+      case "slider":
+        if (typeof value === "number" && Number.isFinite(value))
+          out[field.key] = Math.min(field.max, Math.max(field.min, value));
+        break;
+      case "select":
+      case "segmented":
+        if (typeof value === "string" && field.options.some((option) => option.value === value))
+          out[field.key] = value;
+        break;
+      case "color":
+        if (typeof value === "string" && !UNSAFE_COLOR.test(value)) {
+          const color = parseColor(value);
+          if (color) out[field.key] = formatOklch(color);
+        }
+        break;
+      case "text":
+        if (typeof value === "string") out[field.key] = value;
+        break;
+      case "custom":
+        if (typeof value === typeof field.default && (typeof value !== "number" || Number.isFinite(value)))
+          out[field.key] = value as SettingValue;
+        break;
+      default:
+    }
   });
   return out;
 }

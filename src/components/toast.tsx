@@ -38,12 +38,44 @@ const listeners = new Set<() => void>();
 const emit = () => {
   for (const listener of listeners) listener();
 };
+const timers = new Map<string, { left: number; started: number; handle?: ReturnType<typeof setTimeout> }>();
+const pauseOwners = new Set<object>();
+
+function startTimer(id: string) {
+  const timer = timers.get(id);
+  if (!timer || timer.handle !== undefined || pauseOwners.size > 0 || typeof window === "undefined") return;
+  timer.started = Date.now();
+  timer.handle = setTimeout(() => toast.dismiss(id), timer.left);
+}
+
+function clearTimer(id: string) {
+  clearTimeout(timers.get(id)?.handle);
+  timers.delete(id);
+}
+
+function pauseTimers(owner: object, paused: boolean) {
+  if (paused) pauseOwners.add(owner);
+  else pauseOwners.delete(owner);
+  for (const [id, timer] of timers) {
+    if (pauseOwners.size > 0 && timer.handle !== undefined) {
+      clearTimeout(timer.handle);
+      timer.handle = undefined;
+      timer.left = Math.max(0, timer.left - (Date.now() - timer.started));
+    } else startTimer(id);
+  }
+}
 
 export function toast(input: ToastInput | string): string {
   const next: ToastItem =
     typeof input === "string" ? { title: input, id: `t${++seq}` } : { ...input, id: input.id ?? `t${++seq}` };
   const at = items.findIndex((t) => t.id === next.id);
   items = at >= 0 ? items.map((t, i) => (i === at ? next : t)) : [...items, next];
+  clearTimer(next.id);
+  const duration = next.loading ? 0 : (next.duration ?? (next.action || next.tone === "danger" ? 0 : 5000));
+  if (Number.isFinite(duration) && duration > 0) {
+    timers.set(next.id, { left: Math.min(duration, 2_147_483_647), started: 0 });
+    startTimer(next.id);
+  }
   emit();
   return next.id;
 }
@@ -54,6 +86,8 @@ toast.error = (title: ReactNode, rest?: Omit<ToastInput, "title" | "tone">) =>
 toast.warn = (title: ReactNode, rest?: Omit<ToastInput, "title" | "tone">) =>
   toast({ ...rest, title, tone: "warn" });
 toast.dismiss = (id?: string) => {
+  if (id) clearTimer(id);
+  else for (const key of timers.keys()) clearTimer(key);
   items = id ? items.filter((t) => t.id !== id) : [];
   emit();
 };
@@ -97,6 +131,12 @@ export function Toaster({ position = "bottom-right", max = 4, stack = true }: To
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const paused = hovered || focused;
+  const pauseOwner = useRef({});
+  useEffect(() => {
+    const owner = pauseOwner.current;
+    pauseTimers(owner, paused);
+    return () => pauseTimers(owner, false);
+  }, [paused]);
   const [heights, setHeights] = useState<Record<string, number>>({});
 
   // Re-show on change: moves the toaster above any dialog opened after it.
@@ -107,7 +147,8 @@ export function Toaster({ position = "bottom-right", max = 4, stack = true }: To
     if (list.length > 0) el.showPopover();
   }, [list]);
 
-  const shown = list.slice(-max);
+  const limit = Number.isFinite(max) ? Math.max(0, Math.floor(max)) : 4;
+  const shown = limit ? list.slice(-limit) : [];
   // natural heights (scrollHeight ignores the clamp a collapsed toast gets)
   useLayoutEffect(() => {
     const next: Record<string, number> = {};
@@ -154,7 +195,6 @@ export function Toaster({ position = "bottom-right", max = 4, stack = true }: To
           <Toast
             key={t.id}
             item={t}
-            paused={paused}
             style={
               {
                 "--rk-toast-y": `${top ? offset : -offset}px`,
@@ -172,38 +212,12 @@ export function Toaster({ position = "bottom-right", max = 4, stack = true }: To
   );
 }
 
-function Toast({
-  item,
-  paused,
-  style,
-  behind,
-}: {
-  item: ToastItem;
-  paused: boolean;
-  style: CSSProperties;
-  behind: boolean;
-}) {
+function Toast({ item, style, behind }: { item: ToastItem; style: CSSProperties; behind: boolean }) {
   const [swipe, setSwipe] = useState(0);
   const swipeFrom = useRef<number | null>(null);
   const tone = item.tone ?? "neutral";
-  const duration = item.loading ? 0 : (item.duration ?? (item.action || tone === "danger" ? 0 : 5000));
   const labels = useLabels();
   const body = useRef<HTMLDivElement>(null);
-  const left = useRef(duration);
-  useEffect(() => {
-    left.current = duration;
-  }, [duration]);
-  // `duration` restarts the timer when a toast is updated in place (loading → done)
-  // biome-ignore lint/correctness/useExhaustiveDependencies: see above
-  useEffect(() => {
-    if (paused || !left.current) return;
-    const start = Date.now();
-    const id = setTimeout(() => toast.dismiss(item.id), left.current);
-    return () => {
-      clearTimeout(id);
-      left.current -= Date.now() - start;
-    };
-  }, [paused, item.id, duration]);
 
   // spoken through the shared live regions: a live region inserted together with its text is often skipped
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new item object (update in place) speaks again

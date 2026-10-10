@@ -1,3 +1,4 @@
+/* Generated from styles/select-panel.css.ts. Run bun run styles; do not edit. */
 .rk-select-panel {
   display: flex;
   flex-direction: column;
@@ -5,15 +6,13 @@
   width: 280px;
   padding: 6px;
   overflow: hidden;
-  & .rk-popover-title {
-    padding: 4px 6px 0;
-  }
 }
-
+.rk-select-panel .rk-popover-title {
+  padding: 4px 6px 0;
+}
 .rk-select-panel-search {
   flex-shrink: 0;
 }
-
 .rk-select-panel-list {
   display: flex;
   flex-direction: column;
@@ -22,14 +21,12 @@
   overflow-y: auto;
   outline: none;
 }
-
 .rk-select-panel-option {
   font-size: var(--rk-text-sm);
-  &[aria-selected="true"] {
-    font-weight: 400;
-  }
 }
-
+.rk-select-panel-option[aria-selected="true"] {
+  font-weight: 400;
+}
 .rk-select-panel-box {
   display: grid;
   flex-shrink: 0;
@@ -42,30 +39,27 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     box-shadow var(--rk-dur) var(--rk-ease);
-  &[data-checked] {
-    background: var(--rk-accent);
-    box-shadow: none;
-  }
-  & > svg {
-    width: 11px;
-    height: 11px;
-    stroke-width: 3;
-  }
 }
-
+.rk-select-panel-box[data-checked] {
+  background: var(--rk-accent);
+  box-shadow: none;
+}
+.rk-select-panel-box > svg {
+  width: 11px;
+  height: 11px;
+  stroke-width: 3;
+}
 .rk-select-panel-count {
   flex-shrink: 0;
   color: var(--rk-text-3);
   font-size: var(--rk-text-xs);
 }
-
 .rk-select-panel-empty {
   padding: 14px 8px;
   color: var(--rk-text-3);
   font-size: var(--rk-text-sm);
   text-align: center;
 }
-
 .rk-select-panel-foot {
   display: flex;
   align-items: center;
@@ -74,7 +68,7 @@
   border-top: 1px solid var(--rk-line);
   color: var(--rk-text-3);
   font-size: var(--rk-text-xs);
-  & > :first-child {
-    flex: 1;
-  }
+}
+.rk-select-panel-foot > :first-child {
+  flex: 1;
 }

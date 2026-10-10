@@ -1,11 +1,14 @@
-// npm build: per-module ESM + declarations from tsc (tree-shakeable, React stays a peer), and one
-// dist/styles.css with everything in @layer rootik. The "source" export condition still resolves src/.
+// Extract VE to the source CSS bridge, then emit per-module ESM/declarations and aggregate CSS.
+// The public source condition needs no consumer plugin; React stays a peer.
 import { $ } from "bun";
 import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { generateStyles } from "./styles";
+import { cssEntries, cssSources } from "./css-exports";
 
 const root = join(import.meta.dir, "..");
 const dist = join(root, "dist");
+await generateStyles();
 rmSync(dist, { recursive: true, force: true });
 
 await $`bunx tsc -p ${join(root, "tsconfig.build.json")}`;
@@ -41,10 +44,15 @@ copyFileSync(join(root, "src/tailwind.css"), join(dist, "tailwind.css"));
 
 const cssDir = join(dist, "css");
 mkdirSync(cssDir);
-copyFileSync(join(root, "src/tokens.css"), join(cssDir, "tokens.css"));
-copyFileSync(join(root, "src/base.css"), join(cssDir, "base.css"));
-for (const file of readdirSync(join(root, "src/components")).filter((file) => file.endsWith(".css"))) {
-  copyFileSync(join(root, "src/components", file), join(cssDir, file));
+mkdirSync(join(cssDir, "internal"));
+for (const source of cssSources) {
+  const file = source.slice(source.lastIndexOf("/") + 1);
+  copyFileSync(join(root, "src", source), join(cssDir, "internal", file));
+}
+for (const source of cssEntries) {
+  const file = source.slice(source.lastIndexOf("/") + 1);
+  const wrapper = readFileSync(join(root, "src/css", file), "utf8").replace(/\.\.\/(?:components\/|theme\/)?/g, "./internal/");
+  writeFileSync(join(cssDir, file), wrapper);
 }
 
 console.log("dist: ESM modules + .d.ts, bundled and per-component CSS");

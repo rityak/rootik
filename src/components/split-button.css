@@ -1,29 +1,26 @@
+/* Generated from styles/split-button.css.ts. Run bun run styles; do not edit. */
 .rk-split-toggle {
   --rk-btn-px: 0;
   width: calc(var(--rk-btn-h) * 0.8);
-  & .rk-icon {
-    font-size: 1em;
-    transition: rotate var(--rk-dur) var(--rk-ease);
-  }
-  &[aria-expanded="true"] .rk-icon {
-    rotate: 180deg;
-  }
 }
-
-/* one control, two targets: no gap, a hairline divider drawn over the toggle so each variant keeps
-   its own fill, rim and glow (overriding box-shadow dropped the primary glow on the toggle half) */
+.rk-split-toggle .rk-icon {
+  font-size: 1em;
+  transition: rotate var(--rk-dur) var(--rk-ease);
+}
+.rk-split-toggle[aria-expanded="true"] .rk-icon {
+  rotate: 180deg;
+}
 .rk-split-button {
   gap: 0;
 }
-
 .rk-split-button > .rk-button + .rk-button {
   position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    inset-block: 22%;
-    inset-inline-start: 0;
-    width: 1px;
-    background: color-mix(in oklab, var(--rk-btn-fg) 24%, transparent);
-  }
+}
+.rk-split-button > .rk-button + .rk-button::before {
+  content: "";
+  position: absolute;
+  inset-block: 22%;
+  inset-inline-start: 0;
+  width: 1px;
+  background: color-mix(in oklab, var(--rk-btn-fg) 24%, transparent);
 }

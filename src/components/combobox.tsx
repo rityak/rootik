@@ -1,5 +1,6 @@
 import {
   type KeyboardEvent,
+  type ReactElement,
   type ReactNode,
   type Ref,
   useCallback,
@@ -11,7 +12,7 @@ import {
 } from "react";
 import { cx } from "../lib/cx";
 import { Floating } from "../lib/floating";
-import { mergeRefs, useControllable } from "../lib/hooks";
+import { mergeRefs, useControllable, useLatest } from "../lib/hooks";
 import { CheckIcon, ChevronDownIcon, XIcon } from "../lib/icons";
 import { useLabels } from "../lib/labels";
 import type { Size } from "./button";
@@ -26,7 +27,7 @@ export interface ComboboxOption<T extends string = string> {
   disabled?: boolean;
 }
 
-export interface ComboboxProps<T extends string = string> {
+interface ComboboxBaseProps<T extends string> {
   /** Static options, filtered as you type. */
   options?: ReadonlyArray<ComboboxOption<T>>;
   /** Async options for a query (debounced; the previous request is aborted). Overrides `options`. */
@@ -34,8 +35,6 @@ export interface ComboboxProps<T extends string = string> {
   value?: T | null;
   defaultValue?: T | null;
   onChange?: (value: T | null) => void;
-  /** Accept typed text that matches no option (committed on Enter/blur as its own value). */
-  allowCustom?: boolean;
   /** Match rule for static options; default: case-insensitive "contains". */
   filter?: (option: ComboboxOption<T>, query: string) => boolean;
   placeholder?: string;
@@ -43,6 +42,8 @@ export interface ComboboxProps<T extends string = string> {
   invalid?: boolean;
   disabled?: boolean;
   emptyText?: ReactNode;
+  errorText?: ReactNode;
+  onLoadError?: (error: unknown) => void;
   /** ms before `loadOptions` runs. */
   debounce?: number;
   icon?: ReactNode;
@@ -51,6 +52,11 @@ export interface ComboboxProps<T extends string = string> {
   className?: string;
   ref?: Ref<HTMLInputElement>;
 }
+
+/** Custom input produces arbitrary strings; a finite value union is valid only for fixed options. */
+export type ComboboxProps<T extends string = string> =
+  | (ComboboxBaseProps<T> & { allowCustom?: false })
+  | (ComboboxBaseProps<string> & { allowCustom: true });
 
 const contains = (o: { label: string }, q: string) => o.label.toLowerCase().includes(q.trim().toLowerCase());
 
@@ -73,7 +79,11 @@ function Mark({ text, query }: { text: string; query: string }) {
  * Enter picks, Esc closes (and clears when already closed), blur restores the chosen label unless
  * `allowCustom`. Field label/hint wiring comes from Input.
  */
-export function Combobox<T extends string = string>({
+export function Combobox<T extends string = string>(
+  props: ComboboxBaseProps<T> & { allowCustom?: false },
+): ReactElement;
+export function Combobox(props: ComboboxBaseProps<string> & { allowCustom: true }): ReactElement;
+export function Combobox({
   options = [],
   loadOptions,
   value,
@@ -86,19 +96,22 @@ export function Combobox<T extends string = string>({
   invalid,
   disabled,
   emptyText,
+  errorText,
+  onLoadError,
   debounce = 200,
   icon,
   id,
   "aria-label": ariaLabel,
   className,
   ref,
-}: ComboboxProps<T>) {
+}: ComboboxProps) {
   const labels = useLabels();
-  const [current, setCurrent] = useControllable<T | null>(value, defaultValue, onChange);
-  const [loaded, setLoaded] = useState<ReadonlyArray<ComboboxOption<T>>>([]);
+  const [current, setCurrent] = useControllable<string | null>(value, defaultValue, onChange);
+  const [loaded, setLoaded] = useState<ReadonlyArray<ComboboxOption>>([]);
   const [loading, setLoading] = useState(false);
-  const [known, setKnown] = useState<ComboboxOption<T> | null>(null);
-  const labelOf = (v: T | null) =>
+  const [loadError, setLoadError] = useState(false);
+  const [known, setKnown] = useState<ComboboxOption | null>(null);
+  const labelOf = (v: string | null) =>
     v === null
       ? ""
       : ((options.find((o) => o.value === v) ?? (known?.value === v ? known : null))?.label ?? v);
@@ -109,12 +122,12 @@ export function Combobox<T extends string = string>({
   const input = useRef<HTMLInputElement>(null);
   const list = useRef<HTMLDivElement>(null);
   const listId = useId();
+  const loadFailure = useLatest(onLoadError);
 
-  // external value changes (controlled) re-sync the text while not typing
-  // biome-ignore lint/correctness/useExhaustiveDependencies: labelOf reads options/known for the new value
+  const currentLabel = labelOf(current);
   useEffect(() => {
-    if (!typed) setText(labelOf(current));
-  }, [current]);
+    if (!typed) setText(currentLabel);
+  }, [currentLabel, typed]);
 
   const query = typed ? text : "";
   const shown = useMemo(
@@ -126,15 +139,22 @@ export function Combobox<T extends string = string>({
     if (!loadOptions || !open) return;
     const controller = new AbortController();
     setLoading(true);
+    setLoaded([]);
+    setLoadError(false);
+    setActive(0);
     const timer = setTimeout(() => {
-      loadOptions(query, controller.signal)
+      Promise.resolve()
+        .then(() => loadOptions(query, controller.signal))
         .then((result) => {
           if (controller.signal.aborted) return;
           setLoaded(result);
           setActive(0);
         })
-        .catch(() => {
-          // aborted or failed: keep the previous options
+        .catch((error: unknown) => {
+          if (controller.signal.aborted) return;
+          setLoadError(true);
+          setLoaded([]);
+          loadFailure.current?.(error);
         })
         .finally(() => {
           if (!controller.signal.aborted) setLoading(false);
@@ -144,14 +164,14 @@ export function Combobox<T extends string = string>({
       clearTimeout(timer);
       controller.abort();
     };
-  }, [loadOptions, query, open, debounce]);
+  }, [loadOptions, query, open, debounce, loadFailure]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: `active` drives the scroll
   useEffect(() => {
     list.current?.querySelector('[data-active="true"]')?.scrollIntoView({ block: "nearest" });
   }, [active]);
 
-  const pick = (option: ComboboxOption<T> | undefined) => {
+  const pick = (option: ComboboxOption | undefined) => {
     if (!option || option.disabled) return;
     setKnown(option);
     setCurrent(option.value);
@@ -165,7 +185,7 @@ export function Combobox<T extends string = string>({
     const exact = shown.find((o) => o.label.toLowerCase() === text.trim().toLowerCase());
     if (exact) return pick(exact);
     if (allowCustom && text.trim()) {
-      setCurrent(text.trim() as T);
+      setCurrent(text.trim());
       return;
     }
     if (!text.trim()) {
@@ -283,6 +303,7 @@ export function Combobox<T extends string = string>({
         id={listId}
         role="listbox"
         anchor={box}
+        contextElement={input}
         open={open}
         onOpenChange={(next) => {
           if (!next) setOpen(false);
@@ -293,7 +314,11 @@ export function Combobox<T extends string = string>({
       >
         {shown.length === 0 ? (
           <div className="rk-combobox-empty">
-            {loading ? labels.loading : (emptyText ?? labels.noResults)}
+            {loading
+              ? labels.loading
+              : loadError
+                ? (errorText ?? labels.loadFailed)
+                : (emptyText ?? labels.noResults)}
           </div>
         ) : (
           shown.map((o, i) => (

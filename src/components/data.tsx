@@ -125,6 +125,26 @@ export interface Column<T> {
   hideable?: boolean;
 }
 
+type DisplayKey<T> = {
+  [K in Extract<keyof T, string>]: T[K] extends string | number | boolean | bigint | null | undefined
+    ? K
+    : never;
+}[Extract<keyof T, string>];
+
+/** Checked accessors; computed/object columns require an explicit renderer or sort value. */
+export type StrictColumn<T> = Omit<Column<T>, "key"> &
+  (
+    | { key: DisplayKey<T> }
+    | { key: string; cell: NonNullable<Column<T>["cell"]> }
+    | { key: string; value: NonNullable<Column<T>["value"]> }
+  );
+
+/** Additive strict path; existing Column<T> arrays remain supported. */
+export const defineColumns =
+  <T,>() =>
+  <C extends ReadonlyArray<StrictColumn<T>>>(columns: C): C =>
+    columns;
+
 /** Column widths in px by column key; `null` = automatic layout. */
 export type ColumnWidths = Record<string, number>;
 
@@ -292,9 +312,10 @@ function ResizeHandle({ label, width, min, max, start, onResize, onFit }: Resize
 }
 
 function cellValue<T>(col: Column<T>, row: T) {
-  return col.value
-    ? col.value(row)
-    : ((row as Record<string, unknown>)[col.key] as string | number | undefined);
+  const value: unknown = col.value ? col.value(row) : (row as Record<string, unknown>)[col.key];
+  if (typeof value === "string" || (typeof value === "number" && Number.isFinite(value))) return value;
+  if (typeof value === "boolean" || typeof value === "bigint") return String(value);
+  return null;
 }
 
 export function DataTable<T>({
@@ -311,7 +332,7 @@ export function DataTable<T>({
   sort,
   defaultSort = null,
   onSortChange,
-  empty = "No data",
+  empty,
   resizable,
   columnWidths,
   defaultColumnWidths = null,
@@ -634,7 +655,7 @@ export function DataTable<T>({
         {flat.length === 0 && (
           <tr>
             <td colSpan={columns.length + (selection ? 1 : 0)} className="rk-table-empty">
-              {empty}
+              {empty === undefined ? labels.noData : empty}
             </td>
           </tr>
         )}
@@ -670,35 +691,34 @@ export function DataTable<T>({
               aria-expanded={tree && f.expandable ? isOpen : undefined}
               aria-selected={picked ?? (selectedKey === undefined ? undefined : selectedKey === key)}
               data-clickable={activate ? true : undefined}
-              onClick={
-                activate
-                  ? (event) => {
-                      // clicks on the row's own controls (checkbox, buttons, links) aren't row clicks
-                      if ((event.target as HTMLElement).closest("input, button, a, label")) return;
-                      activate(event);
-                    }
-                  : undefined
-              }
-              onKeyDown={
-                activate || tree
-                  ? (event) => {
-                      if (event.target !== event.currentTarget) return;
-                      if (tree && onTreeKey(event, f, i)) return;
-                      if (
-                        activate &&
-                        (event.key === "Enter" || (selection && !onRowClick && event.key === " "))
-                      ) {
-                        event.preventDefault();
-                        activate(event);
-                      }
-                    }
-                  : undefined
-              }
-              onFocus={tree ? () => setFocusedKey(key) : undefined}
+              onClick={(event) => {
+                custom?.onClick?.(event);
+                if (event.defaultPrevented || !activate) return;
+                // clicks on the row's own controls (checkbox, buttons, links) aren't row clicks
+                if ((event.target as HTMLElement).closest("input, button, a, label")) return;
+                activate(event);
+              }}
+              onKeyDown={(event) => {
+                custom?.onKeyDown?.(event);
+                if (event.defaultPrevented || !(activate || tree)) return;
+                if (event.target !== event.currentTarget) return;
+                if (tree && onTreeKey(event, f, i)) return;
+                if (activate && (event.key === "Enter" || (selection && !onRowClick && event.key === " "))) {
+                  event.preventDefault();
+                  activate(event);
+                }
+              }}
+              onFocus={(event) => {
+                custom?.onFocus?.(event);
+                if (!event.defaultPrevented && tree) setFocusedKey(key);
+              }}
               // Shift+click extends the row selection, not a text selection
-              onMouseDown={selection ? (event) => event.shiftKey && event.preventDefault() : undefined}
+              onMouseDown={(event) => {
+                custom?.onMouseDown?.(event);
+                if (!event.defaultPrevented && selection && event.shiftKey) event.preventDefault();
+              }}
               // a treegrid is one tab stop (arrows move between rows); flat tables keep a stop per row
-              tabIndex={tree ? (key === tabStop ? 0 : -1) : activate ? 0 : undefined}
+              tabIndex={tree ? (key === tabStop ? 0 : -1) : (custom?.tabIndex ?? (activate ? 0 : undefined))}
             >
               {selection && (
                 <td {...pin(null)} className={cx("rk-table-select", pin(null)?.className)}>
@@ -724,7 +744,7 @@ export function DataTable<T>({
                     onChange={(v) => col.onEdit?.(row, v)}
                   />
                 ) : (
-                  (cellValue(col, row) as ReactNode)
+                  cellValue(col, row)
                 );
                 const pinned = pin(col.key);
                 if (!(tree && col.key === treeKey))

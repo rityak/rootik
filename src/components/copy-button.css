@@ -1,18 +1,18 @@
-.rk-copy-button {
-  & .rk-icon > svg {
-    transition:
-      scale var(--rk-dur) var(--rk-spring),
-      opacity var(--rk-dur) var(--rk-ease);
-    @starting-style {
-      scale: 0.5;
-      opacity: 0;
-    }
-  }
-  &[data-copied] {
-    --rk-btn-fg: var(--rk-success);
-    /* the icon keeps the signal under ghost hover, which resets the label colour */
-    & .rk-icon {
-      color: var(--rk-success);
-    }
+/* Generated from styles/copy-button.css.ts. Run bun run styles; do not edit. */
+.rk-copy-button .rk-icon > svg {
+  transition:
+    scale var(--rk-dur) var(--rk-spring),
+    opacity var(--rk-dur) var(--rk-ease);
+}
+.rk-copy-button[data-copied] {
+  --rk-btn-fg: var(--rk-success);
+}
+.rk-copy-button[data-copied] .rk-icon {
+  color: var(--rk-success);
+}
+@starting-style {
+  .rk-copy-button .rk-icon > svg {
+    scale: 0.5;
+    opacity: 0;
   }
 }

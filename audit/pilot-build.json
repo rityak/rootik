@@ -1,0 +1,29 @@
+{
+  "dist": {
+    "cssBytes": 209564,
+    "buttonJsBytes": 4463,
+    "buttonJsGzipBytes": 2126
+  },
+  "source": {
+    "cssBytes": 207115,
+    "buttonJsBytes": 4617,
+    "buttonJsGzipBytes": 2140
+  },
+  "tailwind-dist": {
+    "cssBytes": 73232,
+    "dependencyClosure": "passed",
+    "layerOrder": "theme, base, rootik, components, utilities"
+  },
+  "tailwind-source": {
+    "cssBytes": 73232,
+    "dependencyClosure": "passed",
+    "layerOrder": "theme, base, rootik, components, utilities"
+  },
+  "stylesBytes": 209564,
+  "stylesGzipBytes": 32647,
+  "packedSsr": "passed",
+  "consumerPlugin": "none",
+  "cssExports": 81,
+  "extractedStyleModules": 74,
+  "testsInPackage": false
+}

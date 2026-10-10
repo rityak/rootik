@@ -1,12 +1,12 @@
+/* Generated from styles/qr-code.css.ts. Run bun run styles; do not edit. */
 .rk-qr {
   display: block;
   flex: none;
   border-radius: var(--rk-radius-md);
-  /* scanners expect dark modules on a light plate, whatever the theme */
-  & .rk-qr-plate {
-    fill: var(--rk-inverse);
-  }
-  & .rk-qr-modules {
-    fill: var(--rk-on-inverse);
-  }
+}
+.rk-qr .rk-qr-plate {
+  fill: var(--rk-inverse);
+}
+.rk-qr .rk-qr-modules {
+  fill: var(--rk-on-inverse);
 }

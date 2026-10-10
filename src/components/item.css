@@ -1,3 +1,4 @@
+/* Generated from styles/item.css.ts. Run bun run styles; do not edit. */
 .rk-item {
   --rk-item-h: var(--rk-h-lg);
   --rk-item-pad: calc(var(--rk-space) * 3);
@@ -13,91 +14,82 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     color var(--rk-dur) var(--rk-ease);
-
-  &[data-size="sm"] {
-    --rk-item-h: var(--rk-h-sm);
-    --rk-item-media: 24px;
-    --rk-item-pad: calc(var(--rk-space) * 2.5);
-    gap: calc(var(--rk-space) * 2.5);
-    min-height: var(--rk-item-h);
-    padding-block: 2px;
-  }
-  &[data-size="lg"] {
-    --rk-item-h: 56px;
-    --rk-item-media: 40px;
-    --rk-item-pad: calc(var(--rk-space) * 4);
-    padding-block: 10px;
-  }
-
-  &[data-variant="outline"] {
-    box-shadow: inset 0 0 0 1px var(--rk-line);
-  }
-  &[data-variant="surface"] {
-    background: var(--rk-surface-2);
-    box-shadow: var(--rk-highlight);
-  }
-
-  &[data-interactive]:not([data-disabled], [data-selected]):hover {
-    background: var(--rk-hover);
-  }
-  &[data-selected] {
-    /* inverted row: re-point text and hover tokens so ghost actions stay visible on the light fill */
-    --rk-text: var(--rk-on-inverse);
-    --rk-text-2: color-mix(in oklab, var(--rk-on-inverse) 75%, transparent);
-    /* neutral fills (badge, chip) sit on surface-3: left dark, they read dark-on-dark here */
-    --rk-surface-3: oklch(var(--rk-shade) / 0.08);
-    --rk-hover: oklch(var(--rk-shade) / 0.08);
-    --rk-press: oklch(var(--rk-shade) / 0.14);
-    background: var(--rk-inverse);
-    color: var(--rk-on-inverse);
-    & .rk-item-desc,
-    & .rk-item-meta {
-      color: color-mix(in oklab, var(--rk-on-inverse) 65%, transparent);
-    }
-    & .rk-item-media[data-icon] {
-      background: oklch(var(--rk-shade) / 0.08);
-      color: inherit;
-    }
-    /* tone text is a light step made for dark surfaces; pull it toward the row's text so it reads on either fill */
-    & .rk-badge:not([data-tone="neutral"], [data-variant="solid"]) {
-      color: color-mix(in oklab, var(--rk-tone) 55%, var(--rk-on-inverse));
-    }
-  }
-  &[data-disabled] {
-    opacity: 0.45;
-  }
-  /* the row shows focus; the stretched hit element draws none of its own */
-  &:has(.rk-item-hit:focus-visible) {
-    outline: 2px solid var(--rk-focus);
-    outline-offset: 2px;
-  }
 }
-
+.rk-item[data-size="sm"] {
+  --rk-item-h: var(--rk-h-sm);
+  --rk-item-media: 24px;
+  --rk-item-pad: calc(var(--rk-space) * 2.5);
+  gap: calc(var(--rk-space) * 2.5);
+  min-height: var(--rk-item-h);
+  padding-block: 2px;
+}
+.rk-item[data-size="lg"] {
+  --rk-item-h: 56px;
+  --rk-item-media: 40px;
+  --rk-item-pad: calc(var(--rk-space) * 4);
+  padding-block: 10px;
+}
+.rk-item[data-variant="outline"] {
+  box-shadow: inset 0 0 0 1px var(--rk-line);
+}
+.rk-item[data-variant="surface"] {
+  background: var(--rk-surface-2);
+  box-shadow: var(--rk-highlight);
+}
+.rk-item[data-interactive]:not([data-disabled], [data-selected]):hover {
+  background: var(--rk-hover);
+}
+.rk-item[data-selected] {
+  --rk-text: var(--rk-on-inverse);
+  --rk-text-2: color-mix(in oklab, var(--rk-on-inverse) 75%, transparent);
+  --rk-surface-3: oklch(var(--rk-shade) / 0.08);
+  --rk-hover: oklch(var(--rk-shade) / 0.08);
+  --rk-press: oklch(var(--rk-shade) / 0.14);
+  background: var(--rk-inverse);
+  color: var(--rk-on-inverse);
+}
+.rk-item[data-selected] .rk-item-desc,
+.rk-item[data-selected] .rk-item-meta {
+  color: color-mix(in oklab, var(--rk-on-inverse) 65%, transparent);
+}
+.rk-item[data-selected] .rk-item-media[data-icon] {
+  background: oklch(var(--rk-shade) / 0.08);
+  color: inherit;
+}
+.rk-item[data-selected] .rk-badge:not([data-tone="neutral"], [data-variant="solid"]) {
+  color: color-mix(in oklab, var(--rk-tone) 55%, var(--rk-on-inverse));
+}
+.rk-item[data-disabled] {
+  opacity: 0.45;
+}
+.rk-item:has(.rk-item-hit:focus-visible) {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: 2px;
+}
 .rk-item-media {
   display: flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
   min-width: var(--rk-item-media);
-  &[data-icon] {
-    width: var(--rk-item-media);
-    height: var(--rk-item-media);
-    border-radius: calc(var(--rk-radius-md) - var(--rk-space));
-    background: var(--rk-surface-3);
-    color: var(--rk-text-2);
-    font-size: calc(var(--rk-item-media) * 0.5);
-    & > svg {
-      width: 1em;
-      height: 1em;
-    }
-    &[data-tone] {
-      background: color-mix(in oklab, var(--rk-tone) 14%, var(--rk-surface-3));
-      color: var(--rk-tone-text);
-      box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--rk-tone) 25%, transparent);
-    }
-  }
 }
-
+.rk-item-media[data-icon] {
+  width: var(--rk-item-media);
+  height: var(--rk-item-media);
+  border-radius: calc(var(--rk-radius-md) - var(--rk-space));
+  background: var(--rk-surface-3);
+  color: var(--rk-text-2);
+  font-size: calc(var(--rk-item-media) * 0.5);
+}
+.rk-item-media[data-icon] > svg {
+  width: 1em;
+  height: 1em;
+}
+.rk-item-media[data-icon][data-tone] {
+  background: color-mix(in oklab, var(--rk-tone) 14%, var(--rk-surface-3));
+  color: var(--rk-tone-text);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--rk-tone) 25%, transparent);
+}
 .rk-item-body {
   display: flex;
   flex: 1;
@@ -105,31 +97,27 @@
   gap: 1px;
   min-width: 0;
 }
-
 .rk-item-title {
   overflow: hidden;
   font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .rk-item-desc {
   overflow: hidden;
   color: var(--rk-text-3);
   font-size: var(--rk-text-sm);
   text-overflow: ellipsis;
   white-space: nowrap;
-  [data-size="sm"] > .rk-item-body > & {
-    font-size: var(--rk-text-xs);
-  }
 }
-
+[data-size="sm"] > .rk-item-body > .rk-item-desc {
+  font-size: var(--rk-text-xs);
+}
 .rk-item-meta {
   flex-shrink: 0;
   color: var(--rk-text-3);
   font-size: var(--rk-text-sm);
 }
-
 .rk-item-actions {
   position: relative;
   z-index: 1;
@@ -138,24 +126,22 @@
   align-items: center;
   gap: 2px;
 }
-
 .rk-item-hit {
   all: unset;
   cursor: pointer;
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-  }
-  &:disabled {
-    cursor: not-allowed;
-  }
-  &:focus-visible {
-    outline: none;
-  }
 }
-
+.rk-item-hit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.rk-item-hit:disabled {
+  cursor: not-allowed;
+}
+.rk-item-hit:focus-visible {
+  outline: none;
+}
 .rk-item-group {
   display: flex;
   flex-direction: column;
@@ -165,33 +151,30 @@
   list-style: none;
   min-height: 0;
   overflow-y: auto;
-
-  & > .rk-item {
-    flex-shrink: 0;
-  }
-
-  &[data-variant="divided"] {
-    gap: 0;
-    & > .rk-item + .rk-item::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: var(--rk-item-pad);
-      left: var(--rk-item-pad);
-      border-top: 1px solid var(--rk-line);
-    }
-    /* no hairline next to a filled row */
-    & > .rk-item:is([data-selected], :hover) + .rk-item::before,
-    & > .rk-item[data-selected]::before,
-    & > .rk-item[data-interactive]:hover::before {
-      opacity: 0;
-    }
-  }
-  &[data-variant="cards"] {
-    gap: calc(var(--rk-space) * 2);
-    & > .rk-item:not([data-selected]) {
-      background: var(--rk-surface-2);
-      box-shadow: var(--rk-highlight);
-    }
-  }
+}
+.rk-item-group > .rk-item {
+  flex-shrink: 0;
+}
+.rk-item-group[data-variant="divided"] {
+  gap: 0;
+}
+.rk-item-group[data-variant="divided"] > .rk-item + .rk-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: var(--rk-item-pad);
+  left: var(--rk-item-pad);
+  border-top: 1px solid var(--rk-line);
+}
+.rk-item-group[data-variant="divided"] > .rk-item:is([data-selected], :hover) + .rk-item::before,
+.rk-item-group[data-variant="divided"] > .rk-item[data-selected]::before,
+.rk-item-group[data-variant="divided"] > .rk-item[data-interactive]:hover::before {
+  opacity: 0;
+}
+.rk-item-group[data-variant="cards"] {
+  gap: calc(var(--rk-space) * 2);
+}
+.rk-item-group[data-variant="cards"] > .rk-item:not([data-selected]) {
+  background: var(--rk-surface-2);
+  box-shadow: var(--rk-highlight);
 }

@@ -1,10 +1,10 @@
+/* Generated from styles/stick-to-bottom.css.ts. Run bun run styles; do not edit. */
 .rk-stick {
   position: relative;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
-
 .rk-stick-viewport {
   flex: 1;
   min-height: 0;
@@ -12,7 +12,6 @@
   overflow-anchor: auto;
   overscroll-behavior-y: contain;
 }
-
 .rk-stick-jump {
   position: absolute;
   bottom: calc(var(--rk-space) * 3);
@@ -35,16 +34,11 @@
   transition:
     opacity var(--rk-dur) var(--rk-ease),
     translate var(--rk-dur) var(--rk-ease-out);
-  @starting-style {
-    opacity: 0;
-    translate: -50% 8px;
-  }
-  & > svg {
-    width: 1.1em;
-    height: 1.1em;
-  }
 }
-
+.rk-stick-jump > svg {
+  width: 1.1em;
+  height: 1.1em;
+}
 .rk-stick-unseen {
   min-width: 18px;
   padding: 0 5px;
@@ -54,4 +48,10 @@
   font-size: var(--rk-text-2xs);
   line-height: 18px;
   text-align: center;
+}
+@starting-style {
+  .rk-stick-jump {
+    opacity: 0;
+    translate: -50% 8px;
+  }
 }

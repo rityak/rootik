@@ -1,3 +1,4 @@
+/* Generated from styles/code-block.css.ts. Run bun run styles; do not edit. */
 .rk-code {
   padding: 0.1em 0.4em;
   border-radius: calc(var(--rk-radius-sm) * 0.6);
@@ -6,7 +7,6 @@
   font-family: var(--rk-font-mono);
   font-size: 0.88em;
 }
-
 .rk-code-block {
   display: flex;
   flex-direction: column;
@@ -16,7 +16,6 @@
   background: var(--rk-sunken);
   box-shadow: inset 0 0 0 1px var(--rk-line);
 }
-
 .rk-code-head {
   display: flex;
   align-items: center;
@@ -26,7 +25,6 @@
   border-bottom: 1px solid var(--rk-line);
   font-size: var(--rk-text-xs);
 }
-
 .rk-code-title {
   flex: 1;
   min-width: 0;
@@ -36,7 +34,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .rk-code-lang {
   padding: 1px 6px;
   border-radius: var(--rk-radius-pill);
@@ -46,7 +43,6 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-
 .rk-code-pre {
   margin: 0;
   padding: calc(var(--rk-space) * 3) 0;
@@ -57,50 +53,45 @@
   line-height: 1.65;
   tab-size: 2;
   counter-reset: rk-line;
-
-  &:focus-visible {
-    outline-offset: -2px;
-  }
-  & code {
-    display: block;
-    min-width: max-content;
-    font: inherit;
-  }
-  &[data-wrap] code {
-    min-width: 0;
-  }
 }
-
+.rk-code-pre:focus-visible {
+  outline-offset: -2px;
+}
+.rk-code-pre code {
+  display: block;
+  min-width: max-content;
+  font: inherit;
+}
+.rk-code-pre[data-wrap] code {
+  min-width: 0;
+}
 .rk-code-line {
   display: block;
   padding: 0 calc(var(--rk-space) * 3.5);
   white-space: pre;
   counter-increment: rk-line;
-
-  [data-wrap] & {
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-  }
-  [data-numbers] &::before {
-    content: counter(rk-line);
-    display: inline-block;
-    width: 3ch;
-    margin-right: 2ch;
-    color: var(--rk-text-3);
-    text-align: right;
-    user-select: none;
-  }
-  /* wrapped continuation lines align with the code, not under the number */
-  [data-numbers][data-wrap] & {
-    padding-left: calc(var(--rk-space) * 3.5 + 5ch);
-    text-indent: -5ch;
-  }
-  &[data-highlight] {
-    background: var(--rk-accent-soft);
-    box-shadow: inset 2px 0 0 var(--rk-accent);
-  }
 }
-
+[data-wrap] .rk-code-line {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+[data-numbers] .rk-code-line::before {
+  content: counter(rk-line);
+  display: inline-block;
+  width: 3ch;
+  margin-right: 2ch;
+  color: var(--rk-text-3);
+  text-align: right;
+  user-select: none;
+}
+[data-numbers][data-wrap] .rk-code-line {
+  padding-left: calc(var(--rk-space) * 3.5 + 5ch);
+  text-indent: -5ch;
+}
+.rk-code-line[data-highlight] {
+  background: var(--rk-accent-soft);
+  box-shadow: inset 2px 0 0 var(--rk-accent);
+}
 .rk-code-editor {
   display: flex;
   flex-direction: column;
@@ -109,53 +100,49 @@
   border-radius: var(--rk-radius-md);
   background: var(--rk-sunken);
   box-shadow: inset 0 0 0 1px var(--rk-line);
-
-  & textarea {
-    width: 100%;
-    max-height: var(--rk-code-editor-max, none);
-    min-height: 8em;
-    resize: vertical;
-    padding: calc(var(--rk-space) * 3);
-    border: 0;
-    outline: 0;
-    background: transparent;
-    color: var(--rk-text);
-    caret-color: var(--rk-accent-text);
-    font-family: var(--rk-font-mono);
-    font-size: calc(var(--rk-font-size) * 0.9);
-    line-height: 1.65;
-    tab-size: 2;
-  }
-  &:has(textarea:focus-visible) {
-    outline: 2px solid var(--rk-focus);
-    outline-offset: 2px;
-  }
 }
-
-/* Drop-in visual shell for app-owned CodeMirror 6. */
+.rk-code-editor textarea {
+  width: 100%;
+  max-height: var(--rk-code-editor-max, none);
+  min-height: 8em;
+  resize: vertical;
+  padding: calc(var(--rk-space) * 3);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--rk-text);
+  caret-color: var(--rk-accent-text);
+  font-family: var(--rk-font-mono);
+  font-size: calc(var(--rk-font-size) * 0.9);
+  line-height: 1.65;
+  tab-size: 2;
+}
+.rk-code-editor:has(textarea:focus-visible) {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: 2px;
+}
 .rk-code-editor-theme {
   --rk-editor-selection: color-mix(in oklab, var(--rk-accent) 28%, transparent);
   --rk-editor-active-line: var(--rk-hover);
-
-  & .cm-editor {
-    background: var(--rk-sunken);
-    color: var(--rk-text);
-    font-family: var(--rk-font-mono);
-    font-size: calc(var(--rk-font-size) * 0.9);
-  }
-  & .cm-gutters {
-    border: 0;
-    background: var(--rk-well-soft);
-    color: var(--rk-text-3);
-  }
-  & .cm-activeLine,
-  & .cm-activeLineGutter {
-    background: var(--rk-editor-active-line);
-  }
-  & .cm-selectionBackground {
-    background: var(--rk-editor-selection);
-  }
-  & .cm-cursor {
-    border-left-color: var(--rk-accent-text);
-  }
+}
+.rk-code-editor-theme .cm-editor {
+  background: var(--rk-sunken);
+  color: var(--rk-text);
+  font-family: var(--rk-font-mono);
+  font-size: calc(var(--rk-font-size) * 0.9);
+}
+.rk-code-editor-theme .cm-gutters {
+  border: 0;
+  background: var(--rk-well-soft);
+  color: var(--rk-text-3);
+}
+.rk-code-editor-theme .cm-activeLine,
+.rk-code-editor-theme .cm-activeLineGutter {
+  background: var(--rk-editor-active-line);
+}
+.rk-code-editor-theme .cm-selectionBackground {
+  background: var(--rk-editor-selection);
+}
+.rk-code-editor-theme .cm-cursor {
+  border-left-color: var(--rk-accent-text);
 }

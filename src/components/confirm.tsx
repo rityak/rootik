@@ -79,6 +79,16 @@ export function ConfirmHost() {
     hosts++;
     return () => {
       hosts--;
+      // StrictMode immediately mounts again; cancel only after the final host has left.
+      queueMicrotask(() => {
+        if (hosts !== 0 || queue.length === 0) return;
+        const cancelled = queue;
+        queue = [];
+        for (const request of cancelled)
+          if (request.kind === "confirm") request.resolve(false);
+          else request.resolve(null);
+        emit();
+      });
     };
   }, []);
   const current = list[0];

@@ -1,0 +1,19 @@
+/* Generated from styles/rain.css.ts. Run bun run styles; do not edit. */
+:where(:root, [data-rk-scope])[data-rk-palette="rain"] {
+  --rk-bg: oklch(0.17 var(--rk-neutral-c) var(--rk-neutral-h));
+  --rk-surface-1: oklch(0.205 calc(var(--rk-neutral-c) * 1.25) var(--rk-neutral-h));
+  --rk-surface-2: oklch(0.245 calc(var(--rk-neutral-c) * 1.5) var(--rk-neutral-h));
+  --rk-surface-3: oklch(0.285 calc(var(--rk-neutral-c) * 1.75) var(--rk-neutral-h));
+  --rk-surface-4: oklch(0.325 calc(var(--rk-neutral-c) * 1.83) var(--rk-neutral-h));
+  --rk-sunken: oklch(0.18 var(--rk-neutral-c) var(--rk-neutral-h));
+  --rk-well: oklch(0.18 var(--rk-neutral-c) var(--rk-neutral-h));
+  --rk-well-soft: oklch(0.19 calc(var(--rk-neutral-c) * 1.08) var(--rk-neutral-h));
+  --rk-text: oklch(0.94 calc(var(--rk-neutral-c) * 0.75) var(--rk-neutral-h));
+  --rk-text-2: oklch(0.78 calc(var(--rk-neutral-c) * 1.58) var(--rk-neutral-h));
+  --rk-text-3: oklch(0.7 calc(var(--rk-neutral-c) * 1.83) var(--rk-neutral-h));
+  --rk-inverse: oklch(0.86 calc(var(--rk-neutral-c) * 1.5) var(--rk-neutral-h));
+  --rk-on-inverse: oklch(0.205 calc(var(--rk-neutral-c) * 1.25) var(--rk-neutral-h));
+  --rk-control-edge: oklch(0.62 calc(var(--rk-neutral-c) * 1.67) var(--rk-neutral-h));
+  --rk-accent-hover: oklch(from var(--rk-accent) calc(l - 0.01) c h);
+  --rk-focus: oklch(from var(--rk-accent) max(l, 0.8) min(c, 0.07) h);
+}

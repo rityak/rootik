@@ -6,15 +6,17 @@ import {
   useContext,
   useLayoutEffect,
   useMemo,
-  useRef,
+  useState,
 } from "react";
 import { cx } from "../lib/cx";
-import { readStorage, useControllable, writeStorage } from "../lib/hooks";
+import { readStorage, writeStorage } from "../lib/hooks";
 import { LABELS, type Labels, LabelsContext } from "../lib/labels";
 import {
   APPEARANCE_SECTIONS,
   type AppearanceValues,
+  type BuiltinAppearanceValues,
   defaultValues,
+  normalizeAppearanceValues,
   type SettingsSection,
   type SettingValue,
   THEMES,
@@ -33,6 +35,7 @@ interface AppearanceContext {
 }
 
 const Ctx = createContext<AppearanceContext | null>(null);
+const EMPTY_SECTIONS: ReadonlyArray<SettingsSection> = [];
 
 export interface RootikProviderProps {
   children: ReactNode;
@@ -61,7 +64,7 @@ export interface RootikProviderProps {
  */
 export function RootikProvider({
   children,
-  extensions = [],
+  extensions = EMPTY_SECTIONS,
   sections: baseSections = APPEARANCE_SECTIONS,
   defaults: overrides,
   theme = "iris",
@@ -74,54 +77,68 @@ export function RootikProvider({
   const sections = useMemo(() => [...baseSections, ...extensions], [baseSections, extensions]);
   const strings = useMemo(() => ({ ...LABELS, ...labels }), [labels]);
   const defaults = useMemo(
-    () => ({ ...defaultValues(sections), ...THEMES[theme], ...overrides }) as AppearanceValues,
+    () => ({
+      ...defaultValues(sections),
+      ...normalizeAppearanceValues(sections, { ...THEMES[theme], ...overrides }),
+    }),
     [sections, theme, overrides],
   );
-  const [stored, setStored] = useControllable(value, readStorage<AppearanceValues>(storageKey, {}), onChange);
-  const values = useMemo(() => ({ ...defaults, ...stored }), [defaults, stored]);
-  const written = useRef<string[]>([]);
-  const writtenAttrs = useRef<string[]>([]);
-
+  const [own, setOwn] = useState<AppearanceValues>({});
+  const controlled = value !== undefined;
+  // The first client render must match SSR; persisted preferences apply before the next paint.
+  useLayoutEffect(() => {
+    if (!controlled) setOwn(readStorage<AppearanceValues>(storageKey, {}));
+  }, [storageKey, controlled]);
+  const stored = value ?? own;
+  const clean = useMemo(() => normalizeAppearanceValues(sections, stored), [sections, stored]);
+  const values = useMemo(() => ({ ...defaults, ...clean }), [defaults, clean]);
   useLayoutEffect(() => {
     const el = target ?? document.documentElement;
+    const scoped = el !== document.documentElement;
     const vars = toCssVars(sections, values);
-    for (const name of written.current)
-      if (!(name in vars) || vars[name] === null) el.style.removeProperty(name);
-    const next: string[] = [];
+    const restore: (() => void)[] = [];
     for (const [name, v] of Object.entries(vars)) {
-      if (v === null) continue;
-      el.style.setProperty(name, v);
-      next.push(name);
+      if (v === null && !scoped) continue;
+      const previous = el.style.getPropertyValue(name);
+      const priority = el.style.getPropertyPriority(name);
+      el.style.setProperty(name, v ?? SCOPE_DEFAULTS[name] ?? "initial");
+      const written = el.style.getPropertyValue(name);
+      restore.push(() => {
+        if (el.style.getPropertyValue(name) !== written) return;
+        if (previous) el.style.setProperty(name, previous, priority);
+        else el.style.removeProperty(name);
+      });
     }
-    written.current = next;
-    const attrs = toDataAttrs(sections, values);
-    for (const name of writtenAttrs.current) if (!(name in attrs)) el.removeAttribute(name);
-    for (const [name, v] of Object.entries(attrs)) el.setAttribute(name, v);
-    writtenAttrs.current = Object.keys(attrs);
+    const attrs = { ...toDataAttrs(sections, values), ...(scoped ? { "data-rk-scope": "" } : {}) };
+    for (const [name, v] of Object.entries(attrs)) {
+      const previous = el.getAttribute(name);
+      el.setAttribute(name, v);
+      restore.push(() => {
+        if (el.getAttribute(name) !== v) return;
+        if (previous !== null) el.setAttribute(name, previous);
+        else el.removeAttribute(name);
+      });
+    }
+    return () => {
+      for (const undo of restore) undo();
+    };
   }, [sections, values, target]);
 
-  useLayoutEffect(
-    () => () => {
-      const el = target ?? document.documentElement;
-      for (const name of written.current) el.style.removeProperty(name);
-      for (const name of writtenAttrs.current) el.removeAttribute(name);
-    },
-    [target],
-  );
-
   const commit = (next: AppearanceValues) => {
-    setStored(next);
-    if (value === undefined) writeStorage(storageKey, next);
+    const normalized = normalizeAppearanceValues(sections, next);
+    if (!controlled) setOwn(normalized);
+    onChange?.(normalized);
+    if (value === undefined) writeStorage(storageKey, normalized);
   };
 
   const ctx: AppearanceContext = {
     sections,
     values,
     defaults,
-    set: (key, v) => commit({ ...stored, [key]: v }),
+    set: (key, v) => commit({ ...clean, [key]: v }),
     reset: (key) => {
       if (!key) return commit({});
-      const { [key]: _, ...rest } = stored;
+      const { [key]: _, ...rest } = clean;
       commit(rest);
     },
   };
@@ -133,6 +150,10 @@ export function RootikProvider({
 }
 
 /** One appearance value, or undefined outside a RootikProvider (components use it with a fallback). */
+export function useAppearanceValue<K extends keyof BuiltinAppearanceValues>(
+  key: K,
+): BuiltinAppearanceValues[K] | undefined;
+export function useAppearanceValue(key: string): SettingValue | undefined;
 export function useAppearanceValue(key: string): SettingValue | undefined {
   return useContext(Ctx)?.values[key];
 }
@@ -143,16 +164,26 @@ export function useAppearance(): AppearanceContext {
   return ctx;
 }
 
-/** CSS vars that `overrides` change relative to `base` (null = "use the stylesheet default": left to inherit). */
+const SCOPE_DEFAULTS: Record<string, string> = {
+  "--rk-density": "1",
+  "--rk-roundness": "1",
+  "--rk-linecap": "round",
+  "--rk-font-sans": "var(--rk-font-default)",
+  "--rk-motion": "var(--rk-system-motion)",
+  "--rk-animation-state": "var(--rk-system-animation-state)",
+};
+
+/** Reset nulls explicitly so a child cannot inherit an effect it disabled. */
 export function scopeVars(
   sections: ReadonlyArray<SettingsSection>,
   base: AppearanceValues,
   overrides: Partial<AppearanceValues>,
 ): Record<string, string> {
   const before = toCssVars(sections, base);
-  const after = toCssVars(sections, { ...base, ...overrides } as AppearanceValues);
+  const after = toCssVars(sections, { ...base, ...normalizeAppearanceValues(sections, overrides) });
   const out: Record<string, string> = {};
-  for (const [name, v] of Object.entries(after)) if (v !== null && v !== before[name]) out[name] = v;
+  for (const [name, v] of Object.entries(after))
+    if (v !== before[name]) out[name] = v ?? SCOPE_DEFAULTS[name] ?? "initial";
   return out;
 }
 
@@ -166,12 +197,25 @@ export interface ScopeProps extends HTMLAttributes<HTMLDivElement> {
  * CSS vars RootikProvider writes, and `[data-rk-scope]` re-derives every token from them. Layout-neutral
  * (`display: contents`).
  */
-export function Scope({ values, className, style, ...rest }: ScopeProps) {
+export function Scope({ values, className, style, children, ...rest }: ScopeProps) {
   const ctx = useContext(Ctx);
   const sections = ctx?.sections ?? APPEARANCE_SECTIONS;
   const base = ctx?.values ?? defaultValues(sections);
   const vars = scopeVars(sections, base, values);
-  const attrs = toDataAttrs(sections, { ...base, ...values } as AppearanceValues);
+  const effective = { ...base, ...normalizeAppearanceValues(sections, values) };
+  const attrs = toDataAttrs(sections, effective);
+  const writeWithoutProvider = () => {
+    throw new Error("Editing appearance needs <RootikProvider> above <Scope>");
+  };
+  const local: AppearanceContext = ctx
+    ? { ...ctx, values: effective }
+    : {
+        sections,
+        values: effective,
+        defaults: base,
+        set: writeWithoutProvider,
+        reset: writeWithoutProvider,
+      };
   return (
     <div
       data-rk-scope=""
@@ -179,6 +223,8 @@ export function Scope({ values, className, style, ...rest }: ScopeProps) {
       {...rest}
       className={cx("rk-scope", className)}
       style={{ ...(vars as CSSProperties), ...style }}
-    />
+    >
+      <Ctx value={local}>{children}</Ctx>
+    </div>
   );
 }

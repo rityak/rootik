@@ -13,14 +13,18 @@ export interface NumberBounds {
   precision?: number;
 }
 
-const decimals = (n: number) => (Number.isInteger(n) ? 0 : (String(n).split(".")[1]?.length ?? 0));
+const decimals = (n: number) => {
+  const [coefficient = "", exponent = "0"] = String(n).toLowerCase().split("e");
+  return Math.max(0, (coefficient.split(".")[1]?.length ?? 0) - Number(exponent));
+};
 
 /** Clamp to [min, max] and round to `precision` (float noise like 0.1 + 0.2 disappears). */
 export function clampNumber(
   value: number,
   { min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY, step = 1, precision }: NumberBounds,
 ) {
-  const digits = precision ?? decimals(step);
+  const requested = precision ?? decimals(Number.isFinite(step) && step > 0 ? step : 1);
+  const digits = Number.isFinite(requested) ? Math.max(0, Math.min(100, Math.trunc(requested))) : 0;
   const clamped = Math.min(max, Math.max(min, value));
   return Number(clamped.toFixed(digits));
 }

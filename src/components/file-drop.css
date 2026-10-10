@@ -1,3 +1,4 @@
+/* Generated from styles/file-drop.css.ts. Run bun run styles; do not edit. */
 .rk-file-drop {
   position: relative;
   display: flex;
@@ -15,30 +16,28 @@
   transition:
     box-shadow var(--rk-dur) var(--rk-ease),
     background-color var(--rk-dur) var(--rk-ease);
-
-  &[data-size="sm"] {
-    flex-direction: row;
-    gap: calc(var(--rk-space) * 2.5);
-    min-height: var(--rk-h-lg);
-    padding: calc(var(--rk-space) * 2) calc(var(--rk-space) * 4);
-    border-radius: var(--rk-radius-md);
-    text-align: start;
-  }
-  &[data-dragging] {
-    background: var(--rk-hatch), var(--rk-accent-soft);
-    box-shadow:
-      inset 0 0 0 1.5px var(--rk-accent-line),
-      0 0 0 3px var(--rk-accent-soft);
-    color: var(--rk-text);
-  }
-  &[data-disabled] {
-    opacity: 0.5;
-  }
-  &:has(.rk-file-drop-browse:focus-visible) {
-    box-shadow: inset 0 0 0 1.5px var(--rk-accent-line);
-  }
 }
-
+.rk-file-drop[data-size="sm"] {
+  flex-direction: row;
+  gap: calc(var(--rk-space) * 2.5);
+  min-height: var(--rk-h-lg);
+  padding: calc(var(--rk-space) * 2) calc(var(--rk-space) * 4);
+  border-radius: var(--rk-radius-md);
+  text-align: start;
+}
+.rk-file-drop[data-dragging] {
+  background: var(--rk-hatch), var(--rk-accent-soft);
+  box-shadow:
+    inset 0 0 0 1.5px var(--rk-accent-line),
+    0 0 0 3px var(--rk-accent-soft);
+  color: var(--rk-text);
+}
+.rk-file-drop[data-disabled] {
+  opacity: 0.5;
+}
+.rk-file-drop:has(.rk-file-drop-browse:focus-visible) {
+  box-shadow: inset 0 0 0 1.5px var(--rk-accent-line);
+}
 .rk-file-drop-icon {
   display: grid;
   place-items: center;
@@ -49,23 +48,21 @@
   box-shadow: var(--rk-highlight);
   color: var(--rk-text-2);
   font-size: 20px;
-  [data-size="sm"] > & {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
-  }
-  [data-dragging] > & {
-    color: var(--rk-accent-text);
-  }
 }
-
+[data-size="sm"] > .rk-file-drop-icon {
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+}
+[data-dragging] > .rk-file-drop-icon {
+  color: var(--rk-accent-text);
+}
 .rk-file-drop-text {
   display: flex;
   flex-direction: column;
   gap: 4px;
   font-size: var(--rk-text-md);
 }
-
 .rk-file-drop-browse {
   padding: 0;
   border: 0;
@@ -77,14 +74,13 @@
   text-decoration-color: var(--rk-accent-line);
   text-underline-offset: 3px;
   cursor: pointer;
-  &:hover {
-    text-decoration-color: currentColor;
-  }
-  &:disabled {
-    cursor: not-allowed;
-  }
 }
-
+.rk-file-drop-browse:hover {
+  text-decoration-color: currentColor;
+}
+.rk-file-drop-browse:disabled {
+  cursor: not-allowed;
+}
 .rk-file-drop-hint {
   color: var(--rk-text-3);
   font-size: var(--rk-text-xs);

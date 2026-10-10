@@ -1,7 +1,7 @@
+/* Generated from styles/lightbox.css.ts. Run bun run styles; do not edit. */
 html:has(.rk-lightbox[open]) {
   overflow: hidden;
 }
-
 .rk-lightbox {
   width: 100vw;
   height: 100dvh;
@@ -19,29 +19,22 @@ html:has(.rk-lightbox[open]) {
     opacity var(--rk-dur) var(--rk-ease),
     display var(--rk-dur) allow-discrete,
     overlay var(--rk-dur) allow-discrete;
-
-  &::backdrop {
-    background: transparent;
-    backdrop-filter: blur(calc(var(--rk-blur) * 0.6)) saturate(0.8);
-  }
-
-  &[open] {
-    display: flex;
-    flex-direction: column;
-    opacity: 1;
-    @starting-style {
-      opacity: 0;
-    }
-  }
 }
-
+.rk-lightbox::backdrop {
+  background: transparent;
+  backdrop-filter: blur(calc(var(--rk-blur) * 0.6)) saturate(0.8);
+}
+.rk-lightbox[open] {
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+}
 .rk-lightbox-bar {
   display: flex;
   align-items: center;
   gap: calc(var(--rk-space) * 3);
   padding: calc(var(--rk-space) * 2) calc(var(--rk-space) * 3);
 }
-
 .rk-lightbox-title {
   display: flex;
   align-items: baseline;
@@ -51,12 +44,10 @@ html:has(.rk-lightbox[open]) {
   font-size: var(--rk-text-sm);
   color: var(--rk-text);
 }
-
 .rk-lightbox-counter {
   flex: none;
   color: var(--rk-text-3);
 }
-
 .rk-lightbox-tools {
   display: flex;
   align-items: center;
@@ -67,14 +58,12 @@ html:has(.rk-lightbox[open]) {
   backdrop-filter: blur(var(--rk-blur)) saturate(1.1);
   box-shadow: var(--rk-shadow-pop);
 }
-
 .rk-lightbox-zoom {
   min-width: 5ch;
   text-align: center;
   font-size: var(--rk-text-xs);
   color: var(--rk-text-2);
 }
-
 .rk-lightbox-stage {
   position: relative;
   flex: 1;
@@ -82,13 +71,11 @@ html:has(.rk-lightbox[open]) {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* room for the side arrows; the zoomed image still spans the whole stage */
   padding: calc(var(--rk-space) * 2) calc(var(--rk-h-lg) + var(--rk-space) * 5);
   overflow: hidden;
   touch-action: none;
   outline: none;
 }
-
 .rk-lightbox-img {
   max-width: 100%;
   max-height: 100%;
@@ -99,23 +86,21 @@ html:has(.rk-lightbox[open]) {
   transition:
     transform var(--rk-dur) var(--rk-ease-out),
     opacity var(--rk-dur) var(--rk-ease);
-  &[data-ready] {
-    opacity: 1;
-  }
-  [data-zoomed] > & {
-    cursor: grab;
-  }
-  [data-dragging] > & {
-    cursor: grabbing;
-    transition: opacity var(--rk-dur) var(--rk-ease);
-  }
 }
-
+.rk-lightbox-img[data-ready] {
+  opacity: 1;
+}
+[data-zoomed] > .rk-lightbox-img {
+  cursor: grab;
+}
+[data-dragging] > .rk-lightbox-img {
+  cursor: grabbing;
+  transition: opacity var(--rk-dur) var(--rk-ease);
+}
 .rk-lightbox-spinner {
   position: absolute;
   color: var(--rk-text-3);
 }
-
 .rk-lightbox-error {
   display: flex;
   flex-direction: column;
@@ -123,13 +108,12 @@ html:has(.rk-lightbox[open]) {
   gap: calc(var(--rk-space) * 2);
   color: var(--rk-text-3);
   font-size: var(--rk-text-sm);
-  & > svg {
-    width: 40px;
-    height: 40px;
-    stroke-width: 1.25;
-  }
 }
-
+.rk-lightbox-error > svg {
+  width: 40px;
+  height: 40px;
+  stroke-width: 1.25;
+}
 .rk-lightbox-nav {
   position: absolute;
   top: 50%;
@@ -137,17 +121,16 @@ html:has(.rk-lightbox[open]) {
   background: var(--rk-glass-bg);
   backdrop-filter: blur(var(--rk-blur));
   box-shadow: var(--rk-shadow-2);
-  &[data-side="prev"] {
-    left: calc(var(--rk-space) * 3);
-  }
-  &[data-side="next"] {
-    right: calc(var(--rk-space) * 3);
-  }
-  &:disabled {
-    opacity: 0;
-  }
 }
-
+.rk-lightbox-nav[data-side="prev"] {
+  left: calc(var(--rk-space) * 3);
+}
+.rk-lightbox-nav[data-side="next"] {
+  right: calc(var(--rk-space) * 3);
+}
+.rk-lightbox-nav:disabled {
+  opacity: 0;
+}
 .rk-lightbox-caption {
   margin: 0;
   padding: 0 calc(var(--rk-space) * 6) calc(var(--rk-space) * 2);
@@ -156,22 +139,19 @@ html:has(.rk-lightbox[open]) {
   color: var(--rk-text-2);
   text-wrap: balance;
 }
-
 .rk-lightbox-strip {
   display: flex;
   gap: calc(var(--rk-space) * 1.5);
   padding: calc(var(--rk-space) * 2) calc(var(--rk-space) * 3) calc(var(--rk-space) * 3);
   overflow-x: auto;
   scrollbar-width: none;
-  /* centred while it fits, scrollable from the first thumb once it doesn't */
-  & > :first-child {
-    margin-inline-start: auto;
-  }
-  & > :last-child {
-    margin-inline-end: auto;
-  }
 }
-
+.rk-lightbox-strip > :first-child {
+  margin-inline-start: auto;
+}
+.rk-lightbox-strip > :last-child {
+  margin-inline-end: auto;
+}
 .rk-lightbox-thumb {
   position: relative;
   display: grid;
@@ -189,25 +169,30 @@ html:has(.rk-lightbox[open]) {
   transition:
     opacity var(--rk-dur) var(--rk-ease),
     box-shadow var(--rk-dur) var(--rk-ease);
-  & > svg {
-    width: 20px;
-    height: 20px;
-    color: var(--rk-text-3);
-  }
-  & > img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  &:hover {
-    opacity: 0.8;
-  }
-  &[aria-current="true"] {
-    opacity: 1;
-    box-shadow:
-      0 0 0 2px var(--rk-bg),
-      0 0 0 4px var(--rk-inverse);
+}
+.rk-lightbox-thumb > svg {
+  width: 20px;
+  height: 20px;
+  color: var(--rk-text-3);
+}
+.rk-lightbox-thumb > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rk-lightbox-thumb:hover {
+  opacity: 0.8;
+}
+.rk-lightbox-thumb[aria-current="true"] {
+  opacity: 1;
+  box-shadow:
+    0 0 0 2px var(--rk-bg),
+    0 0 0 4px var(--rk-inverse);
+}
+@starting-style {
+  .rk-lightbox[open] {
+    opacity: 0;
   }
 }

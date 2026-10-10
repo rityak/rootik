@@ -93,3 +93,18 @@ describe("validateSchema", () => {
     expect(validateSchema(schema, { a: "", b: "" })).toEqual({});
   });
 });
+
+test("validation is repeatable for stateful regex and rejects malformed numeric values", () => {
+  for (const pattern of [/^[a-z]+$/g, /^[a-z]+$/y]) {
+    pattern.lastIndex = 2;
+    const schema: Schema = [{ key: "name", type: "string", label: "Name", pattern }];
+    expect(validateSchema(schema, { name: "valid" })).toEqual({});
+    expect(validateSchema(schema, { name: "valid" })).toEqual({});
+    expect(pattern.lastIndex).toBe(2);
+  }
+  const schema: Schema = [{ key: "count", type: "number", label: "Count", min: 0 }];
+  for (const value of [Number.NaN, Number.POSITIVE_INFINITY, "5", false, []])
+    expect(validateSchema(schema, { count: value })).toEqual({ count: LABELS.invalidFormat });
+  expect(validateSchema(schema, { count: null })).toEqual({});
+  expect(validateSchema(schema, { count: 0 })).toEqual({});
+});

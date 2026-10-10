@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#11151a" />
+    <link rel="icon" type="image/svg+xml" href="./assets/rootik-mark.svg" />
+    <title>Rootik — Rain study</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import RefreshRuntime from "/@react-refresh";
+      RefreshRuntime.injectIntoGlobalHook(window);
+      window.$RefreshReg$ = () => {};
+      window.$RefreshSig$ = () => (type) => type;
+      window.__vite_plugin_react_preamble_installed__ = true;
+    </script>
+    <script type="module" src="./demo.tsx"></script>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import { niceTicks } from "./components/charts";
 import { pageRange } from "./components/nav";
-import { APPEARANCE_SECTIONS, defaultValues, toCssVars } from "./theme/schema";
+import { APPEARANCE_SECTIONS, type AppearanceValues, defaultValues, toCssVars } from "./theme/schema";
 
 test("niceTicks covers the range with round steps", () => {
   expect(niceTicks(0, 2140)).toEqual([0, 1000, 2000, 3000]);
@@ -16,7 +16,7 @@ test("pageRange keeps ends, neighbours and fills single gaps", () => {
 });
 
 test("appearance schema maps values to CSS vars", () => {
-  const values = {
+  const values: AppearanceValues = {
     ...defaultValues(APPEARANCE_SECTIONS),
     pill: true,
     radius: 20,
@@ -32,7 +32,12 @@ test("appearance schema maps values to CSS vars", () => {
 });
 
 test("square corners zero every radius, pill included", () => {
-  const values = { ...defaultValues(APPEARANCE_SECTIONS), pill: true, radius: 20, corners: "square" };
+  const values: AppearanceValues = {
+    ...defaultValues(APPEARANCE_SECTIONS),
+    pill: true,
+    radius: 20,
+    corners: "square",
+  };
   const vars = toCssVars(APPEARANCE_SECTIONS, values);
   expect(vars["--rk-radius"]).toBe("0px");
   expect(vars["--rk-radius-control"]).toBe("0px");

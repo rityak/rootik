@@ -1,9 +1,9 @@
+/* Generated from styles/scroller.css.ts. Run bun run styles; do not edit. */
 .rk-scroller {
   --rk-scroller-fade: 32px;
   position: relative;
   min-width: 0;
 }
-
 .rk-scroller-viewport {
   display: flex;
   align-items: center;
@@ -11,32 +11,29 @@
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  /* one row: wrapping chip groups and self-scrolling tab bars keep their full width here */
-  & > * {
-    flex: none;
-    flex-wrap: nowrap;
-  }
-  /* fade only the edges that hide content */
-  .rk-scroller[data-back] > & {
-    mask-image: linear-gradient(to right, transparent, black var(--rk-scroller-fade));
-  }
-  .rk-scroller[data-forward] > & {
-    mask-image: linear-gradient(to left, transparent, black var(--rk-scroller-fade));
-  }
-  .rk-scroller[data-back][data-forward] > & {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black var(--rk-scroller-fade),
-      black calc(100% - var(--rk-scroller-fade)),
-      transparent
-    );
-  }
 }
-
+.rk-scroller-viewport::-webkit-scrollbar {
+  display: none;
+}
+.rk-scroller-viewport > * {
+  flex: none;
+  flex-wrap: nowrap;
+}
+.rk-scroller[data-back] > .rk-scroller-viewport {
+  mask-image: linear-gradient(to right, transparent, black var(--rk-scroller-fade));
+}
+.rk-scroller[data-forward] > .rk-scroller-viewport {
+  mask-image: linear-gradient(to left, transparent, black var(--rk-scroller-fade));
+}
+.rk-scroller[data-back][data-forward] > .rk-scroller-viewport {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--rk-scroller-fade),
+    black calc(100% - var(--rk-scroller-fade)),
+    transparent
+  );
+}
 .rk-scroller-btn {
   position: absolute;
   top: 50%;
@@ -57,20 +54,20 @@
   transition:
     color var(--rk-dur) var(--rk-ease),
     opacity var(--rk-dur) var(--rk-ease);
-  &[data-dir="back"] {
-    left: 0;
-  }
-  &[data-dir="forward"] {
-    right: 0;
-  }
-  &:hover {
-    color: var(--rk-text);
-  }
-  &[hidden] {
-    display: none;
-  }
-  & > svg {
-    width: 1em;
-    height: 1em;
-  }
+}
+.rk-scroller-btn[data-dir="back"] {
+  left: 0;
+}
+.rk-scroller-btn[data-dir="forward"] {
+  right: 0;
+}
+.rk-scroller-btn:hover {
+  color: var(--rk-text);
+}
+.rk-scroller-btn[hidden] {
+  display: none;
+}
+.rk-scroller-btn > svg {
+  width: 1em;
+  height: 1em;
 }

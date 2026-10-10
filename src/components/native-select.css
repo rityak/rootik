@@ -1,16 +1,15 @@
+/* Generated from styles/native-select.css.ts. Run bun run styles; do not edit. */
 .rk-native-select-wrap {
   position: relative;
   display: inline-flex;
   width: 100%;
   min-width: 0;
 }
-
 .rk-native-select {
   appearance: none;
   padding-inline-end: calc(var(--rk-space) * 8);
   text-overflow: ellipsis;
 }
-
 .rk-native-select-chevron {
   position: absolute;
   inset-inline-end: calc(var(--rk-space) * 2.5);
@@ -19,12 +18,11 @@
   color: var(--rk-text-3);
   pointer-events: none;
 }
-
-/* customizable select: the popup gets the menu look */
 @supports (appearance: base-select) {
   .rk-native-select,
   .rk-native-select::picker(select) {
-    appearance: base-select;
+    --rk-native-appearance: base-select;
+    appearance: var(--rk-native-appearance);
   }
   .rk-native-select::picker-icon {
     display: none;
@@ -47,17 +45,17 @@
     padding: 4px calc(var(--rk-space) * 2.5);
     border-radius: calc(var(--rk-radius-md) - 5px);
     font-size: var(--rk-text-md);
-    &:is(:hover, :focus-visible) {
-      background: var(--rk-press);
-      outline: none;
-    }
-    &:checked {
-      font-weight: 500;
-    }
-    &::checkmark {
-      order: 1;
-      margin-inline-start: auto;
-      color: var(--rk-accent-text);
-    }
+  }
+  .rk-native-select option:is(:hover, :focus-visible) {
+    background: var(--rk-press);
+    outline: none;
+  }
+  .rk-native-select option:checked {
+    font-weight: 500;
+  }
+  .rk-native-select option::checkmark {
+    order: 1;
+    margin-inline-start: auto;
+    color: var(--rk-accent-text);
   }
 }

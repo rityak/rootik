@@ -1,53 +1,47 @@
+/* Generated from styles/stepper.css.ts. Run bun run styles; do not edit. */
 .rk-stepper {
   --rk-step-marker: 26px;
   display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
-  &[data-size="sm"] {
-    --rk-step-marker: 20px;
-    font-size: var(--rk-text-sm);
-  }
-  &[data-orientation="vertical"] {
-    flex-direction: column;
-  }
 }
-
+.rk-stepper[data-size="sm"] {
+  --rk-step-marker: 20px;
+  font-size: var(--rk-text-sm);
+}
+.rk-stepper[data-orientation="vertical"] {
+  flex-direction: column;
+}
 .rk-step {
   position: relative;
   flex: 1;
   min-width: 0;
-
-  /* connector to the next step: solid while done, hatched for what's left */
-  &:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    border-radius: calc(1px * var(--rk-roundness));
-    background: var(--rk-hatch);
-  }
-  &[data-done]:not(:last-child)::after {
-    background: var(--rk-accent);
-  }
-  /* horizontal: every step takes an equal share with its marker centered over the label, so
-     the row is symmetric; the connector runs from this marker to the next one, which sits
-     at 150% of this step's width */
-  [data-orientation="horizontal"] > &:not(:last-child)::after {
-    top: calc(var(--rk-step-marker) / 2 - 1px);
-    left: calc(50% + var(--rk-step-marker) / 2 + var(--rk-space) * 2);
-    right: calc(var(--rk-step-marker) / 2 + var(--rk-space) * 2 - 50%);
-    height: 2px;
-  }
-  [data-orientation="vertical"] > & {
-    padding-bottom: calc(var(--rk-space) * 5);
-  }
-  [data-orientation="vertical"] > &:not(:last-child)::after {
-    top: calc(var(--rk-step-marker) + var(--rk-space) * 1.5);
-    bottom: calc(var(--rk-space) * 1.5);
-    left: calc(var(--rk-step-marker) / 2 - 1px);
-    width: 2px;
-  }
 }
-
+.rk-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  border-radius: calc(1px * var(--rk-roundness));
+  background: var(--rk-hatch);
+}
+.rk-step[data-done]:not(:last-child)::after {
+  background: var(--rk-accent);
+}
+[data-orientation="horizontal"] > .rk-step:not(:last-child)::after {
+  top: calc(var(--rk-step-marker) / 2 - 1px);
+  left: calc(50% + var(--rk-step-marker) / 2 + var(--rk-space) * 2);
+  right: calc(var(--rk-step-marker) / 2 + var(--rk-space) * 2 - 50%);
+  height: 2px;
+}
+[data-orientation="vertical"] > .rk-step {
+  padding-bottom: calc(var(--rk-space) * 5);
+}
+[data-orientation="vertical"] > .rk-step:not(:last-child)::after {
+  top: calc(var(--rk-step-marker) + var(--rk-space) * 1.5);
+  bottom: calc(var(--rk-space) * 1.5);
+  left: calc(var(--rk-step-marker) / 2 - 1px);
+  width: 2px;
+}
 .rk-step-inner {
   display: flex;
   align-items: flex-start;
@@ -58,27 +52,26 @@
   color: inherit;
   font: inherit;
   text-align: start;
-  [data-orientation="horizontal"] & {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding-inline: calc(var(--rk-space) * 2);
-    text-align: center;
-  }
-  &:is(button) {
-    border-radius: var(--rk-radius-control);
-    cursor: pointer;
-    &:hover .rk-step-label {
-      color: var(--rk-text);
-      text-decoration: underline;
-      text-underline-offset: 0.2em;
-    }
-  }
-  &[data-disabled] {
-    opacity: 0.5;
-  }
 }
-
+[data-orientation="horizontal"] .rk-step-inner {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-inline: calc(var(--rk-space) * 2);
+  text-align: center;
+}
+.rk-step-inner:is(button) {
+  border-radius: var(--rk-radius-control);
+  cursor: pointer;
+}
+.rk-step-inner:is(button):hover .rk-step-label {
+  color: var(--rk-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.rk-step-inner[data-disabled] {
+  opacity: 0.5;
+}
 .rk-step-marker {
   display: grid;
   place-items: center;
@@ -95,57 +88,51 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     box-shadow var(--rk-dur) var(--rk-ease);
-  /* an even size keeps the icon on whole pixels inside the even marker: 55% gave 11px in a
-     20px marker (4.5px inset) and the check rendered up-left by about a pixel */
-  & > svg {
-    width: round(calc(var(--rk-step-marker) * 0.6), 2px);
-    height: round(calc(var(--rk-step-marker) * 0.6), 2px);
-    stroke-width: 2.5;
-  }
-  [data-state="complete"] & {
-    background: var(--rk-accent);
-    box-shadow: none;
-    color: var(--rk-on-accent);
-  }
-  /* current = the inverted pill of the style guide */
-  [data-state="current"] & {
-    background: var(--rk-inverse);
-    box-shadow: 0 0 0 4px var(--rk-accent-soft);
-    color: var(--rk-on-inverse);
-  }
-  [data-state="error"] & {
-    background: var(--rk-danger);
-    box-shadow: none;
-    color: var(--rk-on-danger);
-  }
 }
-
+.rk-step-marker > svg {
+  width: round(calc(var(--rk-step-marker) * 0.6), 2px);
+  height: round(calc(var(--rk-step-marker) * 0.6), 2px);
+  stroke-width: 2.5;
+}
+[data-state="complete"] .rk-step-marker {
+  background: var(--rk-accent);
+  box-shadow: none;
+  color: var(--rk-on-accent);
+}
+[data-state="current"] .rk-step-marker {
+  background: var(--rk-inverse);
+  box-shadow: 0 0 0 4px var(--rk-accent-soft);
+  color: var(--rk-on-inverse);
+}
+[data-state="error"] .rk-step-marker {
+  background: var(--rk-danger);
+  box-shadow: none;
+  color: var(--rk-on-danger);
+}
 .rk-step-text {
   display: flex;
   flex-direction: column;
   gap: 1px;
   min-width: 0;
   padding-top: calc((var(--rk-step-marker) - 1.45em) / 2);
-  [data-orientation="horizontal"] & {
-    align-items: center;
-    padding-top: 0;
-  }
 }
-
+[data-orientation="horizontal"] .rk-step-text {
+  align-items: center;
+  padding-top: 0;
+}
 .rk-step-label {
   color: var(--rk-text-2);
   font-weight: 500;
-  [data-state="current"] & {
-    color: var(--rk-text);
-  }
-  [data-state="upcoming"] & {
-    color: var(--rk-text-3);
-  }
-  [data-state="error"] & {
-    color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
-  }
 }
-
+[data-state="current"] .rk-step-label {
+  color: var(--rk-text);
+}
+[data-state="upcoming"] .rk-step-label {
+  color: var(--rk-text-3);
+}
+[data-state="error"] .rk-step-label {
+  color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
+}
 .rk-step-desc {
   color: var(--rk-text-3);
   font-size: var(--rk-text-xs);

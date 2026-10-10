@@ -1,23 +1,20 @@
+/* Generated from styles/charts.css.ts. Run bun run styles; do not edit. */
 .rk-chart-frame {
   display: flex;
   flex-direction: column;
   gap: 10px;
   min-width: 0;
 }
-
-/* legend on the left, chart ⇄ table toggle on the right */
 .rk-chart-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   min-height: 24px;
-  & .rk-chart-toggle {
-    margin-inline-start: auto;
-  }
 }
-
-/* row headers read as labels, not as the uppercase column captions */
+.rk-chart-top .rk-chart-toggle {
+  margin-inline-start: auto;
+}
 .rk-chart-table tbody th {
   color: var(--rk-text-2);
   font-size: inherit;
@@ -25,61 +22,50 @@
   letter-spacing: normal;
   text-transform: none;
 }
-
 .rk-chart {
   position: relative;
   min-width: 0;
   width: 100%;
   font-variant-numeric: tabular-nums;
-  & svg {
-    display: block;
-    overflow: visible;
-  }
 }
-
+.rk-chart svg {
+  display: block;
+  overflow: visible;
+}
 .rk-chart-tick {
   fill: var(--rk-text-3);
   font-size: var(--rk-text-2xs);
-  &[data-hot] {
-    fill: var(--rk-text);
-    font-weight: 500;
-  }
 }
-
+.rk-chart-tick[data-hot] {
+  fill: var(--rk-text);
+  font-weight: 500;
+}
 .rk-chart-label {
   fill: var(--rk-text-2);
   font-size: var(--rk-text-xs);
 }
-
 .rk-chart-value {
   fill: var(--rk-text);
   font-size: var(--rk-text-xs);
   font-weight: 500;
 }
-
-.rk-chart-bar {
-  & path {
-    transition:
-      fill var(--rk-dur) var(--rk-ease),
-      opacity var(--rk-dur) var(--rk-ease);
-  }
-  &[data-hot] path:last-of-type {
-    filter: brightness(1.15);
-  }
+.rk-chart-bar path {
+  transition:
+    fill var(--rk-dur) var(--rk-ease),
+    opacity var(--rk-dur) var(--rk-ease);
 }
-
-.rk-chart-ref {
-  & line {
-    stroke: var(--rk-text-2);
-    stroke-dasharray: 3 4;
-  }
-  & text {
-    fill: var(--rk-text-2);
-    font-size: var(--rk-text-2xs);
-    font-weight: 500;
-  }
+.rk-chart-bar[data-hot] path:last-of-type {
+  filter: brightness(1.15);
 }
-
+.rk-chart-ref line {
+  stroke: var(--rk-text-2);
+  stroke-dasharray: 3 4;
+}
+.rk-chart-ref text {
+  fill: var(--rk-text-2);
+  font-size: var(--rk-text-2xs);
+  font-weight: 500;
+}
 .rk-chart-tip {
   position: absolute;
   z-index: 2;
@@ -97,30 +83,26 @@
   white-space: nowrap;
   pointer-events: none;
   translate: -50% calc(-100% - 10px);
-
-  & strong {
-    font-size: var(--rk-text-md);
-    font-weight: 600;
-  }
-  & > span:not(.rk-chart-tip-row) {
-    opacity: 0.7;
-  }
 }
-
+.rk-chart-tip strong {
+  font-size: var(--rk-text-md);
+  font-weight: 600;
+}
+.rk-chart-tip > span:not(.rk-chart-tip-row) {
+  opacity: 0.7;
+}
 .rk-chart-tip-head {
   margin-bottom: 2px;
   font-weight: 500;
 }
-
 .rk-chart-tip-row {
   display: flex;
   align-items: center;
   gap: 6px;
-  & > span:last-child {
-    opacity: 0.65;
-  }
 }
-
+.rk-chart-tip-row > span:last-child {
+  opacity: 0.65;
+}
 .rk-legend {
   display: flex;
   flex-wrap: wrap;
@@ -130,52 +112,47 @@
   list-style: none;
   font-size: var(--rk-text-xs);
   color: var(--rk-text-2);
-
-  & li {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
 }
-
+.rk-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 .rk-legend-key {
   flex-shrink: 0;
   width: 10px;
   height: 10px;
   border-radius: calc(3px * var(--rk-roundness));
-  &[data-shape="line"] {
-    width: 14px;
-    height: 2px;
-    border-radius: calc(1px * var(--rk-roundness));
-  }
-  &[data-shape="dot"] {
-    width: 8px;
-    height: 8px;
-    border-radius: var(--rk-radius-round);
-  }
 }
-
+.rk-legend-key[data-shape="line"] {
+  width: 14px;
+  height: 2px;
+  border-radius: calc(1px * var(--rk-roundness));
+}
+.rk-legend-key[data-shape="dot"] {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--rk-radius-round);
+}
 .rk-sparkline {
   width: 100%;
   min-width: 40px;
-  & svg {
-    display: block;
-    overflow: visible;
-  }
 }
-
+.rk-sparkline svg {
+  display: block;
+  overflow: visible;
+}
 .rk-gauge {
   position: relative;
   display: inline-block;
   flex-shrink: 0;
-  & svg {
-    display: block;
-  }
-  & line {
-    transition: stroke var(--rk-dur-slow) var(--rk-ease);
-  }
 }
-
+.rk-gauge svg {
+  display: block;
+}
+.rk-gauge line {
+  transition: stroke var(--rk-dur-slow) var(--rk-ease);
+}
 .rk-gauge-center {
   position: absolute;
   inset: 0;
@@ -186,7 +163,6 @@
   padding-top: 6%;
   gap: 2px;
 }
-
 .rk-gauge-value {
   display: flex;
   align-items: baseline;
@@ -195,34 +171,28 @@
   letter-spacing: -0.04em;
   line-height: 1;
 }
-
 .rk-gauge-unit {
   font-size: max(11px, 0.3em);
   font-weight: 400;
   letter-spacing: 0;
   color: var(--rk-text-3);
 }
-
 .rk-gauge-label {
   font-size: var(--rk-text-sm);
   color: var(--rk-text-3);
 }
-
-/* brush: overview strip aligned with the range slider's thumb travel */
 .rk-chart-brush {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
-
 .rk-chart-brush-overview {
   margin-inline: 8px;
-  & svg {
-    display: block;
-    overflow: visible;
-  }
 }
-
+.rk-chart-brush-overview svg {
+  display: block;
+  overflow: visible;
+}
 .rk-chart-brush-shade {
   fill: var(--rk-bg);
   opacity: 0.7;

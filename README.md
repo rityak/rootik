@@ -19,7 +19,8 @@
 - **150+ components, zero runtime dependencies.** Only React 19 as a peer. Icons are inline SVG, positioning
   and listboxes are hand-written, everything else is the platform: `<dialog>`, the Popover API, `<details>`,
   native inputs.
-- **Plain CSS on tokens.** Every color, radius, spacing and duration is a `--rk-*` custom property inside
+- **Static CSS on tokens.** Button, Input and Card are authored in Vanilla Extract; consumers still import
+  ordinary CSS without a build plugin. Colors, geometry and motion use `--rk-*` custom properties inside
   `@layer rootik`, so Tailwind or your own CSS wins without `!important`.
 - **Themeable at runtime.** Accent, neutral tint, radius, density, font, surface material (solid, veil, frost,
   liquid glass) and motion are live settings, with a ready-made settings form you can extend.
@@ -116,10 +117,15 @@ and switch with `<html data-theme="light">`. Put `data-rk-scope` next to it to m
 
 ## Development
 
+Toolkit development requires Bun and Node.js 24. Node runs the Vanilla Extract compiler; it is not a
+consumer dependency. All 74 toolkit stylesheets are authored in `styles/*.css.ts` and extracted to static CSS.
+
 ```bash
 bun install
 bun run dev      # stories on http://localhost:61000
-bun run check    # typecheck + biome + tests
+bun run check    # fresh CSS + typecheck + biome + unit/DOM tests
+bun run styles   # extract styles/*.css.ts into the checked-in CSS source bridge
+bun run check:pilot # packed dist/source + selective Tailwind consumers + Node SSR
 bun run build    # dist/: ESM + .d.ts + styles.css
 bun run visual   # local screenshot tests of every story (Playwright)
 ```
@@ -131,6 +137,53 @@ instead of `dist/`:
 // vite.config.ts
 export default defineConfig({ resolve: { conditions: ["source"] } });
 ```
+
+The `source` condition uses pre-extracted CSS too. Edit styles in `styles/*.css.ts`, not the
+generated CSS in `src/components/`, `src/theme/`, `src/tokens.css`, `src/base.css` or `src/fluent.css`. `bun run dev` regenerates CSS on changes; CI rejects
+stale generated files with `bun run styles:check`.
+
+### Rain and gradients (dev / 2.0 preparation)
+
+Graphite & Iris remains the default. Rain is opt-in:
+
+```tsx
+<RootikProvider
+  theme="rain"
+  storageKey="myapp:appearance"
+  defaults={{
+    "glow.gradient": "clouds",
+    "glow.color": "oklch(0.58 0.09 255)",
+    "glow.secondary": "oklch(0.5 0.08 285)",
+    "glow.strength": 70,
+    "glow.x": 75,
+    "glow.y": 10,
+    "glow.spread": 130,
+    "glow.softness": 85,
+    "material.reflection": 35,
+    "material.reflectionAngle": 145,
+  }}
+>
+  <AppearanceSettings only={["background", "effects"]} />
+</RootikProvider>
+```
+
+`glow.gradient`: `material` preserves the original material lighting; `clouds` controls two radial
+lights; `linear` uses `glow.angle` (0–360°). Custom mode uses two colors, strength is 0–250%, cloud
+origins are 0–100%, spread is 40–200%, falloff is 20–100%. Canvas lighting also works with Solid.
+Surface reflection has its own strength (0–200%) and angle, independent of the canvas.
+
+Settings work through controlled values, storage and nested `Scope`; registered extension fields are
+validated too. Invalid types/enums/non-finite numbers fall back, ranges are clamped. Color settings
+accept hex, RGB and OKLCH and normalize to OKLCH; named colors, HSL and CSS expressions are rejected.
+`AppearanceValues` checks built-in value types but keeps extension keys open for compatibility.
+
+Selective component CSS imports include core tokens, Rain/Fluent and their component dependencies.
+All CSS exports use `@layer rootik`; declare the layer order before Tailwind imports. Existing component props, `rk-*` selectors and `--rk-*` names
+are preserved. See real components/settings at `?story=appearance--rain&mode=preview` in Ladle.
+
+Use one global provider and nested `Scope` for local appearance, or an explicit provider `target`.
+Stored preferences are read after SSR hydration; the existing flat storage format is preserved.
+See [MIGRATION-2.0.md](MIGRATION-2.0.md) for the strict column helper and the few contract corrections.
 
 ## License
 

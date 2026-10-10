@@ -17,5 +17,14 @@
     "paths": { "@ladle/react": ["./.ladle/ladle-types.d.ts"] },
     "noEmit": true
   },
-  "include": ["src", ".ladle", "scripts", "visual", "playwright.config.ts"]
+  "include": [
+    "src",
+    ".ladle",
+    "scripts",
+    "styles",
+    "tests",
+    "visual",
+    "playwright.config.ts",
+    "vite.config.ts"
+  ]
 }

@@ -1,3 +1,12 @@
+/* Generated from styles/progress.css.ts. Run bun run styles; do not edit. */
+@keyframes rk-indeterminate {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 300% 0;
+  }
+}
 .rk-spinner {
   --rk-size: 16px;
   display: inline-block;
@@ -7,25 +16,22 @@
   border-radius: var(--rk-radius-round);
   border: 2px solid color-mix(in oklab, currentColor 22%, transparent);
   border-top-color: currentColor;
-  /* reduced motion slows the turn instead of stopping it: a frozen arc no longer reads as "busy" */
-  animation: rk-spin calc(0.7s / max(var(--rk-motion), 0.25)) linear infinite;
+  animation: rk-spin calc(var(--rk-dur-slow) * 2.1875) linear infinite;
+  animation-play-state: var(--rk-animation-state);
 }
-
 .rk-progress {
   --rk-progress-h: 6px;
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 1.5);
   min-width: 0;
-  &[data-size="sm"] {
-    --rk-progress-h: 3px;
-  }
-  &[data-size="lg"] {
-    --rk-progress-h: 10px;
-  }
 }
-
-/* edge: the wrapper covers the parent and clips to its corners; the track sits on the bottom edge */
+.rk-progress[data-size="sm"] {
+  --rk-progress-h: 3px;
+}
+.rk-progress[data-size="lg"] {
+  --rk-progress-h: 10px;
+}
 .rk-progress[data-variant="edge"] {
   position: absolute;
   inset: 0;
@@ -34,19 +40,18 @@
   overflow: clip;
   border-radius: var(--rk-card-r, var(--rk-radius-lg));
   pointer-events: none;
-  & .rk-progress-track {
-    position: absolute;
-    inset: auto 0 0;
-    height: 3px;
-    border-radius: 0;
-    background: none;
-  }
-  & .rk-progress-bar {
-    border-radius: 0;
-    box-shadow: none;
-  }
 }
-
+.rk-progress[data-variant="edge"] .rk-progress-track {
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  border-radius: 0;
+  background: none;
+}
+.rk-progress[data-variant="edge"] .rk-progress-bar {
+  border-radius: 0;
+  box-shadow: none;
+}
 .rk-progress-head {
   display: flex;
   justify-content: space-between;
@@ -54,7 +59,6 @@
   font-size: var(--rk-text-xs);
   color: var(--rk-text-2);
 }
-
 .rk-progress-track {
   position: relative;
   height: var(--rk-progress-h);
@@ -62,74 +66,57 @@
   border-radius: var(--rk-radius-pill);
   background: var(--rk-hatch), color-mix(in oklab, var(--rk-surface-3) 70%, transparent);
 }
-
 .rk-progress-bar {
   height: 100%;
   border-radius: inherit;
   background: var(--rk-tone);
   box-shadow: 0 0 12px -2px color-mix(in oklab, var(--rk-tone) 60%, transparent);
   transition: width var(--rk-dur-slow) var(--rk-ease-out);
-
-  [data-indeterminate] > & {
-    /* without motion: a dim full-width fill instead of a sliding 35% bar (which would read as 35% done) */
-    width: calc(100% - 65% * var(--rk-motion));
-    opacity: calc(0.35 + 0.65 * var(--rk-motion));
-    animation: rk-indeterminate calc(var(--rk-dur-slow) * 4) var(--rk-ease) infinite;
-  }
 }
-
-@keyframes rk-indeterminate {
-  from {
-    translate: -100% 0;
-  }
-  to {
-    translate: 300% 0;
-  }
+[data-indeterminate] > .rk-progress-bar {
+  width: calc(100% - 65% * var(--rk-motion));
+  opacity: calc(0.35 + 0.65 * var(--rk-motion));
+  animation: rk-indeterminate calc(var(--rk-dur-slow) * 4) var(--rk-ease) infinite;
+  animation-play-state: var(--rk-animation-state);
 }
-
 .rk-ring {
   position: relative;
   display: inline-grid;
   place-items: center;
   flex-shrink: 0;
-  & svg {
-    position: absolute;
-    inset: 0;
-    rotate: -90deg;
-  }
-  & circle {
-    fill: none;
-  }
 }
-
+.rk-ring svg {
+  position: absolute;
+  inset: 0;
+  rotate: -90deg;
+}
+.rk-ring circle {
+  fill: none;
+}
 .rk-ring-track {
   stroke: var(--rk-surface-3);
 }
-
 .rk-ring-bar {
   stroke: var(--rk-tone);
   stroke-linecap: var(--rk-linecap);
   transition: stroke-dashoffset var(--rk-dur-slow) var(--rk-ease-out);
 }
-
 .rk-ring-label {
   font-size: var(--rk-text-xs);
   font-weight: 500;
 }
-
 .rk-skeleton {
   height: 0.9em;
   border-radius: var(--rk-radius-sm);
   background:
     linear-gradient(90deg, var(--rk-surface-2) 30%, var(--rk-surface-3) 50%, var(--rk-surface-2) 70%) 0 0 /
     300% 100%;
-  animation: rk-shimmer 1.6s linear infinite;
-  animation-duration: calc(1.6s / max(var(--rk-motion), 0.001));
-  &[data-round] {
-    border-radius: var(--rk-radius-pill);
-  }
+  animation: rk-shimmer calc(var(--rk-dur-slow) * 5) linear infinite;
+  animation-play-state: var(--rk-animation-state);
 }
-
+.rk-skeleton[data-round] {
+  border-radius: var(--rk-radius-pill);
+}
 .rk-skeleton-lines {
   display: flex;
   flex-direction: column;

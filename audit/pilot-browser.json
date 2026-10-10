@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-10",
+  "story": "appearance--rain",
+  "browser": "Codex in-app Chromium",
+  "source": "production components with extracted CSS",
+  "screenshot": "audit/rain-demo/preview-v2.png",
+  "checks": {
+    "libraryHotReload": "full reload after provider file touch; no console errors",
+    "nestedStyles": {
+      "outerFluent": "oklch(0.53 0.1 275)",
+      "innerRootik": "oklch(0.86 0.018 255)",
+      "nestedFluent": "oklch(0.53 0.1 275)"
+    },
+    "floatingShift": {
+      "anchorBefore": 282,
+      "panelBefore": 288,
+      "anchorAfter": 362,
+      "panelAfter": 368,
+      "gap": 6
+    },
+    "comboboxLabel": "Updated",
+    "asyncFailure": "Couldn’t load",
+    "selectiveTailwind": "prior physical check: rounded-none utility overrides radius; Select option menu styled"
+  },
+  "limitations": [
+    "viewport override did not change the IAB width; 375px was not verified",
+    "Firefox/Safari/WebView/NVDA/forced-colors not verified",
+    "composited glass contrast and five-screen approval pending"
+  ]
+}

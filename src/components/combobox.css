@@ -1,7 +1,7 @@
+/* Generated from styles/combobox.css.ts. Run bun run styles; do not edit. */
 .rk-combobox {
   padding-right: calc(var(--rk-space) * 1);
 }
-
 .rk-combobox-toggle {
   display: grid;
   place-items: center;
@@ -13,30 +13,27 @@
   background: transparent;
   color: var(--rk-text-3);
   cursor: pointer;
-  & > svg {
-    width: 1em;
-    height: 1em;
-    transition: rotate var(--rk-dur) var(--rk-ease);
-  }
-  [aria-expanded="true"] ~ .rk-input-end > & > svg {
-    rotate: 180deg;
-  }
-  &:hover:not(:disabled) {
-    background: var(--rk-hover);
-    color: var(--rk-text);
-  }
 }
-
+.rk-combobox-toggle > svg {
+  width: 1em;
+  height: 1em;
+  transition: rotate var(--rk-dur) var(--rk-ease);
+}
+[aria-expanded="true"] ~ .rk-input-end > .rk-combobox-toggle > svg {
+  rotate: 180deg;
+}
+.rk-combobox-toggle:hover:not(:disabled) {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
 .rk-combobox-list {
   font-size: var(--rk-text-md);
 }
-
 .rk-combobox-mark {
   background: none;
   color: var(--rk-accent-text);
   font-weight: 600;
 }
-
 .rk-combobox-empty {
   padding: 10px 8px;
   color: var(--rk-text-3);

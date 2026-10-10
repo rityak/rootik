@@ -1,10 +1,10 @@
+/* Generated from styles/menubar.css.ts. Run bun run styles; do not edit. */
 .rk-menubar {
   display: inline-flex;
   align-items: center;
   gap: 1px;
   min-width: 0;
 }
-
 .rk-menubar-trigger {
   height: calc(var(--rk-h-sm) - 4px);
   padding: 0 calc(var(--rk-space) * 2.5);
@@ -19,21 +19,19 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     color var(--rk-dur) var(--rk-ease);
-
-  &:hover,
-  &:focus-visible {
-    background: var(--rk-hover);
-    color: var(--rk-text);
-  }
-  &[aria-expanded="true"] {
-    background: var(--rk-press);
-    color: var(--rk-text);
-  }
-  &[aria-disabled="true"] {
-    opacity: 0.45;
-  }
-  /* the bar is dense: the ring hugs the title instead of floating 2px out */
-  &:focus-visible {
-    outline-offset: -1px;
-  }
+}
+.rk-menubar-trigger:hover,
+.rk-menubar-trigger:focus-visible {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
+.rk-menubar-trigger[aria-expanded="true"] {
+  background: var(--rk-press);
+  color: var(--rk-text);
+}
+.rk-menubar-trigger[aria-disabled="true"] {
+  opacity: 0.45;
+}
+.rk-menubar-trigger:focus-visible {
+  outline-offset: -1px;
 }
