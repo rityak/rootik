@@ -1,9 +1,9 @@
+/* Generated from styles/shortcuts-sheet.css.ts. Run bun run styles; do not edit. */
 .rk-shortcuts {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
   gap: 16px 24px;
 }
-
 .rk-shortcuts-title {
   margin: 0 0 6px;
   font-size: var(--rk-text-2xs);
@@ -12,11 +12,9 @@
   text-transform: uppercase;
   color: var(--rk-text-3);
 }
-
 .rk-shortcuts-group dl {
   margin: 0;
 }
-
 .rk-shortcuts-row {
   display: flex;
   align-items: center;
@@ -24,13 +22,13 @@
   gap: 12px;
   padding: 5px 0;
   font-size: var(--rk-text-sm);
-  & + & {
-    box-shadow: inset 0 1px 0 var(--rk-line);
-  }
-  & dt {
-    color: var(--rk-text-2);
-  }
-  & dd {
-    margin: 0;
-  }
+}
+.rk-shortcuts-row + .rk-shortcuts-row {
+  box-shadow: inset 0 1px 0 var(--rk-line);
+}
+.rk-shortcuts-row dt {
+  color: var(--rk-text-2);
+}
+.rk-shortcuts-row dd {
+  margin: 0;
 }

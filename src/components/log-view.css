@@ -1,3 +1,4 @@
+/* Generated from styles/log-view.css.ts. Run bun run styles; do not edit. */
 .rk-log {
   display: flex;
   flex-direction: column;
@@ -7,7 +8,6 @@
   box-shadow: inset 0 0 0 1px var(--rk-line);
   overflow: hidden;
 }
-
 .rk-log-toolbar {
   display: flex;
   align-items: center;
@@ -17,32 +17,27 @@
   border-bottom: 1px solid var(--rk-line);
   background: var(--rk-well-soft);
 }
-
 .rk-log-search {
   flex: 1 1 160px;
   max-width: 280px;
 }
-
 .rk-log-actions {
   display: flex;
   gap: 2px;
   margin-inline-start: auto;
 }
-
 .rk-log-body {
   flex: 1;
   min-height: 0;
-  & > .rk-stick-viewport {
-    overflow: auto;
-    outline-offset: -2px;
-  }
 }
-
+.rk-log-body > .rk-stick-viewport {
+  overflow: auto;
+  outline-offset: -2px;
+}
 .rk-log-spacer {
   position: relative;
   min-width: 100%;
 }
-
 .rk-log-row {
   --rk-tone: transparent;
   --rk-tone-text: var(--rk-text);
@@ -61,43 +56,39 @@
   line-height: var(--rk-log-row);
   white-space: pre;
   color: var(--rk-text-2);
-
-  &[data-level="trace"],
-  &[data-level="debug"] {
-    --rk-tone-text: var(--rk-text-3);
-    color: var(--rk-text-3);
-  }
-  &[data-level="info"] {
-    --rk-tone-text: var(--rk-info);
-  }
-  &[data-level="warn"] {
-    --rk-tone: var(--rk-warn);
-    --rk-tone-text: var(--rk-warn);
-  }
-  &[data-level="error"] {
-    --rk-tone: var(--rk-danger);
-    --rk-tone-text: oklch(from var(--rk-danger) calc(l + 0.08) c h);
-    color: var(--rk-text);
-  }
-  /* warnings and errors get a faint row tint and an edge mark */
-  &:is([data-level="warn"], [data-level="error"]) {
-    background: color-mix(in oklab, var(--rk-tone) 7%, transparent);
-    box-shadow: inset 2px 0 0 color-mix(in oklab, var(--rk-tone) 70%, transparent);
-  }
-  &:hover {
-    background-color: var(--rk-hover);
-  }
-  &[data-clickable] {
-    cursor: pointer;
-  }
-
-  & mark {
-    border-radius: calc(2px * var(--rk-roundness));
-    background: color-mix(in oklab, var(--rk-accent) 40%, transparent);
-    color: var(--rk-text);
-  }
 }
-
+.rk-log-row[data-level="trace"],
+.rk-log-row[data-level="debug"] {
+  --rk-tone-text: var(--rk-text-3);
+  color: var(--rk-text-3);
+}
+.rk-log-row[data-level="info"] {
+  --rk-tone-text: var(--rk-info);
+}
+.rk-log-row[data-level="warn"] {
+  --rk-tone: var(--rk-warn);
+  --rk-tone-text: var(--rk-warn);
+}
+.rk-log-row[data-level="error"] {
+  --rk-tone: var(--rk-danger);
+  --rk-tone-text: oklch(from var(--rk-danger) calc(l + 0.08) c h);
+  color: var(--rk-text);
+}
+.rk-log-row:is([data-level="warn"], [data-level="error"]) {
+  background: color-mix(in oklab, var(--rk-tone) 7%, transparent);
+  box-shadow: inset 2px 0 0 color-mix(in oklab, var(--rk-tone) 70%, transparent);
+}
+.rk-log-row:hover {
+  background-color: var(--rk-hover);
+}
+.rk-log-row[data-clickable] {
+  cursor: pointer;
+}
+.rk-log-row mark {
+  border-radius: calc(2px * var(--rk-roundness));
+  background: color-mix(in oklab, var(--rk-accent) 40%, transparent);
+  color: var(--rk-text);
+}
 .rk-log-no {
   min-width: calc(var(--rk-log-digits, 3) * 1ch);
   text-align: end;
@@ -105,35 +96,30 @@
   opacity: 0.7;
   user-select: none;
 }
-
 .rk-log-time {
   color: var(--rk-text-3);
   font-variant-numeric: tabular-nums;
 }
-
 .rk-log-level {
   min-width: 5ch;
   font-weight: 600;
   font-size: var(--rk-text-2xs);
   letter-spacing: 0.04em;
   color: var(--rk-tone-text);
-  &[data-empty] {
-    color: var(--rk-text-3);
-    font-weight: 400;
-  }
 }
-
+.rk-log-level[data-empty] {
+  color: var(--rk-text-3);
+  font-weight: 400;
+}
 .rk-log-source {
   color: var(--rk-text-3);
-  &::after {
-    content: ":";
-  }
 }
-
+.rk-log-source::after {
+  content: ":";
+}
 .rk-log-msg {
   color: inherit;
 }
-
 .rk-log-empty {
   padding: calc(var(--rk-space) * 8);
   text-align: center;

@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "includes": ["src/**", ".ladle/**", "*.json"]
+    "includes": ["src/**", "styles/**", "tests/**", ".ladle/**", "*.json", "vite.config.ts"]
   },
   "plugins": ["./biome/untinted-neutral.grit"],
   "css": { "parser": { "tailwindDirectives": true } },

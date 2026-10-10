@@ -1,6 +1,8 @@
 node_modules/
 dist/
 build/
+audit/package-fixture/
+audit/consumer-build/
 .ladle/build/
 *.tsbuildinfo
 *.tgz

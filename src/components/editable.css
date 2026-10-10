@@ -1,14 +1,14 @@
+/* Generated from styles/editable.css.ts. Run bun run styles; do not edit. */
 .rk-editable {
   position: relative;
   display: inline-flex;
   max-width: 100%;
   min-width: 0;
   vertical-align: top;
-  &[data-mono] {
-    font-family: var(--rk-font-mono);
-  }
 }
-
+.rk-editable[data-mono] {
+  font-family: var(--rk-font-mono);
+}
 .rk-editable-view,
 .rk-editable-input {
   margin: 0 calc(var(--rk-space) * -1.5);
@@ -19,7 +19,6 @@
   font: inherit;
   letter-spacing: inherit;
 }
-
 .rk-editable-view {
   display: inline-flex;
   align-items: center;
@@ -29,24 +28,21 @@
   cursor: text;
   text-align: start;
   transition: background-color var(--rk-dur) var(--rk-ease);
-
-  &:hover:not(:disabled) {
-    background: var(--rk-hover);
-  }
-  &:disabled {
-    cursor: default;
-  }
 }
-
+.rk-editable-view:hover:not(:disabled) {
+  background: var(--rk-hover);
+}
+.rk-editable-view:disabled {
+  cursor: default;
+}
 .rk-editable-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  &[data-empty] {
-    color: var(--rk-text-3);
-  }
 }
-
+.rk-editable-text[data-empty] {
+  color: var(--rk-text-3);
+}
 .rk-editable-icon {
   flex-shrink: 0;
   width: 0.85em;
@@ -54,28 +50,24 @@
   color: var(--rk-text-3);
   opacity: 0;
   transition: opacity var(--rk-dur) var(--rk-ease);
-  .rk-editable-view:is(:hover, :focus-visible) > & {
-    opacity: 1;
-  }
 }
-
+.rk-editable-view:is(:hover, :focus-visible) > .rk-editable-icon {
+  opacity: 1;
+}
 .rk-editable-input {
   field-sizing: content;
   min-width: 4ch;
   max-width: calc(100% + var(--rk-space) * 3);
   background: var(--rk-well);
-  /* inset only: titles and truncating cells clip anything drawn outside the box. The editor is always
-     focused while shown, so it wears the full kit ring */
   outline: 2px solid var(--rk-focus);
   outline-offset: -2px;
-  &[aria-invalid="true"] {
-    outline-color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
-  }
-  &::placeholder {
-    color: var(--rk-text-3);
-  }
 }
-
+.rk-editable-input[aria-invalid="true"] {
+  outline-color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
+}
+.rk-editable-input::placeholder {
+  color: var(--rk-text-3);
+}
 .rk-editable-error {
   position: absolute;
   top: calc(100% + 4px);

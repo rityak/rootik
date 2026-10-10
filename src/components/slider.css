@@ -1,3 +1,4 @@
+/* Generated from styles/slider.css.ts. Run bun run styles; do not edit. */
 .rk-slider {
   --rk-track: 6px;
   --rk-thumb: 16px;
@@ -6,7 +7,6 @@
   gap: 6px;
   min-width: 120px;
 }
-
 .rk-slider-head {
   display: flex;
   justify-content: space-between;
@@ -14,13 +14,11 @@
   font-size: var(--rk-text-sm);
   color: var(--rk-text-2);
 }
-
 .rk-slider-value {
   margin-inline-start: auto;
   color: var(--rk-text);
   font-weight: 500;
 }
-
 .rk-slider-input {
   appearance: none;
   width: 100%;
@@ -28,120 +26,114 @@
   margin: 0;
   background: transparent;
   cursor: pointer;
-
-  &::-webkit-slider-runnable-track {
-    height: var(--rk-track);
-    border-radius: var(--rk-radius-pill);
-    background:
-      linear-gradient(to right, var(--rk-accent) var(--rk-fill), transparent var(--rk-fill)), var(--rk-hatch),
-      var(--rk-surface-3);
-  }
-  &::-moz-range-track {
-    height: var(--rk-track);
-    border-radius: var(--rk-radius-pill);
-    background: var(--rk-hatch), var(--rk-surface-3);
-  }
-  &::-moz-range-progress {
-    height: var(--rk-track);
-    border-radius: var(--rk-radius-pill);
-    background: var(--rk-accent);
-  }
-  &::-webkit-slider-thumb {
-    appearance: none;
-    width: var(--rk-thumb);
-    height: var(--rk-thumb);
-    margin-top: calc((var(--rk-track) - var(--rk-thumb)) / 2);
-    border: 0;
-    border-radius: var(--rk-radius-round);
-    background: var(--rk-inverse);
-    box-shadow:
-      0 0 0 0 var(--rk-accent-soft),
-      0 2px 6px oklch(var(--rk-shade) / 0.5);
-    transition:
-      box-shadow var(--rk-dur) var(--rk-ease),
-      scale var(--rk-dur) var(--rk-spring);
-  }
-  &::-moz-range-thumb {
-    width: var(--rk-thumb);
-    height: var(--rk-thumb);
-    border: 0;
-    border-radius: var(--rk-radius-round);
-    background: var(--rk-inverse);
-    box-shadow: 0 2px 6px oklch(var(--rk-shade) / 0.5);
-  }
-  &:hover::-webkit-slider-thumb {
-    box-shadow:
-      0 0 0 5px var(--rk-accent-soft),
-      0 2px 6px oklch(var(--rk-shade) / 0.5);
-  }
-  &:active::-webkit-slider-thumb {
-    scale: 1.15;
-  }
-  &:focus-visible {
-    outline: none;
-    &::-webkit-slider-thumb {
-      box-shadow:
-        0 0 0 2px var(--rk-bg),
-        0 0 0 4px var(--rk-focus);
-    }
-    &::-moz-range-thumb {
-      box-shadow:
-        0 0 0 2px var(--rk-bg),
-        0 0 0 4px var(--rk-focus);
-    }
-  }
-  &:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
 }
-
+.rk-slider-input::-webkit-slider-runnable-track {
+  height: var(--rk-track);
+  border-radius: var(--rk-radius-pill);
+  background:
+    linear-gradient(to right, var(--rk-accent) var(--rk-fill), transparent var(--rk-fill)), var(--rk-hatch),
+    var(--rk-surface-3);
+}
+.rk-slider-input::-moz-range-track {
+  height: var(--rk-track);
+  border-radius: var(--rk-radius-pill);
+  background: var(--rk-hatch), var(--rk-surface-3);
+}
+.rk-slider-input::-moz-range-progress {
+  height: var(--rk-track);
+  border-radius: var(--rk-radius-pill);
+  background: var(--rk-accent);
+}
+.rk-slider-input::-webkit-slider-thumb {
+  appearance: none;
+  width: var(--rk-thumb);
+  height: var(--rk-thumb);
+  margin-top: calc((var(--rk-track) - var(--rk-thumb)) / 2);
+  border: 0;
+  border-radius: var(--rk-radius-round);
+  background: var(--rk-inverse);
+  box-shadow:
+    0 0 0 0 var(--rk-accent-soft),
+    0 2px 6px oklch(var(--rk-shade) / 0.5);
+  transition:
+    box-shadow var(--rk-dur) var(--rk-ease),
+    scale var(--rk-dur) var(--rk-spring);
+}
+.rk-slider-input::-moz-range-thumb {
+  width: var(--rk-thumb);
+  height: var(--rk-thumb);
+  border: 0;
+  border-radius: var(--rk-radius-round);
+  background: var(--rk-inverse);
+  box-shadow: 0 2px 6px oklch(var(--rk-shade) / 0.5);
+}
+.rk-slider-input:hover::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 5px var(--rk-accent-soft),
+    0 2px 6px oklch(var(--rk-shade) / 0.5);
+}
+.rk-slider-input:active::-webkit-slider-thumb {
+  scale: 1.15;
+}
+.rk-slider-input:focus-visible {
+  outline: none;
+}
+.rk-slider-input:focus-visible::-webkit-slider-thumb {
+  box-shadow:
+    0 0 0 2px var(--rk-bg),
+    0 0 0 4px var(--rk-focus);
+}
+.rk-slider-input:focus-visible::-moz-range-thumb {
+  box-shadow:
+    0 0 0 2px var(--rk-bg),
+    0 0 0 4px var(--rk-focus);
+}
+.rk-slider-input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 .rk-slider-marks {
   position: relative;
   height: 1.2em;
   margin: 0 calc(var(--rk-thumb) / 2);
   font-size: var(--rk-text-2xs);
   color: var(--rk-text-3);
-  & span {
-    position: absolute;
-    translate: -50% 0;
-  }
 }
-
-/* vertical: native vertical writing mode, min at the bottom */
+.rk-slider-marks span {
+  position: absolute;
+  translate: -50% 0;
+}
 .rk-slider[data-orientation="vertical"] {
   flex-direction: column-reverse;
   align-items: center;
   min-width: 0;
   min-height: 120px;
-  & .rk-slider-input {
-    flex: 1;
-    width: var(--rk-thumb);
-    height: auto;
-    writing-mode: vertical-lr;
-    direction: rtl;
-    &::-webkit-slider-runnable-track {
-      width: var(--rk-track);
-      height: 100%;
-      background:
-        linear-gradient(to top, var(--rk-accent) var(--rk-fill), transparent var(--rk-fill)), var(--rk-hatch),
-        var(--rk-surface-3);
-    }
-    &::-webkit-slider-thumb {
-      margin-top: 0;
-      margin-left: calc((var(--rk-track) - var(--rk-thumb)) / 2);
-    }
-  }
 }
-
+.rk-slider[data-orientation="vertical"] .rk-slider-input {
+  flex: 1;
+  width: var(--rk-thumb);
+  height: auto;
+  writing-mode: vertical-lr;
+  direction: rtl;
+}
+.rk-slider[data-orientation="vertical"] .rk-slider-input::-webkit-slider-runnable-track {
+  width: var(--rk-track);
+  height: 100%;
+  background:
+    linear-gradient(to top, var(--rk-accent) var(--rk-fill), transparent var(--rk-fill)), var(--rk-hatch),
+    var(--rk-surface-3);
+}
+.rk-slider[data-orientation="vertical"] .rk-slider-input::-webkit-slider-thumb {
+  margin-top: 0;
+  margin-left: calc((var(--rk-track) - var(--rk-thumb)) / 2);
+}
 .rk-range-body {
   position: relative;
   height: var(--rk-thumb);
-  &[data-disabled] {
-    opacity: 0.45;
-  }
 }
-
+.rk-range-body[data-disabled] {
+  opacity: 0.45;
+}
 .rk-range-track {
   position: absolute;
   inset: calc((var(--rk-thumb) - var(--rk-track)) / 2) 0;
@@ -156,29 +148,27 @@
     ),
     var(--rk-hatch), var(--rk-surface-3);
 }
-
-/* two inputs share the track: only their thumbs take the pointer */
 .rk-range-input {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  &[data-top] {
-    z-index: 1;
-  }
-  &::-webkit-slider-runnable-track {
-    background: transparent;
-  }
-  &::-moz-range-track,
-  &::-moz-range-progress {
-    background: transparent;
-  }
-  &::-webkit-slider-thumb {
-    pointer-events: auto;
-  }
-  &::-moz-range-thumb {
-    pointer-events: auto;
-  }
-  &:disabled {
-    opacity: 1;
-  }
+}
+.rk-range-input[data-top] {
+  z-index: 1;
+}
+.rk-range-input::-webkit-slider-runnable-track {
+  background: transparent;
+}
+.rk-range-input::-moz-range-track,
+.rk-range-input::-moz-range-progress {
+  background: transparent;
+}
+.rk-range-input::-webkit-slider-thumb {
+  pointer-events: auto;
+}
+.rk-range-input::-moz-range-thumb {
+  pointer-events: auto;
+}
+.rk-range-input:disabled {
+  opacity: 1;
 }

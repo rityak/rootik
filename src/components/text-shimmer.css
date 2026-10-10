@@ -1,19 +1,17 @@
-.rk-text-shimmer[data-active] {
-  /* the band sits mid-gradient; both ends of the sweep show only the dim part, so a stopped animation is static */
-  background:
-    linear-gradient(90deg, var(--rk-text-3) 42%, var(--rk-text) 50%, var(--rk-text-3) 58%) 100% 0 / 250% 100%;
-  background-clip: text;
-  color: transparent;
-  animation: rk-text-shimmer 2s linear infinite;
-  animation-duration: calc(2s / max(var(--rk-motion), 0.001));
-}
-
+/* Generated from styles/text-shimmer.css.ts. Run bun run styles; do not edit. */
 @keyframes rk-text-shimmer {
   to {
     background-position: 0 0;
   }
 }
-
+.rk-text-shimmer[data-active] {
+  background:
+    linear-gradient(90deg, var(--rk-text-3) 42%, var(--rk-text) 50%, var(--rk-text-3) 58%) 100% 0 / 250% 100%;
+  background-clip: text;
+  color: transparent;
+  animation: rk-text-shimmer calc(var(--rk-dur-slow) * 6.25) linear infinite;
+  animation-play-state: var(--rk-animation-state);
+}
 @media (forced-colors: active) {
   .rk-text-shimmer[data-active] {
     color: CanvasText;

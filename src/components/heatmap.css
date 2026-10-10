@@ -1,17 +1,16 @@
+/* Generated from styles/heatmap.css.ts. Run bun run styles; do not edit. */
 .rk-heatmap {
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 3);
   min-width: 0;
 }
-
 .rk-heatmap-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--rk-space);
 }
-
 .rk-heatmap-scale {
   display: flex;
   align-items: center;
@@ -19,14 +18,12 @@
   color: var(--rk-text-2);
   font-size: var(--rk-text-xs);
 }
-
 .rk-heatmap-ramp {
   width: 120px;
   height: 8px;
   border-radius: var(--rk-radius-pill);
   background: linear-gradient(to right in oklch, var(--rk-chart-seq-lo), var(--rk-chart-seq-hi));
 }
-
 .rk-heatmap-swatch {
   width: 12px;
   height: 12px;
@@ -35,57 +32,49 @@
   background: var(--rk-hatch), var(--rk-well-soft);
   box-shadow: inset 0 0 0 1px var(--rk-line);
 }
-
 .rk-heatmap-grid {
   display: grid;
   grid-template-columns: max-content repeat(var(--rk-cols), minmax(16px, 1fr));
   gap: 2px;
   outline: none;
-  /* more columns than room (24 hours on a phone): scroll inside the chart, not past the card */
   max-width: 100%;
   overflow-x: auto;
   overscroll-behavior-x: contain;
 }
-
 .rk-heatmap-row {
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: subgrid;
   align-items: center;
 }
-
 .rk-heatmap-rowhead,
 .rk-heatmap-col {
   color: var(--rk-text-3);
   font-size: var(--rk-text-xs);
   transition: color var(--rk-dur) var(--rk-ease);
-  &[data-hot] {
-    color: var(--rk-text);
-  }
 }
-
+:is(.rk-heatmap-rowhead, .rk-heatmap-col)[data-hot] {
+  color: var(--rk-text);
+}
 .rk-heatmap-rowhead {
   padding-right: 8px;
   text-align: end;
   white-space: nowrap;
 }
-
-/* column labels read bottom-to-top so long tags fit narrow columns */
 .rk-heatmap-col {
   display: flex;
   justify-content: center;
   align-self: end;
   padding-bottom: 6px;
-  & > span {
-    max-height: 120px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    writing-mode: vertical-rl;
-    rotate: 180deg;
-  }
 }
-
+.rk-heatmap-col > span {
+  max-height: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+}
 .rk-heatmap-cell {
   display: grid;
   place-items: center;
@@ -94,18 +83,17 @@
   color: var(--rk-text);
   font-size: var(--rk-text-2xs);
   transition: box-shadow var(--rk-dur) var(--rk-ease);
-
-  &[data-bright] {
-    color: var(--rk-on-inverse);
-  }
-  &[data-empty] {
-    background: var(--rk-hatch), var(--rk-well-soft);
-  }
-  &:hover,
-  &:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 2px var(--rk-surface-1),
-      0 0 0 3.5px var(--rk-text);
-  }
+}
+.rk-heatmap-cell[data-bright] {
+  color: var(--rk-on-inverse);
+}
+.rk-heatmap-cell[data-empty] {
+  background: var(--rk-hatch), var(--rk-well-soft);
+}
+.rk-heatmap-cell:hover,
+.rk-heatmap-cell:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--rk-surface-1),
+    0 0 0 3.5px var(--rk-text);
 }

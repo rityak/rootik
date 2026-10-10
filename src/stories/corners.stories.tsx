@@ -1,9 +1,18 @@
 import type { Story } from "@ladle/react";
-import { Avatar, Button, Card, IconButton, Input, Scope, SegmentedControl } from "..";
+import {
+  Avatar,
+  type BuiltinAppearanceValues,
+  Button,
+  Card,
+  IconButton,
+  Input,
+  Scope,
+  SegmentedControl,
+} from "..";
 
 export default { title: "Overview" };
 
-const sample = (shape: string) => (
+const sample = (shape: BuiltinAppearanceValues["corners"]) => (
   <Scope values={{ corners: shape }}>
     <Card
       title={shape === "squircle" ? "Squircle" : shape === "square" ? "Square" : "Round"}

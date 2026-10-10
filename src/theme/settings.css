@@ -1,18 +1,16 @@
+/* Generated from styles/settings.css.ts. Run bun run styles; do not edit. */
 .rk-settings {
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 3);
   min-width: 0;
 }
-
 .rk-settings-select {
   width: 160px;
 }
-
 .rk-settings-slider {
   width: 200px;
 }
-
 .rk-settings-footer {
   display: flex;
   justify-content: flex-end;

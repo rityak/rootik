@@ -1,10 +1,10 @@
+/* Generated from styles/relative-time.css.ts. Run bun run styles; do not edit. */
 .rk-relative-time {
   white-space: nowrap;
 }
-
 .rk-timer {
   white-space: nowrap;
-  &[data-ended] {
-    color: var(--rk-text-3);
-  }
+}
+.rk-timer[data-ended] {
+  color: var(--rk-text-3);
 }

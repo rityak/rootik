@@ -48,6 +48,8 @@ export interface FloatingProps extends Omit<HTMLAttributes<HTMLDivElement>, "pop
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   anchor: Anchor;
+  /** Element tracked for layout shifts when `anchor` is a virtual rect function. */
+  contextElement?: RefObject<Element | null>;
   placement?: Placement;
   offset?: number;
   /** `manual`: no light dismiss (tooltips, toasts). */
@@ -68,6 +70,7 @@ export function Floating({
   open,
   onOpenChange,
   anchor,
+  contextElement,
   placement = "bottom-start",
   offset = 6,
   manual,
@@ -99,35 +102,80 @@ export function Floating({
     const el = own.current;
     if (!el) return;
     let frame = 0;
+    let move: IntersectionObserver | undefined;
+    const element = typeof anchor === "function" ? contextElement?.current : anchor.current;
+    const watchMove = (threshold = 1) => {
+      move?.disconnect();
+      if (!element || !el.matches(":popover-open") || typeof IntersectionObserver === "undefined") return;
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const root = document.documentElement;
+      move = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry || !el.matches(":popover-open")) return;
+          const next = element.getBoundingClientRect();
+          if (
+            next.x !== rect.x ||
+            next.y !== rect.y ||
+            next.width !== rect.width ||
+            next.height !== rect.height
+          )
+            follow();
+          else if (
+            entry.intersectionRatio > 0 &&
+            entry.intersectionRatio < 1 &&
+            entry.intersectionRatio !== threshold
+          )
+            watchMove(entry.intersectionRatio);
+        },
+        {
+          rootMargin: `${-rect.top}px ${rect.right - root.clientWidth}px ${rect.bottom - root.clientHeight}px ${-rect.left}px`,
+          threshold,
+        },
+      );
+      move.observe(element);
+    };
     const follow = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(position);
+      frame = requestAnimationFrame(() => {
+        position();
+        watchMove();
+      });
     };
     const resize = new ResizeObserver(follow);
+    const track = () => {
+      window.addEventListener("scroll", follow, true);
+      window.addEventListener("resize", follow);
+      resize.observe(el);
+      if (element) resize.observe(element);
+      watchMove();
+    };
     const onToggle = (event: Event) => {
       const next = (event as ToggleEvent).newState === "open";
       if (next) {
         position();
-        window.addEventListener("scroll", follow, true);
-        window.addEventListener("resize", follow);
-        resize.observe(el);
+        track();
       } else {
         delete el.dataset.placed;
         window.removeEventListener("scroll", follow, true);
         window.removeEventListener("resize", follow);
         resize.disconnect();
+        move?.disconnect();
+        cancelAnimationFrame(frame);
       }
       onChange.current?.(next);
     };
     el.addEventListener("toggle", onToggle);
+    if (el.matches(":popover-open")) track();
     return () => {
       el.removeEventListener("toggle", onToggle);
       window.removeEventListener("scroll", follow, true);
       window.removeEventListener("resize", follow);
       resize.disconnect();
+      move?.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [position, onChange]);
+  }, [position, onChange, anchor, contextElement]);
 
   // anchor/placement changed while open (context menu reopened at a new point)
   useLayoutEffect(position, [position]);

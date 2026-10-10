@@ -1,0 +1,3136 @@
+{
+  "rootik": {
+    "id": "rootik@0.6.1",
+    "name": "rootik",
+    "version": "0.6.1",
+    "size": 586701,
+    "unpackedSize": 2705176,
+    "shasum": "445c57efd0e56499c56a8bcae6b74784a3960760",
+    "integrity": "sha512-2mnFD+SOhyxTxS2MaDpbNwKaU0rqdejO9aBx8Q1Ck2GVInnpcflXwnRfEVee7juehGWExNjzSvjXWy2NpTF7Nw==",
+    "filename": "rootik-0.6.1.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1062,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 6244,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/bars-list.d.ts",
+        "size": 1212,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/bars-list.d.ts.map",
+        "size": 962,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/bars-list.js",
+        "size": 2240,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/bars-list.js.map",
+        "size": 2613,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/busy-overlay.d.ts",
+        "size": 788,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/busy-overlay.d.ts.map",
+        "size": 503,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/busy-overlay.js",
+        "size": 1017,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/busy-overlay.js.map",
+        "size": 734,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/button.d.ts",
+        "size": 2098,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/button.d.ts.map",
+        "size": 1660,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/button.js",
+        "size": 2730,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/button.js.map",
+        "size": 2607,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/card.d.ts",
+        "size": 5920,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/card.d.ts.map",
+        "size": 3980,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/card.js",
+        "size": 9037,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/card.js.map",
+        "size": 8268,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/chart-parts.d.ts",
+        "size": 1875,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/chart-parts.d.ts.map",
+        "size": 1544,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/chart-parts.js",
+        "size": 4488,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/chart-parts.js.map",
+        "size": 5630,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/charts.d.ts",
+        "size": 4726,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/charts.d.ts.map",
+        "size": 3896,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/charts.js",
+        "size": 20122,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/charts.js.map",
+        "size": 26560,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/checkbox-group.d.ts",
+        "size": 1127,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/checkbox-group.d.ts.map",
+        "size": 993,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/checkbox-group.js",
+        "size": 2671,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/checkbox-group.js.map",
+        "size": 3142,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/choice.d.ts",
+        "size": 5371,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/choice.d.ts.map",
+        "size": 5223,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/choice.js",
+        "size": 9722,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/choice.js.map",
+        "size": 10548,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/code-block.d.ts",
+        "size": 2301,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/code-block.d.ts.map",
+        "size": 1707,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/code-block.js",
+        "size": 4021,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/code-block.js.map",
+        "size": 3494,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/color-picker.d.ts",
+        "size": 2148,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/color-picker.d.ts.map",
+        "size": 1621,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/color-picker.js",
+        "size": 12261,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/color-picker.js.map",
+        "size": 14968,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/combobox.d.ts",
+        "size": 1898,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/combobox.d.ts.map",
+        "size": 1658,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/combobox.js",
+        "size": 8905,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/combobox.js.map",
+        "size": 9132,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/confirm.d.ts",
+        "size": 1295,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/confirm.d.ts.map",
+        "size": 847,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/confirm.js",
+        "size": 4788,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/confirm.js.map",
+        "size": 5250,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/copy-button.d.ts",
+        "size": 843,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/copy-button.d.ts.map",
+        "size": 588,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/copy-button.js",
+        "size": 1539,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/copy-button.js.map",
+        "size": 1517,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/data-state.d.ts",
+        "size": 1515,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/data-state.d.ts.map",
+        "size": 1098,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/data-state.js",
+        "size": 2215,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/data-state.js.map",
+        "size": 2082,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/data.d.ts",
+        "size": 5629,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/data.d.ts.map",
+        "size": 3904,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/data.js",
+        "size": 23884,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/data.js.map",
+        "size": 25395,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/date-range.d.ts",
+        "size": 1266,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/date-range.d.ts.map",
+        "size": 1054,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/date-range.js",
+        "size": 3031,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/date-range.js.map",
+        "size": 3727,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/dialog.d.ts",
+        "size": 2152,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/dialog.d.ts.map",
+        "size": 1708,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/dialog.js",
+        "size": 7678,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/dialog.js.map",
+        "size": 7473,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/display.d.ts",
+        "size": 2537,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/display.d.ts.map",
+        "size": 2055,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/display.js",
+        "size": 3721,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/display.js.map",
+        "size": 3971,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/editable.d.ts",
+        "size": 1311,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/editable.d.ts.map",
+        "size": 887,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/editable.js",
+        "size": 3241,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/editable.js.map",
+        "size": 3198,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/fieldset.d.ts",
+        "size": 866,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/fieldset.d.ts.map",
+        "size": 542,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/fieldset.js",
+        "size": 837,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/fieldset.js.map",
+        "size": 572,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/file-drop.d.ts",
+        "size": 1637,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/file-drop.d.ts.map",
+        "size": 1216,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/file-drop.js",
+        "size": 4144,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/file-drop.js.map",
+        "size": 4041,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/floating-window.d.ts",
+        "size": 1003,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/floating-window.d.ts.map",
+        "size": 759,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/floating-window.js",
+        "size": 3479,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/floating-window.js.map",
+        "size": 3570,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/form.d.ts",
+        "size": 1029,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/form.d.ts.map",
+        "size": 682,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/form.js",
+        "size": 2542,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/form.js.map",
+        "size": 2358,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/heatmap.d.ts",
+        "size": 1365,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/heatmap.d.ts.map",
+        "size": 974,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/heatmap.js",
+        "size": 6384,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/heatmap.js.map",
+        "size": 7033,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/hover-card.d.ts",
+        "size": 866,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/hover-card.d.ts.map",
+        "size": 624,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/hover-card.js",
+        "size": 2825,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/hover-card.js.map",
+        "size": 2714,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/image-grid.d.ts",
+        "size": 2506,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/image-grid.d.ts.map",
+        "size": 1850,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/image-grid.js",
+        "size": 9471,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/image-grid.js.map",
+        "size": 9718,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/indicator.d.ts",
+        "size": 1179,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/indicator.d.ts.map",
+        "size": 845,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/indicator.js",
+        "size": 1109,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/indicator.js.map",
+        "size": 1065,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/input-group.d.ts",
+        "size": 835,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/input-group.d.ts.map",
+        "size": 538,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/input-group.js",
+        "size": 756,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/input-group.js.map",
+        "size": 577,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/input.d.ts",
+        "size": 2609,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/input.d.ts.map",
+        "size": 2110,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/input.js",
+        "size": 4948,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/input.js.map",
+        "size": 4656,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/item.d.ts",
+        "size": 2034,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/item.d.ts.map",
+        "size": 1396,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/item.js",
+        "size": 2303,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/item.js.map",
+        "size": 2028,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/json-view.d.ts",
+        "size": 1098,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/json-view.d.ts.map",
+        "size": 711,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/json-view.js",
+        "size": 7276,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/json-view.js.map",
+        "size": 8518,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout.d.ts",
+        "size": 8265,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout.d.ts.map",
+        "size": 4551,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout.js",
+        "size": 13655,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/layout.js.map",
+        "size": 12360,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/lightbox.d.ts",
+        "size": 2273,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/lightbox.d.ts.map",
+        "size": 1618,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/lightbox.js",
+        "size": 14715,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/lightbox.js.map",
+        "size": 16950,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/log-view.d.ts",
+        "size": 2654,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/log-view.d.ts.map",
+        "size": 1979,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/log-view.js",
+        "size": 7055,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/log-view.js.map",
+        "size": 7736,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/menu.d.ts",
+        "size": 4531,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/menu.d.ts.map",
+        "size": 3212,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/menu.js",
+        "size": 12504,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/menu.js.map",
+        "size": 12217,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/menubar.d.ts",
+        "size": 1079,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/menubar.d.ts.map",
+        "size": 635,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/menubar.js",
+        "size": 7429,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/menubar.js.map",
+        "size": 7335,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/meter.d.ts",
+        "size": 1937,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/meter.d.ts.map",
+        "size": 1310,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/meter.js",
+        "size": 2632,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/meter.js.map",
+        "size": 3075,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/native-select.d.ts",
+        "size": 749,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/native-select.d.ts.map",
+        "size": 565,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/native-select.js",
+        "size": 1012,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/native-select.js.map",
+        "size": 783,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/nav.d.ts",
+        "size": 7717,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/nav.d.ts.map",
+        "size": 5852,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/nav.js",
+        "size": 15937,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/nav.js.map",
+        "size": 16689,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/number-input.d.ts",
+        "size": 1871,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/number-input.d.ts.map",
+        "size": 1302,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/number-input.js",
+        "size": 6366,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/number-input.js.map",
+        "size": 6482,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/overflow-list.d.ts",
+        "size": 1273,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/overflow-list.d.ts.map",
+        "size": 873,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/overflow-list.js",
+        "size": 3732,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/overflow-list.js.map",
+        "size": 4090,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/part-charts.d.ts",
+        "size": 4060,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/part-charts.d.ts.map",
+        "size": 3247,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/part-charts.js",
+        "size": 17145,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/part-charts.js.map",
+        "size": 22400,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/password-input.d.ts",
+        "size": 682,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/password-input.d.ts.map",
+        "size": 515,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/password-input.js",
+        "size": 1483,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/password-input.js.map",
+        "size": 1268,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/pin-input.d.ts",
+        "size": 1510,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/pin-input.d.ts.map",
+        "size": 1236,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/pin-input.js",
+        "size": 5957,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/pin-input.js.map",
+        "size": 6173,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/power-button.d.ts",
+        "size": 1101,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/power-button.d.ts.map",
+        "size": 886,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/power-button.js",
+        "size": 1272,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/power-button.js.map",
+        "size": 1141,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/progress.d.ts",
+        "size": 2076,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/progress.d.ts.map",
+        "size": 1766,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/progress.js",
+        "size": 3293,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/progress.js.map",
+        "size": 3703,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/prose.d.ts",
+        "size": 595,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/prose.d.ts.map",
+        "size": 348,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/prose.js",
+        "size": 592,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/prose.js.map",
+        "size": 344,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/qr-code.d.ts",
+        "size": 1225,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/qr-code.d.ts.map",
+        "size": 843,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/qr-code.js",
+        "size": 13237,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/qr-code.js.map",
+        "size": 20816,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/relative-time.d.ts",
+        "size": 1899,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/relative-time.d.ts.map",
+        "size": 1311,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/relative-time.js",
+        "size": 3985,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/relative-time.js.map",
+        "size": 4576,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/rolling-number.d.ts",
+        "size": 760,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/rolling-number.d.ts.map",
+        "size": 516,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/rolling-number.js",
+        "size": 1565,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/rolling-number.js.map",
+        "size": 1465,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/scatter-chart.d.ts",
+        "size": 1370,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/scatter-chart.d.ts.map",
+        "size": 1281,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/scatter-chart.js",
+        "size": 6189,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/scatter-chart.js.map",
+        "size": 8399,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/schema-form.d.ts",
+        "size": 5261,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/schema-form.d.ts.map",
+        "size": 4238,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/schema-form.js",
+        "size": 11779,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/schema-form.js.map",
+        "size": 12928,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/scroller.d.ts",
+        "size": 698,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/scroller.d.ts.map",
+        "size": 423,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/scroller.js",
+        "size": 3654,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/scroller.js.map",
+        "size": 3791,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/select-panel.d.ts",
+        "size": 1518,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/select-panel.d.ts.map",
+        "size": 1273,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/select-panel.js",
+        "size": 6610,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/select-panel.js.map",
+        "size": 6812,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/select.d.ts",
+        "size": 2228,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/select.d.ts.map",
+        "size": 2043,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/select.js",
+        "size": 7350,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/select.js.map",
+        "size": 8063,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/selection-bar.d.ts",
+        "size": 957,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/selection-bar.d.ts.map",
+        "size": 647,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/selection-bar.js",
+        "size": 2157,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/selection-bar.js.map",
+        "size": 1949,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/settings-list.d.ts",
+        "size": 1579,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/settings-list.d.ts.map",
+        "size": 1084,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/settings-list.js",
+        "size": 1436,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/settings-list.js.map",
+        "size": 1302,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/shortcuts-sheet.d.ts",
+        "size": 461,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/shortcuts-sheet.d.ts.map",
+        "size": 397,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/shortcuts-sheet.js",
+        "size": 1429,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/shortcuts-sheet.js.map",
+        "size": 1551,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/slider.d.ts",
+        "size": 1876,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/slider.d.ts.map",
+        "size": 1578,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/slider.js",
+        "size": 4810,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/slider.js.map",
+        "size": 5001,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/sortable-list.d.ts",
+        "size": 789,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/sortable-list.d.ts.map",
+        "size": 715,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/sortable-list.js",
+        "size": 6306,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/sortable-list.js.map",
+        "size": 5461,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/split-button.d.ts",
+        "size": 770,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/split-button.d.ts.map",
+        "size": 527,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/split-button.js",
+        "size": 1154,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/split-button.js.map",
+        "size": 970,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/splitter.d.ts",
+        "size": 1250,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/splitter.d.ts.map",
+        "size": 852,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/splitter.js",
+        "size": 3560,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/splitter.js.map",
+        "size": 3579,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/spoiler.d.ts",
+        "size": 895,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/spoiler.d.ts.map",
+        "size": 644,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/spoiler.js",
+        "size": 1821,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/spoiler.js.map",
+        "size": 1522,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/stepper.d.ts",
+        "size": 1265,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/stepper.d.ts.map",
+        "size": 859,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/stepper.js",
+        "size": 2492,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/stepper.js.map",
+        "size": 2024,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/stick-to-bottom.d.ts",
+        "size": 1420,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/stick-to-bottom.d.ts.map",
+        "size": 884,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/stick-to-bottom.js",
+        "size": 3251,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/stick-to-bottom.js.map",
+        "size": 3097,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/text-shimmer.d.ts",
+        "size": 531,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/text-shimmer.d.ts.map",
+        "size": 369,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/text-shimmer.js",
+        "size": 423,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/text-shimmer.js.map",
+        "size": 372,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/text.d.ts",
+        "size": 640,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/text.d.ts.map",
+        "size": 715,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/text.js",
+        "size": 438,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/text.js.map",
+        "size": 454,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/timeline.d.ts",
+        "size": 1113,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/timeline.d.ts.map",
+        "size": 822,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/timeline.js",
+        "size": 1227,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/timeline.js.map",
+        "size": 1073,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/toast.d.ts",
+        "size": 1719,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/toast.d.ts.map",
+        "size": 1079,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/toast.js",
+        "size": 7616,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/toast.js.map",
+        "size": 8870,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/token-field.d.ts",
+        "size": 1550,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/token-field.d.ts.map",
+        "size": 1164,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/token-field.js",
+        "size": 7497,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/token-field.js.map",
+        "size": 7891,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tooltip.d.ts",
+        "size": 520,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tooltip.d.ts.map",
+        "size": 552,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tooltip.js",
+        "size": 3406,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tooltip.js.map",
+        "size": 3097,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tour.d.ts",
+        "size": 876,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tour.d.ts.map",
+        "size": 738,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tour.js",
+        "size": 3759,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tour.js.map",
+        "size": 3948,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tracker.d.ts",
+        "size": 1156,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tracker.d.ts.map",
+        "size": 885,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tracker.js",
+        "size": 2664,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tracker.js.map",
+        "size": 2857,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tree-select.d.ts",
+        "size": 1157,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tree-select.d.ts.map",
+        "size": 1122,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tree-select.js",
+        "size": 4954,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tree-select.js.map",
+        "size": 4726,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tree.d.ts",
+        "size": 2446,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tree.d.ts.map",
+        "size": 1889,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tree.js",
+        "size": 12071,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/tree.js.map",
+        "size": 14422,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/truncate.d.ts",
+        "size": 1030,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/truncate.d.ts.map",
+        "size": 654,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/truncate.js",
+        "size": 2135,
+        "mode": 420
+      },
+      {
+        "path": "dist/components/truncate.js.map",
+        "size": 2004,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/bars-list.css",
+        "size": 1883,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/base.css",
+        "size": 6943,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/busy-overlay.css",
+        "size": 1033,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/button.css",
+        "size": 4493,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/card.css",
+        "size": 14296,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/charts.css",
+        "size": 3950,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/checkbox-group.css",
+        "size": 597,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/choice.css",
+        "size": 10609,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/code-block.css",
+        "size": 3702,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/color-picker.css",
+        "size": 2631,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/combobox.css",
+        "size": 858,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/confirm.css",
+        "size": 41,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/copy-button.css",
+        "size": 412,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/data-state.css",
+        "size": 114,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/data.css",
+        "size": 9034,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/dialog.css",
+        "size": 5536,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/display.css",
+        "size": 4839,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/editable.css",
+        "size": 2097,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/fieldset.css",
+        "size": 1296,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/file-drop.css",
+        "size": 2103,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/floating-window.css",
+        "size": 1554,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/heatmap.css",
+        "size": 2362,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/hover-card.css",
+        "size": 319,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/image-grid.css",
+        "size": 3821,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/indicator.css",
+        "size": 1851,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/input-group.css",
+        "size": 1469,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/input.css",
+        "size": 5339,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/item.css",
+        "size": 4877,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/json-view.css",
+        "size": 2411,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/layout.css",
+        "size": 14015,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/lightbox.css",
+        "size": 4339,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/log-view.css",
+        "size": 2911,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/menu.css",
+        "size": 4769,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/menubar.css",
+        "size": 881,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/meter.css",
+        "size": 1163,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/native-select.css",
+        "size": 1472,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/nav.css",
+        "size": 14029,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/number-input.css",
+        "size": 1174,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/overflow-list.css",
+        "size": 1169,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/part-charts.css",
+        "size": 3119,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/password-input.css",
+        "size": 730,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/pin-input.css",
+        "size": 1779,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/power-button.css",
+        "size": 2703,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/progress.css",
+        "size": 3213,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/prose.css",
+        "size": 3266,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/qr-code.css",
+        "size": 264,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/rain.css",
+        "size": 828,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/relative-time.css",
+        "size": 134,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/rolling-number.css",
+        "size": 546,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/schema-form.css",
+        "size": 927,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/scroller.css",
+        "size": 1661,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/select-panel.css",
+        "size": 1544,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/selection-bar.css",
+        "size": 1384,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/settings-list.css",
+        "size": 1244,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/shortcuts-sheet.css",
+        "size": 638,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/slider.css",
+        "size": 4226,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/sortable-list.css",
+        "size": 1240,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/split-button.css",
+        "size": 729,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/splitter.css",
+        "size": 1484,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/spoiler.css",
+        "size": 989,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/stepper.css",
+        "size": 3979,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/stick-to-bottom.css",
+        "size": 1165,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/text-shimmer.css",
+        "size": 643,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/text.css",
+        "size": 694,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/timeline.css",
+        "size": 3032,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/toast.css",
+        "size": 2812,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/token-field.css",
+        "size": 1498,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/tokens.css",
+        "size": 7856,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/tooltip.css",
+        "size": 461,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/tour.css",
+        "size": 1589,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/tracker.css",
+        "size": 1461,
+        "mode": 420
+      },
+      {
+        "path": "dist/css/truncate.css",
+        "size": 615,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 4481,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts.map",
+        "size": 2847,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 4253,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js.map",
+        "size": 2659,
+        "mode": 420
+      },
+      {
+        "path": "dist/labels/en.d.ts",
+        "size": 3663,
+        "mode": 420
+      },
+      {
+        "path": "dist/labels/en.d.ts.map",
+        "size": 266,
+        "mode": 420
+      },
+      {
+        "path": "dist/labels/en.js",
+        "size": 99,
+        "mode": 420
+      },
+      {
+        "path": "dist/labels/en.js.map",
+        "size": 186,
+        "mode": 420
+      },
+      {
+        "path": "dist/labels/ru.d.ts",
+        "size": 298,
+        "mode": 420
+      },
+      {
+        "path": "dist/labels/ru.d.ts.map",
+        "size": 355,
+        "mode": 420
+      },
+      {
+        "path": "dist/labels/ru.js",
+        "size": 11808,
+        "mode": 420
+      },
+      {
+        "path": "dist/labels/ru.js.map",
+        "size": 6595,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/announce.d.ts",
+        "size": 320,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/announce.d.ts.map",
+        "size": 234,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/announce.js",
+        "size": 1175,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/announce.js.map",
+        "size": 1025,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/cx.d.ts",
+        "size": 120,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/cx.d.ts.map",
+        "size": 207,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/cx.js",
+        "size": 107,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/cx.js.map",
+        "size": 220,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/floating.d.ts",
+        "size": 1698,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/floating.d.ts.map",
+        "size": 1191,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/floating.js",
+        "size": 4596,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/floating.js.map",
+        "size": 5410,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/format.d.ts",
+        "size": 1877,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/format.d.ts.map",
+        "size": 1112,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/format.js",
+        "size": 3830,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/format.js.map",
+        "size": 5310,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/highlight.d.ts",
+        "size": 919,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/highlight.d.ts.map",
+        "size": 592,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/highlight.js",
+        "size": 2472,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/highlight.js.map",
+        "size": 2516,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/hooks.d.ts",
+        "size": 4056,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/hooks.d.ts.map",
+        "size": 2178,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/hooks.js",
+        "size": 12570,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/hooks.js.map",
+        "size": 12146,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/icons.d.ts",
+        "size": 3757,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/icons.d.ts.map",
+        "size": 2326,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/icons.js",
+        "size": 6838,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/icons.js.map",
+        "size": 6049,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/indicator.d.ts",
+        "size": 631,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/indicator.d.ts.map",
+        "size": 474,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/indicator.js",
+        "size": 1396,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/indicator.js.map",
+        "size": 1573,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/labels.d.ts",
+        "size": 12328,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/labels.d.ts.map",
+        "size": 3941,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/labels.js",
+        "size": 5451,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/labels.js.map",
+        "size": 4440,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/roving.d.ts",
+        "size": 552,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/roving.d.ts.map",
+        "size": 317,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/roving.js",
+        "size": 4258,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/roving.js.map",
+        "size": 4095,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/selection.d.ts",
+        "size": 1737,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/selection.d.ts.map",
+        "size": 1066,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/selection.js",
+        "size": 2660,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/selection.js.map",
+        "size": 2980,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/virtual.d.ts",
+        "size": 1825,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/virtual.d.ts.map",
+        "size": 1068,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/virtual.js",
+        "size": 4116,
+        "mode": 420
+      },
+      {
+        "path": "dist/lib/virtual.js.map",
+        "size": 4917,
+        "mode": 420
+      },
+      {
+        "path": "dist/styles.css",
+        "size": 211734,
+        "mode": 420
+      },
+      {
+        "path": "dist/tailwind.css",
+        "size": 905,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/provider.d.ts",
+        "size": 3126,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/provider.d.ts.map",
+        "size": 1934,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/provider.js",
+        "size": 5577,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/provider.js.map",
+        "size": 5590,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/schema.d.ts",
+        "size": 8056,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/schema.d.ts.map",
+        "size": 5671,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/schema.js",
+        "size": 28487,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/schema.js.map",
+        "size": 24185,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/settings.d.ts",
+        "size": 901,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/settings.d.ts.map",
+        "size": 586,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/settings.js",
+        "size": 3978,
+        "mode": 420
+      },
+      {
+        "path": "dist/theme/settings.js.map",
+        "size": 4718,
+        "mode": 420
+      },
+      {
+        "path": "llms.txt",
+        "size": 30859,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 3227,
+        "mode": 420
+      },
+      {
+        "path": "src/base.css",
+        "size": 6943,
+        "mode": 420
+      },
+      {
+        "path": "src/components/bars-list.css",
+        "size": 1883,
+        "mode": 420
+      },
+      {
+        "path": "src/components/bars-list.tsx",
+        "size": 3378,
+        "mode": 420
+      },
+      {
+        "path": "src/components/busy-overlay.css",
+        "size": 1033,
+        "mode": 420
+      },
+      {
+        "path": "src/components/busy-overlay.tsx",
+        "size": 1315,
+        "mode": 420
+      },
+      {
+        "path": "src/components/button.css",
+        "size": 4493,
+        "mode": 420
+      },
+      {
+        "path": "src/components/button.tsx",
+        "size": 3868,
+        "mode": 420
+      },
+      {
+        "path": "src/components/card.css",
+        "size": 14296,
+        "mode": 420
+      },
+      {
+        "path": "src/components/card.tsx",
+        "size": 14282,
+        "mode": 420
+      },
+      {
+        "path": "src/components/chart-parts.tsx",
+        "size": 5632,
+        "mode": 420
+      },
+      {
+        "path": "src/components/charts.css",
+        "size": 3950,
+        "mode": 420
+      },
+      {
+        "path": "src/components/charts.tsx",
+        "size": 26194,
+        "mode": 420
+      },
+      {
+        "path": "src/components/checkbox-group.css",
+        "size": 597,
+        "mode": 420
+      },
+      {
+        "path": "src/components/checkbox-group.tsx",
+        "size": 3416,
+        "mode": 420
+      },
+      {
+        "path": "src/components/choice.css",
+        "size": 10609,
+        "mode": 420
+      },
+      {
+        "path": "src/components/choice.tsx",
+        "size": 15332,
+        "mode": 420
+      },
+      {
+        "path": "src/components/code-block.css",
+        "size": 3702,
+        "mode": 420
+      },
+      {
+        "path": "src/components/code-block.tsx",
+        "size": 5461,
+        "mode": 420
+      },
+      {
+        "path": "src/components/color-picker.css",
+        "size": 2631,
+        "mode": 420
+      },
+      {
+        "path": "src/components/color-picker.tsx",
+        "size": 13294,
+        "mode": 420
+      },
+      {
+        "path": "src/components/combobox.css",
+        "size": 858,
+        "mode": 420
+      },
+      {
+        "path": "src/components/combobox.tsx",
+        "size": 10329,
+        "mode": 420
+      },
+      {
+        "path": "src/components/confirm.css",
+        "size": 41,
+        "mode": 420
+      },
+      {
+        "path": "src/components/confirm.tsx",
+        "size": 5841,
+        "mode": 420
+      },
+      {
+        "path": "src/components/copy-button.css",
+        "size": 412,
+        "mode": 420
+      },
+      {
+        "path": "src/components/copy-button.tsx",
+        "size": 1836,
+        "mode": 420
+      },
+      {
+        "path": "src/components/data-state.css",
+        "size": 114,
+        "mode": 420
+      },
+      {
+        "path": "src/components/data-state.tsx",
+        "size": 3182,
+        "mode": 420
+      },
+      {
+        "path": "src/components/data.css",
+        "size": 9034,
+        "mode": 420
+      },
+      {
+        "path": "src/components/data.tsx",
+        "size": 30283,
+        "mode": 420
+      },
+      {
+        "path": "src/components/date-range.tsx",
+        "size": 3839,
+        "mode": 420
+      },
+      {
+        "path": "src/components/dialog.css",
+        "size": 5536,
+        "mode": 420
+      },
+      {
+        "path": "src/components/dialog.tsx",
+        "size": 9542,
+        "mode": 420
+      },
+      {
+        "path": "src/components/display.css",
+        "size": 4839,
+        "mode": 420
+      },
+      {
+        "path": "src/components/display.tsx",
+        "size": 5395,
+        "mode": 420
+      },
+      {
+        "path": "src/components/editable.css",
+        "size": 2097,
+        "mode": 420
+      },
+      {
+        "path": "src/components/editable.tsx",
+        "size": 4083,
+        "mode": 420
+      },
+      {
+        "path": "src/components/fieldset.css",
+        "size": 1296,
+        "mode": 420
+      },
+      {
+        "path": "src/components/fieldset.tsx",
+        "size": 1208,
+        "mode": 420
+      },
+      {
+        "path": "src/components/file-drop.css",
+        "size": 2103,
+        "mode": 420
+      },
+      {
+        "path": "src/components/file-drop.tsx",
+        "size": 4916,
+        "mode": 420
+      },
+      {
+        "path": "src/components/floating-window.css",
+        "size": 1554,
+        "mode": 420
+      },
+      {
+        "path": "src/components/floating-window.tsx",
+        "size": 3951,
+        "mode": 420
+      },
+      {
+        "path": "src/components/form.tsx",
+        "size": 2933,
+        "mode": 420
+      },
+      {
+        "path": "src/components/heatmap.css",
+        "size": 2362,
+        "mode": 420
+      },
+      {
+        "path": "src/components/heatmap.tsx",
+        "size": 8041,
+        "mode": 420
+      },
+      {
+        "path": "src/components/hover-card.css",
+        "size": 319,
+        "mode": 420
+      },
+      {
+        "path": "src/components/hover-card.tsx",
+        "size": 3156,
+        "mode": 420
+      },
+      {
+        "path": "src/components/image-grid.css",
+        "size": 3821,
+        "mode": 420
+      },
+      {
+        "path": "src/components/image-grid.tsx",
+        "size": 11439,
+        "mode": 420
+      },
+      {
+        "path": "src/components/indicator.css",
+        "size": 1851,
+        "mode": 420
+      },
+      {
+        "path": "src/components/indicator.tsx",
+        "size": 1941,
+        "mode": 420
+      },
+      {
+        "path": "src/components/input-group.css",
+        "size": 1469,
+        "mode": 420
+      },
+      {
+        "path": "src/components/input-group.tsx",
+        "size": 1092,
+        "mode": 420
+      },
+      {
+        "path": "src/components/input.css",
+        "size": 5339,
+        "mode": 420
+      },
+      {
+        "path": "src/components/input.tsx",
+        "size": 7350,
+        "mode": 420
+      },
+      {
+        "path": "src/components/item.css",
+        "size": 4877,
+        "mode": 420
+      },
+      {
+        "path": "src/components/item.tsx",
+        "size": 3722,
+        "mode": 420
+      },
+      {
+        "path": "src/components/json-view.css",
+        "size": 2411,
+        "mode": 420
+      },
+      {
+        "path": "src/components/json-view.tsx",
+        "size": 8122,
+        "mode": 420
+      },
+      {
+        "path": "src/components/layout.css",
+        "size": 14015,
+        "mode": 420
+      },
+      {
+        "path": "src/components/layout.tsx",
+        "size": 20121,
+        "mode": 420
+      },
+      {
+        "path": "src/components/lightbox.css",
+        "size": 4339,
+        "mode": 420
+      },
+      {
+        "path": "src/components/lightbox.tsx",
+        "size": 16491,
+        "mode": 420
+      },
+      {
+        "path": "src/components/log-view.css",
+        "size": 2911,
+        "mode": 420
+      },
+      {
+        "path": "src/components/log-view.tsx",
+        "size": 9108,
+        "mode": 420
+      },
+      {
+        "path": "src/components/menu.css",
+        "size": 4769,
+        "mode": 420
+      },
+      {
+        "path": "src/components/menu.tsx",
+        "size": 15026,
+        "mode": 420
+      },
+      {
+        "path": "src/components/menubar.css",
+        "size": 881,
+        "mode": 420
+      },
+      {
+        "path": "src/components/menubar.tsx",
+        "size": 8101,
+        "mode": 420
+      },
+      {
+        "path": "src/components/meter.css",
+        "size": 1163,
+        "mode": 420
+      },
+      {
+        "path": "src/components/meter.tsx",
+        "size": 4150,
+        "mode": 420
+      },
+      {
+        "path": "src/components/native-select.css",
+        "size": 1472,
+        "mode": 420
+      },
+      {
+        "path": "src/components/native-select.tsx",
+        "size": 1236,
+        "mode": 420
+      },
+      {
+        "path": "src/components/nav.css",
+        "size": 14029,
+        "mode": 420
+      },
+      {
+        "path": "src/components/nav.tsx",
+        "size": 23233,
+        "mode": 420
+      },
+      {
+        "path": "src/components/number-input.css",
+        "size": 1174,
+        "mode": 420
+      },
+      {
+        "path": "src/components/number-input.tsx",
+        "size": 7050,
+        "mode": 420
+      },
+      {
+        "path": "src/components/overflow-list.css",
+        "size": 1169,
+        "mode": 420
+      },
+      {
+        "path": "src/components/overflow-list.tsx",
+        "size": 4558,
+        "mode": 420
+      },
+      {
+        "path": "src/components/part-charts.css",
+        "size": 3119,
+        "mode": 420
+      },
+      {
+        "path": "src/components/part-charts.tsx",
+        "size": 22555,
+        "mode": 420
+      },
+      {
+        "path": "src/components/password-input.css",
+        "size": 730,
+        "mode": 420
+      },
+      {
+        "path": "src/components/password-input.tsx",
+        "size": 1732,
+        "mode": 420
+      },
+      {
+        "path": "src/components/pin-input.css",
+        "size": 1779,
+        "mode": 420
+      },
+      {
+        "path": "src/components/pin-input.tsx",
+        "size": 6847,
+        "mode": 420
+      },
+      {
+        "path": "src/components/power-button.css",
+        "size": 2703,
+        "mode": 420
+      },
+      {
+        "path": "src/components/power-button.tsx",
+        "size": 1916,
+        "mode": 420
+      },
+      {
+        "path": "src/components/progress.css",
+        "size": 3213,
+        "mode": 420
+      },
+      {
+        "path": "src/components/progress.tsx",
+        "size": 4920,
+        "mode": 420
+      },
+      {
+        "path": "src/components/prose.css",
+        "size": 3266,
+        "mode": 420
+      },
+      {
+        "path": "src/components/prose.tsx",
+        "size": 648,
+        "mode": 420
+      },
+      {
+        "path": "src/components/qr-code.css",
+        "size": 264,
+        "mode": 420
+      },
+      {
+        "path": "src/components/qr-code.tsx",
+        "size": 13103,
+        "mode": 420
+      },
+      {
+        "path": "src/components/relative-time.css",
+        "size": 134,
+        "mode": 420
+      },
+      {
+        "path": "src/components/relative-time.tsx",
+        "size": 4997,
+        "mode": 420
+      },
+      {
+        "path": "src/components/rolling-number.css",
+        "size": 546,
+        "mode": 420
+      },
+      {
+        "path": "src/components/rolling-number.tsx",
+        "size": 1904,
+        "mode": 420
+      },
+      {
+        "path": "src/components/scatter-chart.tsx",
+        "size": 8058,
+        "mode": 420
+      },
+      {
+        "path": "src/components/schema-form.css",
+        "size": 927,
+        "mode": 420
+      },
+      {
+        "path": "src/components/schema-form.tsx",
+        "size": 16852,
+        "mode": 420
+      },
+      {
+        "path": "src/components/scroller.css",
+        "size": 1661,
+        "mode": 420
+      },
+      {
+        "path": "src/components/scroller.tsx",
+        "size": 4035,
+        "mode": 420
+      },
+      {
+        "path": "src/components/select-panel.css",
+        "size": 1544,
+        "mode": 420
+      },
+      {
+        "path": "src/components/select-panel.tsx",
+        "size": 7911,
+        "mode": 420
+      },
+      {
+        "path": "src/components/select.tsx",
+        "size": 9381,
+        "mode": 420
+      },
+      {
+        "path": "src/components/selection-bar.css",
+        "size": 1384,
+        "mode": 420
+      },
+      {
+        "path": "src/components/selection-bar.tsx",
+        "size": 2625,
+        "mode": 420
+      },
+      {
+        "path": "src/components/settings-list.css",
+        "size": 1244,
+        "mode": 420
+      },
+      {
+        "path": "src/components/settings-list.tsx",
+        "size": 2440,
+        "mode": 420
+      },
+      {
+        "path": "src/components/shortcuts-sheet.css",
+        "size": 638,
+        "mode": 420
+      },
+      {
+        "path": "src/components/shortcuts-sheet.tsx",
+        "size": 1645,
+        "mode": 420
+      },
+      {
+        "path": "src/components/slider.css",
+        "size": 4226,
+        "mode": 420
+      },
+      {
+        "path": "src/components/slider.tsx",
+        "size": 6521,
+        "mode": 420
+      },
+      {
+        "path": "src/components/sortable-list.css",
+        "size": 1240,
+        "mode": 420
+      },
+      {
+        "path": "src/components/sortable-list.tsx",
+        "size": 5732,
+        "mode": 420
+      },
+      {
+        "path": "src/components/split-button.css",
+        "size": 729,
+        "mode": 420
+      },
+      {
+        "path": "src/components/split-button.tsx",
+        "size": 1580,
+        "mode": 420
+      },
+      {
+        "path": "src/components/splitter.css",
+        "size": 1484,
+        "mode": 420
+      },
+      {
+        "path": "src/components/splitter.tsx",
+        "size": 4304,
+        "mode": 420
+      },
+      {
+        "path": "src/components/spoiler.css",
+        "size": 989,
+        "mode": 420
+      },
+      {
+        "path": "src/components/spoiler.tsx",
+        "size": 2284,
+        "mode": 420
+      },
+      {
+        "path": "src/components/stepper.css",
+        "size": 3979,
+        "mode": 420
+      },
+      {
+        "path": "src/components/stepper.tsx",
+        "size": 3251,
+        "mode": 420
+      },
+      {
+        "path": "src/components/stick-to-bottom.css",
+        "size": 1165,
+        "mode": 420
+      },
+      {
+        "path": "src/components/stick-to-bottom.tsx",
+        "size": 3922,
+        "mode": 420
+      },
+      {
+        "path": "src/components/text-shimmer.css",
+        "size": 643,
+        "mode": 420
+      },
+      {
+        "path": "src/components/text-shimmer.tsx",
+        "size": 600,
+        "mode": 420
+      },
+      {
+        "path": "src/components/text.css",
+        "size": 694,
+        "mode": 420
+      },
+      {
+        "path": "src/components/text.tsx",
+        "size": 807,
+        "mode": 420
+      },
+      {
+        "path": "src/components/timeline.css",
+        "size": 3032,
+        "mode": 420
+      },
+      {
+        "path": "src/components/timeline.tsx",
+        "size": 2049,
+        "mode": 420
+      },
+      {
+        "path": "src/components/toast.css",
+        "size": 2812,
+        "mode": 420
+      },
+      {
+        "path": "src/components/toast.tsx",
+        "size": 9097,
+        "mode": 420
+      },
+      {
+        "path": "src/components/token-field.css",
+        "size": 1498,
+        "mode": 420
+      },
+      {
+        "path": "src/components/token-field.tsx",
+        "size": 8665,
+        "mode": 420
+      },
+      {
+        "path": "src/components/tooltip.css",
+        "size": 461,
+        "mode": 420
+      },
+      {
+        "path": "src/components/tooltip.tsx",
+        "size": 3556,
+        "mode": 420
+      },
+      {
+        "path": "src/components/tour.css",
+        "size": 1589,
+        "mode": 420
+      },
+      {
+        "path": "src/components/tour.tsx",
+        "size": 4058,
+        "mode": 420
+      },
+      {
+        "path": "src/components/tracker.css",
+        "size": 1461,
+        "mode": 420
+      },
+      {
+        "path": "src/components/tracker.tsx",
+        "size": 3652,
+        "mode": 420
+      },
+      {
+        "path": "src/components/tree-select.tsx",
+        "size": 5355,
+        "mode": 420
+      },
+      {
+        "path": "src/components/tree.tsx",
+        "size": 13831,
+        "mode": 420
+      },
+      {
+        "path": "src/components/truncate.css",
+        "size": 615,
+        "mode": 420
+      },
+      {
+        "path": "src/components/truncate.tsx",
+        "size": 2725,
+        "mode": 420
+      },
+      {
+        "path": "src/fluent.css",
+        "size": 2598,
+        "mode": 420
+      },
+      {
+        "path": "src/index.ts",
+        "size": 4218,
+        "mode": 420
+      },
+      {
+        "path": "src/labels/en.ts",
+        "size": 67,
+        "mode": 420
+      },
+      {
+        "path": "src/labels/ru.ts",
+        "size": 11510,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/announce.ts",
+        "size": 1199,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/cx.ts",
+        "size": 125,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/floating.tsx",
+        "size": 5259,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/format.ts",
+        "size": 4711,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/highlight.tsx",
+        "size": 2471,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/hooks.ts",
+        "size": 12776,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/icons.tsx",
+        "size": 5664,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/indicator.ts",
+        "size": 1654,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/labels.tsx",
+        "size": 5578,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/roving.ts",
+        "size": 4180,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/selection.ts",
+        "size": 3200,
+        "mode": 420
+      },
+      {
+        "path": "src/lib/virtual.ts",
+        "size": 4724,
+        "mode": 420
+      },
+      {
+        "path": "src/styles.css",
+        "size": 4029,
+        "mode": 420
+      },
+      {
+        "path": "src/tailwind.css",
+        "size": 905,
+        "mode": 420
+      },
+      {
+        "path": "src/theme/provider.tsx",
+        "size": 7528,
+        "mode": 420
+      },
+      {
+        "path": "src/theme/rain.css",
+        "size": 828,
+        "mode": 420
+      },
+      {
+        "path": "src/theme/schema.ts",
+        "size": 29070,
+        "mode": 420
+      },
+      {
+        "path": "src/theme/settings.css",
+        "size": 263,
+        "mode": 420
+      },
+      {
+        "path": "src/theme/settings.tsx",
+        "size": 5157,
+        "mode": 420
+      },
+      {
+        "path": "src/tokens.css",
+        "size": 7856,
+        "mode": 420
+      }
+    ],
+    "entryCount": 624,
+    "bundled": []
+  }
+}

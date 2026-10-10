@@ -1,3 +1,4 @@
+/* Generated from styles/sortable-list.css.ts. Run bun run styles; do not edit. */
 .rk-sortable {
   display: flex;
   flex-direction: column;
@@ -6,7 +7,6 @@
   padding: 0;
   list-style: none;
 }
-
 .rk-sortable-item {
   display: flex;
   align-items: center;
@@ -19,17 +19,16 @@
     background-color var(--rk-dur) var(--rk-ease),
     box-shadow var(--rk-dur) var(--rk-ease),
     scale var(--rk-dur) var(--rk-spring);
-  &[data-lifted] {
-    position: relative;
-    z-index: 1;
-    background: var(--rk-surface-3);
-    box-shadow:
-      inset 0 0 0 1px var(--rk-accent-line),
-      0 8px 24px -10px oklch(var(--rk-shade) / 0.7);
-    scale: 1.01;
-  }
 }
-
+.rk-sortable-item[data-lifted] {
+  position: relative;
+  z-index: 1;
+  background: var(--rk-surface-3);
+  box-shadow:
+    inset 0 0 0 1px var(--rk-accent-line),
+    0 8px 24px -10px oklch(var(--rk-shade) / 0.7);
+  scale: 1.01;
+}
 .rk-sortable-grip {
   display: grid;
   place-items: center;
@@ -44,16 +43,15 @@
   font-size: 16px;
   cursor: grab;
   touch-action: none;
-  &:hover {
-    background: var(--rk-hover);
-    color: var(--rk-text);
-  }
-  &[aria-pressed="true"] {
-    color: var(--rk-accent-text);
-    cursor: grabbing;
-  }
 }
-
+.rk-sortable-grip:hover {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
+.rk-sortable-grip[aria-pressed="true"] {
+  color: var(--rk-accent-text);
+  cursor: grabbing;
+}
 .rk-sortable-content {
   flex: 1;
   min-width: 0;

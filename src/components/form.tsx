@@ -40,10 +40,10 @@ export function Form({ onSubmit, validate, className, children, ...rest }: FormP
     const next: Record<string, string> = {};
     let first: Control | undefined;
     for (const el of Array.from(form.elements)) {
-      if (!isControl(el) || !el.id) continue;
+      if (!isControl(el)) continue;
       el.setCustomValidity(custom[el.name] ?? "");
       if (!el.checkValidity()) {
-        next[el.id] = el.validationMessage;
+        if (el.id) next[el.id] = el.validationMessage;
         first ??= el;
       }
     }
@@ -60,13 +60,15 @@ export function Form({ onSubmit, validate, className, children, ...rest }: FormP
           event.preventDefault();
           const { next, first } = collect(event.currentTarget);
           setErrors(next);
-          if (first) first.focus();
-          else onSubmit?.(new FormData(event.currentTarget), event);
+          if (first) {
+            first.focus();
+            if (!first.id) first.reportValidity();
+          } else onSubmit?.(new FormData(event.currentTarget), event);
         }}
         // once shown, an error follows the value: it goes away the moment the control is valid again
         onInput={(event) => {
           const el = event.target as Element;
-          if (!isControl(el) || !(el.id in errors)) return;
+          if (!isControl(el) || (!(el.id in errors) && !el.validity.customError)) return;
           const { next } = collect(event.currentTarget);
           setErrors((prev) => {
             const out = { ...prev };

@@ -1,19 +1,18 @@
+/* Generated from styles/number-input.css.ts. Run bun run styles; do not edit. */
 .rk-number-input {
   padding-right: calc(var(--rk-space) * 0.75);
-  & .rk-input-el {
-    font-variant-numeric: tabular-nums;
-  }
-  & .rk-input-end {
-    gap: calc(var(--rk-space) * 2);
-  }
 }
-
+.rk-number-input .rk-input-el {
+  font-variant-numeric: tabular-nums;
+}
+.rk-number-input .rk-input-end {
+  gap: calc(var(--rk-space) * 2);
+}
 .rk-number-unit {
   color: var(--rk-text-3);
   font-size: var(--rk-text-sm);
   pointer-events: none;
 }
-
 .rk-number-stepper {
   display: flex;
   flex-direction: column;
@@ -23,7 +22,6 @@
   width: calc(var(--rk-input-h) * 0.62);
   padding-block: 3px;
 }
-
 .rk-number-step {
   display: flex;
   flex: 1;
@@ -40,20 +38,19 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     color var(--rk-dur) var(--rk-ease);
-
-  &:hover:not(:disabled) {
-    background: var(--rk-hover);
-    color: var(--rk-text);
-  }
-  &:active:not(:disabled) {
-    background: var(--rk-press);
-  }
-  &:disabled {
-    opacity: 0.35;
-    cursor: default;
-  }
-  & > svg {
-    width: 1em;
-    height: 1em;
-  }
+}
+.rk-number-step:hover:not(:disabled) {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
+.rk-number-step:active:not(:disabled) {
+  background: var(--rk-press);
+}
+.rk-number-step:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.rk-number-step > svg {
+  width: 1em;
+  height: 1em;
 }

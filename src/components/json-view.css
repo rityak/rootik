@@ -1,3 +1,4 @@
+/* Generated from styles/json-view.css.ts. Run bun run styles; do not edit. */
 .rk-json {
   --rk-indent: 16px;
   display: flex;
@@ -7,7 +8,6 @@
   font-size: var(--rk-text-xs);
   line-height: 1.5;
 }
-
 .rk-json-row {
   --rk-depth: 0;
   position: relative;
@@ -19,7 +19,6 @@
   border-radius: calc(var(--rk-radius-control) - 2px);
   color: var(--rk-text-2);
   outline: none;
-  /* ancestor guides, one per level */
   background-image: repeating-linear-gradient(
     to right,
     transparent 0 8px,
@@ -29,18 +28,16 @@
   background-size: calc(var(--rk-depth) * var(--rk-indent)) 100%;
   background-position: 2px 0;
   background-repeat: no-repeat;
-
-  &[aria-expanded] {
-    cursor: pointer;
-  }
-  &:hover {
-    background-color: var(--rk-hover);
-  }
-  &:focus-visible {
-    box-shadow: inset 0 0 0 2px var(--rk-focus);
-  }
 }
-
+.rk-json-row[aria-expanded] {
+  cursor: pointer;
+}
+.rk-json-row:hover {
+  background-color: var(--rk-hover);
+}
+.rk-json-row:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--rk-focus);
+}
 .rk-json-toggle {
   display: grid;
   place-items: center;
@@ -48,72 +45,65 @@
   width: 14px;
   height: 14px;
   color: var(--rk-text-3);
-  & svg {
-    width: 12px;
-    height: 12px;
-    transition: rotate var(--rk-dur) var(--rk-ease);
-  }
-  & svg[data-open] {
-    rotate: 90deg;
-  }
 }
-
+.rk-json-toggle svg {
+  width: 12px;
+  height: 12px;
+  transition: rotate var(--rk-dur) var(--rk-ease);
+}
+.rk-json-toggle svg[data-open] {
+  rotate: 90deg;
+}
 .rk-json-key {
   flex: none;
   color: var(--rk-text);
-  &::after {
-    content: ":";
-    color: var(--rk-text-3);
-  }
-  &[data-index] {
-    color: var(--rk-text-3);
-  }
 }
-
+.rk-json-key::after {
+  content: ":";
+  color: var(--rk-text-3);
+}
+.rk-json-key[data-index] {
+  color: var(--rk-text-3);
+}
 .rk-json-summary {
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
   min-width: 0;
 }
-
 .rk-json-brace {
   color: var(--rk-text-3);
 }
-
 .rk-json-size {
   font-family: var(--rk-font-sans);
   font-size: var(--rk-text-2xs);
   color: var(--rk-text-3);
 }
-
-/* value colors: the categorical palette lifted for text on dark (identity, not status) */
 .rk-json-value {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  &[data-kind="string"] {
-    color: oklch(from var(--rk-chart-3) calc(l + 0.14) c h);
-  }
-  &[data-kind="number"] {
-    color: oklch(from var(--rk-chart-2) calc(l + 0.12) c h);
-  }
-  &[data-kind="boolean"] {
-    color: oklch(from var(--rk-chart-4) calc(l + 0.16) c h);
-  }
-  &:is([data-kind="null"], [data-kind="undefined"]) {
-    color: var(--rk-text-3);
-    font-style: italic;
-  }
 }
-
+.rk-json-value[data-kind="string"] {
+  color: oklch(from var(--rk-chart-3) calc(l + 0.14) c h);
+}
+.rk-json-value[data-kind="number"] {
+  color: oklch(from var(--rk-chart-2) calc(l + 0.12) c h);
+}
+.rk-json-value[data-kind="boolean"] {
+  color: oklch(from var(--rk-chart-4) calc(l + 0.16) c h);
+}
+.rk-json-value:is([data-kind="null"], [data-kind="undefined"]) {
+  color: var(--rk-text-3);
+  font-style: italic;
+}
 .rk-json-actions {
   display: inline-flex;
   margin-inline-start: auto;
   flex: none;
-  & .rk-button {
-    width: 22px;
-    height: 22px;
-  }
+}
+.rk-json-actions .rk-button {
+  width: 22px;
+  height: 22px;
 }

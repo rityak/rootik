@@ -1,3 +1,4 @@
+/* Generated from styles/spoiler.css.ts. Run bun run styles; do not edit. */
 .rk-spoiler {
   display: flex;
   flex-direction: column;
@@ -5,17 +6,14 @@
   gap: calc(var(--rk-space) * 1.5);
   min-width: 0;
 }
-
 .rk-spoiler-content {
   align-self: stretch;
   overflow: hidden;
   transition: max-height var(--rk-dur-slow) var(--rk-ease-out);
-  /* fade the last lines while collapsed */
-  [data-overflowing]:not([data-expanded]) > & {
-    mask-image: linear-gradient(to bottom, black calc(100% - 2.5em), transparent);
-  }
 }
-
+[data-overflowing]:not([data-expanded]) > .rk-spoiler-content {
+  mask-image: linear-gradient(to bottom, black calc(100% - 2.5em), transparent);
+}
 .rk-spoiler-toggle {
   display: inline-flex;
   align-items: center;
@@ -30,15 +28,15 @@
   font-size: var(--rk-text-sm);
   font-weight: 500;
   cursor: pointer;
-  &:hover {
-    background: var(--rk-hover);
-  }
-  & > svg {
-    width: 14px;
-    height: 14px;
-    transition: rotate var(--rk-dur) var(--rk-ease);
-  }
-  & > svg[data-open] {
-    rotate: 180deg;
-  }
+}
+.rk-spoiler-toggle:hover {
+  background: var(--rk-hover);
+}
+.rk-spoiler-toggle > svg {
+  width: 14px;
+  height: 14px;
+  transition: rotate var(--rk-dur) var(--rk-ease);
+}
+.rk-spoiler-toggle > svg[data-open] {
+  rotate: 180deg;
 }

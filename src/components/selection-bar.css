@@ -1,3 +1,4 @@
+/* Generated from styles/selection-bar.css.ts. Run bun run styles; do not edit. */
 .rk-selection-bar {
   position: fixed;
   inset: auto auto var(--rk-selection-offset) 50%;
@@ -14,22 +15,15 @@
   transition:
     opacity var(--rk-dur) var(--rk-ease),
     translate var(--rk-dur-slow) var(--rk-ease-out);
-
-  &:not(:popover-open) {
-    display: none;
-  }
-  @starting-style {
-    opacity: 0;
-    translate: -50% 16px;
-  }
 }
-
+.rk-selection-bar:not(:popover-open) {
+  display: none;
+}
 .rk-selection-count {
   font-size: var(--rk-text-sm);
   font-weight: 500;
   white-space: nowrap;
 }
-
 .rk-selection-clear {
   display: grid;
   place-items: center;
@@ -45,27 +39,31 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     color var(--rk-dur) var(--rk-ease);
-  &:hover {
-    color: var(--rk-text);
-  }
-  & > svg {
-    width: 1em;
-    height: 1em;
-  }
 }
-
+.rk-selection-clear:hover {
+  color: var(--rk-text);
+}
+.rk-selection-clear > svg {
+  width: 1em;
+  height: 1em;
+}
 .rk-selection-sep {
   align-self: stretch;
   width: 1px;
   margin-block: 4px;
   background: var(--rk-line-strong);
 }
-
 .rk-selection-actions {
   display: flex;
   align-items: center;
   gap: 4px;
-  & .rk-button {
-    border-radius: var(--rk-radius-pill);
+}
+.rk-selection-actions .rk-button {
+  border-radius: var(--rk-radius-pill);
+}
+@starting-style {
+  .rk-selection-bar {
+    opacity: 0;
+    translate: -50% 16px;
   }
 }

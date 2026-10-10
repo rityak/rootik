@@ -166,6 +166,21 @@ export function defaultSchemaValues(schema: Schema): Record<string, SchemaValue>
 }
 
 function checkField(field: SchemaField, value: SchemaValue, values: SchemaValues, labels: Labels) {
+  if (value !== null && field.type !== "custom") {
+    const expected =
+      field.type === "number" || field.type === "slider"
+        ? "number"
+        : field.type === "boolean"
+          ? "boolean"
+          : field.type === "multi"
+            ? "object"
+            : "string";
+    if (
+      typeof value !== expected ||
+      (field.type === "multi" && (!Array.isArray(value) || value.some((item) => typeof item !== "string")))
+    )
+      return labels.invalidFormat;
+  }
   if (isEmpty(value)) {
     if (field.required) return labels.required;
     // a lower bound on picks still applies to an empty selection
@@ -174,18 +189,24 @@ function checkField(field: SchemaField, value: SchemaValue, values: SchemaValues
   switch (field.type) {
     case "string":
     case "text": {
-      const text = String(value);
+      if (typeof value !== "string") return labels.invalidFormat;
+      const text = value;
       if (field.minLength !== undefined && text.length < field.minLength)
         return labels.minLength(field.minLength);
       if (field.maxLength !== undefined && text.length > field.maxLength)
         return labels.maxLength(field.maxLength);
-      if (field.pattern && !field.pattern.test(text)) return field.patternMessage ?? labels.invalidFormat;
+      if (field.pattern) {
+        // Stateful /g and /y expressions must not mutate the schema between validations.
+        const pattern = new RegExp(field.pattern.source, field.pattern.flags);
+        if (!pattern.test(text)) return field.patternMessage ?? labels.invalidFormat;
+      }
       break;
     }
     case "number":
     case "slider":
-      if (field.min !== undefined && Number(value) < field.min) return labels.minValue(field.min);
-      if (field.max !== undefined && Number(value) > field.max) return labels.maxValue(field.max);
+      if (typeof value !== "number" || !Number.isFinite(value)) return labels.invalidFormat;
+      if (field.min !== undefined && value < field.min) return labels.minValue(field.min);
+      if (field.max !== undefined && value > field.max) return labels.maxValue(field.max);
       break;
     case "multi": {
       const count = Array.isArray(value) ? value.length : 0;

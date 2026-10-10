@@ -1,30 +1,26 @@
+/* Generated from styles/data.css.ts. Run bun run styles; do not edit. */
 .rk-table-wrap {
   min-width: 0;
   overflow: auto;
-  /* sticky head gets its shadow only while rows are scrolled under it (where supported) */
   container-type: scroll-state;
-  &[data-framed] {
-    border-radius: var(--rk-radius-md);
-    box-shadow: inset 0 0 0 1px var(--rk-line);
-  }
-  &:focus-visible {
-    outline-offset: -2px;
-  }
-  /* the vertical scrollbar starts under a sticky header */
-  &:has(> [data-sticky])::-webkit-scrollbar-track:vertical {
-    margin-top: 34px;
-  }
 }
-
-/* checkbox column of a selectable DataTable */
+.rk-table-wrap[data-framed] {
+  border-radius: var(--rk-radius-md);
+  box-shadow: inset 0 0 0 1px var(--rk-line);
+}
+.rk-table-wrap:focus-visible {
+  outline-offset: -2px;
+}
+.rk-table-wrap:has(> [data-sticky])::-webkit-scrollbar-track:vertical {
+  margin-top: 34px;
+}
 .rk-table .rk-table-select {
   width: 1%;
   padding-right: 0;
-  & .rk-checkbox {
-    vertical-align: middle;
-  }
 }
-
+.rk-table .rk-table-select .rk-checkbox {
+  vertical-align: middle;
+}
 .rk-table {
   --rk-cell-py: 8px;
   width: 100%;
@@ -32,87 +28,73 @@
   border-spacing: 0;
   font-size: var(--rk-text-sm);
   font-variant-numeric: tabular-nums;
-
-  &[data-density="compact"] {
-    --rk-cell-py: 4px;
-  }
-  &[data-density="comfortable"] {
-    --rk-cell-py: 12px;
-  }
-
-  & th,
-  & td {
-    padding: var(--rk-cell-py) 12px;
-    text-align: start;
-    vertical-align: middle;
-    border-bottom: 1px solid var(--rk-line);
-  }
-  & th {
-    height: 34px;
-    padding-block: 0;
-    color: var(--rk-text-3);
-    font-size: var(--rk-text-2xs);
-    font-weight: 500;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  & td {
-    color: var(--rk-text);
-    &[data-mono] {
-      font-family: var(--rk-font-mono);
-      font-size: 0.94em;
-    }
-  }
-  & tbody tr:last-child td {
-    border-bottom: 0;
-  }
-  & tbody tr {
-    transition: background-color var(--rk-dur) var(--rk-ease);
-    &:hover {
-      background: var(--rk-hover);
-    }
-    &[data-clickable] {
-      cursor: pointer;
-    }
-    &[aria-selected="true"] {
-      background: var(--rk-accent-soft);
-      box-shadow: inset 2px 0 0 var(--rk-accent);
-    }
-    &:focus-visible {
-      outline: 2px solid var(--rk-focus);
-      outline-offset: -2px;
-    }
-  }
-  &[data-zebra] tbody tr:nth-child(even):not(:hover):not([aria-selected="true"]) {
-    background: oklch(var(--rk-tint) / 0.025);
-  }
-  /* virtual tables have spacer rows, so DataTable marks the parity itself */
-  &[data-zebra][data-virtual] tbody tr {
-    &:nth-child(even):not(:hover):not([aria-selected="true"]) {
-      background: none;
-    }
-    &[data-alt]:not(:hover):not([aria-selected="true"]) {
-      background: oklch(var(--rk-tint) / 0.025);
-    }
-  }
-  &[data-sticky] thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background: var(--rk-surface-1);
-    transition: box-shadow var(--rk-dur) var(--rk-ease);
-  }
 }
-
-@container scroll-state(scrollable: top) {
-  .rk-table[data-sticky] thead th {
-    box-shadow:
-      inset 0 -1px 0 var(--rk-line),
-      0 6px 12px -8px oklch(var(--rk-shade) / 0.7);
-  }
+.rk-table[data-density="compact"] {
+  --rk-cell-py: 4px;
 }
-
+.rk-table[data-density="comfortable"] {
+  --rk-cell-py: 12px;
+}
+.rk-table th,
+.rk-table td {
+  padding: var(--rk-cell-py) 12px;
+  text-align: start;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--rk-line);
+}
+.rk-table th {
+  height: 34px;
+  padding-block: 0;
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-2xs);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rk-table td {
+  color: var(--rk-text);
+}
+.rk-table td[data-mono] {
+  font-family: var(--rk-font-mono);
+  font-size: 0.94em;
+}
+.rk-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.rk-table tbody tr {
+  transition: background-color var(--rk-dur) var(--rk-ease);
+}
+.rk-table tbody tr:hover {
+  background: var(--rk-hover);
+}
+.rk-table tbody tr[data-clickable] {
+  cursor: pointer;
+}
+.rk-table tbody tr[aria-selected="true"] {
+  background: var(--rk-accent-soft);
+  box-shadow: inset 2px 0 0 var(--rk-accent);
+}
+.rk-table tbody tr:focus-visible {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: -2px;
+}
+.rk-table[data-zebra] tbody tr:nth-child(even):not(:hover):not([aria-selected="true"]) {
+  background: oklch(var(--rk-tint) / 0.025);
+}
+.rk-table[data-zebra][data-virtual] tbody tr:nth-child(even):not(:hover):not([aria-selected="true"]) {
+  background: none;
+}
+.rk-table[data-zebra][data-virtual] tbody tr[data-alt]:not(:hover):not([aria-selected="true"]) {
+  background: oklch(var(--rk-tint) / 0.025);
+}
+.rk-table[data-sticky] thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--rk-surface-1);
+  transition: box-shadow var(--rk-dur) var(--rk-ease);
+}
 .rk-th-sort {
   display: inline-flex;
   align-items: center;
@@ -127,40 +109,35 @@
   letter-spacing: inherit;
   text-transform: inherit;
   cursor: pointer;
-  & svg {
-    width: 12px;
-    height: 12px;
-    opacity: 0.5;
-  }
-  &:hover {
-    color: var(--rk-text);
-    background: var(--rk-hover);
-  }
-  &[data-sorted] {
-    color: var(--rk-text);
-    & svg {
-      opacity: 1;
-    }
-  }
 }
-
-/* column resize */
+.rk-th-sort svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0.5;
+}
+.rk-th-sort:hover {
+  color: var(--rk-text);
+  background: var(--rk-hover);
+}
+.rk-th-sort[data-sorted] {
+  color: var(--rk-text);
+}
+.rk-th-sort[data-sorted] svg {
+  opacity: 1;
+}
 .rk-table[data-resizable]:not([data-sticky]) th {
   position: relative;
 }
-
 .rk-table[data-fixed] :is(th, td):not(.rk-table-select) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .rk-th-content {
   display: inline-flex;
   max-width: 100%;
   vertical-align: middle;
 }
-
 .rk-th-resize {
   position: absolute;
   top: 0;
@@ -170,29 +147,26 @@
   cursor: col-resize;
   touch-action: none;
   outline: none;
-  /* hairline that turns into an accent bar while hovered, focused or dragged */
-  &::after {
-    content: "";
-    position: absolute;
-    top: 30%;
-    bottom: 30%;
-    right: 0;
-    width: 1px;
-    background: var(--rk-line-strong);
-    transition:
-      background-color var(--rk-dur) var(--rk-ease),
-      inset var(--rk-dur) var(--rk-ease),
-      width var(--rk-dur) var(--rk-ease);
-  }
-  &:is(:hover, :focus-visible, :active)::after {
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--rk-accent);
-  }
 }
-
-/* tree rows: indent plus one guide per ancestor level, drawn on the cell so they join across rows */
+.rk-th-resize::after {
+  content: "";
+  position: absolute;
+  top: 30%;
+  bottom: 30%;
+  right: 0;
+  width: 1px;
+  background: var(--rk-line-strong);
+  transition:
+    background-color var(--rk-dur) var(--rk-ease),
+    inset var(--rk-dur) var(--rk-ease),
+    width var(--rk-dur) var(--rk-ease);
+}
+.rk-th-resize:is(:hover, :focus-visible, :active)::after {
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--rk-accent);
+}
 .rk-table-tree-cell {
   --rk-indent: 20px;
   background-image: repeating-linear-gradient(
@@ -205,7 +179,6 @@
   background-position: 12px 0;
   background-repeat: no-repeat;
 }
-
 .rk-table-tree-inner {
   display: inline-flex;
   align-items: center;
@@ -214,43 +187,34 @@
   margin-inline-start: calc(var(--rk-depth, 0) * var(--rk-indent));
   vertical-align: middle;
 }
-
 .rk-table-tree-content {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-/* virtual rows: one line each, measured once; focus scrolls clear of the sticky header */
-.rk-table[data-virtual] {
-  & :is(th, td):not(.rk-table-select) {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  & tbody tr {
-    scroll-margin-top: var(--rk-table-head, 0px);
-  }
-  & tr.rk-table-spacer td {
-    padding: 0;
-    border: 0;
-  }
+.rk-table[data-virtual] :is(th, td):not(.rk-table-select) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-
+.rk-table[data-virtual] tbody tr {
+  scroll-margin-top: var(--rk-table-head, 0px);
+}
+.rk-table[data-virtual] tr.rk-table-spacer td {
+  padding: 0;
+  border: 0;
+}
 .rk-table td.rk-table-empty {
   padding: 32px 12px;
   text-align: center;
   color: var(--rk-text-3);
 }
-
-/* tree */
 .rk-tree {
   display: flex;
   flex-direction: column;
   gap: 1px;
   font-size: var(--rk-text-md);
 }
-
 .rk-tree-row {
   --rk-depth: 0;
   position: relative;
@@ -264,57 +228,49 @@
   cursor: pointer;
   user-select: none;
   outline: none;
-
-  &:hover {
-    background: var(--rk-hover);
-    color: var(--rk-text);
-  }
-  &:focus-visible {
-    box-shadow: inset 0 0 0 2px var(--rk-focus);
-  }
-  &[aria-selected="true"] {
-    background: var(--rk-inverse);
-    color: var(--rk-on-inverse);
-    & .rk-tree-icon,
-    & .rk-tree-toggle {
-      color: inherit;
-    }
-  }
-  &[aria-disabled="true"] {
-    opacity: 0.45;
-    cursor: default;
-  }
-  /* indent guide */
-  &:not([aria-level="1"])::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: calc(13px + (var(--rk-depth) - 1) * 16px);
-    width: 1px;
-    background: var(--rk-line);
-  }
 }
-
-/* virtualized: the tree is its own scroller, rows sit at measured offsets */
+.rk-tree-row:hover {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
+.rk-tree-row:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--rk-focus);
+}
+.rk-tree-row[aria-selected="true"] {
+  background: var(--rk-inverse);
+  color: var(--rk-on-inverse);
+}
+.rk-tree-row[aria-selected="true"] .rk-tree-icon,
+.rk-tree-row[aria-selected="true"] .rk-tree-toggle {
+  color: inherit;
+}
+.rk-tree-row[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: default;
+}
+.rk-tree-row:not([aria-level="1"])::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(13px + (var(--rk-depth) - 1) * 16px);
+  width: 1px;
+  background: var(--rk-line);
+}
 .rk-tree[data-virtual] {
   display: block;
   overflow: auto;
-  & .rk-tree-row {
-    height: calc(var(--rk-h-sm));
-  }
 }
-
+.rk-tree[data-virtual] .rk-tree-row {
+  height: calc(var(--rk-h-sm));
+}
 .rk-tree-space {
   position: relative;
 }
-
-/* drop targets while dragging a row */
 .rk-tree-row[data-drop="inside"] {
   background: var(--rk-accent-soft);
   box-shadow: inset 0 0 0 1px var(--rk-accent-line);
 }
-
 .rk-tree-row:is([data-drop="before"], [data-drop="after"])::after {
   content: "";
   position: absolute;
@@ -324,15 +280,12 @@
   border-radius: calc(1px * var(--rk-roundness));
   background: var(--rk-accent);
 }
-
 .rk-tree-row[data-drop="before"]::after {
   top: -1px;
 }
-
 .rk-tree-row[data-drop="after"]::after {
   bottom: -1px;
 }
-
 .rk-tree-check {
   display: grid;
   place-items: center;
@@ -343,19 +296,18 @@
   box-shadow: inset 0 0 0 1.5px var(--rk-control-edge);
   color: var(--rk-on-accent);
   font-size: 11px;
-  & svg {
-    stroke-width: 3;
-    opacity: 0;
-  }
-  &[data-state] {
-    background: var(--rk-accent);
-    box-shadow: none;
-    & svg {
-      opacity: 1;
-    }
-  }
 }
-
+.rk-tree-check svg {
+  stroke-width: 3;
+  opacity: 0;
+}
+.rk-tree-check[data-state] {
+  background: var(--rk-accent);
+  box-shadow: none;
+}
+.rk-tree-check[data-state] svg {
+  opacity: 1;
+}
 .rk-tree-toggle {
   display: grid;
   place-items: center;
@@ -364,22 +316,20 @@
   height: 18px;
   border-radius: calc(5px * var(--rk-roundness));
   color: var(--rk-text-3);
-  & svg {
-    transition: rotate var(--rk-dur) var(--rk-ease);
-  }
-  & svg[data-open] {
-    rotate: 90deg;
-  }
-  &:hover {
-    background: var(--rk-press);
-  }
 }
-
+.rk-tree-toggle svg {
+  transition: rotate var(--rk-dur) var(--rk-ease);
+}
+.rk-tree-toggle svg[data-open] {
+  rotate: 90deg;
+}
+.rk-tree-toggle:hover {
+  background: var(--rk-press);
+}
 .rk-tree-icon {
   font-size: 15px;
   color: var(--rk-text-3);
 }
-
 .rk-tree-label {
   flex: 1;
   min-width: 0;
@@ -387,7 +337,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .rk-tree-trailing {
   display: flex;
   align-items: center;
@@ -395,29 +344,33 @@
   flex-shrink: 0;
   font-size: var(--rk-text-xs);
   color: var(--rk-text-3);
-  [aria-selected="true"] > & {
-    color: inherit;
-    opacity: 0.7;
-  }
 }
-
-/* pinned first column: opaque so rows scroll under it; the row tint is layered on top */
+[aria-selected="true"] > .rk-tree-trailing {
+  color: inherit;
+  opacity: 0.7;
+}
 .rk-table .rk-table-pin {
   --rk-pin-tint: transparent;
   position: sticky;
   z-index: 1;
   background: linear-gradient(var(--rk-pin-tint), var(--rk-pin-tint)), var(--rk-surface-1);
-  &[data-pin-edge] {
-    box-shadow: inset -1px 0 0 var(--rk-line);
-  }
-  tr:hover > & {
-    --rk-pin-tint: var(--rk-hover);
-  }
-  tr[aria-selected="true"] > & {
-    --rk-pin-tint: var(--rk-accent-soft);
-  }
 }
-
+.rk-table .rk-table-pin[data-pin-edge] {
+  box-shadow: inset -1px 0 0 var(--rk-line);
+}
+tr:hover > :is(.rk-table .rk-table-pin) {
+  --rk-pin-tint: var(--rk-hover);
+}
+tr[aria-selected="true"] > :is(.rk-table .rk-table-pin) {
+  --rk-pin-tint: var(--rk-accent-soft);
+}
 .rk-table thead .rk-table-pin {
   z-index: 2;
+}
+@container scroll-state(scrollable: top) {
+  .rk-table[data-sticky] thead th {
+    box-shadow:
+      inset 0 -1px 0 var(--rk-line),
+      0 6px 12px -8px oklch(var(--rk-shade) / 0.7);
+  }
 }

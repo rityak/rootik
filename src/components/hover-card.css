@@ -1,3 +1,4 @@
+/* Generated from styles/hover-card.css.ts. Run bun run styles; do not edit. */
 .rk-hover-card {
   width: max-content;
   max-width: min(340px, calc(100vw - 16px));

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-10",
+  "status": "Proposed Rain preset; production tokens unchanged",
+  "method": "OKLCH to linear sRGB; all channels checked in [0,1]; WCAG relative luminance; opaque pairs only",
+  "colors": {
+    "canvas": [0.17, 0.012, 255],
+    "well": [0.15, 0.012, 255],
+    "content": [0.205, 0.015, 255],
+    "raised": [0.245, 0.018, 255],
+    "hover": [0.285, 0.021, 255],
+    "text": [0.94, 0.009, 250],
+    "secondary": [0.78, 0.019, 255],
+    "muted": [0.69, 0.022, 255],
+    "accent": [0.53, 0.1, 275],
+    "accentHover": [0.54, 0.1, 275],
+    "accentPressed": [0.5, 0.1, 275],
+    "onAccent": [0.97, 0.006, 255],
+    "selected": [0.86, 0.018, 255],
+    "onSelected": [0.205, 0.015, 255],
+    "edge": [0.58, 0.02, 255],
+    "focus": [0.8, 0.07, 275]
+  },
+  "checks": [
+    { "foreground": "text", "background": "content", "ratio": 15.03, "minimum": 4.5 },
+    { "foreground": "secondary", "background": "raised", "ratio": 8.11, "minimum": 4.5 },
+    { "foreground": "muted", "background": "hover", "ratio": 5.18, "minimum": 4.5 },
+    { "foreground": "onAccent", "background": "accent", "ratio": 4.94, "minimum": 4.5 },
+    { "foreground": "onAccent", "background": "accentHover", "ratio": 4.74, "minimum": 4.5 },
+    { "foreground": "onAccent", "background": "accentPressed", "ratio": 5.62, "minimum": 4.5 },
+    { "foreground": "onSelected", "background": "selected", "ratio": 11.71, "minimum": 4.5 },
+    { "foreground": "edge", "background": "hover", "ratio": 3.35, "minimum": 3 },
+    { "foreground": "focus", "background": "hover", "ratio": 7.61, "minimum": 3 }
+  ],
+  "notValidated": [
+    "Composited glass over images and charts",
+    "Semantic success/warn/danger/info pairs",
+    "Consumer-provided accent values",
+    "Rendered browser states and font metrics"
+  ]
+}

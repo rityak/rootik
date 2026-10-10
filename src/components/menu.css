@@ -1,3 +1,4 @@
+/* Generated from styles/menu.css.ts. Run bun run styles; do not edit. */
 .rk-menu {
   display: flex;
   flex-direction: column;
@@ -13,7 +14,6 @@
   box-shadow: var(--rk-shadow-pop);
   outline: none;
 }
-
 .rk-menu-item {
   display: flex;
   align-items: center;
@@ -32,36 +32,33 @@
   cursor: pointer;
   outline: none;
   scroll-margin: 5px;
-
-  &:focus-visible,
-  &:focus,
-  &[data-active="true"] {
-    background: var(--rk-press);
-  }
-  &[aria-selected="true"] {
-    color: var(--rk-text);
-    font-weight: 500;
-  }
-  &[aria-disabled="true"] {
-    opacity: 0.4;
-    cursor: default;
-  }
-  &[data-danger] {
-    color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
-    &:focus {
-      background: color-mix(in oklab, var(--rk-danger) 16%, transparent);
-    }
-  }
 }
-
+.rk-menu-item:focus-visible,
+.rk-menu-item:focus,
+.rk-menu-item[data-active="true"] {
+  background: var(--rk-press);
+}
+.rk-menu-item[aria-selected="true"] {
+  color: var(--rk-text);
+  font-weight: 500;
+}
+.rk-menu-item[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: default;
+}
+.rk-menu-item[data-danger] {
+  color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
+}
+.rk-menu-item[data-danger]:focus {
+  background: color-mix(in oklab, var(--rk-danger) 16%, transparent);
+}
 .rk-menu-icon {
   font-size: 1.1em;
   color: var(--rk-text-2);
-  [data-danger] > & {
-    color: inherit;
-  }
 }
-
+[data-danger] > .rk-menu-icon {
+  color: inherit;
+}
 .rk-menu-media,
 .rk-select-media {
   display: inline-flex;
@@ -71,38 +68,33 @@
   max-width: 2.5em;
   overflow: hidden;
   border-radius: calc(var(--rk-radius-sm) * 0.7);
-  & > :is(img, svg, video) {
-    width: auto;
-    height: 100%;
-    object-fit: cover;
-  }
 }
-
+:is(.rk-menu-media, .rk-select-media) > :is(img, svg, video) {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
 .rk-menu-text {
   display: flex;
   flex: 1;
   flex-direction: column;
   min-width: 0;
 }
-
 .rk-select-group {
   min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
 }
-
 .rk-menu-hint {
   font-size: var(--rk-text-xs);
   color: var(--rk-text-3);
   font-weight: 400;
 }
-
 .rk-menu-check {
   flex-shrink: 0;
   color: var(--rk-accent-text);
 }
-
 .rk-menu-shortcut {
   margin-inline-start: auto;
   padding-inline-start: 12px;
@@ -110,14 +102,12 @@
   font-size: var(--rk-text-2xs);
   color: var(--rk-text-3);
 }
-
 .rk-menu-separator {
   height: 1px;
   margin: 4px 6px;
   background: var(--rk-line);
   flex-shrink: 0;
 }
-
 .rk-menu-status {
   display: flex;
   align-items: center;
@@ -125,7 +115,6 @@
   padding: 8px 10px;
   color: var(--rk-text-3);
 }
-
 .rk-menu-label {
   padding: 6px 10px 2px;
   font-size: var(--rk-text-2xs);
@@ -134,11 +123,9 @@
   text-transform: uppercase;
   color: var(--rk-text-3);
 }
-
 .rk-select-list[data-mono] {
   font-family: var(--rk-font-mono);
 }
-
 .rk-popover {
   min-width: 220px;
   max-width: min(420px, calc(100vw - 16px));
@@ -150,14 +137,11 @@
   backdrop-filter: blur(var(--rk-blur)) saturate(1.3);
   box-shadow: var(--rk-shadow-pop);
 }
-
 .rk-popover-title {
   margin-bottom: calc(var(--rk-space) * 3);
   font-size: var(--rk-text-md);
   font-weight: 600;
 }
-
-/* Select trigger (box styles shared with .rk-input in input.css) */
 .rk-select-trigger {
   --rk-sel-h: var(--rk-h-md);
   display: inline-flex;
@@ -173,65 +157,58 @@
   font-size: var(--rk-text-md);
   text-align: start;
   cursor: pointer;
-
-  &[data-size="sm"] {
-    --rk-sel-h: var(--rk-h-sm);
-    padding-inline-start: calc(var(--rk-space) * 2.5);
-    font-size: var(--rk-text-sm);
-  }
-  &[data-size="lg"] {
-    --rk-sel-h: var(--rk-h-lg);
-  }
-  &[data-mono] .rk-select-value {
-    font-family: var(--rk-font-mono);
-    font-size: 0.94em;
-  }
-  &[data-variant="button"] {
-    width: auto;
-    background: var(--rk-surface-3);
-    font-weight: 500;
-    &:hover {
-      background: var(--rk-surface-4);
-    }
-  }
 }
-
+.rk-select-trigger[data-size="sm"] {
+  --rk-sel-h: var(--rk-h-sm);
+  padding-inline-start: calc(var(--rk-space) * 2.5);
+  font-size: var(--rk-text-sm);
+}
+.rk-select-trigger[data-size="lg"] {
+  --rk-sel-h: var(--rk-h-lg);
+}
+.rk-select-trigger[data-mono] .rk-select-value {
+  font-family: var(--rk-font-mono);
+  font-size: 0.94em;
+}
+.rk-select-trigger[data-variant="button"] {
+  width: auto;
+  background: var(--rk-surface-3);
+  font-weight: 500;
+}
+.rk-select-trigger[data-variant="button"]:hover {
+  background: var(--rk-surface-4);
+}
 .rk-select-value {
   flex: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  &[data-placeholder] {
-    color: var(--rk-text-3);
-  }
 }
-
+.rk-select-value[data-placeholder] {
+  color: var(--rk-text-3);
+}
 .rk-select-chevron {
   flex-shrink: 0;
   color: var(--rk-text-3);
   transition: rotate var(--rk-dur) var(--rk-ease);
-  [aria-expanded="true"] > & {
-    rotate: 180deg;
-  }
 }
-
+[aria-expanded="true"] > .rk-select-chevron {
+  rotate: 180deg;
+}
 .rk-menu-sub-trigger[aria-expanded="true"] {
   background: var(--rk-press);
 }
-
 .rk-menu-sub-chevron {
   flex-shrink: 0;
   margin-inline-start: auto;
   color: var(--rk-text-3);
 }
-
-/* TreeSelect panel: search on top, the tree scrolls */
 .rk-tree-select {
   gap: 6px;
   max-width: min(420px, calc(100vw - 16px));
-  & .rk-tree {
-    overflow-y: auto;
-    min-height: 0;
-  }
+}
+.rk-tree-select .rk-tree {
+  overflow-y: auto;
+  min-height: 0;
 }

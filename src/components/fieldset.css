@@ -1,3 +1,4 @@
+/* Generated from styles/fieldset.css.ts. Run bun run styles; do not edit. */
 .rk-fieldset {
   display: flex;
   flex-direction: column;
@@ -6,28 +7,21 @@
   margin: 0;
   padding: 0;
   border: 0;
-
-  &[data-variant="outline"] {
-    padding: calc(var(--rk-space) * 4);
-    border-radius: var(--rk-radius-md);
-    box-shadow: inset 0 0 0 1px var(--rk-line);
-    background: var(--rk-well-soft);
-  }
-
-  &:disabled {
-    & .rk-fieldset-legend,
-    & .rk-fieldset-desc {
-      opacity: 0.5;
-    }
-    /* controls that style `data-disabled` rather than :disabled */
-    & :is(.rk-check, .rk-segmented, .rk-swatches, .rk-slider, .rk-field-label) {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-  }
 }
-
-/* the legend is a normal flex child (float trick keeps it out of the border line) */
+.rk-fieldset[data-variant="outline"] {
+  padding: calc(var(--rk-space) * 4);
+  border-radius: var(--rk-radius-md);
+  box-shadow: inset 0 0 0 1px var(--rk-line);
+  background: var(--rk-well-soft);
+}
+.rk-fieldset:disabled .rk-fieldset-legend,
+.rk-fieldset:disabled .rk-fieldset-desc {
+  opacity: 0.5;
+}
+.rk-fieldset:disabled :is(.rk-check, .rk-segmented, .rk-swatches, .rk-slider, .rk-field-label) {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 .rk-fieldset-legend {
   float: left;
   width: 100%;
@@ -36,28 +30,26 @@
   font-size: var(--rk-text-sm);
   font-weight: 600;
   color: var(--rk-text);
-  & + * {
-    clear: both;
-  }
 }
-
+.rk-fieldset-legend + * {
+  clear: both;
+}
 .rk-fieldset-desc {
   margin: calc(var(--rk-space) * -2) 0 0;
   font-size: var(--rk-text-xs);
   color: var(--rk-text-3);
   text-wrap: pretty;
 }
-
 .rk-fieldset-body {
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 3);
   min-width: 0;
-  &[data-row] {
-    flex-direction: row;
-    flex-wrap: wrap;
-    & > * {
-      flex: 1 1 160px;
-    }
-  }
+}
+.rk-fieldset-body[data-row] {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.rk-fieldset-body[data-row] > * {
+  flex: 1 1 160px;
 }

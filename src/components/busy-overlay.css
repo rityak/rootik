@@ -1,21 +1,28 @@
+/* Generated from styles/busy-overlay.css.ts. Run bun run styles; do not edit. */
+@keyframes rk-busy-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .rk-busy {
   position: relative;
   min-width: 0;
 }
-
 .rk-busy-content {
   transition:
     opacity var(--rk-dur) var(--rk-ease),
     filter var(--rk-dur) var(--rk-ease);
-  [data-busy] > & {
-    opacity: 0.45;
-    transition-delay: var(--rk-busy-delay, 200ms);
-  }
-  [data-busy]:has(> [data-blur]) > & {
-    filter: blur(2px);
-  }
 }
-
+[data-busy] > .rk-busy-content {
+  opacity: 0.45;
+  transition-delay: var(--rk-busy-delay, 200ms);
+}
+[data-busy]:has(> [data-blur]) > .rk-busy-content {
+  filter: blur(2px);
+}
 .rk-busy-overlay {
   position: absolute;
   inset: 0;
@@ -26,7 +33,6 @@
   cursor: progress;
   animation: rk-busy-in var(--rk-dur) var(--rk-ease) var(--rk-busy-delay, 200ms) both;
 }
-
 .rk-busy-badge {
   display: inline-flex;
   align-items: center;
@@ -38,13 +44,4 @@
   box-shadow: var(--rk-shadow-pop);
   color: var(--rk-text-2);
   font-size: var(--rk-text-sm);
-}
-
-@keyframes rk-busy-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }

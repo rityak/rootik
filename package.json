@@ -38,15 +38,19 @@
       "default": "./dist/tailwind.css"
     },
     "./css/tokens.css": {
-      "source": "./src/tokens.css",
+      "source": "./src/css/tokens.css",
       "default": "./dist/css/tokens.css"
     },
+    "./css/rain.css": {
+      "source": "./src/css/rain.css",
+      "default": "./dist/css/rain.css"
+    },
     "./css/base.css": {
-      "source": "./src/base.css",
+      "source": "./src/css/base.css",
       "default": "./dist/css/base.css"
     },
     "./css/*.css": {
-      "source": "./src/components/*.css",
+      "source": "./src/css/*.css",
       "default": "./dist/css/*.css"
     },
     "./labels/en": {
@@ -68,16 +72,21 @@
     "src",
     "!src/stories",
     "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
     "llms.txt"
   ],
   "scripts": {
-    "dev": "ladle serve",
-    "build:stories": "ladle build",
+    "dev": "bun scripts/dev.ts",
+    "styles": "bun scripts/styles.ts",
+    "styles:check": "bun scripts/styles.ts --check",
+    "check:pilot": "bun run build && bun scripts/check-pilot.ts",
+    "build:stories": "bun run styles && ladle build",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
-    "format": "biome check --write . && bun scripts/llms.ts",
-    "test": "bun test",
-    "check": "bun run typecheck && bun run lint && bun test",
+    "format": "biome check --write . && bun run styles && bun scripts/llms.ts",
+    "test": "bun test ./src && bun run test:dom",
+    "test:dom": "bun test --preload ./scripts/dom-setup.ts ./tests/dom",
+    "check": "bun run styles:check && bun run typecheck && bun run lint && bun run test",
     "build": "bun scripts/build.ts && bun scripts/check-dist.ts",
     "prepublishOnly": "bun run check && bun run llms && bun run build",
     "llms": "bun scripts/llms.ts",
@@ -91,15 +100,23 @@
     "@biomejs/biome": "^2.5.14",
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
+    "@happy-dom/global-registrator": "^20.14.6",
     "@ladle/react": "^5.1.1",
     "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "4.3.3",
     "@types/bun": "^1.4.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@vanilla-extract/css": "^1.21.3",
+    "@vanilla-extract/rollup-plugin": "^1.5.4",
+    "csstype": "3.2.3",
     "lucide-react": "^1.48.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "typescript": "^7.0.2"
+    "rollup": "^4.64.3",
+    "tailwindcss": "4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "6.4.3"
   },
   "publishConfig": {
     "access": "public",

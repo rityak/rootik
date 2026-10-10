@@ -1,3 +1,4 @@
+/* Generated from styles/floating-window.css.ts. Run bun run styles; do not edit. */
 .rk-floating-window {
   position: fixed;
   inset: auto;
@@ -16,10 +17,8 @@
   box-shadow: var(--rk-shadow-pop);
   color: var(--rk-text);
   overflow: hidden;
-  /* native corner grip: resizing needs no JS */
   resize: both;
 }
-
 .rk-floating-window-bar {
   display: flex;
   align-items: center;
@@ -30,11 +29,10 @@
   cursor: grab;
   touch-action: none;
   user-select: none;
-  &:active {
-    cursor: grabbing;
-  }
 }
-
+.rk-floating-window-bar:active {
+  cursor: grabbing;
+}
 .rk-floating-window-title {
   flex: 1;
   padding: 0;
@@ -52,7 +50,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .rk-floating-window-close {
   display: grid;
   place-items: center;
@@ -63,12 +60,11 @@
   background: transparent;
   color: var(--rk-text-2);
   cursor: pointer;
-  &:hover {
-    background: var(--rk-hover);
-    color: var(--rk-text);
-  }
 }
-
+.rk-floating-window-close:hover {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
 .rk-floating-window-body {
   flex: 1;
   min-height: 0;

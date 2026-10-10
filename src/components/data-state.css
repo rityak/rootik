@@ -1,6 +1,7 @@
+/* Generated from styles/data-state.css.ts. Run bun run styles; do not edit. */
 .rk-data-state {
   min-width: 0;
-  &[data-status="loading"] {
-    padding-block: calc(var(--rk-space) * 2);
-  }
+}
+.rk-data-state[data-status="loading"] {
+  padding-block: calc(var(--rk-space) * 2);
 }

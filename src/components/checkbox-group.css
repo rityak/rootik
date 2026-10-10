@@ -1,22 +1,20 @@
+/* Generated from styles/checkbox-group.css.ts. Run bun run styles; do not edit. */
 .rk-checkbox-group {
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 2.5);
   min-width: 0;
 }
-
 .rk-checkbox-group-items {
   display: flex;
   flex-direction: column;
   gap: calc(var(--rk-space) * 2.5);
-  &[data-orientation="horizontal"] {
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: calc(var(--rk-space) * 5);
-  }
 }
-
-/* children indent under the parent checkbox with a guide line, like Nest */
+.rk-checkbox-group-items[data-orientation="horizontal"] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: calc(var(--rk-space) * 5);
+}
 .rk-checkbox-group-nested {
   margin-inline-start: 7px;
   padding: 2px 0 2px calc(var(--rk-space) * 4);

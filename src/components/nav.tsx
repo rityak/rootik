@@ -13,6 +13,7 @@ import { useControllable } from "../lib/hooks";
 import { ChevronLeftIcon, ChevronRightIcon } from "../lib/icons";
 import { useIndicator } from "../lib/indicator";
 import { useLabels } from "../lib/labels";
+import { useFocusRecovery } from "../lib/roving";
 import type { Size } from "./button";
 import { useShellCompact, useShellDockBar } from "./layout";
 import { Select } from "./select";
@@ -68,16 +69,19 @@ export function Tabs<T extends string = string>({
   const vertical = orientation === "vertical";
   const [current, set] = useControllable<T | undefined>(
     value,
-    defaultValue ?? items[0]?.value,
+    defaultValue ?? items.find((t) => !t.disabled)?.value,
     onChange as (v: T | undefined) => void,
   );
   const list = useRef<HTMLDivElement>(null);
+  useFocusRecovery(list);
+  const enabled = items.filter((t) => !t.disabled);
+  const tabStop = enabled.find((t) => t.value === current)?.value ?? enabled[0]?.value;
   const box = useIndicator(list, '[aria-selected="true"]', current, vertical ? "y" : "x");
   const strings = useLabels();
 
   const onKeyDown = (event: React.KeyboardEvent) => {
-    const enabled = items.filter((t) => !t.disabled);
-    const i = enabled.findIndex((t) => t.value === current);
+    const from = (event.target as HTMLElement).closest<HTMLElement>('[role="tab"]')?.dataset.value;
+    const i = enabled.findIndex((t) => t.value === from);
     const [back, forward] = vertical ? ["ArrowUp", "ArrowDown"] : ["ArrowLeft", "ArrowRight"];
     const to = { [forward]: i + 1, [back]: i - 1, Home: 0, End: enabled.length - 1 }[event.key];
     if (to === undefined) return;
@@ -119,7 +123,7 @@ export function Tabs<T extends string = string>({
             aria-controls={idPrefix ? `${idPrefix}-panel-${t.value}` : undefined}
             aria-selected={selected}
             aria-label={t.label ? undefined : t.hint}
-            tabIndex={selected ? 0 : -1}
+            tabIndex={t.value === tabStop ? 0 : -1}
             disabled={t.disabled}
             data-value={t.value}
             className="rk-tab"

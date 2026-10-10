@@ -31,14 +31,28 @@ export function useControllable<T>(
 
 export function mergeRefs<T>(...refs: Array<Ref<T> | undefined>): RefCallback<T> {
   return (node) => {
+    const cleanups: Array<() => void> = [];
     for (const ref of refs) {
-      if (typeof ref === "function") ref(node);
-      else if (ref) ref.current = node;
+      if (typeof ref === "function") {
+        const cleanup = ref(node);
+        if (node !== null) cleanups.push(typeof cleanup === "function" ? cleanup : () => ref(null));
+      } else if (ref) {
+        ref.current = node;
+        if (node !== null)
+          cleanups.push(() => {
+            ref.current = null;
+          });
+      }
     }
+    if (node !== null)
+      return () => {
+        for (const cleanup of cleanups) cleanup();
+      };
   };
 }
 
 type AnyProps = Record<string, unknown>;
+const ARIA_IDS_SEPARATOR = /\s+/;
 
 /** Clone a trigger element, chaining its own handlers and ref with ours. */
 export function cloneTrigger(
@@ -50,6 +64,18 @@ export function cloneTrigger(
   for (const key of Object.keys(extra)) {
     const mine = own[key];
     const theirs = extra[key];
+    if (key === "aria-describedby" || key === "aria-labelledby") {
+      merged[key] =
+        [
+          ...new Set(
+            [mine, theirs]
+              .filter((id): id is string => typeof id === "string")
+              .flatMap((id) => id.split(ARIA_IDS_SEPARATOR)),
+          ),
+        ]
+          .filter(Boolean)
+          .join(" ") || undefined;
+    }
     if (key.startsWith("on") && typeof mine === "function" && typeof theirs === "function") {
       merged[key] = (...args: unknown[]) => {
         mine(...args);

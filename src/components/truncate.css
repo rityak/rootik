@@ -1,3 +1,4 @@
+/* Generated from styles/truncate.css.ts. Run bun run styles; do not edit. */
 .rk-truncate-text {
   display: inline-block;
   max-width: 100%;
@@ -6,26 +7,24 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: top;
-
-  &[data-lines] {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: var(--rk-lines);
-    line-clamp: var(--rk-lines);
-    white-space: normal;
-  }
-
-  &[data-middle] {
-    display: inline-flex;
-    & .rk-truncate-start {
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    & .rk-truncate-end {
-      flex: none;
-      white-space: pre;
-    }
-  }
+}
+.rk-truncate-text[data-lines] {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--rk-lines);
+  line-clamp: var(--rk-lines);
+  white-space: normal;
+}
+.rk-truncate-text[data-middle] {
+  display: inline-flex;
+}
+.rk-truncate-text[data-middle] .rk-truncate-start {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rk-truncate-text[data-middle] .rk-truncate-end {
+  flex: none;
+  white-space: pre;
 }

@@ -1,3 +1,4 @@
+/* Generated from styles/tooltip.css.ts. Run bun run styles; do not edit. */
 .rk-tooltip {
   display: flex;
   align-items: center;
@@ -12,7 +13,6 @@
   font-weight: 500;
   line-height: 1.35;
 }
-
 .rk-tooltip-kbd {
   font-family: var(--rk-font-mono);
   font-size: var(--rk-text-2xs);

@@ -1,40 +1,45 @@
+/* Generated from styles/input-group.css.ts. Run bun run styles; do not edit. */
 .rk-input-group {
   --rk-group-radius: var(--rk-radius-control);
   display: inline-flex;
   align-items: stretch;
   min-width: 0;
-  &[data-block] {
-    display: flex;
-    & > .rk-input {
-      flex: 1;
-    }
-  }
-
-  /* parts: square inside, rounded at the outer ends; floating layers (select lists, tooltips) are skipped */
-  & > :is(.rk-input, .rk-select-trigger, .rk-button, .rk-input-addon) {
-    position: relative;
-    border-radius: 0;
-    &:not(:nth-child(1 of :not(.rk-floating))) {
-      /* shared 1px edge: the inset outlines overlap instead of doubling */
-      margin-inline-start: -1px;
-    }
-    &:nth-child(1 of :not(.rk-floating)) {
-      border-start-start-radius: var(--rk-group-radius);
-      border-end-start-radius: var(--rk-group-radius);
-    }
-    &:nth-last-child(1 of :not(.rk-floating)) {
-      border-start-end-radius: var(--rk-group-radius);
-      border-end-end-radius: var(--rk-group-radius);
-    }
-    &:is(:focus-visible, :focus-within, :hover) {
-      z-index: 1;
-    }
-  }
-  & > .rk-button {
-    height: auto;
-  }
 }
-
+.rk-input-group[data-block] {
+  display: flex;
+}
+.rk-input-group[data-block] > .rk-input {
+  flex: 1;
+}
+.rk-input-group > :is(.rk-input, .rk-select-trigger, .rk-button, .rk-input-addon) {
+  position: relative;
+  border-radius: 0;
+}
+.rk-input-group
+  > :is(.rk-input, .rk-select-trigger, .rk-button, .rk-input-addon):not(:nth-child(1 of :not(.rk-floating))) {
+  margin-inline-start: -1px;
+}
+.rk-input-group
+  > :is(.rk-input, .rk-select-trigger, .rk-button, .rk-input-addon):nth-child(1 of :not(.rk-floating)) {
+  border-start-start-radius: var(--rk-group-radius);
+  border-end-start-radius: var(--rk-group-radius);
+}
+.rk-input-group
+  > :is(.rk-input, .rk-select-trigger, .rk-button, .rk-input-addon):nth-last-child(1 of :not(.rk-floating)) {
+  border-start-end-radius: var(--rk-group-radius);
+  border-end-end-radius: var(--rk-group-radius);
+}
+.rk-input-group
+  > :is(.rk-input, .rk-select-trigger, .rk-button, .rk-input-addon):is(
+    :focus-visible,
+    :focus-within,
+    :hover
+  ) {
+  z-index: 1;
+}
+.rk-input-group > .rk-button {
+  height: auto;
+}
 .rk-input-addon {
   display: inline-flex;
   align-items: center;
@@ -46,8 +51,8 @@
   font-size: var(--rk-text-sm);
   white-space: nowrap;
   user-select: none;
-  &[data-mono] {
-    font-family: var(--rk-font-mono);
-    font-size: calc(var(--rk-text-sm) * 0.94);
-  }
+}
+.rk-input-addon[data-mono] {
+  font-family: var(--rk-font-mono);
+  font-size: calc(var(--rk-text-sm) * 0.94);
 }

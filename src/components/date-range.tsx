@@ -22,11 +22,14 @@ export function resolveRange(
 ): { from: Date; to: Date } | null {
   if ("preset" in value) {
     const p = presets.find((x) => x.id === value.preset);
-    return p ? { from: new Date(now - p.ms), to: new Date(now) } : null;
+    if (!p || !Number.isFinite(p.ms) || p.ms < 0 || !Number.isFinite(now)) return null;
+    const from = new Date(now - p.ms);
+    const to = new Date(now);
+    return Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()) ? null : { from, to };
   }
   const from = new Date(value.from);
   const to = new Date(value.to);
-  return Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()) ? null : { from, to };
+  return Number.isNaN(from.getTime()) || Number.isNaN(to.getTime()) || from > to ? null : { from, to };
 }
 
 const H = 3_600_000;

@@ -1,36 +1,36 @@
+/* Generated from styles/text.css.ts. Run bun run styles; do not edit. */
 .rk-text {
   margin: 0;
   color: var(--rk-text);
   font: inherit;
-
-  &[data-size="xs"] {
-    font-size: var(--rk-text-xs);
-  }
-  &[data-size="sm"] {
-    font-size: var(--rk-text-sm);
-  }
-  &[data-size="lg"] {
-    font-size: var(--rk-text-lg);
-  }
-  &[data-text-tone="muted"] {
-    color: var(--rk-text-2);
-  }
-  &[data-text-tone="faint"] {
-    color: var(--rk-text-3);
-  }
-  &[data-text-tone="accent"] {
-    color: var(--rk-accent-text);
-  }
-  &[data-text-tone="success"] {
-    color: var(--rk-success);
-  }
-  &[data-text-tone="warn"] {
-    color: var(--rk-warn);
-  }
-  &[data-text-tone="danger"] {
-    color: var(--rk-danger);
-  }
-  &[data-text-tone="info"] {
-    color: var(--rk-info);
-  }
+}
+.rk-text[data-size="xs"] {
+  font-size: var(--rk-text-xs);
+}
+.rk-text[data-size="sm"] {
+  font-size: var(--rk-text-sm);
+}
+.rk-text[data-size="lg"] {
+  font-size: var(--rk-text-lg);
+}
+.rk-text[data-text-tone="muted"] {
+  color: var(--rk-text-2);
+}
+.rk-text[data-text-tone="faint"] {
+  color: var(--rk-text-3);
+}
+.rk-text[data-text-tone="accent"] {
+  color: var(--rk-accent-text);
+}
+.rk-text[data-text-tone="success"] {
+  color: var(--rk-success);
+}
+.rk-text[data-text-tone="warn"] {
+  color: var(--rk-warn);
+}
+.rk-text[data-text-tone="danger"] {
+  color: var(--rk-danger);
+}
+.rk-text[data-text-tone="info"] {
+  color: var(--rk-info);
 }

@@ -1,7 +1,7 @@
+/* Generated from styles/dialog.css.ts. Run bun run styles; do not edit. */
 html:has(.rk-dialog[open]) {
   overflow: hidden;
 }
-
 .rk-dialog {
   --rk-dialog-w: 560px;
   width: min(var(--rk-dialog-w), calc(100vw - 32px));
@@ -14,7 +14,6 @@ html:has(.rk-dialog[open]) {
   color: var(--rk-text);
   overflow: visible;
   outline: none;
-  /* closed state; transitions run both ways (exit keeps it rendered and in the top layer) */
   opacity: 0;
   scale: 0.96;
   translate: 0 8px;
@@ -24,120 +23,85 @@ html:has(.rk-dialog[open]) {
     translate var(--rk-dur) var(--rk-ease),
     display var(--rk-dur) allow-discrete,
     overlay var(--rk-dur) allow-discrete;
-
-  &::backdrop {
-    background: var(--rk-scrim);
-    backdrop-filter: blur(calc(var(--rk-blur) * 0.2));
-    opacity: 0;
-    transition:
-      opacity var(--rk-dur) var(--rk-ease),
-      display var(--rk-dur) allow-discrete,
-      overlay var(--rk-dur) allow-discrete;
-  }
-
-  &[open] {
-    display: flex;
-    opacity: 1;
-    scale: 1;
-    translate: 0 0;
-    /* entry is slower than exit */
-    transition-duration: var(--rk-dur-slow);
-    transition-timing-function: var(--rk-ease-out);
-    @starting-style {
-      opacity: 0;
-      scale: 0.96;
-      translate: 0 8px;
-    }
-    &::backdrop {
-      opacity: 1;
-      transition-duration: var(--rk-dur-slow);
-      @starting-style {
-        opacity: 0;
-      }
-    }
-  }
-
-  &[data-size="sm"] {
-    --rk-dialog-w: 400px;
-  }
-  &[data-size="lg"] {
-    --rk-dialog-w: 820px;
-  }
-  &[data-size="xl"] {
-    --rk-dialog-w: 1120px;
-  }
-  &[data-size="full"] {
-    --rk-dialog-w: 100vw;
-    height: calc(100dvh - 48px);
-  }
-
-  &[data-placement="top"] {
-    margin: 12vh auto auto;
-  }
-
-  &:is([data-placement="right"], [data-placement="left"]) {
-    --rk-dialog-w: 440px;
-    height: 100dvh;
-    max-height: 100dvh;
-    margin: 0 0 0 auto;
-    & .rk-dialog-panel {
-      border-radius: var(--rk-radius-lg) 0 0 var(--rk-radius-lg);
-    }
-    &[data-size="sm"] {
-      --rk-dialog-w: 340px;
-    }
-    &[data-size="lg"] {
-      --rk-dialog-w: 640px;
-    }
-  }
-  /* drawers slide from their edge instead of fading in */
-  &:is([data-placement="right"], [data-placement="left"], [data-placement="bottom"]) {
-    opacity: 1;
-    scale: 1;
-    &[open] {
-      translate: 0 0;
-      @starting-style {
-        opacity: 1;
-        scale: 1;
-      }
-    }
-  }
-  &[data-placement="right"] {
-    translate: 100% 0;
-    &[open] {
-      @starting-style {
-        translate: 100% 0;
-      }
-    }
-  }
-  &[data-placement="left"] {
-    margin: 0 auto 0 0;
-    translate: -100% 0;
-    & .rk-dialog-panel {
-      border-radius: 0 var(--rk-radius-lg) var(--rk-radius-lg) 0;
-    }
-    &[open] {
-      @starting-style {
-        translate: -100% 0;
-      }
-    }
-  }
-  &[data-placement="bottom"] {
-    width: 100vw;
-    max-height: 85dvh;
-    margin: auto 0 0;
-    & .rk-dialog-panel {
-      border-radius: var(--rk-radius-xl) var(--rk-radius-xl) 0 0;
-    }
-    translate: 0 100%;
-    &[open] {
-      @starting-style {
-        translate: 0 100%;
-      }
-    }
-  }
 }
-
+.rk-dialog::backdrop {
+  background: var(--rk-scrim);
+  backdrop-filter: blur(calc(var(--rk-blur) * 0.2));
+  opacity: 0;
+  transition:
+    opacity var(--rk-dur) var(--rk-ease),
+    display var(--rk-dur) allow-discrete,
+    overlay var(--rk-dur) allow-discrete;
+}
+.rk-dialog[open] {
+  display: flex;
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+  transition-duration: var(--rk-dur-slow);
+  transition-timing-function: var(--rk-ease-out);
+}
+.rk-dialog[open]::backdrop {
+  opacity: 1;
+  transition-duration: var(--rk-dur-slow);
+}
+.rk-dialog[data-size="sm"] {
+  --rk-dialog-w: 400px;
+}
+.rk-dialog[data-size="lg"] {
+  --rk-dialog-w: 820px;
+}
+.rk-dialog[data-size="xl"] {
+  --rk-dialog-w: 1120px;
+}
+.rk-dialog[data-size="full"] {
+  --rk-dialog-w: 100vw;
+  height: calc(100dvh - 48px);
+}
+.rk-dialog[data-placement="top"] {
+  margin: 12vh auto auto;
+}
+.rk-dialog:is([data-placement="right"], [data-placement="left"]) {
+  --rk-dialog-w: 440px;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0 0 0 auto;
+}
+.rk-dialog:is([data-placement="right"], [data-placement="left"]) .rk-dialog-panel {
+  border-radius: var(--rk-radius-lg) 0 0 var(--rk-radius-lg);
+}
+.rk-dialog:is([data-placement="right"], [data-placement="left"])[data-size="sm"] {
+  --rk-dialog-w: 340px;
+}
+.rk-dialog:is([data-placement="right"], [data-placement="left"])[data-size="lg"] {
+  --rk-dialog-w: 640px;
+}
+.rk-dialog:is([data-placement="right"], [data-placement="left"], [data-placement="bottom"]) {
+  opacity: 1;
+  scale: 1;
+}
+.rk-dialog:is([data-placement="right"], [data-placement="left"], [data-placement="bottom"])[open] {
+  translate: 0 0;
+}
+.rk-dialog[data-placement="right"] {
+  translate: 100% 0;
+}
+.rk-dialog[data-placement="left"] {
+  margin: 0 auto 0 0;
+  translate: -100% 0;
+}
+.rk-dialog[data-placement="left"] .rk-dialog-panel {
+  border-radius: 0 var(--rk-radius-lg) var(--rk-radius-lg) 0;
+}
+.rk-dialog[data-placement="bottom"] {
+  width: 100vw;
+  max-height: 85dvh;
+  margin: auto 0 0;
+  translate: 0 100%;
+}
+.rk-dialog[data-placement="bottom"] .rk-dialog-panel {
+  border-radius: var(--rk-radius-xl) var(--rk-radius-xl) 0 0;
+}
 .rk-dialog-panel {
   display: flex;
   flex-direction: column;
@@ -149,23 +113,19 @@ html:has(.rk-dialog[open]) {
   box-shadow: var(--rk-shadow-pop);
   overflow: hidden;
 }
-
 .rk-dialog-header {
   display: flex;
   align-items: flex-start;
   gap: 12px;
   padding: calc(var(--rk-pad) * 1.1) calc(var(--rk-pad) * 1.25) 0;
 }
-
 .rk-dialog-header:is(:last-child, :has(+ .rk-dialog-footer)) {
   padding-bottom: calc(var(--rk-pad) * 1.1);
 }
-
 .rk-dialog-titles {
   flex: 1;
   min-width: 0;
 }
-
 .rk-dialog-title {
   margin: 0;
   font-size: var(--rk-text-lg);
@@ -173,13 +133,11 @@ html:has(.rk-dialog[open]) {
   letter-spacing: -0.01em;
   line-height: 1.3;
 }
-
 .rk-dialog-desc {
   margin: 4px 0 0;
   font-size: var(--rk-text-sm);
   color: var(--rk-text-3);
 }
-
 .rk-dialog-close {
   display: grid;
   place-items: center;
@@ -193,19 +151,17 @@ html:has(.rk-dialog[open]) {
   color: var(--rk-text-2);
   font-size: 16px;
   cursor: pointer;
-  &:hover {
-    background: var(--rk-press);
-    color: var(--rk-text);
-  }
 }
-
+.rk-dialog-close:hover {
+  background: var(--rk-press);
+  color: var(--rk-text);
+}
 .rk-dialog-body {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   padding: calc(var(--rk-pad) * 1.25);
 }
-
 .rk-dialog-footer {
   display: flex;
   align-items: center;
@@ -216,16 +172,11 @@ html:has(.rk-dialog[open]) {
   border-top: 1px solid var(--rk-line);
   background: var(--rk-well-soft);
 }
-
-/* command palette */
-.rk-command {
-  & .rk-dialog-body {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
+.rk-command .rk-dialog-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
-
 .rk-command-search {
   display: flex;
   align-items: center;
@@ -235,23 +186,21 @@ html:has(.rk-dialog[open]) {
   border-bottom: 1px solid var(--rk-line);
   color: var(--rk-text-3);
   font-size: 16px;
-
-  & input {
-    flex: 1;
-    min-width: 0;
-    height: 100%;
-    border: 0;
-    outline: none;
-    background: transparent;
-    color: var(--rk-text);
-    font: inherit;
-    font-size: var(--rk-text-lg);
-    &::placeholder {
-      color: var(--rk-text-3);
-    }
-  }
 }
-
+.rk-command-search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--rk-text);
+  font: inherit;
+  font-size: var(--rk-text-lg);
+}
+.rk-command-search input::placeholder {
+  color: var(--rk-text-3);
+}
 .rk-command-list {
   display: flex;
   flex-direction: column;
@@ -260,14 +209,35 @@ html:has(.rk-dialog[open]) {
   overflow-y: auto;
   padding: 6px;
 }
-
 .rk-command-empty {
   padding: 28px 12px;
   text-align: center;
   color: var(--rk-text-3);
 }
-
 .rk-command-enter {
   color: var(--rk-text-3);
   flex-shrink: 0;
+}
+@starting-style {
+  .rk-dialog[open] {
+    opacity: 0;
+    scale: 0.96;
+    translate: 0 8px;
+  }
+  .rk-dialog[open]::backdrop {
+    opacity: 0;
+  }
+  .rk-dialog:is([data-placement="right"], [data-placement="left"], [data-placement="bottom"])[open] {
+    opacity: 1;
+    scale: 1;
+  }
+  .rk-dialog[data-placement="right"][open] {
+    translate: 100% 0;
+  }
+  .rk-dialog[data-placement="left"][open] {
+    translate: -100% 0;
+  }
+  .rk-dialog[data-placement="bottom"][open] {
+    translate: 0 100%;
+  }
 }

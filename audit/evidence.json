@@ -1,0 +1,134 @@
+{
+  "auditDate": "2026-10-10",
+  "baseCommit": "2ddc8f7287881f9af7558dc880ddbc8fb2801168",
+  "branch": "dev",
+  "packageVersion": "0.6.1",
+  "environment": {
+    "timezone": "Asia/Irkutsk",
+    "bunActual": "1.3.14",
+    "bunPinned": "1.3.11",
+    "typescript": "7.0.2",
+    "react": "19.3.0",
+    "browser": "Chromium, Codex in-app browser"
+  },
+  "baseline": {
+    "check": "passed",
+    "tests": 83,
+    "testFiles": 25,
+    "assertions": 292,
+    "build": "passed",
+    "llmsCheck": "passed",
+    "storiesBuild": "passed with two CSS nesting target warnings",
+    "runtimeExports": 257,
+    "componentTsxFiles": 77,
+    "componentCssFiles": 69,
+    "storyFiles": 84,
+    "stylesBytes": 210589,
+    "stylesGzipBytes": 39876,
+    "isolatedButtonJsBytes": 4612,
+    "isolatedButtonJsGzipBytes": 2140,
+    "buttonMeasurementScope": "Bun browser minified bundle; React external; CSS excluded",
+    "packEntryCount": 623,
+    "packSizeBytes": 580712,
+    "packUnpackedBytes": 2666109,
+    "unwantedPackFile": "src/components/toolkit-gaps.test.tsx"
+  },
+  "logicalProbes": {
+    "schemaPattern": {
+      "input": "Same schema with /a/g, name=a, validated twice",
+      "actual": [{}, { "name": "Invalid format" }]
+    },
+    "schemaNaN": {
+      "input": "required number, NaN, min=0, max=10",
+      "actualErrors": {}
+    },
+    "smallNumberStep": {
+      "input": "clampNumber(2e-7, {step:1e-7})",
+      "actual": 0
+    },
+    "reversedRange": {
+      "input": "from=2026-10-10T18:00, to=2026-10-09T18:00",
+      "actualFromUtc": "2026-10-10T10:00:00.000Z",
+      "actualToUtc": "2026-10-09T10:00:00.000Z",
+      "returnedNonNull": true
+    },
+    "mergedRef": {
+      "input": "callback returns cleanup; merged callback invoked with node and null",
+      "actualReturnedCleanupType": "undefined",
+      "cleanupCalls": 0
+    },
+    "objectCell": {
+      "input": "Column key=meta, row.meta={count:1}, no cell renderer",
+      "method": "renderToStaticMarkup",
+      "actual": "Objects are not valid as a React child"
+    },
+    "solidScopeVars": {
+      "method": "scopeVars with default appearance and material=solid",
+      "actualOverrides": {}
+    }
+  },
+  "browserProbes": {
+    "requiredInputWithoutId": "Invalid empty control submitted through Form",
+    "inputCallbackRef": { "attachCalls": 4, "cleanupCallsAfterUnmount": 0 },
+    "solidScopeInsideLiquid": { "alpha": "40%", "filter": "blur(26px) saturate(1.15)" },
+    "defaultDensityInsideCompact": { "actualMdControlHeightPx": 29.2344, "expectedDefaultPx": 34 },
+    "disabledFirstTab": "Only tabindex=0 item is disabled; enabled item tabindex=-1",
+    "filteredTreeSelection": "Remaining visible tree row has tabindex=-1",
+    "rowProps": "Custom onClick not called; explicit tabindex=0 overwritten",
+    "comboboxLabel": "Options label changed Original to Updated; input retained Original",
+    "floatingLayoutShift": {
+      "anchorBeforeX": 28,
+      "anchorAfterX": 228,
+      "floatingBeforeX": 28,
+      "floatingAfterX": 28
+    },
+    "lastConfirmHostUnmount": "Promise remained pending without mounted dialog",
+    "motionOff": {
+      "spinnerSeconds": 2.8,
+      "skeletonSeconds": 1600,
+      "textShimmerSeconds": 2000,
+      "loopsRemain": true
+    },
+    "selectPanelSearch": {
+      "ariaLabel": null,
+      "ariaLabelledby": null,
+      "labelText": "",
+      "placeholder": "Filter…",
+      "axName": ""
+    },
+    "mobileDashboard": {
+      "viewportWidth": 375,
+      "viewportHeight": 812,
+      "documentWidth": 375,
+      "drawerEscapeAndFocusReturn": "passed"
+    }
+  },
+  "contrast": {
+    "method": "WCAG relative luminance on opaque in-gamut OKLCH token pairs; not composited glass",
+    "irisNormal": 4.62,
+    "irisHover": 3.91,
+    "dangerFilled": 3.07,
+    "mutedOnSurface3": 3.98,
+    "fluentSelectedSegment": 4.02
+  },
+  "compileAcceptedUnsafeCases": [
+    "AppearanceValues with radius=bad, motion=true and unknownKey",
+    "Column<{name:string}> with key=naem",
+    "Column<{meta:{count:number}}> with key=meta and no cell",
+    "SchemaValues with count=not-a-number",
+    "Combobox<a|b> allowCustom with narrow a|b|null onChange"
+  ],
+  "sourceReviewOnly": [
+    "Toast hidden transient items do not expire until mounted",
+    "Selective CSS is unlayered and lacks complete family/theme dependencies",
+    "CI push branches include main, not dev"
+  ],
+  "notPerformed": [
+    "Consumer builds and live integration",
+    "Full SSR hydration and RSC suite",
+    "NVDA and forced-colors visual testing",
+    "Firefox, Safari and Tauri WebView validation",
+    "GPU/frame profiling and long-running load tests",
+    "Installed CSS-in-JS comparative benchmark"
+  ]
+}

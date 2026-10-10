@@ -1,4 +1,4 @@
-/* tabs */
+/* Generated from styles/nav.css.ts. Run bun run styles; do not edit. */
 .rk-tabs {
   --rk-tab-h: var(--rk-h-md);
   position: relative;
@@ -8,104 +8,96 @@
   min-width: 0;
   overflow-x: auto;
   scrollbar-width: none;
-
-  &[data-size="sm"] {
-    --rk-tab-h: var(--rk-h-sm);
-    font-size: var(--rk-text-sm);
-  }
-  &[data-size="lg"] {
-    --rk-tab-h: var(--rk-h-lg);
-  }
-  &[data-fill] .rk-tab {
-    flex: 1;
-  }
-
-  &[data-variant="line"] {
-    gap: calc(var(--rk-space) * 4);
-    box-shadow: inset 0 -1px 0 var(--rk-line);
-    & .rk-tab {
-      padding: 0 2px;
-    }
-    & .rk-tabs-indicator {
-      bottom: 0;
-      height: 2px;
-      border-radius: calc(2px * var(--rk-roundness)) calc(2px * var(--rk-roundness)) 0 0;
-      background: var(--rk-text);
-    }
-  }
-
-  &[data-variant="pill"] {
-    display: inline-flex;
-    width: fit-content;
-    max-width: 100%;
-    padding: 3px;
-    border-radius: calc(var(--rk-radius-control) + 3px * var(--rk-roundness));
-    background: var(--rk-well);
-    box-shadow: inset 0 0 0 1px var(--rk-line);
-    &[data-fill] {
-      display: flex;
-      width: auto;
-    }
-    & .rk-tab {
-      height: calc(var(--rk-tab-h) - 6px);
-      padding: 0 calc(var(--rk-space) * 3.5);
-      border-radius: var(--rk-radius-control);
-    }
-    & .rk-tab[aria-selected="true"] {
-      color: var(--rk-on-inverse);
-    }
-    & .rk-tabs-indicator {
-      top: 3px;
-      bottom: 3px;
-      border-radius: var(--rk-radius-control);
-      background: var(--rk-inverse);
-      box-shadow: 0 2px 8px -2px oklch(var(--rk-shade) / 0.5);
-    }
-  }
 }
-
-/* top nav reuses the pill tab bar; links instead of tabs */
+.rk-tabs[data-size="sm"] {
+  --rk-tab-h: var(--rk-h-sm);
+  font-size: var(--rk-text-sm);
+}
+.rk-tabs[data-size="lg"] {
+  --rk-tab-h: var(--rk-h-lg);
+}
+.rk-tabs[data-fill] .rk-tab {
+  flex: 1;
+}
+.rk-tabs[data-variant="line"] {
+  gap: calc(var(--rk-space) * 4);
+  box-shadow: inset 0 -1px 0 var(--rk-line);
+}
+.rk-tabs[data-variant="line"] .rk-tab {
+  padding: 0 2px;
+}
+.rk-tabs[data-variant="line"] .rk-tabs-indicator {
+  bottom: 0;
+  height: 2px;
+  border-radius: calc(2px * var(--rk-roundness)) calc(2px * var(--rk-roundness)) 0 0;
+  background: var(--rk-tab-line, var(--rk-text));
+}
+.rk-tabs[data-variant="pill"] {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  padding: 3px;
+  border-radius: calc(var(--rk-radius-control) + 3px * var(--rk-roundness));
+  background: var(--rk-track-bg, var(--rk-well));
+  box-shadow: var(--rk-track-shadow, inset 0 0 0 1px var(--rk-line));
+}
+.rk-tabs[data-variant="pill"][data-fill] {
+  display: flex;
+  width: auto;
+}
+.rk-tabs[data-variant="pill"] .rk-tab {
+  height: calc(var(--rk-tab-h) - 6px);
+  padding: 0 calc(var(--rk-space) * 3.5);
+  border-radius: var(--rk-radius-control);
+}
+.rk-tabs[data-variant="pill"] .rk-tab[aria-selected="true"] {
+  color: var(--rk-selected-fg, var(--rk-on-inverse));
+}
+.rk-tabs[data-variant="pill"] .rk-tabs-indicator {
+  top: 3px;
+  bottom: 3px;
+  border-radius: var(--rk-radius-control);
+  background: var(--rk-selected-bg, var(--rk-inverse));
+  box-shadow: var(--rk-selected-shadow, 0 2px 8px -2px oklch(var(--rk-shade) / 0.5));
+}
 .rk-topnav {
   min-width: 0;
-  & .rk-tab {
-    text-decoration: none;
-  }
-  & .rk-tab[aria-current="page"] {
-    color: var(--rk-on-inverse);
-  }
 }
-
-/* vertical: settings-page list; the line becomes a rail on the start edge */
+.rk-topnav .rk-tab {
+  text-decoration: none;
+}
+.rk-topnav .rk-tab[aria-current="page"] {
+  color: var(--rk-selected-fg, var(--rk-on-inverse));
+}
 .rk-tabs[data-orientation="vertical"] {
   flex-direction: column;
   overflow: visible;
-  & .rk-tab {
-    justify-content: flex-start;
-    padding-inline: calc(var(--rk-space) * 3);
-  }
-  & .rk-tabs-indicator {
-    transition-property: top, bottom;
-  }
-  &[data-variant="line"] {
-    gap: 2px;
-    box-shadow: inset 1px 0 0 var(--rk-line);
-    & .rk-tabs-indicator {
-      left: 0;
-      width: 2px;
-      height: auto;
-      border-radius: 0 calc(2px * var(--rk-roundness)) calc(2px * var(--rk-roundness)) 0;
-    }
-  }
-  &[data-variant="pill"] {
-    display: flex;
-    width: auto;
-    & .rk-tabs-indicator {
-      left: 3px;
-      right: 3px;
-    }
-  }
 }
-
+.rk-tabs[data-orientation="vertical"] .rk-tab {
+  justify-content: flex-start;
+  padding-inline: calc(var(--rk-space) * 3);
+}
+.rk-tabs[data-orientation="vertical"] .rk-tabs-indicator {
+  transition-property: top, bottom;
+}
+.rk-tabs[data-orientation="vertical"][data-variant="line"] {
+  gap: 2px;
+  box-shadow: inset 1px 0 0 var(--rk-line);
+}
+.rk-tabs[data-orientation="vertical"][data-variant="line"] .rk-tabs-indicator {
+  left: 0;
+  width: 2px;
+  height: auto;
+  border-radius: 0 calc(2px * var(--rk-roundness)) calc(2px * var(--rk-roundness)) 0;
+}
+.rk-tabs[data-orientation="vertical"][data-variant="pill"] {
+  display: flex;
+  width: auto;
+}
+.rk-tabs[data-orientation="vertical"][data-variant="pill"] .rk-tabs-indicator {
+  left: 3px;
+  right: 3px;
+}
 .rk-tab {
   position: relative;
   z-index: 1;
@@ -124,25 +116,23 @@
   white-space: nowrap;
   cursor: pointer;
   transition: color var(--rk-dur) var(--rk-ease);
-
-  &:hover:not(:disabled) {
-    color: var(--rk-text);
-  }
-  &[aria-selected="true"] {
-    color: var(--rk-text);
-  }
-  &:focus-visible {
-    outline-offset: -2px;
-  }
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-  & .rk-icon {
-    font-size: 1.1em;
-  }
 }
-
+.rk-tab:hover:not(:disabled) {
+  color: var(--rk-text);
+}
+.rk-tab[aria-selected="true"] {
+  color: var(--rk-text);
+}
+.rk-tab:focus-visible {
+  outline-offset: -2px;
+}
+.rk-tab:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.rk-tab .rk-icon {
+  font-size: 1.1em;
+}
 .rk-tab-media {
   display: inline-flex;
   flex-shrink: 0;
@@ -150,13 +140,12 @@
   max-width: 2.5em;
   overflow: hidden;
   border-radius: calc(var(--rk-radius-sm) * 0.7);
-  & > :is(img, svg, video) {
-    width: auto;
-    height: 100%;
-    object-fit: cover;
-  }
 }
-
+.rk-tab-media > :is(img, svg, video) {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
 .rk-tab-badge {
   min-width: 18px;
   padding: 1px 5px;
@@ -165,20 +154,17 @@
   color: var(--rk-text-2);
   font-size: var(--rk-text-2xs);
   font-weight: 500;
-  [aria-selected="true"] > & {
-    background: color-mix(in oklab, currentColor 14%, transparent);
-    color: inherit;
-  }
 }
-
+[aria-selected="true"] > .rk-tab-badge {
+  background: color-mix(in oklab, currentColor 14%, transparent);
+  color: inherit;
+}
 .rk-tab-dirty {
   width: 6px;
   height: 6px;
   border-radius: var(--rk-radius-round);
   background: var(--rk-warn);
 }
-
-/* sidebar & nav items */
 .rk-sidebar {
   display: flex;
   flex-direction: column;
@@ -186,7 +172,6 @@
   height: 100%;
   width: 100%;
 }
-
 .rk-sidebar-header {
   display: flex;
   align-items: center;
@@ -195,7 +180,6 @@
   padding: 0 14px;
   flex-shrink: 0;
 }
-
 .rk-sidebar-body {
   display: flex;
   flex: 1;
@@ -205,7 +189,6 @@
   padding: 6px 8px;
   overflow-y: auto;
 }
-
 .rk-sidebar-footer {
   display: flex;
   flex-direction: column;
@@ -213,45 +196,38 @@
   padding: 8px;
   flex-shrink: 0;
 }
-
-.rk-sidebar[data-collapsed] {
-  & .rk-sidebar-header {
-    justify-content: center;
-    padding: 0;
-  }
-  & .rk-nav-item {
-    justify-content: center;
-  }
-  & .rk-nav-link {
-    flex: 0 0 auto;
-    width: var(--rk-h-md);
-    justify-content: center;
-    padding: 0;
-  }
-  /* hidden visually only: the label stays the link's accessible name (icons are aria-hidden) */
-  & .rk-nav-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-  /* the rail keeps the header's first element (logo, toggle) */
-  & .rk-sidebar-header > :not(:first-child) {
-    display: none;
-  }
-  & .rk-sidebar-footer .rk-nav-item {
-    justify-content: center;
-  }
+.rk-sidebar[data-collapsed] .rk-sidebar-header {
+  justify-content: center;
+  padding: 0;
 }
-
+.rk-sidebar[data-collapsed] .rk-nav-item {
+  justify-content: center;
+}
+.rk-sidebar[data-collapsed] .rk-nav-link {
+  flex: 0 0 auto;
+  width: var(--rk-h-md);
+  justify-content: center;
+  padding: 0;
+}
+.rk-sidebar[data-collapsed] .rk-nav-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.rk-sidebar[data-collapsed] .rk-sidebar-header > :not(:first-child) {
+  display: none;
+}
+.rk-sidebar[data-collapsed] .rk-sidebar-footer .rk-nav-item {
+  justify-content: center;
+}
 .rk-nav-group {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-
 .rk-nav-group-head {
   display: flex;
   align-items: center;
@@ -260,7 +236,6 @@
   min-height: 26px;
   padding: 0 4px 0 10px;
 }
-
 .rk-nav-group-label {
   display: inline-flex;
   align-items: center;
@@ -274,20 +249,18 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  &:is(button) {
-    cursor: pointer;
-    &:hover {
-      color: var(--rk-text-2);
-    }
-  }
 }
-
+.rk-nav-group-label:is(button) {
+  cursor: pointer;
+}
+.rk-nav-group-label:is(button):hover {
+  color: var(--rk-text-2);
+}
 .rk-nav-group-items {
   display: flex;
   flex-direction: column;
   gap: 1px;
 }
-
 .rk-nav-item {
   --rk-depth: 0;
   position: relative;
@@ -299,27 +272,34 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     color var(--rk-dur) var(--rk-ease);
-
-  &:hover {
-    background: var(--rk-hover);
-    color: var(--rk-text);
-  }
-  &[data-muted] {
-    color: var(--rk-text-3);
-  }
-  &[data-active] {
-    background: var(--rk-inverse);
-    color: var(--rk-on-inverse);
-    & .rk-nav-icon {
-      color: inherit;
-    }
-    & .rk-badge[data-tone="neutral"] {
-      background: oklch(var(--rk-shade) / 0.08);
-      color: inherit;
-    }
-  }
 }
-
+.rk-nav-item:hover {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
+.rk-nav-item[data-muted] {
+  color: var(--rk-text-3);
+}
+.rk-nav-item[data-active] {
+  background: var(--rk-nav-active-bg, var(--rk-inverse));
+  color: var(--rk-nav-active-fg, var(--rk-on-inverse));
+}
+.rk-nav-item[data-active]::before {
+  content: var(--rk-nav-marker, none);
+  position: absolute;
+  inset-block: 22%;
+  inset-inline-start: 0;
+  width: 3px;
+  border-radius: calc(2px * var(--rk-roundness));
+  background: var(--rk-accent);
+}
+.rk-nav-item[data-active] .rk-nav-icon {
+  color: var(--rk-nav-active-icon, inherit);
+}
+.rk-nav-item[data-active] .rk-badge[data-tone="neutral"] {
+  background: oklch(var(--rk-shade) / 0.08);
+  color: inherit;
+}
 .rk-nav-link {
   display: flex;
   flex: 1;
@@ -338,24 +318,22 @@
   text-align: start;
   text-decoration: none;
   cursor: pointer;
-  &:disabled,
-  &[aria-disabled] {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
-  &:focus-visible {
-    outline-offset: -2px;
-  }
 }
-
+.rk-nav-link:disabled,
+.rk-nav-link[aria-disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.rk-nav-link:focus-visible {
+  outline-offset: -2px;
+}
 .rk-nav-icon {
   font-size: 16px;
   color: var(--rk-text-3);
-  .rk-nav-item:hover & {
-    color: var(--rk-text-2);
-  }
 }
-
+.rk-nav-item:hover .rk-nav-icon {
+  color: var(--rk-text-2);
+}
 .rk-nav-label {
   flex: 1;
   min-width: 0;
@@ -363,84 +341,74 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .rk-nav-trailing {
   display: flex;
   align-items: center;
   gap: 2px;
   padding-inline-end: 4px;
   flex-shrink: 0;
-  &[data-hover] {
-    opacity: 0;
-    transition: opacity var(--rk-dur) var(--rk-ease);
-    .rk-nav-item:is(:hover, :focus-within) & {
-      opacity: 1;
-    }
-  }
 }
-
-/* dock */
+.rk-nav-trailing[data-hover] {
+  opacity: 0;
+  transition: opacity var(--rk-dur) var(--rk-ease);
+}
+.rk-nav-item:is(:hover, :focus-within) .rk-nav-trailing[data-hover] {
+  opacity: 1;
+}
 .rk-dock {
   max-width: 100%;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 6px;
-  border-radius: var(--rk-radius-pill);
+  border-radius: var(--rk-dock-radius, var(--rk-radius-pill));
   box-shadow:
     var(--rk-surface-shadow, var(--rk-shadow-1)),
     0 16px 40px -16px oklch(var(--rk-shade) / 0.7);
 }
-
-/* bar: taskbar along the bottom edge; start slot, items, then the extras pushed to the far end */
 .rk-dock[data-shape="bar"] {
   display: flex;
   width: 100%;
   padding: 4px;
   border-radius: var(--rk-radius-lg);
   box-shadow: var(--rk-surface-shadow, var(--rk-shadow-1));
-  & .rk-dock-track {
-    flex: 1;
-  }
-  &[data-align="center"] .rk-dock-track {
-    justify-content: safe center;
-  }
-  & .rk-dock-item {
-    height: var(--rk-h-lg);
-    border-radius: var(--rk-radius-control);
-  }
-  &[data-variant="icons"] .rk-dock-item {
-    width: calc(var(--rk-h-lg) + 8px);
-    background: transparent;
-  }
-  & .rk-dock-indicator {
-    border-radius: var(--rk-radius-control);
-  }
 }
-
+.rk-dock[data-shape="bar"] .rk-dock-track {
+  flex: 1;
+}
+.rk-dock[data-shape="bar"][data-align="center"] .rk-dock-track {
+  justify-content: safe center;
+}
+.rk-dock[data-shape="bar"] .rk-dock-item {
+  height: var(--rk-h-lg);
+  border-radius: var(--rk-radius-control);
+}
+.rk-dock[data-shape="bar"][data-variant="icons"] .rk-dock-item {
+  width: calc(var(--rk-h-lg) + 8px);
+  background: transparent;
+}
+.rk-dock[data-shape="bar"] .rk-dock-indicator {
+  border-radius: var(--rk-dock-indicator-radius, var(--rk-radius-control));
+}
 .rk-dock-track {
   position: relative;
   display: flex;
   align-items: center;
   gap: 6px;
-  /* wider than its container: scroll the items instead of clipping the first ones; the padding keeps
-     focus rings and badges inside the scroll box */
   min-width: 0;
   padding: 4px;
   margin: -4px;
   overflow-x: auto;
   scrollbar-width: none;
 }
-
 .rk-dock-indicator {
-  /* the track has 4px padding (room for focus rings while it scrolls): match the item box */
-  top: 4px;
+  top: var(--rk-dock-indicator-top, 4px);
+  height: var(--rk-dock-indicator-height, auto);
   bottom: 4px;
-  border-radius: var(--rk-radius-pill);
-  background: var(--rk-inverse);
-  box-shadow: 0 4px 14px -4px oklch(var(--rk-shade) / 0.6);
+  border-radius: var(--rk-dock-indicator-radius, var(--rk-radius-pill));
+  background: var(--rk-dock-indicator-bg, var(--rk-inverse));
+  box-shadow: var(--rk-dock-indicator-shadow, 0 4px 14px -4px oklch(var(--rk-shade) / 0.6));
 }
-
 .rk-dock-item {
   position: relative;
   z-index: 1;
@@ -453,7 +421,7 @@
   height: 44px;
   padding: 0;
   border: 0;
-  border-radius: var(--rk-radius-pill);
+  border-radius: var(--rk-dock-radius, var(--rk-radius-pill));
   background: var(--rk-hover);
   color: var(--rk-text-2);
   font: inherit;
@@ -464,36 +432,33 @@
   transition:
     background-color var(--rk-dur) var(--rk-ease),
     color var(--rk-dur-slow) var(--rk-ease);
-
-  & .rk-icon {
-    font-size: 18px;
-  }
-  &:hover:not([aria-current]):not([aria-selected="true"]):not(:disabled) {
-    background: var(--rk-press);
-    color: var(--rk-text);
-  }
-  &:active:not(:disabled) .rk-icon {
-    scale: 0.96;
-  }
-  &:is([aria-current="page"], [aria-selected="true"]) {
-    background: transparent;
-    color: var(--rk-on-inverse);
-  }
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  [data-variant="labels"] & {
-    width: auto;
-    padding: 0 18px 0 15px;
-    background: transparent;
-    &:hover:not([aria-current]):not([aria-selected="true"]):not(:disabled) {
-      background: var(--rk-hover);
-    }
-  }
 }
-
+.rk-dock-item .rk-icon {
+  font-size: 18px;
+}
+.rk-dock-item:hover:not([aria-current]):not([aria-selected="true"]):not(:disabled) {
+  background: var(--rk-press);
+  color: var(--rk-text);
+}
+.rk-dock-item:active:not(:disabled) .rk-icon {
+  scale: 0.96;
+}
+.rk-dock-item:is([aria-current="page"], [aria-selected="true"]) {
+  background: var(--rk-dock-active-bg, transparent);
+  color: var(--rk-dock-active-fg, var(--rk-on-inverse));
+}
+.rk-dock-item:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+[data-variant="labels"] .rk-dock-item {
+  width: auto;
+  padding: 0 18px 0 15px;
+  background: transparent;
+}
+[data-variant="labels"] .rk-dock-item:hover:not([aria-current]):not([aria-selected="true"]):not(:disabled) {
+  background: var(--rk-hover);
+}
 .rk-dock-dot {
   position: absolute;
   top: 9px;
@@ -503,13 +468,12 @@
   border-radius: var(--rk-radius-round);
   background: var(--rk-accent);
   box-shadow: 0 0 0 2px var(--rk-surface-2);
-  [data-variant="labels"] & {
-    top: 10px;
-    left: 27px;
-    right: auto;
-  }
 }
-
+[data-variant="labels"] .rk-dock-dot {
+  top: 10px;
+  left: 27px;
+  right: auto;
+}
 .rk-dock-count {
   position: absolute;
   top: 1px;
@@ -524,19 +488,16 @@
   font-weight: 600;
   line-height: 18px;
   text-align: center;
-  [data-variant="labels"] & {
-    position: static;
-  }
 }
-
+[data-variant="labels"] .rk-dock-count {
+  position: static;
+}
 .rk-dock-sep {
   width: 1px;
   height: 24px;
   margin: 0 4px;
   background: var(--rk-line-strong);
 }
-
-/* breadcrumbs */
 .rk-breadcrumbs ol {
   display: flex;
   flex-wrap: wrap;
@@ -547,93 +508,85 @@
   list-style: none;
   font-size: var(--rk-text-sm);
 }
-
 .rk-breadcrumbs li {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   min-width: 0;
-  & :is(a, button) {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 2px 4px;
-    border: 0;
-    border-radius: calc(6px * var(--rk-roundness));
-    background: none;
-    color: var(--rk-text-3);
-    font: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    &:hover {
-      color: var(--rk-text);
-      background: var(--rk-hover);
-    }
-  }
-  & [aria-current] {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 2px 4px;
-    color: var(--rk-text);
-    font-weight: 500;
-  }
 }
-
+.rk-breadcrumbs li :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: calc(6px * var(--rk-roundness));
+  background: none;
+  color: var(--rk-text-3);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.rk-breadcrumbs li :is(a, button):hover {
+  color: var(--rk-text);
+  background: var(--rk-hover);
+}
+.rk-breadcrumbs li [aria-current] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  color: var(--rk-text);
+  font-weight: 500;
+}
 .rk-breadcrumbs-sep {
   color: var(--rk-text-3);
   opacity: 0.6;
 }
-
-/* pagination */
 .rk-pagination {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 4px;
-
-  & > button:not(.rk-select-trigger) {
-    display: inline-grid;
-    place-items: center;
-    min-width: var(--rk-h-sm);
-    height: var(--rk-h-sm);
-    padding: 0 6px;
-    border: 0;
-    border-radius: var(--rk-radius-control);
-    background: transparent;
-    color: var(--rk-text-2);
-    font: inherit;
-    font-size: var(--rk-text-sm);
-    font-variant-numeric: tabular-nums;
-    cursor: pointer;
-    &:hover:not(:disabled) {
-      background: var(--rk-hover);
-      color: var(--rk-text);
-    }
-    &[aria-current] {
-      background: var(--rk-inverse);
-      color: var(--rk-on-inverse);
-      font-weight: 600;
-    }
-    &:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
-  }
 }
-
+.rk-pagination > button:not(.rk-select-trigger) {
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--rk-h-sm);
+  height: var(--rk-h-sm);
+  padding: 0 6px;
+  border: 0;
+  border-radius: var(--rk-radius-control);
+  background: transparent;
+  color: var(--rk-text-2);
+  font: inherit;
+  font-size: var(--rk-text-sm);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.rk-pagination > button:not(.rk-select-trigger):hover:not(:disabled) {
+  background: var(--rk-hover);
+  color: var(--rk-text);
+}
+.rk-pagination > button:not(.rk-select-trigger)[aria-current] {
+  background: var(--rk-selected-bg, var(--rk-inverse));
+  color: var(--rk-selected-fg, var(--rk-on-inverse));
+  font-weight: 600;
+}
+.rk-pagination > button:not(.rk-select-trigger):disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
 .rk-pagination-info {
   margin-inline-end: 8px;
   color: var(--rk-text-3);
   font-size: var(--rk-text-sm);
   white-space: nowrap;
 }
-
 .rk-pagination-size {
   width: auto;
   margin-inline-end: 8px;
 }
-
 .rk-pagination-current {
   min-width: 56px;
   text-align: center;
@@ -641,21 +594,17 @@
   color: var(--rk-text-2);
   white-space: nowrap;
 }
-
 .rk-pagination-gap {
   min-width: 20px;
   text-align: center;
   color: var(--rk-text-3);
 }
-
-/* table of contents */
 .rk-toc {
   display: flex;
   flex-direction: column;
   box-shadow: inset 1px 0 0 var(--rk-line);
   font-size: var(--rk-text-sm);
 }
-
 .rk-toc-link {
   position: relative;
   padding: 4px 10px 4px calc(12px + var(--rk-toc-depth) * 12px);
@@ -663,22 +612,22 @@
   color: var(--rk-text-3);
   text-decoration: none;
   transition: color var(--rk-dur) var(--rk-ease);
-  &:hover {
-    color: var(--rk-text);
-  }
-  &[aria-current] {
-    color: var(--rk-text);
-    font-weight: 500;
-  }
-  &[aria-current]::before {
-    content: "";
-    position: absolute;
-    inset: 4px auto 4px 0;
-    width: 2px;
-    border-radius: 0 calc(2px * var(--rk-roundness)) calc(2px * var(--rk-roundness)) 0;
-    background: var(--rk-text);
-  }
-  &:focus-visible {
-    outline-offset: -2px;
-  }
+}
+.rk-toc-link:hover {
+  color: var(--rk-text);
+}
+.rk-toc-link[aria-current] {
+  color: var(--rk-text);
+  font-weight: 500;
+}
+.rk-toc-link[aria-current]::before {
+  content: "";
+  position: absolute;
+  inset: 4px auto 4px 0;
+  width: 2px;
+  border-radius: 0 calc(2px * var(--rk-roundness)) calc(2px * var(--rk-roundness)) 0;
+  background: var(--rk-text);
+}
+.rk-toc-link:focus-visible {
+  outline-offset: -2px;
 }

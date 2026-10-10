@@ -1,8 +1,9 @@
-import { type CSSProperties, type ReactNode, useMemo, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { cx } from "../lib/cx";
 import { useHighlight } from "../lib/highlight";
 import { useControllable } from "../lib/hooks";
 import { CheckIcon, ChevronRightIcon, MinusIcon } from "../lib/icons";
+import { useFocusRecovery } from "../lib/roving";
 import { nextSelection } from "../lib/selection";
 import { useVirtual } from "../lib/virtual";
 
@@ -95,6 +96,8 @@ export function Tree({
   const [focused, setFocused] = useState<string | null>(null);
   const [drop, setDrop] = useState<{ id: string; pos: TreeDropPosition } | null>(null);
   const root = useRef<HTMLDivElement>(null);
+  const pendingFocus = useRef<string | null>(null);
+  useFocusRecovery(root);
   const anchor = useRef<string | undefined>(undefined);
   const dragged = useRef<string | null>(null);
   const typed = useRef({ text: "", at: 0 });
@@ -156,7 +159,28 @@ export function Tree({
   const toggle = (id: string, to = !openSet.has(id)) =>
     setOpen(to ? [...open, id] : open.filter((x) => x !== id));
   const isSelected = (id: string) => (multiple ? multi.includes(id) : selected === id);
-  const tabStop = focused ?? (multiple ? multi[0] : selected) ?? rows[0]?.node.id;
+  const rendered = height
+    ? virtual.items.flatMap((v) => {
+        const row = rows[v.index];
+        return row ? [row.node.id] : [];
+      })
+    : keys;
+  const tabStop =
+    [focused, ...(multiple ? multi : [selected])].find((id) => id != null && rendered.includes(id)) ??
+    rendered[0];
+
+  useLayoutEffect(() => {
+    const id = pendingFocus.current;
+    if (!id) return;
+    if (!keys.includes(id)) {
+      pendingFocus.current = null;
+      return;
+    }
+    const node = root.current?.querySelector<HTMLElement>(`[data-id="${CSS.escape(id)}"]`);
+    if (!node) return;
+    pendingFocus.current = null;
+    node.focus();
+  });
 
   const checkState = (id: string): boolean | "mixed" => {
     const ls = leaves.get(id) ?? [id];
@@ -180,13 +204,10 @@ export function Tree({
 
   const focusRow = (id: string | undefined) => {
     if (!id) return;
+    pendingFocus.current = id;
     setFocused(id);
     const index = keys.indexOf(id);
     if (height && index >= 0) virtual.scrollToIndex(index);
-    // a virtualized row may only exist after the scroll re-renders
-    requestAnimationFrame(() =>
-      root.current?.querySelector<HTMLElement>(`[data-id="${CSS.escape(id)}"]`)?.focus(),
-    );
   };
 
   const onKeyDown = (event: React.KeyboardEvent, row: Row, index: number) => {

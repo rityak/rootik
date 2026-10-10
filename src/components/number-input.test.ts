@@ -1,6 +1,14 @@
 import { expect, test } from "bun:test";
 import { clampNumber, parseNumber } from "./number-input";
 
+test("scientific steps preserve small values and invalid precision never throws", () => {
+  expect(clampNumber(2e-7, { step: 1e-7 })).toBe(2e-7);
+  expect(clampNumber(2.25e-7, { step: 2.5e-8 })).toBe(2.25e-7);
+  expect(clampNumber(123, { step: 1e3 })).toBe(123);
+  expect(() => clampNumber(1, { precision: 1000 })).not.toThrow();
+  expect(() => clampNumber(1, { precision: Number.NaN })).not.toThrow();
+});
+
 test("clampNumber clamps and rounds to the step's decimals", () => {
   expect(clampNumber(0.1 + 0.2, { step: 0.1 })).toBe(0.3);
   expect(clampNumber(150, { min: 0, max: 100 })).toBe(100);

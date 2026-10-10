@@ -1,4 +1,4 @@
-import { type KeyboardEvent, type RefObject, useLayoutEffect } from "react";
+import { type KeyboardEvent, type RefObject, useLayoutEffect, useRef } from "react";
 import { isTypingTarget } from "./hooks";
 
 const ITEMS =
@@ -16,6 +16,43 @@ const groupOf = (root: HTMLElement, radio: HTMLInputElement) =>
   Array.from(root.querySelectorAll<HTMLInputElement>('input[type="radio"]')).filter(
     (r) => r.name === radio.name,
   );
+
+/** Restore focus after a focused roving item is removed or natively disabled, without stealing it. */
+export function useFocusRecovery(ref: RefObject<HTMLElement | null>) {
+  const focused = useRef<HTMLElement | null>(null);
+  useLayoutEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+    const onFocus = (event: FocusEvent) => {
+      focused.current = event.target instanceof HTMLElement ? event.target : null;
+    };
+    const onBlur = (event: FocusEvent) => {
+      if (root.contains(event.relatedTarget as Node | null)) return;
+      if (event.relatedTarget) focused.current = null;
+      else {
+        // React blurs a removed node while it is still connected; wait for the commit.
+        const leaving = focused.current;
+        queueMicrotask(() => {
+          if (focused.current === leaving && leaving?.ownerDocument.activeElement !== leaving)
+            focused.current = null;
+        });
+      }
+    };
+    root.addEventListener("focusin", onFocus);
+    root.addEventListener("focusout", onBlur);
+    return () => {
+      root.removeEventListener("focusin", onFocus);
+      root.removeEventListener("focusout", onBlur);
+    };
+  }, [ref]);
+  useLayoutEffect(() => {
+    const node = focused.current;
+    const root = ref.current;
+    if (!node || !root || (root.contains(node) && !node.matches(":disabled"))) return;
+    focused.current = null;
+    root.querySelector<HTMLElement>('[tabindex="0"]')?.focus();
+  });
+}
 
 function itemsOf(root: HTMLElement) {
   return Array.from(root.querySelectorAll<HTMLElement>(ITEMS)).filter((el) => {

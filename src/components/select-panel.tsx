@@ -38,6 +38,8 @@ export interface SelectPanelProps<T extends string = string> {
   title?: ReactNode;
   /** Filter field; default on above 7 options. */
   searchable?: boolean;
+  /** Accessible name of the filter input; defaults to the shared search label. */
+  searchLabel?: string;
   /** Stage changes and commit them with Apply (closing discards). */
   deferred?: boolean;
   placement?: Placement;
@@ -61,6 +63,7 @@ export function SelectPanel<T extends string = string>({
   single,
   title,
   searchable = options.length > 7,
+  searchLabel,
   deferred,
   placement = "bottom-start",
   emptyText,
@@ -197,6 +200,7 @@ export function SelectPanel<T extends string = string>({
               className="rk-input-el"
               value={query}
               placeholder={labels.filter}
+              aria-label={searchLabel ?? labels.searchLabel}
               role="combobox"
               aria-expanded
               aria-controls={`${id}-list`}
