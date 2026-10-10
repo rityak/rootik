@@ -37,27 +37,31 @@
 npm install rootik
 ```
 
-### 1.0 beta: local testing
+### 1.0 beta
 
-The current `dev` build is `1.0.0-beta.1`; it is not published on npm. The target release is 1.0,
+The testing build is `1.0.0-beta.1`, distributed through the npm `next` channel and a
+[GitHub prerelease](https://github.com/rityak/rootik/releases/tag/v1.0.0-beta.1). The target release is 1.0,
 renamed from the original 2.0 plan. Existing audit/migration filenames are retained for stable links.
 
-After `bun run build`, create the installable package:
+Install it in your application:
 
 ```bash
-bun pm pack --ignore-scripts --filename rootik-1.0.0-beta.1.tgz
+bun add rootik@next
 ```
 
 For the local umiray-client checkout on Windows:
 
 ```powershell
-bun add --cwd D:/Projects/umiray-client D:/Projects/rootik/rootik-1.0.0-beta.1.tgz
+bun add --cwd D:/Projects/umiray-client rootik@next
 bun run --cwd D:/Projects/umiray-client dev
 ```
 
 This updates the consumer dependency and lockfile. Select Rain in Appearance settings to try the new
 palette; installing the beta preserves existing visual defaults and saved preferences. To return
-to the published version, run `bun add --cwd D:/Projects/umiray-client rootik@0.6.1`.
+to the stable version, run `bun add --cwd D:/Projects/umiray-client rootik@latest`.
+
+Prerelease tags publish to `next`; stable tags publish to `latest`. Testing a beta does not change
+the version installed by `npm install rootik`.
 
 The toolkit preview runs with `bun run dev` at `http://127.0.0.1:61000/`; open
 `?mode=preview&story=appearance--rain` for the Rain playground. The beta still has the release gates

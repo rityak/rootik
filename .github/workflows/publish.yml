@@ -22,4 +22,7 @@ jobs:
           node-version: 24
       - run: npm install -g npm@latest
       - run: bun install --frozen-lockfile
-      - run: npm publish
+      - name: Publish stable or preview channel
+        env:
+          NPM_TAG: ${{ contains(github.ref_name, '-') && 'next' || 'latest' }}
+        run: npm publish --tag "$NPM_TAG"
