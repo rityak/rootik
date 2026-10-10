@@ -1,10 +1,10 @@
-# Rootik: аудит и программа обновления до 2.0
+# Rootik: аудит и программа обновления до 1.0
 
 Дата: 10 октября 2026. База: `rootik@0.6.1`, commit `2ddc8f7287881f9af7558dc880ddbc8fb2801168`. Рабочая ветка: `dev`.
 
 ## Статус реализации в `dev`
 
-Версия остаётся `0.6.1`. Реализация подготовлена к review и merge; npm 2.0 release не выполняется до предрелизных gates. Findings ниже описывают исходный commit, а таблица статуса — текущее исправление.
+Целевая версия переименована пользователем с 2.0 на 1.0. Имя файла сохранено ради существующих ссылок; упоминания 2.0 в исходной программе ниже относятся теперь к gates 1.0. Подготовлена локальная тестовая сборка `1.0.0-beta.1`; stable release не выполняется до предрелизных gates. PR #73 влит в main. Findings ниже описывают исходный commit, а таблица статуса — текущее исправление.
 
 - Все 74 toolkit stylesheet-модуля переведены на Vanilla Extract в `styles/*.css.ts`. Единственный maintained authoring source — TypeScript; прежние CSS paths являются generated bridge. Public classes, tokens и data selectors сохранены, consumer plugin/runtime dependency не нужен.
 - Гибкие градиенты входят в production appearance API: material/clouds/linear, два цвета, intensity/angle/origin/spread/falloff и независимый surface reflection. Solid также показывает canvas gradient. Rain opt-in, Graphite & Iris остаётся default.

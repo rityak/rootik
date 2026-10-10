@@ -9,7 +9,7 @@ one of them needs it or because a mainstream toolkit (Radix/Mantine/shadcn) has 
 - React 19, TypeScript (strict, `noUncheckedIndexedAccess`), Bun, Biome, Ladle for stories.
 - **Zero runtime deps** besides React. Icons inside the kit are inline SVG (`src/lib/icons.tsx`);
   consumers pass any `ReactNode` as `icon` (lucide works). `lucide-react` is a dev dep for stories only.
-- Static CSS with custom properties, no Tailwind in the kit. The 2.0 migration uses Vanilla Extract in
+- Static CSS with custom properties, no Tailwind in the kit. The 1.0 migration uses Vanilla Extract in
   `styles/*.css.ts` for all 74 toolkit stylesheets; generated CSS is never edited by hand.
   Generated CSS stays in the existing src paths; consumers need no VE plugin. Aggregate CSS uses `@layer rootik`.
 - Node.js 24 runs the VE compiler (Bun's Windows evaluator is incompatible); Bun remains the command/test runtime.

@@ -1,6 +1,7 @@
-# 2.0 preparation: migration notes
+# 1.0 preparation: migration notes
 
-The package version remains 0.6.1 on `dev`. This branch prepares 2.0; it is not a stable 2.0 release.
+The testing package is 1.0.0-beta.1 on `dev`. The release target was renamed from 2.0 to 1.0;
+this filename is retained for stable links. The beta is not a stable release.
 
 ## Styling and imports
 
@@ -86,4 +87,4 @@ overrides and translucent background contrast still require application-level ve
 
 Automated contracts, packed source/dist/Tailwind fixtures and SSR are covered. Complete the browser
 and WebView matrix, NVDA/forced-colors checks, composited glass contrast, dense-screen visual approval
-and reference-machine performance gates listed in `AUDIT-2.0.md` before publishing 2.0.
+and reference-machine performance gates listed in `AUDIT-2.0.md` before publishing stable 1.0.

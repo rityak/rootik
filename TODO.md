@@ -1,6 +1,6 @@
 # Rootik — progress
 
-## 2.0 / dev: implemented foundation
+## 1.0 / dev: implemented foundation
 
 - [x] Flexible canvas gradients and independent surface reflection; opt-in Rain appearance
 - [x] Effective nested Scope, profile resets, nested Fluent isolation and target cleanup
@@ -17,7 +17,8 @@
 - [ ] Reference-machine performance/cold-start comparisons, 10 000 rows and dataset-toolkit integration
 
 Findings, evidence and release gates: `AUDIT-2.0.md`. Consumer changes: `MIGRATION-2.0.md`.
-This branch does not declare a stable 2.0 release.
+The target release is 1.0 (renamed from the original 2.0 plan). The testing build is 1.0.0-beta.1;
+this branch does not declare a stable release. Audit/migration filenames are retained for stable links.
 
 Legend: `[x]` done (component + story, checked in browser) · `[ ]` planned · `~` partial.
 Sources: **DT** = dataset-toolkit/client, **UR** = umiray-client. Priority: P0 needed by a consumer now,

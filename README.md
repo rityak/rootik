@@ -19,7 +19,7 @@
 - **150+ components, zero runtime dependencies.** Only React 19 as a peer. Icons are inline SVG, positioning
   and listboxes are hand-written, everything else is the platform: `<dialog>`, the Popover API, `<details>`,
   native inputs.
-- **Static CSS on tokens.** Button, Input and Card are authored in Vanilla Extract; consumers still import
+- **Static CSS on tokens.** All toolkit stylesheets are authored in Vanilla Extract; consumers still import
   ordinary CSS without a build plugin. Colors, geometry and motion use `--rk-*` custom properties inside
   `@layer rootik`, so Tailwind or your own CSS wins without `!important`.
 - **Themeable at runtime.** Accent, neutral tint, radius, density, font, surface material (solid, veil, frost,
@@ -36,6 +36,32 @@
 ```bash
 npm install rootik
 ```
+
+### 1.0 beta: local testing
+
+The current `dev` build is `1.0.0-beta.1`; it is not published on npm. The target release is 1.0,
+renamed from the original 2.0 plan. Existing audit/migration filenames are retained for stable links.
+
+After `bun run build`, create the installable package:
+
+```bash
+bun pm pack --ignore-scripts --filename rootik-1.0.0-beta.1.tgz
+```
+
+For the local umiray-client checkout on Windows:
+
+```powershell
+bun add --cwd D:/Projects/umiray-client D:/Projects/rootik/rootik-1.0.0-beta.1.tgz
+bun run --cwd D:/Projects/umiray-client dev
+```
+
+This updates the consumer dependency and lockfile. Select Rain in Appearance settings to try the new
+palette; installing the beta preserves existing visual defaults and saved preferences. To return
+to the published version, run `bun add --cwd D:/Projects/umiray-client rootik@0.6.1`.
+
+The toolkit preview runs with `bun run dev` at `http://127.0.0.1:61000/`; open
+`?mode=preview&story=appearance--rain` for the Rain playground. The beta still has the release gates
+listed in [AUDIT-2.0.md](AUDIT-2.0.md).
 
 ```tsx
 import "rootik/styles.css";
@@ -142,7 +168,7 @@ The `source` condition uses pre-extracted CSS too. Edit styles in `styles/*.css.
 generated CSS in `src/components/`, `src/theme/`, `src/tokens.css`, `src/base.css` or `src/fluent.css`. `bun run dev` regenerates CSS on changes; CI rejects
 stale generated files with `bun run styles:check`.
 
-### Rain and gradients (dev / 2.0 preparation)
+### Rain and gradients (dev / 1.0 preparation)
 
 Graphite & Iris remains the default. Rain is opt-in:
 
