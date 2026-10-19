@@ -5,7 +5,7 @@ globalStyle(".rk-slider", {
   display: "flex",
   flexDirection: "column",
   gap: "6px",
-  minWidth: "120px",
+  minWidth: "min(120px, 100%)",
   vars: { "--rk-track": "6px", "--rk-thumb": "16px" },
 });
 
@@ -80,13 +80,13 @@ globalStyle(".rk-slider-input:active::-webkit-slider-thumb", { scale: "1.15" });
 globalStyle(".rk-slider-input:focus-visible", { outline: "none" });
 
 globalStyle(".rk-slider-input:focus-visible::-webkit-slider-thumb", {
-  boxShadow: `0 0 0 2px ${tokens.bg},
-        0 0 0 4px ${tokens.focus}`,
+  boxShadow: `inset 0 0 0 2px ${tokens.focus}`,
+  "@media": { "(forced-colors: active)": { outline: "2px solid Highlight", outlineOffset: "-2px" } },
 });
 
 globalStyle(".rk-slider-input:focus-visible::-moz-range-thumb", {
-  boxShadow: `0 0 0 2px ${tokens.bg},
-        0 0 0 4px ${tokens.focus}`,
+  boxShadow: `inset 0 0 0 2px ${tokens.focus}`,
+  "@media": { "(forced-colors: active)": { outline: "2px solid Highlight", outlineOffset: "-2px" } },
 });
 
 globalStyle(".rk-slider-input:disabled", { opacity: "0.45", cursor: "not-allowed" });
@@ -161,3 +161,7 @@ globalStyle(".rk-range-input::-webkit-slider-thumb", { pointerEvents: "auto" });
 globalStyle(".rk-range-input::-moz-range-thumb", { pointerEvents: "auto" });
 
 globalStyle(".rk-range-input:disabled", { opacity: "1" });
+
+globalStyle(".rk-slider", { maxWidth: "100%" });
+globalStyle(".rk-slider-input", { minWidth: 0 });
+globalStyle(".rk-slider-head", { flexWrap: "wrap", overflowWrap: "anywhere" });

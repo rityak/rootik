@@ -1,0 +1,84 @@
+/* Generated from styles/overlays-contours.css.ts. Run bun run styles; do not edit. */
+.rk-toast-host {
+  display: contents;
+}
+.rk-overlay[data-surface] {
+  isolation: isolate;
+  padding: var(--rk-overlay-pad);
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.rk-dialog-panel[data-surface] {
+  position: relative;
+  overflow: visible;
+}
+.rk-overlay > .rk-overlay-surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.rk-overlay-surface > .rk-svg-surface-content {
+  display: none;
+}
+.rk-dialog-panel[data-surface] > .rk-dialog-header {
+  padding: 0;
+}
+.rk-dialog-panel[data-surface] > .rk-dialog-body {
+  padding: calc(var(--rk-space) * 4) 0;
+  overflow-wrap: anywhere;
+}
+.rk-dialog-panel[data-surface] > .rk-dialog-footer {
+  padding: calc(var(--rk-space) * 3) 0 0;
+  background: transparent;
+}
+.rk-command .rk-dialog-panel[data-surface] > .rk-dialog-body {
+  padding: 0;
+}
+.rk-command .rk-dialog-panel[data-surface] .rk-command-search {
+  padding-inline: 0;
+}
+.rk-command .rk-dialog-panel[data-surface] .rk-command-list {
+  padding-inline: 0;
+}
+.rk-dialog-panel[data-surface] > .rk-dialog-header:last-child {
+  padding: 0;
+}
+.rk-tooltip[data-surface] > .rk-overlay-surface {
+  --rk-svg-fill: var(--rk-inverse);
+  --rk-svg-fill-low: var(--rk-inverse);
+  --rk-svg-edge-top: var(--rk-inverse);
+  --rk-svg-edge: var(--rk-inverse);
+}
+.rk-tooltip[data-surface] > .rk-overlay-surface[data-flat] {
+  background: var(--rk-inverse);
+}
+.rk-toast[data-behind] > .rk-overlay-surface {
+  opacity: 1;
+}
+.rk-toast[data-surface] {
+  overflow-wrap: anywhere;
+  overflow: visible;
+}
+.rk-toast[data-surface] .rk-toast-action {
+  white-space: normal;
+  height: auto;
+  min-height: calc(var(--rk-space) * 6);
+  padding-block: var(--rk-space);
+}
+.rk-dialog[open] > .rk-dialog-panel > .rk-overlay-surface .rk-motion-light,
+.rk-floating:popover-open > .rk-overlay-surface .rk-motion-light,
+.rk-toast > .rk-overlay-surface .rk-motion-light {
+  animation-name: var(--rk-effect-animation);
+}
+.rk-overlay > .rk-overlay-surface[data-flat] {
+  box-shadow: inset 0 0 0 1px var(--rk-line);
+}
+@media (forced-colors: active) {
+  .rk-overlay[data-surface] {
+    outline: 1px solid CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+}

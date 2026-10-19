@@ -69,6 +69,11 @@
   --rk-danger: oklch(0.68 0.2 24);
   --rk-info: oklch(0.75 0.13 245);
   --rk-on-danger: var(--rk-on-inverse);
+  --rk-syntax-string: oklch(0.78 0.075 185);
+  --rk-syntax-number: oklch(0.8 0.085 65);
+  --rk-syntax-boolean: oklch(0.8 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
   --rk-chart-1: oklch(0.66 0.15 250);
   --rk-chart-2: oklch(0.66 0.16 45);
   --rk-chart-3: oklch(0.66 0.11 185);
@@ -79,6 +84,9 @@
   --rk-chart-idle: var(--rk-surface-4);
   --rk-chart-seq-lo: oklch(0.26 0.035 250);
   --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-on-fill: oklch(0.13 0.01 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
   --rk-space: calc(4px * var(--rk-density));
   --rk-h-sm: calc(28px * var(--rk-density));
   --rk-h-md: calc(34px * var(--rk-density));

@@ -35,7 +35,7 @@
   box-shadow:
     0 0 0 2px var(--rk-inverse),
     0 1px 6px 1px oklch(var(--rk-shade) / 0.6);
-  outline-offset: 3px;
+  outline-offset: -2px;
 }
 .rk-cp-thumb[data-outside] {
   box-shadow:
@@ -100,7 +100,7 @@
     0 1px 4px oklch(var(--rk-shade) / 0.6);
 }
 .rk-cp-slider:focus-visible {
-  outline-offset: 3px;
+  outline-offset: -2px;
 }
 .rk-cp-text {
   flex: 1;

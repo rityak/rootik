@@ -116,12 +116,9 @@
 }
 .rk-card[data-interactive] {
   cursor: pointer;
-  transition:
-    translate var(--rk-dur) var(--rk-ease),
-    box-shadow var(--rk-dur) var(--rk-ease);
+  transition: box-shadow var(--rk-dur) var(--rk-ease);
 }
 .rk-card[data-interactive]:hover {
-  translate: 0 -2px;
   box-shadow: var(--rk-shadow-2);
 }
 .rk-card[data-selected] {
@@ -131,7 +128,7 @@
 }
 .rk-card:has(> .rk-card-hit:focus-visible) {
   outline: 2px solid var(--rk-focus);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 .rk-card[data-action] .rk-card-actions,
 .rk-card[data-action]
@@ -548,7 +545,7 @@
   border-bottom: 0;
 }
 .rk-kv[data-layout="rows"] .rk-kv-item dt {
-  flex-shrink: 0;
+  flex-shrink: 1;
 }
 .rk-kv[data-layout="rows"] .rk-kv-item dd {
   flex: 1 1 auto;
@@ -556,7 +553,7 @@
 }
 .rk-kv[data-layout="grid"] {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
   gap: 14px 20px;
 }
 .rk-kv[data-layout="grid"] .rk-kv-item {
@@ -592,6 +589,19 @@
 .rk-kv-copy:focus-visible,
 .rk-kv-copy[data-copied] {
   opacity: 1;
+}
+.rk-card-header,
+.rk-card-footer,
+.rk-card-actions {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.rk-card-body,
+.rk-card-title,
+.rk-card-desc,
+.rk-kv dt {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 @media (hover: none) {
   .rk-kv-copy {

@@ -11,6 +11,7 @@ import {
 import { cx } from "../lib/cx";
 import { readStorage, writeStorage } from "../lib/hooks";
 import { LABELS, type Labels, LabelsContext } from "../lib/labels";
+import { cancelThemeTransition, startThemeTransition } from "../motion/theme-transition";
 import {
   APPEARANCE_SECTIONS,
   type AppearanceValues,
@@ -135,7 +136,12 @@ export function RootikProvider({
     sections,
     values,
     defaults,
-    set: (key, v) => commit({ ...clean, [key]: v }),
+    set: (key, v) => {
+      if ((key === "motion" || key === "effects") && v === "off") cancelThemeTransition();
+      const update = () => commit({ ...clean, [key]: v });
+      if (key === "palette" || key === "colorMode") startThemeTransition(update, values);
+      else update();
+    },
     reset: (key) => {
       if (!key) return commit({});
       const { [key]: _, ...rest } = clean;

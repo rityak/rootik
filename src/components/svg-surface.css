@@ -1,0 +1,45 @@
+/* Generated from styles/svg-surface.css.ts. Run bun run styles; do not edit. */
+.rk-svg-surface {
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+}
+.rk-svg-surface[data-flat] {
+  border-radius: var(--rk-radius-lg);
+  background: var(--rk-surface-1);
+  box-shadow: var(--rk-shadow-1);
+}
+.rk-svg-surface[data-flat] > .rk-svg-surface-glass {
+  border-radius: inherit;
+  overflow: hidden;
+}
+.rk-svg-surface-frame,
+.rk-svg-surface-glass {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.rk-svg-surface-frame {
+  overflow: visible;
+}
+.rk-svg-surface-glass {
+  overflow: hidden;
+}
+.rk-svg-surface-blur {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(var(--rk-svg-blur, var(--rk-space)));
+}
+.rk-svg-surface-content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: var(--rk-svg-pad-top) var(--rk-svg-pad-right) var(--rk-svg-pad-bottom) var(--rk-svg-pad-left);
+}
+.rk-svg-surface-guide {
+  pointer-events: none;
+  opacity: 0.65;
+}

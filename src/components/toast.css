@@ -79,7 +79,7 @@
   color: var(--rk-tone-text);
 }
 .rk-toast-body {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
 }
 .rk-toast-title {
@@ -120,6 +120,17 @@
 .rk-toast-close:hover {
   background: var(--rk-hover);
   color: var(--rk-text);
+}
+.rk-toast-title {
+  overflow-wrap: anywhere;
+}
+.rk-toast-action {
+  flex-shrink: 1;
+  min-width: 0;
+  height: auto;
+  min-height: 24px;
+  overflow-wrap: anywhere;
+  padding-block: var(--rk-space);
 }
 @starting-style {
   .rk-toast {

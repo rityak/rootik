@@ -14,13 +14,13 @@ globalStyle(".rk-selection-bar", {
   borderRadius: `${tokens.radiusPill}`,
   color: `${tokens.text}`,
   translate: "-50% 0",
-  transition: `opacity ${tokens.dur} ${tokens.ease},
-    translate ${tokens.durSlow} ${tokens.easeOut}`,
+  transition: `opacity ${tokens.dur} ${tokens.ease}`,
+  flexWrap: "wrap",
 });
 
 globalStyle(".rk-selection-bar:not(:popover-open)", { display: "none" });
 
-globalStyle(".rk-selection-bar", { "@starting-style": { opacity: "0", translate: "-50% 16px" } });
+globalStyle(".rk-selection-bar", { "@starting-style": { opacity: "0" } });
 
 globalStyle(".rk-selection-count", { fontSize: `${tokens.textSm}`, fontWeight: "500", whiteSpace: "nowrap" });
 
@@ -51,6 +51,15 @@ globalStyle(".rk-selection-sep", {
   background: `${tokens.lineStrong}`,
 });
 
-globalStyle(".rk-selection-actions", { display: "flex", alignItems: "center", gap: "4px" });
+globalStyle(".rk-selection-actions", {
+  display: "flex",
+  flexWrap: "wrap",
+  alignItems: "center",
+  gap: `${tokens.space}`,
+});
 
 globalStyle(".rk-selection-actions .rk-button", { borderRadius: `${tokens.radiusPill}` });
+
+globalStyle(".rk-selection-count", { minWidth: 0, whiteSpace: "normal", overflowWrap: "anywhere" });
+globalStyle(".rk-selection-actions", { minWidth: 0, maxWidth: "100%" });
+globalStyle(".rk-selection-clear, .rk-selection-sep", { flexShrink: 0 });

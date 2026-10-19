@@ -2,6 +2,7 @@
 .rk-pin {
   --rk-pin-size: var(--rk-h-md);
   display: inline-flex;
+  max-width: 100%;
   align-items: center;
   gap: calc(var(--rk-space) * 3);
 }
@@ -13,10 +14,12 @@
 }
 .rk-pin-group {
   display: inline-flex;
+  min-width: 0;
   gap: calc(var(--rk-space) * 1.5);
 }
 .rk-pin-cell {
   --rk-ctl-edge: var(--rk-control-edge);
+  min-width: 0;
   width: calc(var(--rk-pin-size) * 1.05);
   height: calc(var(--rk-pin-size) * 1.2);
   padding: 0;
@@ -46,7 +49,7 @@
 }
 .rk-pin-cell:focus-visible {
   outline: 2px solid var(--rk-focus);
-  outline-offset: 1px;
+  outline-offset: -2px;
 }
 [data-invalid] .rk-pin-cell {
   --rk-ctl-edge: color-mix(in oklab, var(--rk-danger) 70%, transparent);

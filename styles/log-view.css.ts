@@ -65,7 +65,7 @@ globalStyle('.rk-log-row[data-level="error"]', {
   color: `${tokens.text}`,
   vars: {
     "--rk-tone": `${tokens.danger}`,
-    "--rk-tone-text": `oklch(from ${tokens.danger} calc(l + 0.08) c h)`,
+    "--rk-tone-text": tokens.danger,
   },
 });
 

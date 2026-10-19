@@ -60,7 +60,10 @@ globalStyle('.rk-dialog[data-size="full"]', {
   vars: { "--rk-dialog-w": "100vw" },
 });
 
-globalStyle('.rk-dialog[data-placement="top"]', { margin: "12vh auto auto" });
+globalStyle('.rk-dialog[data-placement="top"]', {
+  margin: "12dvh auto auto",
+  maxHeight: "calc(88dvh - 16px)",
+});
 
 globalStyle('.rk-dialog:is([data-placement="right"], [data-placement="left"])', {
   height: "100dvh",
@@ -208,6 +211,7 @@ globalStyle(".rk-command-search input", {
   flex: "1",
   minWidth: "0",
   height: "100%",
+  padding: "0",
   border: "0",
   outline: "none",
   background: "transparent",
@@ -217,6 +221,11 @@ globalStyle(".rk-command-search input", {
 });
 
 globalStyle(".rk-command-search input::placeholder", { color: `${tokens.text3}` });
+
+globalStyle(".rk-command-search:has(:focus-visible)", {
+  boxShadow: `inset 0 -2px 0 ${tokens.focus}`,
+  "@media": { "(forced-colors: active)": { outline: "2px solid Highlight", outlineOffset: "-2px" } },
+});
 
 globalStyle(".rk-command-list", {
   display: "flex",
@@ -230,3 +239,10 @@ globalStyle(".rk-command-list", {
 globalStyle(".rk-command-empty", { padding: "28px 12px", textAlign: "center", color: `${tokens.text3}` });
 
 globalStyle(".rk-command-enter", { color: `${tokens.text3}`, flexShrink: "0" });
+
+globalStyle(".rk-dialog, .rk-dialog-panel, .rk-dialog-body", { minWidth: 0 });
+globalStyle(".rk-dialog-panel", { maxHeight: "inherit" });
+globalStyle(".rk-dialog-header, .rk-dialog-footer, .rk-command-search", { flexShrink: 0, minWidth: 0 });
+globalStyle(".rk-dialog-body", { overscrollBehavior: "contain" });
+globalStyle(".rk-dialog-title, .rk-dialog-desc, .rk-dialog-body", { overflowWrap: "anywhere" });
+globalStyle(".rk-dialog-close", { flexShrink: 0 });

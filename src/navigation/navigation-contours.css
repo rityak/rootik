@@ -1,0 +1,49 @@
+/* Generated from styles/navigation-contours.css.ts. Run bun run styles; do not edit. */
+.rk-tab[data-svg-border],
+.rk-nav-link[data-svg-border],
+.rk-segmented-item[data-svg-border] {
+  --rk-svg-control-fill: transparent;
+  --rk-svg-control-edge: var(--rk-control-edge);
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  transition: none;
+}
+:is(.rk-tab, .rk-nav-link, .rk-segmented-item)[data-svg-border] > .rk-svg-control-frame {
+  z-index: -1;
+}
+.rk-tabs[data-svg-border] > .rk-tabs-indicator,
+.rk-segmented[data-svg-border] > .rk-segmented-thumb {
+  display: none;
+}
+.rk-nav-item:has(> .rk-nav-link[data-svg-border]) {
+  background: transparent;
+}
+:is(.rk-tab, .rk-nav-link, .rk-segmented-item)[data-svg-border]:where(:hover):not(
+  :where(:disabled, [data-disabled], [aria-disabled="true"])
+) {
+  --rk-svg-control-fill: var(--rk-hover);
+}
+.rk-tab[data-svg-border][aria-selected="true"],
+.rk-segmented-item[data-svg-border][data-checked] {
+  --rk-svg-control-fill: var(--rk-selected-bg, var(--rk-inverse));
+  background: transparent;
+}
+.rk-nav-item[data-active] > .rk-nav-link[data-svg-border] {
+  --rk-svg-control-fill: var(--rk-nav-active-bg, var(--rk-inverse));
+}
+.rk-tab[data-svg-border]:focus-visible,
+.rk-nav-link[data-svg-border]:focus-visible,
+.rk-segmented-item[data-svg-border]:has(:focus-visible) {
+  --rk-svg-control-stroke: 3;
+  --rk-svg-control-edge: currentColor;
+  outline: none;
+}
+@media (forced-colors: active) {
+  .rk-tab[data-svg-border]:focus-visible,
+  .rk-nav-link[data-svg-border]:focus-visible,
+  .rk-segmented-item[data-svg-border]:has(:focus-visible) {
+    outline: 2px solid var(--rk-focus);
+    outline-offset: -2px;
+  }
+}

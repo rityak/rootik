@@ -19,8 +19,7 @@ globalStyle(".rk-sortable-item", {
   background: `${tokens.wellSoft}`,
   boxShadow: `inset 0 0 0 1px ${tokens.line}`,
   transition: `background-color ${tokens.dur} ${tokens.ease},
-    box-shadow ${tokens.dur} ${tokens.ease},
-    scale ${tokens.dur} ${tokens.spring}`,
+    box-shadow ${tokens.dur} ${tokens.ease}`,
 });
 
 globalStyle(".rk-sortable-item[data-lifted]", {
@@ -29,7 +28,6 @@ globalStyle(".rk-sortable-item[data-lifted]", {
   background: `${tokens.surface3}`,
   boxShadow: `inset 0 0 0 1px ${tokens.accentLine},
       0 8px 24px -10px oklch(${tokens.shade} / 0.7)`,
-  scale: "1.01",
 });
 
 globalStyle(".rk-sortable-grip", {

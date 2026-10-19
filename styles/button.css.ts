@@ -47,7 +47,7 @@ globalStyle(".rk-button:hover:not(:disabled)", {
 });
 
 globalStyle(".rk-button:active:not(:disabled)", {
-  scale: 0.96,
+  scale: "var(--rk-button-press-scale, 0.96)",
 });
 
 globalStyle(".rk-button:disabled", {
@@ -88,7 +88,7 @@ globalStyle(variantSelector("primary"), {
     "--rk-btn-fg": `${tokens.onAccent}`,
     "--rk-btn-edge": "transparent",
   },
-  boxShadow: `inset 0 1px 0 oklch(${tokens.tint} / 0.25), 0 0 0 1px color-mix(in oklab, ${tokens.accent} 40%, transparent), 0 6px 20px -8px color-mix(in oklab, ${tokens.accent} 60%, transparent)`,
+  boxShadow: `var(--rk-button-primary-shadow, inset 0 1px 0 oklch(${tokens.tint} / 0.25), 0 0 0 1px color-mix(in oklab, ${tokens.accent} 40%, transparent), 0 6px 20px -8px color-mix(in oklab, ${tokens.accent} 60%, transparent))`,
 });
 
 globalStyle(`${variantSelector("primary")}:hover:not(:disabled)`, {
@@ -96,6 +96,10 @@ globalStyle(`${variantSelector("primary")}:hover:not(:disabled)`, {
     "--rk-btn-bg": `${tokens.accentHover}`,
     "--rk-btn-fg": `${tokens.onAccentHover}`,
   },
+});
+
+globalStyle('.rk-button[data-variant="primary"]:focus-visible', {
+  outlineColor: "var(--rk-btn-fg)",
 });
 
 globalStyle(variantSelector("inverse"), {
@@ -150,7 +154,7 @@ globalStyle(`${variantSelector("danger")}, ${variantSelector("warn")}`, {
   vars: {
     "--rk-tone": `${tokens.danger}`,
     "--rk-btn-bg": "color-mix(in oklab, var(--rk-tone) 14%, transparent)",
-    "--rk-btn-fg": "oklch(from var(--rk-tone) max(l, 0.78) c h)",
+    "--rk-btn-fg": "var(--rk-button-tone-text, oklch(from var(--rk-tone) max(l, 0.78) c h))",
     "--rk-btn-edge": "color-mix(in oklab, var(--rk-tone) 28%, transparent)",
   },
 });
@@ -229,3 +233,7 @@ globalStyle(".rk-button-group > .rk-button:not(:last-of-type)", {
   borderStartEndRadius: 0,
   borderEndEndRadius: 0,
 });
+
+globalStyle(".rk-button", { minWidth: 0, maxWidth: "100%" });
+globalStyle(".rk-button-label", { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis" });
+globalStyle(".rk-button-group", { minWidth: 0, maxWidth: "100%", overflowX: "auto" });

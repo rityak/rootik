@@ -126,7 +126,7 @@ globalStyle(".rk-code-editor textarea", {
 
 globalStyle(".rk-code-editor:has(textarea:focus-visible)", {
   outline: `2px solid ${tokens.focus}`,
-  outlineOffset: "2px",
+  outlineOffset: "-2px",
 });
 
 globalStyle(".rk-code-editor-theme", {

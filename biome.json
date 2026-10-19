@@ -102,7 +102,16 @@
   },
   "overrides": [
     {
-      "includes": ["src/components/**", "src/lib/**", "src/theme/**", "src/index.ts"],
+      "includes": [
+        "src/components/**",
+        "src/layout/**",
+        "src/navigation/**",
+        "src/controls/**",
+        "src/motion/**",
+        "src/lib/**",
+        "src/theme/**",
+        "src/index.ts"
+      ],
       "linter": {
         "rules": {
           "correctness": {

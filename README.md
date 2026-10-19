@@ -31,17 +31,47 @@
 
 <img src="https://raw.githubusercontent.com/rityak/rootik/main/.github/assets/desktop-client.jpg" alt="Desktop client layout with a floating dock" width="100%">
 
+## SVG layout and artwork
+
+`rootik/navigation` now supplies the migrated sidebar, dock, tabs, segmented controls, links and menus with optional padding-safe SVG contours. Import `rootik/navigation/styles.css`; old root imports remain compatible. See [navigation API and validation](NAVIGATION.md).
+
+`rootik/controls` supplies actions, text/select inputs, choices, sliders, numeric/date/color controls and their existing types. Import `rootik/controls/styles.css`. Optional SVG decoration preserves native controls across appearance changes; old root imports remain compatible. See [controls API and validation](CONTROLS.md).
+
+`rootik/forms` owns Field, Form, Fieldset, SettingsGroup/Row and SchemaForm. Optional `surface` materials share the layout geometry; SchemaForm forwards `svgBorder` to supported controls. Native labels, validation, reset and disabled sections remain intact. Import `rootik/forms/styles.css`; see [forms API and validation](FORMS.md).
+
+`rootik/overlays` groups native dialogs/drawers, popovers, hints, hover cards, notifications, confirmation, command and shortcut panels. Optional SVG surfaces preserve content and focus; notification actions remain usable inside native modals. Import `rootik/overlays/styles.css`; see [overlay API and validation](OVERLAYS.md).
+
+`rootik/data` groups Table/DataTable, column controls, trees/pickers, lists, sorting, selection and scrolling. Optional collection surfaces stay outside native scroll viewports; row geometry and virtual windows are unchanged by SVG settings. Import `rootik/data/styles.css`; see [data API and validation](DATA.md).
+
+`rootik/feedback` supplies statuses, badges, progress, meters, loading/busy indicators and data/result states. SVG tracks, segmented rings, contours and shared activity repeat controls preserve labels and native content. Import `rootik/feedback/styles.css`; see [feedback API and validation](FEEDBACK.md).
+
+`rootik/charts` supplies plots, gauges, trackers, heatmaps and ChartPanel. It uses separate light/dark data palettes, exact table views and optional SVG surface/entry animation. Import `rootik/charts/styles.css`; see [charts API and validation](CHARTS.md).
+
+`rootik/content` groups content cards, text/prose, editors, JSON/log readers, disclosure, avatars and media. Optional SVG surfaces preserve mounted native content; Text exposes font roles, weights and italics. Import `rootik/content/styles.css`; see [content API and validation](CONTENT.md).
+
+`rootik/motion` supplies opt-in SVG light layers (sheen/ripple/flow) and event-driven theme transitions (fade/wipe/iris), shared by theme, layout, navigation and controls. PowerButton adds `signal` and `reactor` VPN-style dials. Effects respect motion settings, reduced motion, SVG disabling and Fluent; production defaults remain off. See [motion settings and integration](MOTION.md).
+
+The Signal migration starts with the public `rootik/layout` and `rootik/theme` modules: six light/dark palettes, optional local fonts, shaped or plain panels, floating or edge-aligned layout, and a square Fluent fallback. Existing root imports remain compatible. See [layout usage and settings](LAYOUT.md) and the [module migration order](MIGRATION-DESIGN.md). All groups now have modular entries. The package-wide legacy default is retained pending consumer and platform validation.
+
+`SvgSurface`, `SvgBackdrop` and `SvgArtwork` provide padding-safe shaped panels, custom SVG backgrounds and restrained abstract motion. `Button`, `Input` and `IconButton` accept optional `svgBorder` contours: `soft`, `cut`, `notch`, `ticket`. Styles are authored in Vanilla Extract; the default palette follows Rootik's dark tokens. See [SVG API and composition examples](SVG.md).
+
+The [Typography Lab](design-lab/TYPOGRAPHY.md) compares Cyrillic font families on real controls and data, including system fallbacks, variable weights, italic and mono. It is a local design study; published font defaults remain unchanged.
+
 ## Install
 
 ```bash
 npm install rootik
 ```
 
-### 1.0 beta
+### 1.0 beta.2
 
-The testing build is `1.0.0-beta.1`, distributed through the npm `next` channel and a
-[GitHub prerelease](https://github.com/rityak/rootik/releases/tag/v1.0.0-beta.1). The target release is 1.0,
-renamed from the original 2.0 plan. Existing audit/migration filenames are retained for stable links.
+This checkout prepares `1.0.0-beta.2`: the Signal module migration, shared SVG/motion toolkit and
+layout containment fixes. See [release notes](CHANGELOG.md#100-beta2) and [migration notes](MIGRATION-DESIGN.md).
+The target release is 1.0, renamed from the original 2.0 plan; existing audit/migration filenames remain valid.
+
+The package uses npm `next` for previews. The commands below install the latest **published** preview;
+preparing this checkout does not update that channel. After the beta.2 GitHub prerelease is published,
+the release workflow publishes `1.0.0-beta.2` to `next`.
 
 Install it in your application:
 
@@ -57,7 +87,7 @@ bun run --cwd D:/Projects/umiray-client dev
 ```
 
 This updates the consumer dependency and lockfile. Select Rain in Appearance settings to try the new
-palette; installing the beta preserves existing visual defaults and saved preferences. To return
+palette or choose a Signal palette explicitly; installing the beta preserves existing visual defaults and saved preferences. To return
 to the stable version, run `bun add --cwd D:/Projects/umiray-client rootik@latest`.
 
 Prerelease tags publish to `next`; stable tags publish to `latest`. Testing a beta does not change

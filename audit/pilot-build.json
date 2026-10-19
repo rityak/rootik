@@ -1,29 +1,29 @@
 {
   "dist": {
-    "cssBytes": 209564,
-    "buttonJsBytes": 4463,
-    "buttonJsGzipBytes": 2126
+    "cssBytes": 1788045,
+    "buttonJsBytes": 10529,
+    "buttonJsGzipBytes": 4588
   },
   "source": {
-    "cssBytes": 207115,
-    "buttonJsBytes": 4617,
-    "buttonJsGzipBytes": 2140
+    "cssBytes": 1785120,
+    "buttonJsBytes": 11248,
+    "buttonJsGzipBytes": 4613
   },
   "tailwind-dist": {
-    "cssBytes": 73232,
+    "cssBytes": 200537,
     "dependencyClosure": "passed",
     "layerOrder": "theme, base, rootik, components, utilities"
   },
   "tailwind-source": {
-    "cssBytes": 73232,
+    "cssBytes": 200537,
     "dependencyClosure": "passed",
     "layerOrder": "theme, base, rootik, components, utilities"
   },
-  "stylesBytes": 209564,
-  "stylesGzipBytes": 32647,
+  "stylesBytes": 312634,
+  "stylesGzipBytes": 43458,
   "packedSsr": "passed",
   "consumerPlugin": "none",
-  "cssExports": 81,
-  "extractedStyleModules": 74,
+  "cssExports": 102,
+  "extractedStyleModules": 98,
   "testsInPackage": false
 }

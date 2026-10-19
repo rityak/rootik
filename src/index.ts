@@ -1,80 +1,78 @@
-export * from "./components/bars-list";
-export * from "./components/busy-overlay";
+export * from "./charts/bars-list";
+export * from "./charts/chart-panel";
+export * from "./charts/charts";
+export * from "./charts/heatmap";
+export * from "./charts/part-charts";
+export * from "./charts/scatter-chart";
+export * from "./charts/tracker";
 export * from "./components/button";
-export * from "./components/card";
-export * from "./components/charts";
 export * from "./components/checkbox-group";
 export * from "./components/choice";
-export * from "./components/code-block";
 export * from "./components/color-picker";
 export * from "./components/combobox";
-export * from "./components/confirm";
-export * from "./components/copy-button";
-export * from "./components/data";
-export * from "./components/data-state";
 export * from "./components/date-range";
-export * from "./components/dialog";
-export * from "./components/display";
-export * from "./components/editable";
-export * from "./components/fieldset";
-export * from "./components/file-drop";
-export * from "./components/floating-window";
-export * from "./components/form";
-export * from "./components/heatmap";
-export * from "./components/hover-card";
-export * from "./components/image-grid";
-export * from "./components/indicator";
 export * from "./components/input";
 export * from "./components/input-group";
-export * from "./components/item";
-export * from "./components/json-view";
 export * from "./components/layout";
-export * from "./components/lightbox";
-export * from "./components/log-view";
 export * from "./components/menu";
 export * from "./components/menubar";
-export * from "./components/meter";
 export * from "./components/native-select";
 export * from "./components/nav";
 export * from "./components/number-input";
-export * from "./components/overflow-list";
-export * from "./components/part-charts";
 export * from "./components/password-input";
 export * from "./components/pin-input";
 export * from "./components/power-button";
-export * from "./components/progress";
-export * from "./components/prose";
-export * from "./components/qr-code";
-export * from "./components/relative-time";
-export * from "./components/rolling-number";
-export * from "./components/scatter-chart";
-export * from "./components/schema-form";
-export * from "./components/scroller";
 export * from "./components/select";
-export * from "./components/select-panel";
-export * from "./components/selection-bar";
-export * from "./components/settings-list";
-export * from "./components/shortcuts-sheet";
 export * from "./components/slider";
-export * from "./components/sortable-list";
 export * from "./components/split-button";
-export * from "./components/splitter";
-export * from "./components/spoiler";
-export * from "./components/stepper";
-export * from "./components/stick-to-bottom";
-export * from "./components/text";
-export * from "./components/text-shimmer";
-export * from "./components/timeline";
-export * from "./components/toast";
+export * from "./components/svg-artwork";
+export * from "./components/svg-backdrop";
+export * from "./components/svg-surface";
 export * from "./components/token-field";
-export * from "./components/tooltip";
-export * from "./components/tour";
-export * from "./components/tracker";
-export * from "./components/tree";
-export * from "./components/tree-select";
-export * from "./components/truncate";
+export * from "./content/card";
+export * from "./content/code-block";
+export * from "./content/copy-button";
+export * from "./content/display";
+export * from "./content/editable";
+export * from "./content/file-drop";
+export * from "./content/image-grid";
+export * from "./content/json-view";
+export * from "./content/lightbox";
+export * from "./content/log-view";
+export * from "./content/prose";
+export * from "./content/qr-code";
+export * from "./content/relative-time";
+export * from "./content/rolling-number";
+export * from "./content/spoiler";
+export * from "./content/stick-to-bottom";
+export * from "./content/text";
+export * from "./content/text-shimmer";
+export * from "./content/timeline";
+export * from "./content/truncate";
+export * from "./data/data";
+export * from "./data/item";
+export * from "./data/overflow-list";
+export * from "./data/scroller";
+export * from "./data/select-panel";
+export * from "./data/selection-bar";
+export * from "./data/sortable-list";
+export type { DataSurfaceOptions } from "./data/surface";
+export * from "./data/tree";
+export * from "./data/tree-select";
+export * from "./feedback/busy-overlay";
+export * from "./feedback/data-state";
+export * from "./feedback/indicator";
+export * from "./feedback/meter";
+export * from "./feedback/progress";
+export type { FeedbackAnimation, FeedbackDecoration } from "./feedback/track";
+export * from "./forms/fieldset";
+export * from "./forms/form";
+export * from "./forms/schema-form";
+export * from "./forms/settings-list";
 export { en } from "./labels/en";
 export { ru, ruAppearance, ruTranslate } from "./labels/ru";
+export * from "./layout/floating-window";
+export * from "./layout/splitter";
 export { announce } from "./lib/announce";
 export { cx } from "./lib/cx";
 export { type Anchor, Floating, type FloatingProps, type Placement } from "./lib/floating";
@@ -108,12 +106,35 @@ export {
   useSelection,
 } from "./lib/selection";
 export {
+  SVG_CONTROL_BORDERS,
+  SVG_SHAPES,
+  type SvgControlBorder,
+  type SvgEdge,
+  type SvgGeometryOptions,
+  type SvgPadding,
+  type SvgShape,
+  svgControlGeometry,
+  svgGeometry,
+  svgPadding,
+} from "./lib/svg-geometry";
+export {
   prefixOffsets,
   type UseVirtualOptions,
   useVirtual,
   type VirtualItem,
   virtualRange,
 } from "./lib/virtual";
+export * from "./motion/index";
+export * from "./navigation/stepper";
+export * from "./overlays/command-palette";
+export * from "./overlays/confirm";
+export * from "./overlays/dialog";
+export * from "./overlays/hover-card";
+export * from "./overlays/shortcuts-sheet";
+export type { OverlaySurfaceOptions } from "./overlays/surface";
+export * from "./overlays/toast";
+export * from "./overlays/tooltip";
+export * from "./overlays/tour";
 export * from "./theme/provider";
 export * from "./theme/schema";
 export * from "./theme/settings";

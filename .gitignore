@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
+build-design-lab/
 audit/package-fixture/
 audit/consumer-build/
 .ladle/build/
@@ -19,3 +20,6 @@ playwright-report/
 Thumbs.db
 .idea/
 .vscode/
+
+# Local design QA captures; keep generated screenshots out of release commits.
+design-lab/screenshots/

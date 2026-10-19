@@ -4,10 +4,10 @@
   inset: auto;
   display: flex;
   flex-direction: column;
-  min-width: 220px;
-  min-height: 120px;
-  max-width: calc(100vw - 16px);
-  max-height: calc(100dvh - 16px);
+  min-width: min(220px, var(--rk-floating-max-w, calc(100dvw - 16px)));
+  min-height: min(120px, var(--rk-floating-max-h, calc(100dvh - 16px)));
+  max-width: var(--rk-floating-max-w, calc(100dvw - 16px));
+  max-height: var(--rk-floating-max-h, calc(100dvh - 16px));
   margin: 0;
   padding: 0;
   border: 0;
@@ -18,6 +18,12 @@
   color: var(--rk-text);
   overflow: hidden;
   resize: both;
+}
+.rk-floating-window[data-surface] > .rk-floating-window-bar {
+  padding: 0 0 calc(var(--rk-space) * 2);
+}
+.rk-floating-window[data-surface] > .rk-floating-window-body {
+  padding: calc(var(--rk-space) * 3) 0 0;
 }
 .rk-floating-window-bar {
   display: flex;
@@ -70,4 +76,13 @@
   min-height: 0;
   overflow: auto;
   padding: 12px;
+}
+.rk-floating-window-bar,
+.rk-floating-window-close {
+  flex-shrink: 0;
+}
+.rk-floating-window-body {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  overscroll-behavior: contain;
 }

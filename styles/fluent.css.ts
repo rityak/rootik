@@ -3,6 +3,8 @@ import { tokens } from "./tokens.css";
 
 globalStyle(':where(:root, [data-rk-scope], [data-rk-style="rootik"])', {
   vars: {
+    "--rk-button-press-scale": "initial",
+    "--rk-button-primary-shadow": "initial",
     "--rk-selected-bg": "initial",
     "--rk-selected-fg": "initial",
     "--rk-selected-shadow": "initial",
@@ -26,6 +28,8 @@ globalStyle(':where(:root, [data-rk-scope], [data-rk-style="rootik"])', {
 
 globalStyle(':where([data-rk-style="fluent"])', {
   vars: {
+    "--rk-button-press-scale": "1",
+    "--rk-button-primary-shadow": "none",
     [tokens.highlight]: "inset 0 0 0 0 transparent",
     [tokens.shadow1]: `0 0 0 1px ${tokens.line}`,
     [tokens.shadow2]: `0 0 0 1px ${tokens.lineStrong}, 0 8px 24px -12px oklch(${tokens.shade} / 0.6)`,

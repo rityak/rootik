@@ -136,10 +136,11 @@
   transition:
     translate var(--rk-dur-slow) var(--rk-spring),
     background-color var(--rk-dur) var(--rk-ease),
-    width var(--rk-dur) var(--rk-ease);
+    transform var(--rk-dur) var(--rk-ease);
 }
 .rk-switch:active:not(:disabled)::before {
-  width: calc(var(--rk-sw-h) + 1px);
+  transform: scaleX(1.25);
+  transform-origin: left center;
 }
 .rk-switch:checked {
   background: var(--rk-accent);
@@ -150,7 +151,7 @@
   background: var(--rk-on-accent);
 }
 .rk-switch:checked:active:not(:disabled)::before {
-  translate: calc(var(--rk-sw-w) - var(--rk-sw-h) - 5px) 0;
+  transform-origin: right center;
 }
 .rk-switch[data-size="sm"] {
   --rk-sw-w: 26px;
@@ -212,6 +213,7 @@
   box-shadow: var(--rk-selected-shadow, 0 2px 8px -2px oklch(var(--rk-shade) / 0.5));
 }
 .rk-segmented-item {
+  line-height: 1;
   position: relative;
   z-index: 1;
   display: inline-flex;
@@ -240,7 +242,7 @@
 }
 .rk-segmented-item:has(:focus-visible) {
   outline: 2px solid var(--rk-focus);
-  outline-offset: 1px;
+  outline-offset: -2px;
 }
 .rk-segmented-item .rk-icon {
   font-size: 1.1em;
@@ -271,7 +273,7 @@
 }
 .rk-choice-card:has(:focus-visible) {
   outline: 2px solid var(--rk-focus);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 .rk-choice-card[data-disabled] {
   opacity: 0.45;
@@ -416,7 +418,7 @@
 }
 .rk-swatch:has(:focus-visible) {
   outline: 2px solid var(--rk-focus);
-  outline-offset: 4px;
+  outline-offset: -2px;
 }
 .rk-swatch[data-custom] {
   background: var(--rk-swatch, var(--rk-spectrum));
@@ -429,4 +431,21 @@
   place-items: center;
   color: var(--rk-on-inverse);
   font-weight: 700;
+}
+.rk-checkbox:is(:checked, :indeterminate):focus-visible,
+.rk-radio:checked:focus-visible,
+.rk-switch:checked:focus-visible {
+  outline-color: var(--rk-on-accent);
+}
+.rk-segmented,
+.rk-chip-group {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.rk-check-text,
+.rk-choice-card-label,
+.rk-choice-card-desc,
+.rk-choice-card-note {
+  overflow-wrap: anywhere;
 }

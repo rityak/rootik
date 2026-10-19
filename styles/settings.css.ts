@@ -8,8 +8,8 @@ globalStyle(".rk-settings", {
   minWidth: "0",
 });
 
-globalStyle(".rk-settings-select", { width: "160px" });
+globalStyle(".rk-settings-select", { width: "min(160px, 100%)" });
 
-globalStyle(".rk-settings-slider", { width: "200px" });
+globalStyle(".rk-settings-slider", { width: "min(200px, 100%)" });
 
 globalStyle(".rk-settings-footer", { display: "flex", justifyContent: "flex-end" });

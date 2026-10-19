@@ -12,10 +12,10 @@
   opacity: 0.45;
 }
 .rk-schema-row > [data-layout="inline"] > .rk-field-control :is(.rk-input, .rk-select-trigger, .rk-slider) {
-  width: var(--rk-schema-control-width, 200px);
+  width: min(var(--rk-schema-control-width, 200px), 100%);
 }
 .rk-schema-row > [data-layout="inline"] > .rk-field-control .rk-textarea {
-  width: calc(var(--rk-schema-control-width, 200px) * 1.4);
+  width: min(calc(var(--rk-schema-control-width, 200px) * 1.4), 100%);
 }
 .rk-schema-row > [data-layout="inline"] > .rk-field-control .rk-chip-group {
   justify-content: flex-end;
@@ -30,4 +30,8 @@
   display: flex;
   justify-content: flex-end;
   gap: calc(var(--rk-space) * 2);
+}
+.rk-schema-actions {
+  flex-wrap: wrap;
+  min-width: 0;
 }

@@ -73,7 +73,7 @@ globalStyle('[data-position^="top"] .rk-toast', {
 
 globalStyle(".rk-toast-icon", { marginTop: "1px", fontSize: "16px", color: "var(--rk-tone-text)" });
 
-globalStyle(".rk-toast-body", { flex: "1", minWidth: "0" });
+globalStyle(".rk-toast-body", { flex: "1 1 auto", minWidth: "0" });
 
 globalStyle(".rk-toast-title", { fontWeight: "500", color: `${tokens.text}` });
 
@@ -108,3 +108,13 @@ globalStyle(".rk-toast-close", {
 });
 
 globalStyle(".rk-toast-close:hover", { background: `${tokens.hover}`, color: `${tokens.text}` });
+
+globalStyle(".rk-toast-title", { overflowWrap: "anywhere" });
+globalStyle(".rk-toast-action", {
+  flexShrink: 1,
+  minWidth: 0,
+  height: "auto",
+  minHeight: "24px",
+  overflowWrap: "anywhere",
+  paddingBlock: tokens.space,
+});

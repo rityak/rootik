@@ -1,20 +1,29 @@
 import type { ReactNode } from "react";
 import { formatOklch, type Oklch, oklchToLinearRgb, parseColor } from "../lib/color";
+import { FONTS, MONO_FONTS, SYSTEM_SERIF } from "./fonts";
+import { SIGNAL_PALETTES, type SignalPaletteId } from "./palettes";
+
+export { FONTS } from "./fonts";
 
 export type SettingValue = string | number | boolean;
 export interface BuiltinAppearanceValues {
-  palette: "legacy" | "rain";
+  palette: "legacy" | "rain" | SignalPaletteId;
+  colorMode: "light" | "dark";
   accent: string;
   neutral: string;
   style: "rootik" | "fluent";
+  svgShapes: boolean;
   radius: number;
   pill: boolean;
   corners: "round" | "squircle" | "square";
   layout: "islands" | "inset";
   spacing: "flush" | "tight" | "default" | "roomy";
   dock: "float" | "bar";
+  dockShape: "surface" | "capsule";
   density: "compact" | "default" | "comfortable";
-  font: "geist" | "inter" | "system" | "mono";
+  font: "geist" | "inter" | "rubik" | "onest" | "system" | "mono";
+  monoFont: "system" | "jetbrains" | "geist";
+  displayFont: "ui" | "literata";
   fontSize: number;
   glow: "accent" | "neutral" | "custom" | "off";
   "glow.color": string;
@@ -37,6 +46,9 @@ export interface BuiltinAppearanceValues {
   "glass.transparency": number;
   "glass.blur": number;
   motion: "system" | "full" | "off";
+  effects: "off" | "subtle" | "expressive";
+  effectStyle: "sheen" | "ripple" | "flow";
+  themeTransition: "fade" | "wipe" | "iris";
 }
 /** Known keys are typed; consumer extension keys remain supported. */
 export type AppearanceValues = Partial<BuiltinAppearanceValues> & Record<string, SettingValue>;
@@ -44,6 +56,12 @@ export type AppearanceValues = Partial<BuiltinAppearanceValues> & Record<string,
 export type CssVars = Record<string, string | null>;
 
 export const THEMES = {
+  cobalt: { palette: "cobalt", glow: "off", material: "veil", radius: 16, font: "system", fontSize: 14 },
+  albedo: { palette: "albedo", glow: "off", material: "veil", radius: 16, font: "system", fontSize: 14 },
+  makima: { palette: "makima", glow: "off", material: "veil", radius: 16, font: "system", fontSize: 14 },
+  miyabi: { palette: "miyabi", glow: "off", material: "veil", radius: 16, font: "system", fontSize: 14 },
+  hoshino: { palette: "hoshino", glow: "off", material: "veil", radius: 16, font: "system", fontSize: 14 },
+  maomao: { palette: "maomao", glow: "off", material: "veil", radius: 16, font: "system", fontSize: 14 },
   iris: { accent: "oklch(0.57 0.2 277)", neutral: "graphite", material: "veil", radius: 18 },
   ocean: { accent: "oklch(0.58 0.14 245)", neutral: "slate", material: "frost", radius: 16 },
   ember: { accent: "oklch(0.6 0.19 35)", neutral: "mocha", material: "solid", radius: 12 },
@@ -66,7 +84,19 @@ export const THEMES = {
     "material.reflection": 35,
   },
   // Windows 10 (UWP) spirit in the kit's own colors: flat solid panels edge to edge, taskbar dock
-  fluent: { style: "fluent", spacing: "flush", layout: "inset", dock: "bar" },
+  fluent: {
+    style: "fluent",
+    spacing: "flush",
+    layout: "inset",
+    dock: "bar",
+    svgShapes: false,
+    radius: 0,
+    corners: "square",
+    pill: false,
+    material: "solid",
+    glow: "off",
+    font: "system",
+  },
 } as const satisfies Record<string, Partial<AppearanceValues>>;
 
 export type ThemeName = keyof typeof THEMES;
@@ -148,13 +178,6 @@ const NEUTRALS: Record<string, [hue: number, chroma: number]> = {
   moss: [150, 0.014],
   mocha: [50, 0.014],
   plum: [320, 0.015],
-};
-
-export const FONTS: Record<string, string | null> = {
-  geist: null,
-  inter: '"Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif',
-  system: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
-  mono: '"Geist Mono Variable", "JetBrains Mono", ui-monospace, monospace',
 };
 
 const tint = (a: number) => `oklch(var(--rk-tint) / ${a})`;
@@ -350,8 +373,21 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         options: [
           { value: "legacy", label: "Graphite & Iris" },
           { value: "rain", label: "Rain" },
+          ...SIGNAL_PALETTES.map((palette) => ({ value: palette.id, label: palette.name })),
         ],
         dataAttr: "rk-palette",
+      },
+      {
+        key: "colorMode",
+        type: "segmented",
+        label: "Color mode",
+        default: "dark",
+        options: [
+          { value: "light", label: "Light" },
+          { value: "dark", label: "Dark" },
+        ],
+        dataAttr: "rk-mode",
+        visible: (all) => SIGNAL_PALETTES.some((palette) => palette.id === all.palette),
       },
       {
         key: "accent",
@@ -359,8 +395,10 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         label: "Accent",
         default: ACCENTS[0].value,
         swatches: ACCENTS,
+        visible: (all) => !SIGNAL_PALETTES.some((palette) => palette.id === all.palette),
         cssVar: "--rk-accent",
-        apply: (v, all) => {
+        apply: (v, all): CssVars => {
+          if (SIGNAL_PALETTES.some((palette) => palette.id === all.palette)) return {};
           const color = parseColor(String(v));
           const hover = color && {
             ...color,
@@ -380,7 +418,9 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         hint: "Hue of backgrounds and text",
         default: "graphite",
         options: Object.keys(NEUTRALS).map((k) => ({ value: k, label: k[0]?.toUpperCase() + k.slice(1) })),
-        apply: (v) => {
+        visible: (all) => !SIGNAL_PALETTES.some((palette) => palette.id === all.palette),
+        apply: (v, all): CssVars => {
+          if (SIGNAL_PALETTES.some((palette) => palette.id === all.palette)) return {};
           const [h, c] = NEUTRALS[String(v)] ?? NEUTRALS.graphite ?? [260, 0.012];
           return { "--rk-neutral-h": String(h), "--rk-neutral-c": String(c) };
         },
@@ -395,7 +435,7 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         key: "style",
         type: "segmented",
         label: "Style",
-        hint: "Fluent: flat Windows 10 panels in the same colors: small corners, accent bars mark the selection, no glass",
+        hint: "Fluent: square panels in the same colors, accent selection bars, no SVG contours or glass",
         default: "rootik",
         options: [
           { value: "rootik", label: "Rootik" },
@@ -404,6 +444,14 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         dataAttr: "rk-style",
         // radius, material and glass read it
         apply: () => ({}),
+      },
+      {
+        key: "svgShapes",
+        type: "toggle",
+        label: "SVG contours",
+        hint: "Decorative panel and control contours; off restores ordinary rectangular boundaries",
+        default: true,
+        visible: (all) => !fluent(all),
       },
       {
         key: "radius",
@@ -415,12 +463,11 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         format: (v) => `${v}px`,
         visible: (all) => all.corners !== "square" && !fluent(all),
         apply: (v, all) => {
-          const square = all.corners === "square";
-          if (fluent(all) && !square) return { "--rk-radius": "4px", "--rk-radius-control": "2px" };
+          const square = all.corners === "square" || fluent(all);
           const r = square ? 0 : Number(v);
           return {
             "--rk-radius": `${r}px`,
-            "--rk-radius-control": all.pill && !square ? "999px" : `${Math.round(r * 0.55)}px`,
+            "--rk-radius-control": all.pill && r > 0 ? "999px" : `${Math.round(r * 0.55)}px`,
           };
         },
       },
@@ -443,10 +490,10 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
           { value: "squircle", label: "Squircle" },
           { value: "square", label: "Square" },
         ],
-        apply: (v) => ({
+        apply: (v, all) => ({
           "--rk-corner-shape": v === "squircle" ? "squircle" : "round",
-          "--rk-roundness": v === "square" ? "0" : null,
-          "--rk-linecap": v === "square" ? "butt" : null,
+          "--rk-roundness": v === "square" || all.radius === 0 || fluent(all) ? "0" : null,
+          "--rk-linecap": v === "square" || all.radius === 0 || fluent(all) ? "butt" : null,
         }),
       },
       {
@@ -491,6 +538,18 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         // read by AppShell, no CSS vars
         apply: () => ({}),
       },
+      {
+        key: "dockShape",
+        type: "segmented",
+        label: "Floating dock shape",
+        hint: "Surface follows the shell contour; capsule uses a rounded dock without an outer SVG panel",
+        default: "surface",
+        options: [
+          { value: "surface", label: "Surface" },
+          { value: "capsule", label: "Capsule" },
+        ],
+        visible: (all) => all.dock !== "bar",
+      },
     ],
   },
   {
@@ -517,10 +576,38 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
         options: [
           { value: "geist", label: "Geist" },
           { value: "inter", label: "Inter" },
+          { value: "rubik", label: "Rubik" },
+          { value: "onest", label: "Onest" },
           { value: "system", label: "System" },
           { value: "mono", label: "Mono" },
         ],
         apply: (v) => ({ "--rk-font-sans": FONTS[String(v)] ?? null }),
+      },
+      {
+        key: "monoFont",
+        type: "select",
+        label: "Monospace font",
+        default: "geist",
+        options: [
+          { value: "system", label: "System Mono" },
+          { value: "jetbrains", label: "JetBrains Mono" },
+          { value: "geist", label: "Geist Mono" },
+        ],
+        apply: (v) => ({ "--rk-font-mono": MONO_FONTS[String(v)] ?? MONO_FONTS.geist ?? "monospace" }),
+      },
+      {
+        key: "displayFont",
+        type: "select",
+        label: "Display font",
+        default: "ui",
+        options: [
+          { value: "ui", label: "Same as interface" },
+          { value: "literata", label: "Literata" },
+        ],
+        apply: (v) => ({
+          "--rk-font-display":
+            v === "literata" ? `"Literata Variable", ${SYSTEM_SERIF}` : "var(--rk-font-sans)",
+        }),
       },
       {
         key: "fontSize",
@@ -785,6 +872,48 @@ export const APPEARANCE_SECTIONS: SettingsSection[] = [
             min: 4,
             max: 40,
             format: (v) => `${v}px`,
+          },
+        ],
+      },
+      {
+        key: "effects",
+        type: "segmented",
+        label: "Decorative motion",
+        default: "off",
+        dataAttr: "rk-effects",
+        hint: "Optional SVG light and theme transitions; reduced motion always disables decoration",
+        options: [
+          { value: "off", label: "Off" },
+          { value: "subtle", label: "Subtle" },
+          { value: "expressive", label: "Expressive" },
+        ],
+        apply: (v, all) => ({
+          "--rk-switch-animation":
+            v !== "off" && all.motion !== "off" && !fluent(all) ? "rk-switch-light" : "none",
+          "--rk-effects-strength": v === "expressive" ? "0.3" : v === "subtle" ? "0.14" : "0",
+        }),
+        children: [
+          {
+            key: "effectStyle",
+            type: "segmented",
+            label: "Light variation",
+            default: "sheen",
+            options: [
+              { value: "sheen", label: "Sheen" },
+              { value: "ripple", label: "Ripple" },
+              { value: "flow", label: "Flow" },
+            ],
+          },
+          {
+            key: "themeTransition",
+            type: "segmented",
+            label: "Theme transition",
+            default: "fade",
+            options: [
+              { value: "fade", label: "Fade" },
+              { value: "wipe", label: "Wipe" },
+              { value: "iris", label: "Iris" },
+            ],
           },
         ],
       },

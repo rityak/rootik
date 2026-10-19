@@ -3,6 +3,7 @@ import { tokens } from "./tokens.css";
 
 globalStyle(".rk-item", {
   position: "relative",
+  isolation: "isolate",
   display: "flex",
   alignItems: "center",
   gap: `calc(${tokens.space} * 3)`,
@@ -75,7 +76,7 @@ globalStyle(".rk-item[data-disabled]", { opacity: "0.45" });
 
 globalStyle(".rk-item:has(.rk-item-hit:focus-visible)", {
   outline: `2px solid ${tokens.focus}`,
-  outlineOffset: "2px",
+  outlineOffset: "-2px",
 });
 
 globalStyle(".rk-item-media", {

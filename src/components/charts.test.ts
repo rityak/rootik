@@ -36,3 +36,10 @@ test("treemapLayout tiles the box without gaps: areas are proportional and sum t
     expect(r.y + r.h).toBeLessThanOrEqual(400 + 1e-6);
   }
 });
+
+import { barPath } from "../charts/chart-parts";
+
+test("thin horizontal bars clamp end radii to half the band height", () => {
+  expect(barPath(0, 0, 100, 4, 8, true)).toContain("a2,2");
+  expect(barPath(0, 0, 4, 100, 8)).toContain("a2,2");
+});

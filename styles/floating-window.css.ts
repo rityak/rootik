@@ -6,10 +6,10 @@ globalStyle(".rk-floating-window", {
   inset: "auto",
   display: "flex",
   flexDirection: "column",
-  minWidth: "220px",
-  minHeight: "120px",
-  maxWidth: "calc(100vw - 16px)",
-  maxHeight: "calc(100dvh - 16px)",
+  minWidth: "min(220px, var(--rk-floating-max-w, calc(100dvw - 16px)))",
+  minHeight: "min(120px, var(--rk-floating-max-h, calc(100dvh - 16px)))",
+  maxWidth: "var(--rk-floating-max-w, calc(100dvw - 16px))",
+  maxHeight: "var(--rk-floating-max-h, calc(100dvh - 16px))",
   margin: "0",
   padding: "0",
   border: "0",
@@ -20,6 +20,13 @@ globalStyle(".rk-floating-window", {
   color: `${tokens.text}`,
   overflow: "hidden",
   resize: "both",
+});
+
+globalStyle(".rk-floating-window[data-surface] > .rk-floating-window-bar", {
+  padding: `0 0 calc(${tokens.space} * 2)`,
+});
+globalStyle(".rk-floating-window[data-surface] > .rk-floating-window-body", {
+  padding: `calc(${tokens.space} * 3) 0 0`,
 });
 
 globalStyle(".rk-floating-window-bar", {
@@ -69,3 +76,10 @@ globalStyle(".rk-floating-window-close", {
 globalStyle(".rk-floating-window-close:hover", { background: `${tokens.hover}`, color: `${tokens.text}` });
 
 globalStyle(".rk-floating-window-body", { flex: "1", minHeight: "0", overflow: "auto", padding: "12px" });
+
+globalStyle(".rk-floating-window-bar, .rk-floating-window-close", { flexShrink: 0 });
+globalStyle(".rk-floating-window-body", {
+  minWidth: 0,
+  overflowWrap: "anywhere",
+  overscrollBehavior: "contain",
+});

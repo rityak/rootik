@@ -4,6 +4,9 @@
   overflow: auto;
   container-type: scroll-state;
 }
+.rk-table-surface {
+  min-width: 0;
+}
 .rk-table-wrap[data-framed] {
   border-radius: var(--rk-radius-md);
   box-shadow: inset 0 0 0 1px var(--rk-line);
@@ -46,10 +49,9 @@
   height: 34px;
   padding-block: 0;
   color: var(--rk-text-3);
-  font-size: var(--rk-text-2xs);
+  font-size: var(--rk-text-xs);
   font-weight: 500;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  letter-spacing: 0;
   white-space: nowrap;
 }
 .rk-table td {
@@ -72,8 +74,11 @@
   cursor: pointer;
 }
 .rk-table tbody tr[aria-selected="true"] {
-  background: var(--rk-accent-soft);
-  box-shadow: inset 2px 0 0 var(--rk-accent);
+  --rk-text: var(--rk-on-inverse);
+  --rk-text-2: var(--rk-on-inverse);
+  --rk-text-3: color-mix(in oklab, var(--rk-on-inverse) 78%, transparent);
+  background: var(--rk-inverse);
+  color: var(--rk-on-inverse);
 }
 .rk-table tbody tr:focus-visible {
   outline: 2px solid var(--rk-focus);
@@ -91,11 +96,13 @@
 .rk-table[data-sticky] thead th {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   background: var(--rk-surface-1);
   transition: box-shadow var(--rk-dur) var(--rk-ease);
 }
 .rk-th-sort {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -110,7 +117,7 @@
   text-transform: inherit;
   cursor: pointer;
 }
-.rk-th-sort svg {
+.rk-th-sort > svg {
   width: 12px;
   height: 12px;
   opacity: 0.5;
@@ -122,7 +129,7 @@
 .rk-th-sort[data-sorted] {
   color: var(--rk-text);
 }
-.rk-th-sort[data-sorted] svg {
+.rk-th-sort[data-sorted] > svg {
   opacity: 1;
 }
 .rk-table[data-resizable]:not([data-sticky]) th {
@@ -362,10 +369,10 @@ tr:hover > :is(.rk-table .rk-table-pin) {
   --rk-pin-tint: var(--rk-hover);
 }
 tr[aria-selected="true"] > :is(.rk-table .rk-table-pin) {
-  --rk-pin-tint: var(--rk-accent-soft);
+  --rk-pin-tint: var(--rk-inverse);
 }
-.rk-table thead .rk-table-pin {
-  z-index: 2;
+.rk-table[data-pinned] thead .rk-table-pin {
+  z-index: 3;
 }
 @container scroll-state(scrollable: top) {
   .rk-table[data-sticky] thead th {

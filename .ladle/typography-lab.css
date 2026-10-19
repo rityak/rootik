@@ -1,0 +1,614 @@
+/* Generated from styles/typography-lab.css.ts. Run bun run styles; do not edit. */
+.rt-lab,
+.rd-app:has(.rt-lab) {
+  --rk-font-size: 14px;
+  --rk-text-md: var(--rk-font-size);
+  --rk-text-sm: calc(var(--rk-font-size) * 0.93);
+  --rk-text-xs: 12px;
+  --rk-text-2xs: 11px;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+}
+.rt-lab[data-family="system"],
+.rd-app:has(.rt-lab[data-family="system"]) {
+  --rk-font-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Roboto, "Noto Sans",
+    Arial, sans-serif;
+  font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Roboto, "Noto Sans",
+    Arial, sans-serif;
+}
+.rt-font-card[data-specimen="system"] .rt-font-sample {
+  font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Roboto, "Noto Sans",
+    Arial, sans-serif;
+}
+.rt-lab[data-family="inter"],
+.rd-app:has(.rt-lab[data-family="inter"]) {
+  --rk-font-sans:
+    "Inter Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+  font-family:
+    "Inter Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-font-card[data-specimen="inter"] .rt-font-sample {
+  font-family:
+    "Inter Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-lab[data-family="rubik"],
+.rd-app:has(.rt-lab[data-family="rubik"]) {
+  --rk-font-sans:
+    "Rubik Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+  font-family:
+    "Rubik Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-font-card[data-specimen="rubik"] .rt-font-sample {
+  font-family:
+    "Rubik Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-lab[data-family="onest"],
+.rd-app:has(.rt-lab[data-family="onest"]) {
+  --rk-font-sans:
+    "Onest Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+  font-family:
+    "Onest Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-font-card[data-specimen="onest"] .rt-font-sample {
+  font-family:
+    "Onest Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-lab[data-family="golos"],
+.rd-app:has(.rt-lab[data-family="golos"]) {
+  --rk-font-sans:
+    "Golos Text Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+  font-family:
+    "Golos Text Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-font-card[data-specimen="golos"] .rt-font-sample {
+  font-family:
+    "Golos Text Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-lab[data-family="geist"],
+.rd-app:has(.rt-lab[data-family="geist"]) {
+  --rk-font-sans:
+    "Geist Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+  font-family:
+    "Geist Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-font-card[data-specimen="geist"] .rt-font-sample {
+  font-family:
+    "Geist Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI",
+    Roboto, "Noto Sans", Arial, sans-serif;
+}
+.rt-lab[data-family="jetbrains"],
+.rd-app:has(.rt-lab[data-family="jetbrains"]) {
+  --rk-font-sans:
+    "JetBrains Mono Variable", "Cascadia Code", "Cascadia Mono", ui-monospace, "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+  font-family:
+    "JetBrains Mono Variable", "Cascadia Code", "Cascadia Mono", ui-monospace, "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+}
+.rt-font-card[data-specimen="jetbrains"] .rt-font-sample {
+  font-family:
+    "JetBrains Mono Variable", "Cascadia Code", "Cascadia Mono", ui-monospace, "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+}
+.rt-lab[data-family="literata"],
+.rd-app:has(.rt-lab[data-family="literata"]) {
+  --rk-font-sans: "Literata Variable", Georgia, "Times New Roman", serif;
+  font-family: "Literata Variable", Georgia, "Times New Roman", serif;
+}
+.rt-font-card[data-specimen="literata"] .rt-font-sample {
+  font-family: "Literata Variable", Georgia, "Times New Roman", serif;
+}
+.rt-lab[data-mono="system"],
+.rd-app:has(.rt-lab[data-mono="system"]) {
+  --rk-font-mono:
+    "Cascadia Code", "Cascadia Mono", ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+.rt-lab[data-mono="jetbrains"],
+.rd-app:has(.rt-lab[data-mono="jetbrains"]) {
+  --rk-font-mono:
+    "JetBrains Mono Variable", "Cascadia Code", "Cascadia Mono", ui-monospace, "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+}
+.rt-lab[data-mono="geist"],
+.rd-app:has(.rt-lab[data-mono="geist"]) {
+  --rk-font-mono:
+    "Geist Mono Variable", "Cascadia Code", "Cascadia Mono", ui-monospace, "SFMono-Regular", Consolas,
+    "Liberation Mono", monospace;
+}
+.rt-lab[data-display="literata"] {
+  --rt-display-family: "Literata Variable", Georgia, "Times New Roman", serif;
+}
+.rt-lab[data-display="system"] {
+  --rt-display-family: Georgia, "Times New Roman", serif;
+}
+.rt-lab {
+  --rt-display-family: var(--rk-font-sans);
+  font-size: var(--rk-font-size);
+  font-weight: var(--rt-body-weight, 400);
+  line-height: 1.6;
+  letter-spacing: normal;
+  gap: 28px;
+}
+.rt-lab :is(p, h2, h3, h4) {
+  margin: 0;
+}
+.rt-intro {
+  display: grid;
+  gap: 12px;
+  max-width: 650px;
+}
+.rt-kicker {
+  display: block;
+  font: 500 11px / 1.5 var(--rk-font-mono);
+  letter-spacing: 0.04em;
+  color: var(--rk-text-3);
+}
+.rt-intro h2 {
+  font-size: clamp(30px, 4cqw, 44px);
+  font-weight: 550;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: var(--rk-text);
+}
+.rt-intro p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--rk-text-2);
+  max-width: 60ch;
+}
+.rt-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.rt-settings {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 18px;
+  padding: 24px;
+  border: 1px solid var(--rk-line);
+  border-radius: 16px;
+  background: var(--rk-surface-1);
+}
+.rt-settings .rk-field-label,
+.rt-settings .rk-slider-label {
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.45;
+}
+.rt-settings .rk-check-text {
+  font-size: 12px;
+  line-height: 1.5;
+}
+.rt-live-heading,
+.rt-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rt-live-heading h2 {
+  font-size: 20px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.rt-live-heading > span,
+.rt-section-head > span {
+  font: 11px / 1.5 var(--rk-font-mono);
+  color: var(--rk-text-3);
+}
+.rt-live {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+.rt-hero .rk-svg-surface-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 420px;
+}
+.rt-hero h2 {
+  font-family: var(--rt-display-family);
+  font-size: clamp(34px, 5cqw, 54px);
+  line-height: 1.08;
+  font-weight: 450;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+.rt-hero h2 em {
+  color: var(--rk-accent-text);
+  font-weight: 500;
+}
+.rt-lab[data-italic="false"] .rt-hero h2 em {
+  font-style: normal;
+}
+.rt-body {
+  font-size: var(--rk-font-size);
+  line-height: 1.6;
+  font-weight: var(--rt-body-weight, 400);
+  color: var(--rk-text-2);
+  max-width: 64ch;
+  text-wrap: pretty;
+}
+.rt-panel {
+  padding: 28px;
+  background: var(--rk-surface-2);
+  border: 1px solid var(--rk-line);
+  border-radius: 18px;
+  min-width: 0;
+}
+.rt-metric {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: auto;
+  font-variant-numeric: var(--rt-numbers);
+}
+.rt-metric strong {
+  font-size: clamp(40px, 5cqw, 56px);
+  line-height: 1.1;
+  font-weight: 350;
+  letter-spacing: -0.035em;
+  color: var(--rk-text);
+}
+.rt-metric > span {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--rk-text-3);
+}
+.rt-hero-actions,
+.rt-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rt-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--rk-text-2);
+}
+.rt-status i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--rk-success);
+}
+.rt-form {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+}
+.rt-form h3 {
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.rt-form .rk-field-label {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 550;
+}
+.rt-form .rk-field-hint {
+  font-size: 12px;
+  line-height: 1.5;
+}
+.rt-data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.rt-section-head h3 {
+  font-size: 18px;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.rt-table-scroll {
+  overflow-x: auto;
+  margin-block: 20px;
+}
+.rt-number-probe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 20px;
+  font-size: 22px;
+  font-variant-numeric: var(--rt-numbers);
+  color: var(--rk-accent-text);
+}
+.rt-number-probe span {
+  width: max-content;
+  border-bottom: 1px solid var(--rk-line);
+}
+.rt-table-panel table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--rk-font-size);
+  line-height: 1.5;
+}
+.rt-table-panel :is(th, td) {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rk-line);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: var(--rt-numbers);
+}
+.rt-table-panel th {
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--rk-text-3);
+}
+.rt-table-panel :is(th, td):first-child {
+  text-align: left;
+  padding-right: 22px;
+}
+.rt-table-panel :is(th, td):nth-child(2) {
+  padding-inline: 16px;
+}
+.rt-table-panel td small {
+  display: block;
+  font: 11px / 1.6 var(--rk-font-mono);
+  color: var(--rk-text-3);
+  margin-top: 3px;
+}
+.rt-caption {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--rk-text-3);
+  max-width: 68ch;
+}
+.rt-code-panel pre {
+  font: 13px / 1.75 var(--rk-font-mono);
+  font-variant-ligatures: var(--rt-ligatures);
+  overflow-x: auto;
+  margin-block: 20px;
+  padding: 18px;
+  background: var(--rk-well);
+  border: 1px solid var(--rk-line);
+  border-radius: 10px;
+  color: var(--rk-text);
+  tab-size: 2;
+}
+.rt-code-panel code {
+  font: inherit;
+}
+.rt-scale {
+  display: grid;
+  gap: 22px;
+}
+.rt-scale-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rk-line);
+}
+.rt-scale-row > div {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--rk-text-2);
+}
+.rt-scale-row small {
+  display: block;
+  font: 11px / 1.6 var(--rk-font-mono);
+  color: var(--rk-text-3);
+  margin-top: 3px;
+}
+.rt-scale-row p {
+  overflow-wrap: anywhere;
+  color: var(--rk-text);
+}
+.rt-scale [data-role="display"] {
+  font-family: var(--rt-display-family);
+  font-size: clamp(32px, 5cqw, 48px);
+  font-weight: 450;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+.rt-scale [data-role="title"] {
+  font-size: 28px;
+  font-weight: 550;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+.rt-scale [data-role="section"] {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.rt-scale [data-role="body"] {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+.rt-scale [data-role="label"] {
+  font-size: 13px;
+  font-weight: 550;
+  line-height: 18px;
+}
+.rt-scale [data-role="caption"] {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+}
+.rt-font-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.rt-font-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.rt-font-card[data-selected="true"] {
+  border-color: var(--rk-accent-text);
+  box-shadow: inset 0 2px 0 var(--rk-accent-text);
+}
+.rt-font-card header {
+  display: grid;
+  gap: 5px;
+}
+.rt-font-card header h3 {
+  font-size: 18px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.rt-font-card header > span {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--rk-text-3);
+}
+.rt-font-card header small {
+  font: 11px / 1.5 var(--rk-font-mono);
+  color: var(--rk-text-3);
+}
+.rt-font-sample {
+  display: grid;
+  gap: 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+}
+.rt-font-sample h4 {
+  font-size: 30px;
+  line-height: 1.13;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+.rt-font-sample strong {
+  font-weight: 700;
+  line-height: 1.5;
+}
+.rt-font-sample em {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+}
+.rt-font-sample .rt-bold-italic {
+  font-weight: 700;
+}
+.rt-no-italic {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--rk-text-3);
+  font-style: normal;
+}
+.rt-weights {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.rt-glyphs {
+  font-size: 18px;
+  line-height: 1.5;
+  padding-top: 16px;
+  border-top: 1px solid var(--rk-line);
+  overflow-wrap: anywhere;
+}
+.rt-font-note {
+  color: var(--rk-text-2);
+  font-size: 12px;
+  line-height: 1.65;
+  margin-top: auto;
+  max-width: 64ch;
+}
+.rt-font-card footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rt-font-card footer a {
+  color: var(--rk-accent-text);
+  font-size: 12px;
+  line-height: 1.5;
+  text-underline-offset: 3px;
+}
+.rt-recommendation {
+  display: grid;
+  gap: 16px;
+}
+.rt-recommendation h2 {
+  font-size: clamp(24px, 3cqw, 32px);
+  line-height: 1.2;
+  font-weight: 550;
+  letter-spacing: -0.025em;
+}
+.rt-recommendation > p {
+  max-width: 72ch;
+  color: var(--rk-text-2);
+  line-height: 1.65;
+}
+@media (max-width: 600px) {
+  .rt-settings {
+    padding: 18px;
+    gap: 22px 14px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rt-panel {
+    padding: 20px;
+  }
+  .rt-scale-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+}
+@container (max-width: 1100px) {
+  .rt-settings {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container (max-width: 600px) {
+  .rt-settings {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@container (max-width: 1050px) {
+  .rt-live {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rt-data-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@container (max-width: 850px) {
+  .rt-font-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

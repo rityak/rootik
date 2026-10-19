@@ -1,5 +1,27 @@
 # Rootik — progress
 
+## Signal module migration
+
+- [x] `/theme`: six shared light/dark recipes, System/Rubik/Onest UI roles, independent mono/display fonts and optional licensed local font assets
+- [x] `/layout`: split production implementations, compatible root exports, selective CSS, shaped shell parts and custom backdrop slot
+- [x] Floating and edge-aligned frames; floating/taskbar dock, inspector, keyboard resize and mobile drawer in the Layout example
+- [x] Appearance controls for SVG contours, square corners and Fluent; ordinary controls restored when SVG is off
+- [x] `/navigation`: split implementations, public/selective exports, SVG sidebar/pill-tabs/segments, disabled links, dock focus recovery and a production navigation example
+- [x] `/controls`: seventeen implementation families, compatibility/selective exports, shared optional SVG contours, native state preservation and a production controls example
+- [x] `/motion`: optional SVG light recipes, native theme transitions, shared module settings, VPN power variants and stable no-motion fallbacks
+- [x] `/forms`: compatible public/selective exports, native and schema validation, optional SVG sections, shared control contours, reset and a production forms example
+- [x] `/overlays`: compatible/selective exports, shared SVG materials, native dialog/popover behavior, modal-aware notification host, keyboard command/confirm flows and a production example
+- [x] `/data`: compatible/selective exports, optional SVG collection shells, table/tree/list selection and sorting, virtual rows, keyboard scrolling and a production example
+- [x] `/feedback`: compatible/selective exports, SVG tracks/rings/badges/messages, activity repeat controls, accessible finite ranges, stable busy content and a production example
+- [x] `/charts`: compatible/selective exports, ChartPanel, separate light/dark chart ink, optional SVG entry motion, retained table/brush state and a production example
+- [x] `/content`: compatible/selective exports, SVG card/disclosure surfaces, text roles, mode-specific syntax ink, fixed QR polarity, native editor/media state, Lightbox navigation/focus repair and a production example
+- [x] Remaining helper locations: FloatingWindow/Splitter → layout, SelectPanel → data, Stepper → navigation, Tour → overlays
+- [x] Helper decoration: shared FloatingWindow/SelectPanel/Tour surfaces, Stepper marker contours, stable Splitter grip, focus/cancellation regressions and integrated module examples
+- [x] Packed Signal integration in the real umiray-client frontend: typecheck/build, Cobalt light/dark, dock/navigation, log filtering and appearance persistence (mock API; consumer sources unchanged)
+- [ ] Native WebView/other-engine/assistive-technology/performance release matrix and dataset-toolkit adoption
+
+Contracts and completion gates: [MIGRATION-DESIGN.md](MIGRATION-DESIGN.md). Layout API: [LAYOUT.md](LAYOUT.md).
+
 ## 1.0 / dev: implemented foundation
 
 - [x] Flexible canvas gradients and independent surface reflection; opt-in Rain appearance
@@ -10,14 +32,14 @@
 - [x] Combobox custom-value contracts, async failure states and dynamic label updates
 - [x] Floating resize/layout-shift observation, Confirm cancellation, number/date validation and toast lifetime
 - [x] Opaque accent/text/control contrast regressions; composited glass remains a release gate
-- [x] All 74 stylesheets authored with Vanilla Extract; stable public hooks, static consumer CSS
-- [x] 81 selective CSS exports with layer/dependency closure; packed source/dist/Tailwind/SSR fixtures
+- [x] All toolkit stylesheets authored with Vanilla Extract; stable public hooks, static consumer CSS
+- [x] 102 selective CSS exports with layer/dependency closure; packed source/dist/Tailwind/SSR fixtures
 - [x] Unit/SSR and DOM contract suites in CI; real packed umiray-client integration build
 - [ ] Browser/WebView/NVDA/forced-colors matrix, five dense Rain screens and composited glass approval
 - [ ] Reference-machine performance/cold-start comparisons, 10 000 rows and dataset-toolkit integration
 
 Findings, evidence and release gates: `AUDIT-2.0.md`. Consumer changes: `MIGRATION-2.0.md`.
-The target release is 1.0 (renamed from the original 2.0 plan). The testing build is 1.0.0-beta.1;
+The target release is 1.0 (renamed from the original 2.0 plan). The prepared testing build is 1.0.0-beta.2;
 this branch does not declare a stable release. Audit/migration filenames are retained for stable links.
 
 Legend: `[x]` done (component + story, checked in browser) · `[ ]` planned · `~` partial.
@@ -43,11 +65,11 @@ React Aria 1.21, Base UI 1.8, Radix, Radix Themes, HeroUI 3.2, Chakra 3.37, antd
 
 ## Appearance: Fluent, taskbar, background
 
-- [x] Style → Fluent (`data-rk-style="fluent"`, `src/fluent.css`): Windows 10 spirit in the same colors — 4/2px radii, solid, no glass, hairline depth, accent bar / underline / fill instead of the inverted pill (lists keep the pill); `theme="fluent"` = Fluent + Flush + Inset + Bar
+- [x] Style → Fluent (`data-rk-style="fluent"`, `src/fluent.css`): Windows 10 spirit in the same colors — square corners, solid, no glass, hairline depth, accent bar / underline / fill instead of the inverted pill (lists keep the pill); `theme="fluent"` = Fluent + Flush + Inset + Bar
 - [x] Panel spacing (Flush / Tight / Default / Roomy → `--rk-shell-space`); flush panels drop their outer radius
 - [x] Dock as a taskbar: AppShell `dockPlacement="bar"` / setting Dock → Bar, Dock `start` slot, `shape`, `align`
 - [x] Background: glow color (Accent / Neutral / Custom / Off) + strength; surface transparency and blur; glass transparency; background image with dim (`--rk-backdrop`)
-- [ ] Scope can't turn a material off (null vars are left to inherit), so `<Scope values={{ style: "fluent" }}>` keeps the root's glass
+- [x] Nested Fluent Scope clears inherited material/glass; covered by scope and DOM regressions
 
 ## Batch 3 — one PR per item
 
@@ -343,10 +365,26 @@ below once the batch is in.
 - [x] Treemap — squarified, parts past 6 share one grey ↗ Mantine Treemap
 - [x] Histogram via `bin()` on a `dense` BarChart; BarChart thins crowded axis labels (DT distributions)
 
+## SVG layout and artwork
+
+- [x] Typography Lab: Cyrillic System/Inter/Rubik/Onest/Golos/Geist/JetBrains/Literata comparisons, distinct Rubik/Onest presets, real italic/bold specimens, independent UI/mono/display selectors, role scale and local licensed fonts
+- [x] Approved typography choices: System fallback, Rubik/Onest UI, JetBrains Mono technical text and optional Literata display
+- [ ] Validate platform font fallbacks on macOS/Linux and native WebView
+
+- [x] Optional SVG control borders on Button, Input and IconButton: soft, cut, notch and ticket; native states and padding retained
+- [x] SVG keyboard focus follows the real contour with fill/rim/shadow feedback; no detached outline or pressed scaling, forced-colors fallback retained
+- [x] Six Design Lab palettes in light/dark: Cobalt, Albedo, Makima, Miyabi, Hoshino, Maomao; independent mode recipes and a neutral page canvas
+
+- [x] SvgSurface: eight parametric shapes, shared padding/content safe area, side/depth/position/span, glass and contours
+- [x] SvgBackdrop: dots, stripes, grid, crosses and hex tiles; custom React SVG slot with isolated definition IDs
+- [x] SvgArtwork: six abstract studies; compositor wrapper animations respect Motion Off and reduced motion
+- [x] Vanilla Extract authoring, generated aggregate/selective CSS, public exports, stories and geometry/DOM coverage
+- [ ] Windows WebView / Firefox / Safari visual and GPU profiling for SVG surfaces and backdrop blur
+
 ## Not planned (2026-09 review)
 
-- Motion-library effects (animated beams, globe, retro grid, marquee), Dock magnification, M3 Expressive shape
-  morphing — marketing flourish; break density and the short-motion rule
+- Marketing effects (animated beams, globe, marquee), Dock magnification and unrestricted shape morphing.
+  SVG layout/artwork is now in scope; shape deformations must remain inside padding.
 - Custom ScrollArea (styled native scrollbars are enough), Carousel
 - Rating, Transfer, Mentions, Watermark, SignaturePad, FloatButton, NavigationMenu (site mega-menu) — not dashboard/desktop needs
 - AngleSlider, ImageCropper, Masonry — until a consumer asks (masonry via CSS grid lanes when it ships)
@@ -355,4 +393,4 @@ below once the batch is in.
 ## Migration (after P0 is stable)
 
 - [ ] dataset-toolkit: replace `shared/ui/*` with rootik, map tokens (`--color-*` → `--rk-*`), keep Tailwind for layout
-- [ ] umiray-client: replace `shell/*`, move theme presets (midnight/green/purple) to `RootikProvider defaults` + `extensions` (background image field)
+- [x] umiray-client uses AppShell/RootikProvider and toolkit appearance settings; packed Signal compatibility verified (see audit/signal-consumer.json)

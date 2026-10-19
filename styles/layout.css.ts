@@ -2,6 +2,8 @@ import { globalStyle } from "@vanilla-extract/css";
 import { tokens } from "./tokens.css";
 
 globalStyle(".rk-shell", {
+  position: "relative",
+  isolation: "isolate",
   display: "flex",
   gap: "var(--rk-shell-gap)",
   height: "100dvh",
@@ -15,6 +17,17 @@ globalStyle(".rk-shell", {
     "--rk-shell-gap": `calc(${tokens.space} * 2.5 * var(--rk-shell-space, 1))`,
     "--rk-shell-round": "clamp(0, var(--rk-shell-space, 1) * 1000, 1)",
   },
+});
+
+globalStyle(".rk-shell-backdrop", { position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 });
+globalStyle(".rk-shell > :not(.rk-shell-backdrop, .rk-skip)", { position: "relative", zIndex: 1 });
+globalStyle(".rk-shell-part-content", { display: "flex", flexDirection: "column", flex: 1, minHeight: 0 });
+globalStyle(".rk-shell-sidebar.rk-svg-surface", { flexDirection: "column" });
+globalStyle(".rk-shell-aside > .rk-svg-surface", { flex: 1, minWidth: 0 });
+globalStyle(".rk-shell-dock .rk-svg-surface .rk-dock", {
+  background: "transparent",
+  boxShadow: "none",
+  backdropFilter: "none",
 });
 
 globalStyle(
@@ -154,7 +167,7 @@ globalStyle(".rk-shell[data-inactive] .rk-titlebar", {
 
 globalStyle(".rk-titlebar", {
   display: "grid",
-  gridTemplateColumns: "1fr auto 1fr",
+  gridTemplateColumns: "minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr)",
   alignItems: "center",
   gap: "12px",
   minHeight: `calc(${tokens.hMd} + 16px)`,
@@ -174,6 +187,14 @@ globalStyle(".rk-titlebar-center", {
 });
 
 globalStyle(".rk-titlebar-center > *", { "@container": { "rk-titlebar (width < 32rem)": { flex: "1" } } });
+
+globalStyle(".rk-titlebar:has(> .rk-titlebar-center:empty)", {
+  gridTemplateColumns: "minmax(0, 1fr) auto",
+});
+globalStyle(".rk-titlebar:has(> .rk-titlebar-center:empty) > :is(.rk-titlebar-start, .rk-titlebar-end)", {
+  gridArea: "auto",
+});
+globalStyle(".rk-titlebar-center:empty", { display: "none" });
 
 globalStyle(".rk-titlebar-start,\n.rk-titlebar-end", {
   display: "flex",
@@ -517,7 +538,7 @@ globalStyle(".rk-shell-drawer-inner > *", { flex: "1" });
 
 globalStyle(".rk-master-detail", {
   display: "grid",
-  gridTemplateColumns: "var(--rk-md-list-w) minmax(0, 1fr)",
+  gridTemplateColumns: "minmax(0, var(--rk-md-list-w)) minmax(0, 1fr)",
   gap: "var(--rk-gap, 12px)",
   minHeight: "0",
 });
@@ -549,3 +570,17 @@ globalStyle(".rk-master-detail-back", {
 });
 
 globalStyle(".rk-master-detail-back:hover", { background: `${tokens.hover}`, color: `${tokens.text}` });
+
+// Reset automatic flex/grid minima only on layout slots, never on arbitrary consumer content.
+globalStyle(
+  ".rk-shell, .rk-shell-body, .rk-shell-part-content, .rk-shell-header, .rk-shell-footer, .rk-shell-drawer-inner, .rk-page-body, .rk-page-column, .rk-master-detail",
+  { minWidth: 0 },
+);
+globalStyle(".rk-page-column > *", { minWidth: 0 });
+globalStyle(".rk-shell-dock", { minWidth: 0, maxWidth: "calc(100% - var(--rk-shell-gap) * 2)" });
+globalStyle(".rk-shell-dock > *", { minWidth: 0, maxWidth: "100%" });
+globalStyle(".rk-titlebar-controls, .rk-titlebar-controls > button", { flexShrink: 0 });
+globalStyle(".rk-page-title, .rk-page-desc, .rk-action-bar-status", { overflowWrap: "anywhere" });
+globalStyle(".rk-page-actions", { minWidth: 0, maxWidth: "100%" });
+globalStyle(".rk-status-bar", { minWidth: 0, overflowX: "auto", whiteSpace: "nowrap" });
+globalStyle(".rk-status-bar-end", { flexShrink: 0 });

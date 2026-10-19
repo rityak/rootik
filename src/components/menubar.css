@@ -9,7 +9,7 @@
   height: calc(var(--rk-h-sm) - 4px);
   padding: 0 calc(var(--rk-space) * 2.5);
   border: 0;
-  border-radius: calc(var(--rk-radius-control) - 2px);
+  border-radius: max(0px, calc(var(--rk-radius-control) - 2px));
   background: transparent;
   color: var(--rk-text-2);
   font: inherit;
@@ -33,5 +33,5 @@
   opacity: 0.45;
 }
 .rk-menubar-trigger:focus-visible {
-  outline-offset: -1px;
+  outline-offset: -2px;
 }

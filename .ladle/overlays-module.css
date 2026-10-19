@@ -1,0 +1,105 @@
+/* Generated from styles/overlays-module.css.ts. Run bun run styles; do not edit. */
+.om-study {
+  min-width: 0;
+  color: var(--rk-text);
+  background: var(--rk-bg);
+  font-family: var(--rk-font-sans);
+}
+.om-settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+  align-items: end;
+  gap: calc(var(--rk-space) * 4);
+  padding: calc(var(--rk-space) * 6);
+  border-bottom: 1px solid var(--rk-line);
+}
+.om-canvas {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  padding: calc(var(--rk-space) * 7);
+}
+.om-canvas > .rk-svg-backdrop {
+  z-index: -1;
+}
+.om-canvas .rk-page-title {
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 550;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+.om-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: calc(var(--rk-space) * 6);
+  margin-top: calc(var(--rk-space) * 7);
+}
+.om-card,
+.om-popover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: calc(var(--rk-space) * 4);
+  min-width: 0;
+}
+.om-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--rk-space) * 3);
+  color: var(--rk-accent-text);
+}
+.om-heading code,
+.om-status code {
+  font: var(--rk-text-xs) / 1.5 var(--rk-font-mono);
+  letter-spacing: 0.06em;
+}
+.om-card h2 {
+  font-size: var(--rk-text-lg);
+  font-weight: 550;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+.om-card p,
+.om-popover-content p,
+.om-note {
+  font-size: var(--rk-text-sm);
+  line-height: 1.65;
+  color: var(--rk-text-2);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.om-popover-content small {
+  color: var(--rk-text-2);
+  font-size: var(--rk-text-xs);
+}
+.om-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--rk-space) * 3);
+}
+.om-status {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--rk-space) * 3);
+  padding-top: calc(var(--rk-space) * 5);
+  font-size: var(--rk-text-xs);
+  color: var(--rk-text-2);
+}
+.om-status > span {
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 850px) {
+  .om-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .om-canvas {
+    padding: calc(var(--rk-space) * 3);
+  }
+}

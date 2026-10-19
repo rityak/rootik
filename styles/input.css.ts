@@ -114,7 +114,7 @@ globalStyle(
   ".rk-input:is(:focus-visible, :has(:focus-visible)), .rk-textarea:is(:focus-visible, :has(:focus-visible)), .rk-select-trigger:is(:focus-visible, :has(:focus-visible))",
   {
     outline: `2px solid ${tokens.focus}`,
-    outlineOffset: "2px",
+    outlineOffset: "-2px",
   },
 );
 
@@ -282,3 +282,9 @@ globalStyle(".rk-input input::-webkit-calendar-picker-indicator", {
 globalStyle(".rk-input input::-webkit-calendar-picker-indicator:hover", {
   opacity: 1,
 });
+
+globalStyle(".rk-field-control", { maxWidth: "100%" });
+globalStyle(".rk-field-label, .rk-field-hint, .rk-field-error, .rk-field-aside", {
+  overflowWrap: "anywhere",
+});
+globalStyle(".rk-textarea", { minWidth: 0, maxWidth: "100%" });

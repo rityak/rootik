@@ -10,6 +10,13 @@
   display: flex;
   flex-shrink: 0;
 }
+.rk-overflow-measure-clip {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  visibility: hidden;
+  pointer-events: none;
+}
 .rk-overflow-measure {
   position: absolute;
   top: 0;

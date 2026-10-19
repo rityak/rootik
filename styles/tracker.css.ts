@@ -39,7 +39,7 @@ globalStyle(".rk-tracker-bar", {
   borderRadius: `calc(2px * ${tokens.roundness})`,
   background: "var(--rk-tone)",
   transition: `opacity ${tokens.dur} ${tokens.ease},
-    scale ${tokens.dur} ${tokens.easeOut}`,
+    box-shadow ${tokens.dur} ${tokens.easeOut}`,
 });
 
 globalStyle(".rk-tracker-bar[data-idle]", {
@@ -48,9 +48,9 @@ globalStyle(".rk-tracker-bar[data-idle]", {
 
 globalStyle(".rk-tracker-bars:has([data-shown]) > .rk-tracker-bar:not([data-shown])", { opacity: "0.55" });
 
-globalStyle(".rk-tracker-bar[data-shown]", { scale: "1 1.12" });
+globalStyle(".rk-tracker-bar[data-shown]", { boxShadow: `inset 0 0 0 1px ${tokens.text}` });
 
-globalStyle(".rk-tracker-bar:focus-visible", { outlineOffset: "1px" });
+globalStyle(".rk-tracker-bar:focus-visible", { outlineOffset: "-2px" });
 
 globalStyle(".rk-tracker-bars", { "@container": { "rk-tracker (width < 26rem)": { gap: "1px" } } });
 

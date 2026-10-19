@@ -1,7 +1,7 @@
 // Extract VE to the source CSS bridge, then emit per-module ESM/declarations and aggregate CSS.
 // The public source condition needs no consumer plugin; React stays a peer.
 import { $ } from "bun";
-import { copyFileSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { generateStyles } from "./styles";
 import { cssEntries, cssSources } from "./css-exports";
@@ -29,7 +29,7 @@ for (const file of walk(dist).filter((f) => f.endsWith(".js") || f.endsWith(".d.
 }
 
 // Bun's CSS bundler can't parse newer at-rules (scroll-state queries), so inline the imports ourselves:
-// `@import "x" layer(rootik)` becomes `@layer rootik { …x… }`, the same cascade as in development.
+// `@import "x" layer(rootik)` becomes `@layer rootik { вЂ¦xвЂ¦ }`, the same cascade as in development.
 const IMPORT = /^@import\s+"([^"]+)"\s+layer\((\w+)\);\s*$/gm;
 const entry = join(root, "src/styles.css");
 const css = readFileSync(entry, "utf8").replace(IMPORT, (_, path: string, layer: string) => {
@@ -41,6 +41,8 @@ if (css.includes("@import")) throw new Error("unresolved @import in styles.css")
 writeFileSync(join(dist, "styles.css"), css);
 
 copyFileSync(join(root, "src/tailwind.css"), join(dist, "tailwind.css"));
+copyFileSync(join(root, "src/fonts.css"), join(dist, "fonts.css"));
+cpSync(join(root, "src/fonts"), join(dist, "fonts"), { recursive: true });
 
 const cssDir = join(dist, "css");
 mkdirSync(cssDir);
@@ -51,7 +53,7 @@ for (const source of cssSources) {
 }
 for (const source of cssEntries) {
   const file = source.slice(source.lastIndexOf("/") + 1);
-  const wrapper = readFileSync(join(root, "src/css", file), "utf8").replace(/\.\.\/(?:components\/|theme\/)?/g, "./internal/");
+  const wrapper = readFileSync(join(root, "src/css", file), "utf8").replace(/\.\.\/(?:components\/|theme\/|navigation\/|controls\/|motion\/|forms\/|overlays\/|data\/|feedback\/|charts\/|content\/)?/g, "./internal/");
   writeFileSync(join(cssDir, file), wrapper);
 }
 

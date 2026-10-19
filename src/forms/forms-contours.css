@@ -1,0 +1,81 @@
+/* Generated from styles/forms-contours.css.ts. Run bun run styles; do not edit. */
+.rk-form {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 4);
+  min-width: 0;
+}
+.rk-settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 5);
+}
+.rk-settings-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: space-between;
+  gap: calc(var(--rk-space) * 3);
+}
+.rk-settings-header > div:first-child {
+  min-width: 0;
+  flex: 1 1 180px;
+}
+.rk-settings-heading {
+  margin: 0;
+  font-size: var(--rk-text-md);
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--rk-text);
+}
+.rk-settings-description {
+  margin: var(--rk-space) 0 0;
+  font-size: var(--rk-text-xs);
+  line-height: 1.6;
+  color: var(--rk-text-2);
+}
+.rk-settings-surface[data-tone="danger"] {
+  --rk-svg-edge-top: var(--rk-danger);
+  --rk-svg-edge: color-mix(in oklab, var(--rk-danger) 40%, var(--rk-line));
+}
+.rk-settings-surface[data-tone="danger"] .rk-settings-heading {
+  color: var(--rk-danger);
+}
+.rk-fieldset[data-surface] {
+  position: relative;
+  isolation: isolate;
+  padding: var(--rk-form-pad);
+  background: none;
+  box-shadow: none;
+}
+.rk-fieldset > .rk-fieldset-surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.rk-fieldset-surface > .rk-svg-surface-content {
+  display: none;
+}
+.rk-fieldset:is(:hover, :focus-within) > .rk-fieldset-surface .rk-motion-light {
+  animation-name: var(--rk-effect-animation);
+}
+.rk-fieldset:disabled > .rk-fieldset-surface .rk-motion-light {
+  animation-name: none;
+}
+.rk-schema-row > [data-layout="inline"] > .rk-field-control {
+  max-width: 100%;
+}
+.rk-schema-row
+  > [data-layout="inline"]
+  > .rk-field-control
+  :is(.rk-input, .rk-select-trigger, .rk-slider, .rk-textarea) {
+  max-width: 100%;
+}
+.rk-settings-actions,
+.rk-schema-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--rk-space) * 2);
+}

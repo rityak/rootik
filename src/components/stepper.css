@@ -89,7 +89,7 @@
     background-color var(--rk-dur) var(--rk-ease),
     box-shadow var(--rk-dur) var(--rk-ease);
 }
-.rk-step-marker > svg {
+.rk-step-symbol > svg {
   width: round(calc(var(--rk-step-marker) * 0.6), 2px);
   height: round(calc(var(--rk-step-marker) * 0.6), 2px);
   stroke-width: 2.5;
@@ -136,4 +136,47 @@
 .rk-step-desc {
   color: var(--rk-text-3);
   font-size: var(--rk-text-xs);
+}
+.rk-step-symbol {
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
+}
+.rk-stepper[data-svg-border] .rk-step-marker {
+  --rk-svg-control-fill: var(--rk-surface-2);
+  --rk-svg-control-edge: var(--rk-control-edge);
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  box-shadow: none;
+}
+.rk-stepper[data-svg-border] [data-state="complete"] .rk-step-marker {
+  --rk-svg-control-fill: var(--rk-accent);
+  --rk-svg-control-edge: var(--rk-accent);
+}
+.rk-stepper[data-svg-border] [data-state="current"] .rk-step-marker {
+  --rk-svg-control-fill: var(--rk-inverse);
+  --rk-svg-control-edge: var(--rk-accent-text);
+  --rk-svg-control-stroke: 2;
+}
+.rk-stepper[data-svg-border] [data-state="error"] .rk-step-marker {
+  --rk-svg-control-fill: var(--rk-danger);
+  --rk-svg-control-edge: var(--rk-danger);
+}
+.rk-stepper[data-svg-border] [data-state="current"] .rk-step-marker > .rk-motion-layer {
+  opacity: 1;
+}
+.rk-stepper[data-svg-border] [data-state="current"] .rk-motion-light {
+  animation-name: var(--rk-effect-animation);
+}
+.rk-stepper,
+.rk-step-inner,
+.rk-step-inner > :last-child {
+  min-width: 0;
+  max-width: 100%;
+}
+.rk-step-label,
+.rk-step-desc {
+  overflow-wrap: anywhere;
 }

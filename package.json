@@ -1,6 +1,6 @@
 {
   "name": "rootik",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Dark-first React UI toolkit for dashboards, panels and desktop clients",
   "license": "MIT",
   "author": "Ritya",
@@ -24,6 +24,69 @@
     "**/*.css"
   ],
   "exports": {
+    "./overlays": {
+      "types": "./dist/overlays/index.d.ts",
+      "source": "./src/overlays/index.ts",
+      "default": "./dist/overlays/index.js"
+    },
+    "./overlays/styles.css": {
+      "source": "./src/css/overlays.css",
+      "default": "./dist/css/overlays.css"
+    },
+    "./forms": {
+      "types": "./dist/forms/index.d.ts",
+      "source": "./src/forms/index.ts",
+      "default": "./dist/forms/index.js"
+    },
+    "./forms/styles.css": {
+      "source": "./src/css/forms.css",
+      "default": "./dist/css/forms.css"
+    },
+    "./motion": {
+      "types": "./dist/motion/index.d.ts",
+      "source": "./src/motion/index.ts",
+      "default": "./dist/motion/index.js"
+    },
+    "./motion/styles.css": {
+      "source": "./src/css/motion.css",
+      "default": "./dist/css/motion.css"
+    },
+    "./controls": {
+      "types": "./dist/controls/index.d.ts",
+      "source": "./src/controls/index.ts",
+      "default": "./dist/controls/index.js"
+    },
+    "./controls/styles.css": {
+      "source": "./src/css/controls.css",
+      "default": "./dist/css/controls.css"
+    },
+    "./navigation": {
+      "types": "./dist/navigation/index.d.ts",
+      "source": "./src/navigation/index.ts",
+      "default": "./dist/navigation/index.js"
+    },
+    "./navigation/styles.css": {
+      "source": "./src/css/navigation.css",
+      "default": "./dist/css/navigation.css"
+    },
+    "./layout": {
+      "types": "./dist/layout/index.d.ts",
+      "source": "./src/layout/index.ts",
+      "default": "./dist/layout/index.js"
+    },
+    "./layout/styles.css": {
+      "source": "./src/css/layout.css",
+      "default": "./dist/css/layout.css"
+    },
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "source": "./src/theme/index.ts",
+      "default": "./dist/theme/index.js"
+    },
+    "./fonts.css": {
+      "source": "./src/fonts.css",
+      "default": "./dist/fonts.css"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "source": "./src/index.ts",
@@ -63,7 +126,43 @@
       "source": "./src/labels/ru.ts",
       "default": "./dist/labels/ru.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./data": {
+      "types": "./dist/data/index.d.ts",
+      "source": "./src/data/index.ts",
+      "default": "./dist/data/index.js"
+    },
+    "./data/styles.css": {
+      "source": "./src/css/data.css",
+      "default": "./dist/css/data.css"
+    },
+    "./content": {
+      "types": "./dist/content/index.d.ts",
+      "source": "./src/content/index.ts",
+      "default": "./dist/content/index.js"
+    },
+    "./content/styles.css": {
+      "source": "./src/css/content.css",
+      "default": "./dist/css/content.css"
+    },
+    "./charts": {
+      "types": "./dist/charts/index.d.ts",
+      "source": "./src/charts/index.ts",
+      "default": "./dist/charts/index.js"
+    },
+    "./charts/styles.css": {
+      "source": "./src/css/charts.css",
+      "default": "./dist/css/charts.css"
+    },
+    "./feedback": {
+      "types": "./dist/feedback/index.d.ts",
+      "source": "./src/feedback/index.ts",
+      "default": "./dist/feedback/index.js"
+    },
+    "./feedback/styles.css": {
+      "source": "./src/css/feedback.css",
+      "default": "./dist/css/feedback.css"
+    }
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -73,7 +172,8 @@
     "!src/stories",
     "!src/**/*.test.ts",
     "!src/**/*.test.tsx",
-    "llms.txt"
+    "llms.txt",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "dev": "bun scripts/dev.ts",
@@ -81,6 +181,7 @@
     "styles:check": "bun scripts/styles.ts --check",
     "check:pilot": "bun run build && bun scripts/check-pilot.ts",
     "build:stories": "bun run styles && ladle build",
+    "build:design-lab": "bun run styles && vite build --config design-lab/vite.config.ts && bun design-lab/check-build.ts",
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
     "format": "biome check --write . && bun run styles && bun scripts/llms.ts",
@@ -100,6 +201,12 @@
     "@biomejs/biome": "^2.5.14",
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
+    "@fontsource-variable/golos-text": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/literata": "^5.3.0",
+    "@fontsource-variable/onest": "^5.3.1",
+    "@fontsource-variable/rubik": "5.3.0",
     "@happy-dom/global-registrator": "^20.14.6",
     "@ladle/react": "^5.1.1",
     "@playwright/test": "^1.63.0",

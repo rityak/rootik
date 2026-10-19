@@ -8,14 +8,10 @@ globalStyle(".rk-tour-spot", {
   boxShadow: `0 0 0 2px ${tokens.accent},
     0 0 0 100vmax oklch(${tokens.shade} / 0.55)`,
   pointerEvents: "none",
-  transition: `left ${tokens.durSlow} ${tokens.easeOut},
-    top ${tokens.durSlow} ${tokens.easeOut},
-    width ${tokens.durSlow} ${tokens.easeOut},
-    height ${tokens.durSlow} ${tokens.easeOut}`,
 });
 
 globalStyle(".rk-tour", {
-  width: "min(320px, calc(100vw - 16px))",
+  width: "min(320px, var(--rk-floating-max-w, calc(100dvw - 16px)))",
   padding: "14px",
   borderRadius: `${tokens.radiusLg}`,
   background: `${tokens.glassBg}`,
@@ -24,7 +20,7 @@ globalStyle(".rk-tour", {
   fontSize: `${tokens.textSm}`,
 });
 
-globalStyle(".rk-tour:focus-visible", { outlineOffset: "2px" });
+globalStyle(".rk-tour:focus-visible", { outlineOffset: "-2px" });
 
 globalStyle(".rk-tour-head", { display: "flex", alignItems: "flex-start", gap: "8px" });
 
@@ -50,3 +46,7 @@ globalStyle(".rk-tour-content", { marginTop: "6px", color: `${tokens.text2}`, te
 globalStyle(".rk-tour-foot", { display: "flex", alignItems: "center", gap: "6px", marginTop: "14px" });
 
 globalStyle(".rk-tour-count", { flex: "1", color: `${tokens.text3}`, fontSize: `${tokens.textXs}` });
+
+globalStyle(".rk-tour", { overflowWrap: "anywhere", overflow: "auto", overscrollBehavior: "contain" });
+globalStyle(".rk-tour-title", { minWidth: 0 });
+globalStyle(".rk-tour-close", { flexShrink: 0 });

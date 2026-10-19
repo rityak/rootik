@@ -11,6 +11,14 @@ globalStyle(".rk-overflow-list", {
 
 globalStyle(".rk-overflow-item", { display: "flex", flexShrink: "0" });
 
+globalStyle(".rk-overflow-measure-clip", {
+  position: "absolute",
+  inset: 0,
+  overflow: "clip",
+  visibility: "hidden",
+  pointerEvents: "none",
+});
+
 globalStyle(".rk-overflow-measure", {
   position: "absolute",
   top: "0",

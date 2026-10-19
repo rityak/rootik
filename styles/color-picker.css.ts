@@ -40,7 +40,7 @@ globalStyle(".rk-cp-thumb", {
   background: "var(--rk-cp-opaque)",
   boxShadow: `0 0 0 2px ${tokens.inverse},
     0 1px 6px 1px oklch(${tokens.shade} / 0.6)`,
-  outlineOffset: "3px",
+  outlineOffset: "-2px",
 });
 
 globalStyle(".rk-cp-thumb[data-outside]", {
@@ -105,6 +105,6 @@ globalStyle(".rk-cp-slider::-moz-range-thumb", {
       0 1px 4px oklch(${tokens.shade} / 0.6)`,
 });
 
-globalStyle(".rk-cp-slider:focus-visible", { outlineOffset: "3px" });
+globalStyle(".rk-cp-slider:focus-visible", { outlineOffset: "-2px" });
 
 globalStyle(".rk-cp-text", { flex: "1" });

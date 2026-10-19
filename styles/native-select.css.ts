@@ -41,6 +41,10 @@ globalStyle(".rk-native-select::picker(select)", {
   "@supports": {
     "(appearance: base-select)": {
       marginBlock: "6px",
+      maxWidth: "calc(100dvw - 16px)",
+      maxHeight: "min(360px, calc(100dvh - 16px))",
+      overflow: "auto",
+      overflowWrap: "anywhere",
       padding: "5px",
       border: "0",
       borderRadius: `${tokens.radiusMd}`,
@@ -60,7 +64,7 @@ globalStyle(".rk-native-select option", {
       gap: "8px",
       minHeight: `calc(${tokens.hSm} + 2px)`,
       padding: `4px calc(${tokens.space} * 2.5)`,
-      borderRadius: `calc(${tokens.radiusMd} - 5px)`,
+      borderRadius: `max(0px, calc(${tokens.radiusMd} - 5px))`,
       fontSize: `${tokens.textMd}`,
     },
   },

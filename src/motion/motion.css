@@ -1,0 +1,207 @@
+/* Generated from styles/motion.css.ts. Run bun run styles; do not edit. */
+@keyframes rk-light-sheen {
+  0% {
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+  25% {
+    opacity: var(--rk-effects-strength, 0);
+  }
+  75% {
+    opacity: var(--rk-effects-strength, 0);
+  }
+  100% {
+    transform: translateX(110%);
+    opacity: 0;
+  }
+}
+@keyframes rk-light-ripple {
+  from {
+    transform: scale(0.2);
+    opacity: var(--rk-effects-strength, 0);
+  }
+  to {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+@keyframes rk-light-press {
+  from {
+    transform: scale(0.5);
+    opacity: var(--rk-effects-strength, 0);
+  }
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+@keyframes rk-light-flow {
+  0%,
+  100% {
+    transform: translateX(-25%);
+    opacity: 0;
+  }
+  30%,
+  65% {
+    opacity: var(--rk-effects-strength, 0);
+  }
+  50% {
+    transform: translateX(25%);
+  }
+}
+@keyframes rk-switch-light {
+  from {
+    box-shadow: inset 0 0 0 calc(var(--rk-space) * 4) oklch(var(--rk-tint) / 0.4);
+  }
+  to {
+    box-shadow: inset 0 0 0 0 oklch(var(--rk-tint) / 0);
+  }
+}
+@keyframes rk-theme-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes rk-theme-iris {
+  from {
+    clip-path: circle(0% at 50% 35%);
+  }
+  to {
+    clip-path: circle(150% at 50% 35%);
+  }
+}
+.rk-motion-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  contain: paint;
+}
+.rk-motion-light {
+  display: block;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation-duration: calc(var(--rk-dur-slow) * 3);
+  animation-timing-function: var(--rk-ease-out);
+  animation-fill-mode: both;
+  animation-play-state: var(--rk-animation-state);
+}
+.rk-motion-light > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.rk-motion-layer[data-effect="ripple"] {
+  --rk-effect-animation: rk-light-ripple;
+}
+.rk-motion-layer[data-effect="sheen"] {
+  --rk-effect-animation: rk-light-sheen;
+}
+.rk-motion-layer[data-effect="flow"] {
+  --rk-effect-animation: rk-light-flow;
+}
+:where(button, a, label, .rk-input, .rk-native-select-wrap, .rk-textarea-wrap, .rk-svg-surface):is(
+    :hover,
+    :focus-visible,
+    :has(:focus-visible),
+    [aria-pressed="true"],
+    [aria-selected="true"],
+    [aria-current="page"],
+    [data-checked]
+  ):not(:disabled, [data-disabled], [aria-disabled="true"])
+  > .rk-motion-layer
+  > .rk-motion-light,
+.rk-motion-layer[data-active] > .rk-motion-light,
+.rk-nav-item[data-active] > .rk-nav-link > .rk-motion-layer > .rk-motion-light {
+  animation-name: var(--rk-effect-animation);
+}
+.rk-motion-layer[data-loop] > .rk-motion-light {
+  animation-duration: calc(var(--rk-dur-slow) * 20);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+:is(
+  .rk-button,
+  .rk-dock-item,
+  .rk-tab,
+  .rk-nav-link,
+  .rk-segmented-item,
+  .rk-input,
+  .rk-select-trigger,
+  .rk-choice-card,
+  .rk-chip
+):has(> .rk-motion-layer) {
+  position: relative;
+  isolation: isolate;
+}
+:is(button, a, label):active:not(:disabled, [data-disabled], [aria-disabled="true"])
+  > .rk-motion-layer
+  > .rk-motion-light {
+  animation-name: rk-light-press;
+  animation-duration: var(--rk-dur-slow);
+}
+.rk-button > .rk-motion-layer,
+.rk-input[data-svg-border] > .rk-motion-layer {
+  z-index: 0;
+}
+.rk-button:has(> .rk-motion-layer) > :not(.rk-motion-layer, .rk-svg-control-frame) {
+  position: relative;
+  z-index: 1;
+}
+.rk-svg-surface > .rk-motion-layer,
+.rk-svg-backdrop > .rk-motion-layer {
+  z-index: 0;
+}
+.rk-switch:checked {
+  animation: var(--rk-switch-animation, none) calc(var(--rk-dur-slow) * 2) var(--rk-ease-out) both;
+  animation-play-state: var(--rk-animation-state);
+}
+:root[data-rk-theme-transition]::view-transition,
+:root[data-rk-theme-transition]::view-transition-group(*),
+:root[data-rk-theme-transition]::view-transition-image-pair(*),
+:root[data-rk-theme-transition]::view-transition-old(*),
+:root[data-rk-theme-transition]::view-transition-new(*) {
+  pointer-events: none;
+}
+:root[data-rk-theme-transition]::view-transition-old(*),
+:root[data-rk-theme-transition]::view-transition-new(*) {
+  animation-duration: calc(var(--rk-dur-slow) * 1.5);
+  animation-timing-function: var(--rk-ease-out);
+}
+:root[data-rk-theme-transition="wipe"]::view-transition-new(*) {
+  animation-name: rk-theme-wipe;
+  mix-blend-mode: normal;
+}
+:root[data-rk-theme-transition="wipe"]::view-transition-old(*) {
+  animation-name: none;
+  mix-blend-mode: normal;
+}
+:root[data-rk-theme-transition="iris"]::view-transition-new(*) {
+  animation-name: rk-theme-iris;
+  mix-blend-mode: normal;
+}
+:root[data-rk-theme-transition="iris"]::view-transition-old(*) {
+  animation-name: none;
+  mix-blend-mode: normal;
+}
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .rk-motion-layer,
+  .rk-switch:checked {
+    animation: none;
+  }
+  .rk-motion-layer {
+    display: none;
+  }
+  .rk-motion-light {
+    animation: none;
+  }
+  .rk-power[data-pending] > .rk-power-orbit {
+    animation: none;
+  }
+}

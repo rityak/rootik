@@ -14,11 +14,11 @@ globalStyle(".rk-schema-control:disabled .rk-swatches", { opacity: "0.45" });
 
 globalStyle(
   '.rk-schema-row > [data-layout="inline"] > .rk-field-control :is(.rk-input, .rk-select-trigger, .rk-slider)',
-  { width: "var(--rk-schema-control-width, 200px)" },
+  { width: "min(var(--rk-schema-control-width, 200px), 100%)" },
 );
 
 globalStyle('.rk-schema-row > [data-layout="inline"] > .rk-field-control .rk-textarea', {
-  width: "calc(var(--rk-schema-control-width, 200px) * 1.4)",
+  width: "min(calc(var(--rk-schema-control-width, 200px) * 1.4), 100%)",
 });
 
 globalStyle('.rk-schema-row > [data-layout="inline"] > .rk-field-control .rk-chip-group', {
@@ -35,3 +35,5 @@ globalStyle(".rk-schema-actions", {
   justifyContent: "flex-end",
   gap: `calc(${tokens.space} * 2)`,
 });
+
+globalStyle(".rk-schema-actions", { flexWrap: "wrap", minWidth: 0 });

@@ -64,3 +64,47 @@
 [data-orientation="vertical"] > .rk-splitter-handle::after {
   inset: -1px 0;
 }
+.rk-splitter[data-grip] > .rk-splitter-handle {
+  background: transparent;
+  color: var(--rk-text-3);
+  isolation: isolate;
+}
+.rk-splitter[data-grip][data-orientation="horizontal"] > .rk-splitter-handle {
+  width: calc(var(--rk-space) * 3);
+}
+.rk-splitter[data-grip][data-orientation="vertical"] > .rk-splitter-handle {
+  height: calc(var(--rk-space) * 3);
+}
+.rk-splitter-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: calc(var(--rk-space) * 2);
+  height: calc(var(--rk-space) * 8);
+  pointer-events: none;
+}
+[data-orientation="vertical"] > .rk-splitter-handle > .rk-splitter-grip {
+  rotate: 90deg;
+}
+.rk-splitter-handle > .rk-motion-layer {
+  overflow: hidden;
+}
+.rk-splitter-handle:focus-visible::after {
+  inset: 0;
+  opacity: 1;
+  background: var(--rk-focus);
+}
+.rk-splitter[data-grip] > .rk-splitter-handle:focus-visible {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: -2px;
+}
+.rk-splitter[data-grip] > .rk-splitter-handle:focus-visible::after {
+  opacity: 0;
+}
+@media (forced-colors: active) {
+  .rk-splitter-handle:focus-visible::after {
+    background: Highlight;
+    forced-color-adjust: none;
+  }
+}

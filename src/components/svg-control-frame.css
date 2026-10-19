@@ -1,0 +1,58 @@
+/* Generated from styles/svg-control-frame.css.ts. Run bun run styles; do not edit. */
+.rk-svg-control-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.rk-button[data-svg-border],
+.rk-input[data-svg-border] {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  box-shadow: none;
+}
+.rk-button[data-svg-border] {
+  --rk-svg-control-fill: var(--rk-btn-bg);
+  --rk-svg-control-edge: var(--rk-btn-edge);
+}
+.rk-input[data-svg-border] {
+  --rk-svg-control-fill: var(--rk-well);
+  --rk-svg-control-edge: var(--rk-ctl-edge);
+}
+.rk-button[data-svg-border] > :not(.rk-svg-control-frame, .rk-motion-layer),
+.rk-input[data-svg-border] > :not(.rk-svg-control-frame, .rk-motion-layer) {
+  position: relative;
+  z-index: 1;
+}
+.rk-input[data-svg-border] .rk-input-el:focus-visible {
+  outline: none;
+}
+.rk-button[data-svg-border]:focus-visible,
+.rk-input[data-svg-border]:has(:focus-visible) {
+  --rk-svg-control-stroke: 3;
+  outline: none;
+}
+.rk-button[data-svg-border]:focus-visible {
+  --rk-svg-control-edge: var(--rk-btn-fg);
+  --rk-svg-control-fill: color-mix(in oklab, var(--rk-btn-bg) 94%, var(--rk-btn-fg));
+}
+.rk-input[data-svg-border]:has(:focus-visible) {
+  --rk-svg-control-edge: var(--rk-focus);
+  --rk-svg-control-fill: color-mix(in oklab, var(--rk-well) 95%, var(--rk-focus));
+}
+.rk-input[data-svg-border][data-invalid]:has(:focus-visible) {
+  --rk-svg-control-edge: var(--rk-danger);
+}
+.rk-button[data-svg-border]:active:not(:disabled) {
+  scale: none;
+}
+@media (forced-colors: active) {
+  .rk-button[data-svg-border]:focus-visible,
+  .rk-input[data-svg-border]:has(:focus-visible) {
+    outline: 2px solid var(--rk-focus);
+    outline-offset: -2px;
+  }
+}

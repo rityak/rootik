@@ -37,7 +37,7 @@ html {
 }
 :where([class*="rk-"]):focus-visible {
   outline: 2px solid var(--rk-focus);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 :where([class*="rk-"]) {
   box-sizing: border-box;
@@ -190,6 +190,10 @@ html {
   display: contents;
   font-family: var(--rk-font-sans);
   font-size: var(--rk-font-size);
+}
+.rk-floating {
+  max-width: var(--rk-floating-max-w, calc(100dvw - 16px));
+  max-height: var(--rk-floating-max-h, calc(100dvh - 16px));
 }
 @supports selector(::-webkit-scrollbar) {
   * {

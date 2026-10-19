@@ -49,7 +49,7 @@ globalStyle("::-webkit-scrollbar-button,\n  ::-webkit-scrollbar-corner", {
 
 globalStyle(':where([class*="rk-"]):focus-visible', {
   outline: `2px solid ${tokens.focus}`,
-  outlineOffset: "2px",
+  outlineOffset: "-2px",
 });
 
 globalStyle(':where([class*="rk-"])', { boxSizing: "border-box" });
@@ -213,4 +213,9 @@ globalStyle(".rk-scope", {
   display: "contents",
   fontFamily: `${tokens.fontSans}`,
   fontSize: `${tokens.fontSize}`,
+});
+
+globalStyle(".rk-floating", {
+  maxWidth: "var(--rk-floating-max-w, calc(100dvw - 16px))",
+  maxHeight: "var(--rk-floating-max-h, calc(100dvh - 16px))",
 });

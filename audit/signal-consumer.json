@@ -1,0 +1,44 @@
+{
+  "consumer": "umiray-client",
+  "date": "2026-10-19",
+  "rootikInput": "packed tarball dist",
+  "consumerChanges": false,
+  "typecheck": "passed",
+  "viteBuild": "passed",
+  "viteVersion": "7.3.6",
+  "tailwindVersion": "4.3.3",
+  "browserBuild": "separate development build with consumer mock bridge",
+  "browserVerified": [
+    "Cobalt light/dark",
+    "connection/groups/routing/log navigation",
+    "log timeout filter",
+    "appearance persistence after reload",
+    "document/client widths equal at 1280 CSS px",
+    "no browser warnings/errors"
+  ],
+  "assets": [
+    {
+      "file": "index-5tlDtD1l.js",
+      "bytes": 1975568,
+      "gzipBytes": 589191
+    },
+    {
+      "file": "index-BYow20M1.css",
+      "bytes": 282708,
+      "gzipBytes": 43947
+    }
+  ],
+  "warnings": [
+    "Tailwind highlight pseudo-element parser",
+    "zod annotation placement",
+    "CodeMirror mixed imports",
+    "large application chunk"
+  ],
+  "notVerified": [
+    "native Tauri runtime/networking",
+    "dataset-toolkit adoption (no Rootik dependency)",
+    "Firefox/Safari/other engines",
+    "NVDA/forced colors",
+    "GPU/cold-start reference benchmarks"
+  ]
+}

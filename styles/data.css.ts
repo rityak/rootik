@@ -3,6 +3,8 @@ import { tokens } from "./tokens.css";
 
 globalStyle(".rk-table-wrap", { minWidth: "0", overflow: "auto", containerType: "scroll-state" });
 
+globalStyle(".rk-table-surface", { minWidth: 0 });
+
 globalStyle(".rk-table-wrap[data-framed]", {
   borderRadius: `${tokens.radiusMd}`,
   boxShadow: `inset 0 0 0 1px ${tokens.line}`,
@@ -40,10 +42,9 @@ globalStyle(".rk-table th", {
   height: "34px",
   paddingBlock: "0",
   color: `${tokens.text3}`,
-  fontSize: `${tokens.text2xs}`,
+  fontSize: `${tokens.textXs}`,
   fontWeight: "500",
-  letterSpacing: "0.07em",
-  textTransform: "uppercase",
+  letterSpacing: "0",
   whiteSpace: "nowrap",
 });
 
@@ -60,8 +61,13 @@ globalStyle(".rk-table tbody tr:hover", { background: `${tokens.hover}` });
 globalStyle(".rk-table tbody tr[data-clickable]", { cursor: "pointer" });
 
 globalStyle('.rk-table tbody tr[aria-selected="true"]', {
-  background: `${tokens.accentSoft}`,
-  boxShadow: `inset 2px 0 0 ${tokens.accent}`,
+  background: `${tokens.inverse}`,
+  color: `${tokens.onInverse}`,
+  vars: {
+    [tokens.text]: `${tokens.onInverse}`,
+    [tokens.text2]: `${tokens.onInverse}`,
+    [tokens.text3]: `color-mix(in oklab, ${tokens.onInverse} 78%, transparent)`,
+  },
 });
 
 globalStyle(".rk-table tbody tr:focus-visible", {
@@ -86,7 +92,7 @@ globalStyle(
 globalStyle(".rk-table[data-sticky] thead th", {
   position: "sticky",
   top: "0",
-  zIndex: "1",
+  zIndex: "2",
   background: `${tokens.surface1}`,
   transition: `box-shadow ${tokens.dur} ${tokens.ease}`,
 });
@@ -101,6 +107,8 @@ globalStyle(".rk-table[data-sticky] thead th", {
 });
 
 globalStyle(".rk-th-sort", {
+  position: "relative",
+  isolation: "isolate",
   display: "inline-flex",
   alignItems: "center",
   gap: "4px",
@@ -116,13 +124,13 @@ globalStyle(".rk-th-sort", {
   cursor: "pointer",
 });
 
-globalStyle(".rk-th-sort svg", { width: "12px", height: "12px", opacity: "0.5" });
+globalStyle(".rk-th-sort > svg", { width: "12px", height: "12px", opacity: "0.5" });
 
 globalStyle(".rk-th-sort:hover", { color: `${tokens.text}`, background: `${tokens.hover}` });
 
 globalStyle(".rk-th-sort[data-sorted]", { color: `${tokens.text}` });
 
-globalStyle(".rk-th-sort[data-sorted] svg", { opacity: "1" });
+globalStyle(".rk-th-sort[data-sorted] > svg", { opacity: "1" });
 
 globalStyle(".rk-table[data-resizable]:not([data-sticky]) th", { position: "relative" });
 
@@ -345,7 +353,7 @@ globalStyle(".rk-table .rk-table-pin[data-pin-edge]", { boxShadow: `inset -1px 0
 globalStyle("tr:hover > :is(.rk-table .rk-table-pin)", { vars: { "--rk-pin-tint": `${tokens.hover}` } });
 
 globalStyle('tr[aria-selected="true"] > :is(.rk-table .rk-table-pin)', {
-  vars: { "--rk-pin-tint": `${tokens.accentSoft}` },
+  vars: { "--rk-pin-tint": `${tokens.inverse}` },
 });
 
-globalStyle(".rk-table thead .rk-table-pin", { zIndex: "2" });
+globalStyle(".rk-table[data-pinned] thead .rk-table-pin", { zIndex: "3" });

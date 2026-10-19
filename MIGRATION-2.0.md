@@ -1,6 +1,6 @@
 # 1.0 preparation: migration notes
 
-The testing package is 1.0.0-beta.1 on `dev`. The release target was renamed from 2.0 to 1.0;
+The prepared testing package is 1.0.0-beta.2 on `dev`. See [beta.2 changes](CHANGELOG.md#100-beta2). The release target was renamed from 2.0 to 1.0;
 this filename is retained for stable links. The beta is not a stable release.
 
 ## Styling and imports
