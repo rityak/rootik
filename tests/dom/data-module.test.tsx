@@ -82,6 +82,35 @@ test("table sorting, selection and native content survive SVG and material chang
   }
 });
 
+test("resizable table headers expose their current value before interaction", async () => {
+  const container = document.createElement("div");
+  document.body.append(container);
+  const root = createRoot(container);
+  try {
+    await act(() =>
+      root.render(
+        <DataTable
+          aria-label="Gateways"
+          columns={[{ key: "name", header: "Name", resizable: true }]}
+          rows={[{ name: "Tokyo" }]}
+          rowKey={(row) => row.name}
+        />,
+      ),
+    );
+    const separator = container.querySelector<HTMLElement>('[role="separator"]');
+    expect(separator?.getAttribute("aria-valuenow")).toBe("120");
+    await act(() =>
+      separator?.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true, cancelable: true }),
+      ),
+    );
+    expect(Number(separator?.getAttribute("aria-valuenow"))).toBeGreaterThan(120);
+  } finally {
+    await act(() => root.unmount());
+    container.remove();
+  }
+});
+
 test("tree keyboard checks leaves, skips disabled nodes and filters with ancestors", async () => {
   const container = document.createElement("div");
   document.body.append(container);

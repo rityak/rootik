@@ -41,6 +41,7 @@ export const ru: Labels = {
   remove: "Удалить",
   clear: "Очистить",
   loading: "Загрузка",
+  progress: "Прогресс",
   search: "Поиск…",
   searchLabel: "Поиск",
   select: "Выберите…",

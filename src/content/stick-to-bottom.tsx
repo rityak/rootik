@@ -99,6 +99,7 @@ export function StickToBottom({
     <div {...rest} className={cx("rk-stick", className)} data-following={following || undefined}>
       <div
         {...viewportProps}
+        tabIndex={viewportProps?.tabIndex ?? 0}
         ref={mergeRefs(viewport, viewportRef)}
         className={cx("rk-stick-viewport", viewportProps?.className)}
         onScroll={(event) => {

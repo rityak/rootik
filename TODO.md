@@ -18,7 +18,7 @@
 - [x] Remaining helper locations: FloatingWindow/Splitter → layout, SelectPanel → data, Stepper → navigation, Tour → overlays
 - [x] Helper decoration: shared FloatingWindow/SelectPanel/Tour surfaces, Stepper marker contours, stable Splitter grip, focus/cancellation regressions and integrated module examples
 - [x] Packed Signal integration in the real umiray-client frontend: typecheck/build, Cobalt light/dark, dock/navigation, log filtering and appearance persistence (mock API; consumer sources unchanged)
-- [ ] Native WebView/other-engine/assistive-technology/performance release matrix and dataset-toolkit adoption
+- [ ] Execute the native WebView/other-engine/assistive-technology/performance and dataset-toolkit rows in `RELEASE-MATRIX.md`
 
 Contracts and completion gates: [MIGRATION-DESIGN.md](MIGRATION-DESIGN.md). Layout API: [LAYOUT.md](LAYOUT.md).
 
@@ -222,12 +222,12 @@ below once the batch is in.
 - [x] `AppearanceSettings`: schema-driven form, project `extensions`, nested fields (`children`), `visible`, `cssVar`/`apply`
 - [x] `useHotkey`, `useControllable`, `cx`, inline icon set
 - [x] Surface materials (Settings → Effects → Surfaces): solid / veil (default) / frost / liquid via `.rk-surface` (cards + layout parts), ambient glow on the AppShell canvas, gradient hairline rim
-- [x] CI (`.github/workflows/ci.yml`): typecheck, `biome ci`, unit tests, Ladle build on push to main and PRs
+- [x] CI (`.github/workflows/ci.yml`): typecheck, `biome ci`, unit tests, Ladle build, serious/critical axe checks, keyboard resize/dialog focus and 375 px phone containment
 - [x] Strict Biome: extra rules on top of `recommended`, kit code may import only peer deps (no dev deps like lucide-react), `noHexColors`, GritQL plugin `biome/untinted-neutral.grit` (translucent `oklch(L 0 0 / a)` overlays)
 - [x] Label-on-fill token (`--rk-on-danger` or a generic `--rk-on-tone`) instead of hardcoded `oklch(0.99 0 0)` in Button armed and TitleBar close hover, `oklch(0.15 0 0)` on the custom swatch — P2 ★
 - [x] Dist build: tsc per-module ESM + d.ts, bundled `styles.css`, export parity check; `source` condition keeps src/ for linked dev
 - ~ Visual regression: Playwright screenshots of every story on the Ladle build (fake clock, reduced motion), run locally with `bun run visual`; the CI workflow was dropped (cloud baselines were noise)
-- [ ] Playwright tests on the client: per-machine visual baselines as a pre-release check, plus interaction tests for the tricky widgets (combobox/listbox keyboard nav, dialogs and focus return, toasts, drag in SortableList/Splitter)
+- ~ Playwright: CI covers critical-story axe, table resize, dialog focus return and 375 px phone containment; local visual baselines plus combobox, toast and drag flows remain pre-release checks
 - [ ] Floating on CSS anchor positioning (`position-anchor`, `position-try-fallbacks`), `computePosition` stays as fallback; anchored container queries so a flipped popover animates from the anchor side — P2 ↗ CSS anchor positioning
 - [ ] Sliding indicator (Tabs/SegmentedControl/Dock) anchored to the active item instead of measuring in `lib/indicator.ts` — P2 ↗ CSS anchor positioning
 - [x] Scroll shadows: sticky table head / PageHeader get a shadow only while content is scrolled under them (`@container scroll-state()`, no-op where unsupported) ↗ CSS scroll-state queries

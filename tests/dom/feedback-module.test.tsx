@@ -47,6 +47,8 @@ test("progress exposes the same bounded finite value that it draws and names Rea
     await act(() => root.render(<Progress aria-label="Waiting" animation="off" />));
     expect(bar?.hasAttribute("aria-valuenow")).toBe(false);
     expect(bar?.getAttribute("data-indeterminate")).toBe("true");
+    await act(() => root.render(<Progress value={25} />));
+    expect(bar?.getAttribute("aria-label")).toBe("Progress");
   } finally {
     await act(() => root.unmount());
     container.remove();
@@ -76,6 +78,19 @@ test("segmented rings isolate mask IDs and fall back without invalid SVG geometr
     await act(() => render(false));
     expect(container.querySelector("mask")).toBeNull();
     expect(container.querySelector(".rk-ring-label") === label).toBe(true);
+  } finally {
+    await act(() => root.unmount());
+    container.remove();
+  }
+});
+
+test("progress rings have a default accessible name", async () => {
+  const container = document.createElement("div");
+  document.body.append(container);
+  const root = createRoot(container);
+  try {
+    await act(() => root.render(<ProgressRing value={25} />));
+    expect(container.querySelector('[role="progressbar"]')?.getAttribute("aria-label")).toBe("Progress");
   } finally {
     await act(() => root.unmount());
     container.remove();

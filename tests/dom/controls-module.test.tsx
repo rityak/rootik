@@ -177,3 +177,16 @@ test("migrated controls keep disabled, keyboard, loading and native-class contra
     container.remove();
   }
 });
+
+test("standalone selects have a default accessible name", async () => {
+  const container = document.createElement("div");
+  document.body.append(container);
+  const root = createRoot(container);
+  try {
+    await act(() => root.render(<Select options={[{ value: "one", label: "One" }]} />));
+    expect(container.querySelector('[role="combobox"]')?.getAttribute("aria-label")).toBe("Select");
+  } finally {
+    await act(() => root.unmount());
+    container.remove();
+  }
+});

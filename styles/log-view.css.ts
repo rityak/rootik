@@ -88,7 +88,6 @@ globalStyle(".rk-log-no", {
   minWidth: "calc(var(--rk-log-digits, 3) * 1ch)",
   textAlign: "end",
   color: `${tokens.text3}`,
-  opacity: "0.7",
   userSelect: "none",
 });
 

@@ -95,7 +95,7 @@ the version installed by `npm install rootik`.
 
 The toolkit preview runs with `bun run dev` at `http://127.0.0.1:61000/`; open
 `?mode=preview&story=appearance--rain` for the Rain playground. The beta still has the release gates
-listed in [AUDIT-2.0.md](AUDIT-2.0.md).
+listed in [AUDIT-2.0.md](AUDIT-2.0.md); their executable status is tracked in the [1.0 release matrix](RELEASE-MATRIX.md).
 
 ```tsx
 import "rootik/styles.css";

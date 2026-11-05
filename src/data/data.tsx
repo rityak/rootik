@@ -297,7 +297,7 @@ function ResizeHandle({ label, width, min, max, start, onResize, onFit }: Resize
       role="separator"
       aria-orientation="vertical"
       aria-label={label}
-      aria-valuenow={width === undefined ? undefined : Math.round(width)}
+      aria-valuenow={clamp(width ?? 120)}
       aria-valuemin={min}
       aria-valuemax={max}
       tabIndex={0}
@@ -409,7 +409,9 @@ export function DataTable<T>({
     if (current && columns.every((c) => current[c.key] !== undefined)) return current;
     const measured: ColumnWidths = {};
     for (const c of columns)
-      measured[c.key] = Math.round(headerCell(c.key)?.getBoundingClientRect().width ?? 120);
+      measured[c.key] = Math.round(
+        headerCell(c.key)?.getBoundingClientRect().width || (typeof c.width === "number" ? c.width : 120),
+      );
     setWidths(measured);
     return measured;
   };
@@ -649,7 +651,7 @@ export function DataTable<T>({
                     <span className="rk-th-content">{headerContent(col, dir)}</span>
                     <ResizeHandle
                       label={`${labels.resize}: ${typeof col.header === "string" ? col.header : col.key}`}
-                      width={widths?.[col.key]}
+                      width={widths?.[col.key] ?? (typeof col.width === "number" ? col.width : undefined)}
                       min={col.minWidth ?? 48}
                       max={col.maxWidth ?? 1200}
                       start={() => freeze()[col.key] ?? 120}

@@ -104,8 +104,8 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 - `Spinner` вЂ” src/feedback/progress.tsx:11, story `display--text-shimmers`
 - `Progress` вЂ” src/feedback/progress.tsx:68, story `display--feedback`. Linear progress.
-- `ProgressRing` вЂ” src/feedback/progress.tsx:133, story `display--feedback`
-- `Skeleton` вЂ” src/feedback/progress.tsx:210, story `display--feedback`
+- `ProgressRing` вЂ” src/feedback/progress.tsx:136, story `display--feedback`
+- `Skeleton` вЂ” src/feedback/progress.tsx:216, story `display--feedback`
 
 ### src/feedback/status.tsx
 
@@ -259,7 +259,7 @@ With Tailwind v4 declare `@layer theme, base, rootik, components, utilities;` be
 
 - `Table` вЂ” src/data/data.tsx:57, story `data--plain-table`. Styled native table: write thead/tbody/tr/td as usual.
 - `DataTable` вЂ” src/data/data.tsx:334, story `data--virtual-tree-rows`
-- `ColumnsMenu` вЂ” src/data/data.tsx:829, story `data--columns-and-editing`. Show/hide columns of a DataTable: checkbox menu over `hiddenColumns`.
+- `ColumnsMenu` вЂ” src/data/data.tsx:831, story `data--columns-and-editing`. Show/hide columns of a DataTable: checkbox menu over `hiddenColumns`.
 
 ### src/data/item.tsx
 

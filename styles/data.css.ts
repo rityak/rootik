@@ -70,6 +70,13 @@ globalStyle('.rk-table tbody tr[aria-selected="true"]', {
   },
 });
 
+globalStyle(
+  '.rk-table tbody tr[aria-selected="true"] .rk-badge:not([data-tone="neutral"], [data-variant="solid"])',
+  {
+    color: `color-mix(in oklab, var(--rk-tone) 55%, ${tokens.onInverse})`,
+  },
+);
+
 globalStyle(".rk-table tbody tr:focus-visible", {
   outline: `2px solid ${tokens.focus}`,
   outlineOffset: "-2px",

@@ -95,7 +95,7 @@ globalStyle("[data-tone]", {
   vars: {
     "--rk-tone": `${tokens.accent}`,
     "--rk-tone-text": `${tokens.accentText}`,
-    "--rk-on-tone": "oklch(from var(--rk-tone) clamp(0.16, (0.73 - l) * 100, 0.99) 0 0)",
+    "--rk-on-tone": "oklch(from var(--rk-tone) clamp(0.16, (0.63 - l) * 100, 0.99) 0 0)",
   },
 });
 

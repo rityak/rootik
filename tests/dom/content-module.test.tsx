@@ -417,21 +417,24 @@ test("JSON copy actions distinguish values from paths and omit the redundant roo
     await act(() => rows[0]?.focus());
     expect(rows[0]?.querySelectorAll("button").length).toBe(1);
     expect(rows[0]?.querySelector('[aria-label="Copy path"]')).toBeNull();
-    await act(() => {
+    await act(async () => {
       rows[0]?.querySelector<HTMLButtonElement>("button")?.click();
+      await Promise.resolve();
     });
     expect(written[0]).toBe(JSON.stringify({ host: "north" }, null, 2));
     await act(() => rows[1]?.focus());
     const value = rows[1]?.querySelector<HTMLButtonElement>('[aria-label="Copy value"]');
     const path = rows[1]?.querySelector<HTMLButtonElement>('[aria-label="Copy path"]');
     expect(value?.querySelector("svg")?.innerHTML === path?.querySelector("svg")?.innerHTML).toBe(false);
-    await act(() => {
+    await act(async () => {
       path?.click();
+      await Promise.resolve();
     });
     expect(written[1]).toBe("$.host");
     expect(path?.hasAttribute("data-copied")).toBe(true);
-    await act(() => {
+    await act(async () => {
       value?.click();
+      await Promise.resolve();
     });
     expect(written[2]).toBe('"north"');
   } finally {

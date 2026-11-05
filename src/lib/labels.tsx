@@ -33,6 +33,7 @@ export const LABELS = {
   remove: "Remove",
   clear: "Clear",
   loading: "Loading",
+  progress: "Progress",
   search: "Search…",
   /** Accessible name of a SearchInput that has no visible label. */
   searchLabel: "Search",

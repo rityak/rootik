@@ -187,6 +187,7 @@
     "format": "biome check --write . && bun run styles && bun scripts/llms.ts",
     "test": "bun test ./src && bun run test:dom",
     "test:dom": "bun test --preload ./scripts/dom-setup.ts ./tests/dom",
+    "test:browser": "playwright test visual/a11y.pw.ts",
     "check": "bun run styles:check && bun run typecheck && bun run lint && bun run test",
     "build": "bun scripts/build.ts && bun scripts/check-dist.ts",
     "prepublishOnly": "bun run check && bun run llms && bun run build",
@@ -198,6 +199,7 @@
     "react-dom": ">=19"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@biomejs/biome": "^2.5.14",
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource-variable/geist-mono": "^5.3.0",
@@ -207,7 +209,7 @@
     "@fontsource-variable/literata": "^5.3.0",
     "@fontsource-variable/onest": "^5.3.1",
     "@fontsource-variable/rubik": "5.3.0",
-    "@happy-dom/global-registrator": "^20.14.6",
+    "@happy-dom/global-registrator": "21.0.4",
     "@ladle/react": "^5.1.1",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/vite": "4.3.3",
@@ -223,7 +225,7 @@
     "rollup": "^4.64.3",
     "tailwindcss": "4.3.3",
     "typescript": "^7.0.2",
-    "vite": "6.4.3"
+    "vite": "6.4.5"
   },
   "publishConfig": {
     "access": "public",

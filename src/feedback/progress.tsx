@@ -80,6 +80,7 @@ export function Progress({
   "aria-labelledby": labelledBy,
   ...rest
 }: ProgressProps) {
+  const labels = useLabels();
   const labelId = useId();
   const limit = Number.isFinite(max) && max > 0 ? max : 100;
   const current = value === undefined ? undefined : finite(value, 0, 0, limit);
@@ -105,7 +106,9 @@ export function Progress({
         aria-valuemin={0}
         aria-valuemax={limit}
         aria-valuenow={current}
-        aria-label={ariaLabel ?? (typeof label === "string" ? label : undefined)}
+        aria-label={
+          ariaLabel ?? (typeof label === "string" ? label : label == null ? labels.progress : undefined)
+        }
         aria-labelledby={labelledBy ?? (ariaLabel === undefined && label != null ? labelId : undefined)}
         className="rk-progress-track"
         data-indeterminate={pct === undefined || undefined}
@@ -139,8 +142,10 @@ export function ProgressRing({
   tone = "accent",
   className,
   children,
+  "aria-label": ariaLabel,
   ...rest
 }: ProgressRingProps) {
+  const labels = useLabels();
   const id = `rk-ring-${useId().replaceAll(":", "")}`;
   const svg = useAppearanceValue("svgShapes");
   const appearanceStyle = useAppearanceValue("style");
@@ -159,6 +164,7 @@ export function ProgressRing({
       aria-valuemin={0}
       aria-valuemax={limit}
       aria-valuenow={current}
+      aria-label={ariaLabel ?? labels.progress}
       className={cx("rk-ring", className)}
       data-tone={tone}
       style={{ width: size, height: size, ...rest.style }}

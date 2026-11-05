@@ -93,7 +93,6 @@
   min-width: calc(var(--rk-log-digits, 3) * 1ch);
   text-align: end;
   color: var(--rk-text-3);
-  opacity: 0.7;
   user-select: none;
 }
 .rk-log-time {

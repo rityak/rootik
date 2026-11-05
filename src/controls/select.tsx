@@ -1,7 +1,7 @@
 import { type CSSProperties, type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { SvgControlFrame, useSvgControlBorder } from "../components/svg-control-frame";
 import { cx } from "../lib/cx";
-import { useField } from "../lib/field-context";
+import { useField, useFieldLabel } from "../lib/field-context";
 import { Floating } from "../lib/floating";
 import { useControllable } from "../lib/hooks";
 import { CheckIcon, ChevronDownIcon } from "../lib/icons";
@@ -112,6 +112,7 @@ export function Select<T extends string = string>({
   const typed = useRef({ text: "", at: 0 });
   const listId = useId();
   const field = useField(rest);
+  const fieldLabel = useFieldLabel();
   const flat = options.flatMap((entry) => (isGroup(entry) ? entry.options : [entry]));
   const chosen = flat.find((o) => o.value === current);
   const choices: Choice<T>[] = [
@@ -231,7 +232,8 @@ export function Select<T extends string = string>({
         ref={trigger}
         type="button"
         role="combobox"
-        aria-label={rest["aria-label"]}
+        aria-label={rest["aria-label"] ?? (fieldLabel ? undefined : strings.selectItem)}
+        aria-labelledby={rest["aria-label"] ? undefined : fieldLabel}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listId}
