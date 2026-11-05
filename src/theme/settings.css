@@ -6,10 +6,10 @@
   min-width: 0;
 }
 .rk-settings-select {
-  width: 160px;
+  width: min(160px, 100%);
 }
 .rk-settings-slider {
-  width: 200px;
+  width: min(200px, 100%);
 }
 .rk-settings-footer {
   display: flex;

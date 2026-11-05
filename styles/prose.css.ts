@@ -6,7 +6,7 @@ globalStyle(".rk-prose", {
   color: `${tokens.text2}`,
   fontSize: `${tokens.textMd}`,
   lineHeight: "1.65",
-  overflowWrap: "break-word",
+  overflowWrap: "anywhere",
   vars: { "--rk-prose-gap": "0.9em" },
 });
 
@@ -131,3 +131,6 @@ globalStyle(".rk-prose kbd", {
   fontFamily: `${tokens.fontMono}`,
   fontSize: "0.82em",
 });
+
+globalStyle(".rk-prose", { maxWidth: "100%", overflowX: "auto" });
+globalStyle(".rk-prose :is(video, canvas, iframe, svg)", { maxWidth: "100%" });

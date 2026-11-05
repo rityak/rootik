@@ -3,6 +3,7 @@ import { tokens } from "./tokens.css";
 
 globalStyle(".rk-pin", {
   display: "inline-flex",
+  maxWidth: "100%",
   alignItems: "center",
   gap: `calc(${tokens.space} * 3)`,
   vars: { "--rk-pin-size": `${tokens.hMd}` },
@@ -12,9 +13,10 @@ globalStyle('.rk-pin[data-size="sm"]', { vars: { "--rk-pin-size": `${tokens.hSm}
 
 globalStyle('.rk-pin[data-size="lg"]', { vars: { "--rk-pin-size": `${tokens.hLg}` } });
 
-globalStyle(".rk-pin-group", { display: "inline-flex", gap: `calc(${tokens.space} * 1.5)` });
+globalStyle(".rk-pin-group", { display: "inline-flex", minWidth: 0, gap: `calc(${tokens.space} * 1.5)` });
 
 globalStyle(".rk-pin-cell", {
+  minWidth: 0,
   width: "calc(var(--rk-pin-size) * 1.05)",
   height: "calc(var(--rk-pin-size) * 1.2)",
   padding: "0",
@@ -41,7 +43,7 @@ globalStyle(".rk-pin-cell:hover:not(:disabled)", { vars: { "--rk-ctl-edge": `${t
 
 globalStyle(".rk-pin-cell:focus", { vars: { "--rk-ctl-edge": `${tokens.accentLine}` } });
 
-globalStyle(".rk-pin-cell:focus-visible", { outline: `2px solid ${tokens.focus}`, outlineOffset: "1px" });
+globalStyle(".rk-pin-cell:focus-visible", { outline: `2px solid ${tokens.focus}`, outlineOffset: "-2px" });
 
 globalStyle("[data-invalid] .rk-pin-cell", {
   vars: { "--rk-ctl-edge": `color-mix(in oklab, ${tokens.danger} 70%, transparent)` },

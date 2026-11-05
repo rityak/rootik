@@ -14,6 +14,7 @@ export const FloatingWindows: Story = () => {
       {open && (
         <FloatingWindow
           title="Inspector · sample_0001.png"
+          surface={{ shape: "bevel", padding: 20 }}
           onClose={() => setOpen(false)}
           defaultPosition={{ x: 220, y: 60 }}
         >

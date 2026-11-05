@@ -39,7 +39,7 @@
   background: var(--rk-tone);
   transition:
     opacity var(--rk-dur) var(--rk-ease),
-    scale var(--rk-dur) var(--rk-ease-out);
+    box-shadow var(--rk-dur) var(--rk-ease-out);
 }
 .rk-tracker-bar[data-idle] {
   background: var(--rk-hatch), color-mix(in oklab, var(--rk-surface-3) 70%, transparent);
@@ -48,10 +48,10 @@
   opacity: 0.55;
 }
 .rk-tracker-bar[data-shown] {
-  scale: 1 1.12;
+  box-shadow: inset 0 0 0 1px var(--rk-text);
 }
 .rk-tracker-bar:focus-visible {
-  outline-offset: 1px;
+  outline-offset: -2px;
 }
 @container rk-tracker (width < 26rem) {
   .rk-tracker-bars {

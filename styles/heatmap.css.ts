@@ -87,12 +87,12 @@ globalStyle(".rk-heatmap-cell", {
   placeItems: "center",
   aspectRatio: "1",
   borderRadius: `calc(3px * ${tokens.roundness})`,
-  color: `${tokens.text}`,
+  color: `${tokens.chartSeqTextLo}`,
   fontSize: `${tokens.text2xs}`,
   transition: `box-shadow ${tokens.dur} ${tokens.ease}`,
 });
 
-globalStyle(".rk-heatmap-cell[data-bright]", { color: `${tokens.onInverse}` });
+globalStyle(".rk-heatmap-cell[data-bright]", { color: `${tokens.chartSeqTextHi}` });
 
 globalStyle(".rk-heatmap-cell[data-empty]", { background: `${tokens.hatch}, ${tokens.wellSoft}` });
 

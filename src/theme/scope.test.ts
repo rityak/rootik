@@ -18,12 +18,14 @@ test("tuning knobs at defaults keep the designed materials; Fluent goes solid an
   expect(vars["--rk-shell-space"]).toBeNull();
   expect(vars["--rk-backdrop"]).toBeNull();
   expect(toDataAttrs(APPEARANCE_SECTIONS, base)).toEqual({
+    "data-rk-effects": "off",
     "data-rk-style": "rootik",
     "data-rk-palette": "legacy",
+    "data-rk-mode": "dark",
   });
 
   const fluent = scopeVars(APPEARANCE_SECTIONS, base, { style: "fluent" });
-  expect(fluent["--rk-radius"]).toBe("4px");
+  expect(fluent["--rk-radius"]).toBe("0px");
   expect(fluent["--rk-glass"]).toBe("0");
   expect(toCssVars(APPEARANCE_SECTIONS, { ...base, style: "fluent" })["--rk-surface-alpha"]).toBeNull();
 

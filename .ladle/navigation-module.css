@@ -1,0 +1,121 @@
+/* Generated from styles/navigation-module.css.ts. Run bun run styles; do not edit. */
+.nm-study {
+  color: var(--rk-text);
+  background: var(--rk-bg);
+  font-family: var(--rk-font-sans);
+  min-width: 0;
+}
+.nm-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  align-items: end;
+  gap: 16px;
+  padding: 20px;
+}
+.nm-shell {
+  height: 860px;
+  max-width: 100%;
+  border: 1px solid var(--rk-line);
+  border-radius: var(--rk-radius-lg);
+}
+.nm-page {
+  display: grid;
+  gap: 24px;
+  padding-block: 20px;
+  min-width: 0;
+}
+.nm-page > .rk-page-header,
+.nm-page > .rk-topnav {
+  margin-inline: 28px;
+}
+.nm-page .rk-page-title {
+  font-size: clamp(26px, 4cqw, 36px);
+}
+.nm-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.nm-code {
+  font: 11px / 1.5 var(--rk-font-mono);
+  color: var(--rk-text-3);
+}
+.nm-projects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-block: 24px;
+}
+.nm-projects[data-view="rows"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+.nm-project {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--rk-control-edge);
+  border-radius: var(--rk-radius-md);
+  color: var(--rk-text);
+  background: var(--rk-well-soft);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.nm-project:hover {
+  background: var(--rk-hover);
+}
+.nm-project:focus-visible {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: -2px;
+}
+.nm-project > svg {
+  flex-shrink: 0;
+  color: var(--rk-accent-text);
+}
+.nm-project strong,
+.nm-project small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.nm-project strong {
+  font-weight: 550;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.nm-project small {
+  color: var(--rk-text-3);
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+.nm-preferences {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 28px;
+}
+.nm-copy {
+  font-size: 14px;
+  color: var(--rk-text-2);
+  line-height: 1.6;
+}
+.nm-page h2 {
+  font-size: 20px;
+  font-weight: 550;
+  margin: 0 0 24px;
+}
+.nm-page h3 {
+  font-size: 16px;
+  font-weight: 550;
+  margin: 0 0 12px;
+}
+@media (max-width: 700px) {
+  .nm-projects,
+  .nm-preferences {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

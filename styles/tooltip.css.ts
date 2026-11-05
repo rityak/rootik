@@ -5,7 +5,7 @@ globalStyle(".rk-tooltip", {
   display: "flex",
   alignItems: "center",
   gap: "8px",
-  maxWidth: "280px",
+  maxWidth: "min(280px, var(--rk-floating-max-w, calc(100dvw - 16px)))",
   padding: "5px 9px",
   borderRadius: `calc(${tokens.radiusSm} * 0.8)`,
   background: `${tokens.inverse}`,
@@ -21,3 +21,5 @@ globalStyle(".rk-tooltip-kbd", {
   fontSize: `${tokens.text2xs}`,
   opacity: "0.6",
 });
+
+globalStyle(".rk-tooltip", { overflowWrap: "anywhere", overflow: "auto", overscrollBehavior: "contain" });

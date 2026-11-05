@@ -59,7 +59,8 @@ html:has(.rk-dialog[open]) {
   height: calc(100dvh - 48px);
 }
 .rk-dialog[data-placement="top"] {
-  margin: 12vh auto auto;
+  margin: 12dvh auto auto;
+  max-height: calc(88dvh - 16px);
 }
 .rk-dialog:is([data-placement="right"], [data-placement="left"]) {
   --rk-dialog-w: 440px;
@@ -191,6 +192,7 @@ html:has(.rk-dialog[open]) {
   flex: 1;
   min-width: 0;
   height: 100%;
+  padding: 0;
   border: 0;
   outline: none;
   background: transparent;
@@ -200,6 +202,9 @@ html:has(.rk-dialog[open]) {
 }
 .rk-command-search input::placeholder {
   color: var(--rk-text-3);
+}
+.rk-command-search:has(:focus-visible) {
+  box-shadow: inset 0 -2px 0 var(--rk-focus);
 }
 .rk-command-list {
   display: flex;
@@ -216,6 +221,31 @@ html:has(.rk-dialog[open]) {
 }
 .rk-command-enter {
   color: var(--rk-text-3);
+  flex-shrink: 0;
+}
+.rk-dialog,
+.rk-dialog-panel,
+.rk-dialog-body {
+  min-width: 0;
+}
+.rk-dialog-panel {
+  max-height: inherit;
+}
+.rk-dialog-header,
+.rk-dialog-footer,
+.rk-command-search {
+  flex-shrink: 0;
+  min-width: 0;
+}
+.rk-dialog-body {
+  overscroll-behavior: contain;
+}
+.rk-dialog-title,
+.rk-dialog-desc,
+.rk-dialog-body {
+  overflow-wrap: anywhere;
+}
+.rk-dialog-close {
   flex-shrink: 0;
 }
 @starting-style {
@@ -239,5 +269,11 @@ html:has(.rk-dialog[open]) {
   }
   .rk-dialog[data-placement="bottom"][open] {
     translate: 0 100%;
+  }
+}
+@media (forced-colors: active) {
+  .rk-command-search:has(:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
   }
 }

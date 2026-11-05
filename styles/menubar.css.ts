@@ -7,7 +7,7 @@ globalStyle(".rk-menubar-trigger", {
   height: `calc(${tokens.hSm} - 4px)`,
   padding: `0 calc(${tokens.space} * 2.5)`,
   border: "0",
-  borderRadius: `calc(${tokens.radiusControl} - 2px)`,
+  borderRadius: `max(0px, calc(${tokens.radiusControl} - 2px))`,
   background: "transparent",
   color: `${tokens.text2}`,
   font: "inherit",
@@ -30,4 +30,4 @@ globalStyle('.rk-menubar-trigger[aria-expanded="true"]', {
 
 globalStyle('.rk-menubar-trigger[aria-disabled="true"]', { opacity: "0.45" });
 
-globalStyle(".rk-menubar-trigger:focus-visible", { outlineOffset: "-1px" });
+globalStyle(".rk-menubar-trigger:focus-visible", { outlineOffset: "-2px" });

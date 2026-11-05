@@ -66,7 +66,7 @@ globalStyle(".rk-progress-bar", {
   height: "100%",
   borderRadius: "inherit",
   background: "var(--rk-tone)",
-  boxShadow: "0 0 12px -2px color-mix(in oklab, var(--rk-tone) 60%, transparent)",
+  boxShadow: `inset 0 1px 0 oklch(${tokens.tint} / 0.16)`,
   transition: `width ${tokens.durSlow} ${tokens.easeOut}`,
 });
 
@@ -77,7 +77,10 @@ globalStyle("[data-indeterminate] > .rk-progress-bar", {
   animationPlayState: `${tokens.animationState}`,
 });
 
-globalKeyframes("rk-indeterminate", { from: { translate: "-100% 0" }, to: { translate: "300% 0" } });
+globalKeyframes("rk-indeterminate", {
+  from: { translate: `calc(-100% * ${tokens.motion}) 0` },
+  to: { translate: `calc(300% * ${tokens.motion}) 0` },
+});
 globalStyle(".rk-ring", {
   position: "relative",
   display: "inline-grid",

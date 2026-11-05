@@ -3,9 +3,9 @@
   display: flex;
   flex-direction: column;
   gap: 1px;
-  min-width: 180px;
-  max-width: min(360px, calc(100vw - 16px));
-  max-height: min(360px, var(--rk-available-h, 360px));
+  min-width: min(180px, var(--rk-floating-max-w, calc(100dvw - 16px)));
+  max-width: min(360px, var(--rk-floating-max-w, calc(100dvw - 16px)));
+  max-height: min(360px, var(--rk-available-h, 360px), var(--rk-floating-max-h, calc(100dvh - 16px)));
   overflow-y: auto;
   padding: 5px;
   border-radius: var(--rk-radius-md);
@@ -23,7 +23,7 @@
   padding: 4px calc(var(--rk-space) * 2.5);
   margin: 0;
   border: 0;
-  border-radius: calc(var(--rk-radius-md) - 5px);
+  border-radius: max(0px, calc(var(--rk-radius-md) - 5px));
   background: transparent;
   color: var(--rk-text);
   font: inherit;
@@ -45,6 +45,9 @@
 .rk-menu-item[aria-disabled="true"] {
   opacity: 0.4;
   cursor: default;
+}
+.rk-menu-item:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--rk-focus);
 }
 .rk-menu-item[data-danger] {
   color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
@@ -127,9 +130,9 @@
   font-family: var(--rk-font-mono);
 }
 .rk-popover {
-  min-width: 220px;
-  max-width: min(420px, calc(100vw - 16px));
-  max-height: var(--rk-available-h, 480px);
+  min-width: min(220px, var(--rk-floating-max-w, calc(100dvw - 16px)));
+  max-width: min(420px, var(--rk-floating-max-w, calc(100dvw - 16px)));
+  max-height: min(var(--rk-available-h, 480px), var(--rk-floating-max-h, calc(100dvh - 16px)));
   overflow: auto;
   padding: var(--rk-pad);
   border-radius: var(--rk-radius-lg);
@@ -211,4 +214,15 @@
 .rk-tree-select .rk-tree {
   overflow-y: auto;
   min-height: 0;
+}
+.rk-menu,
+.rk-popover {
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
+}
+@media (forced-colors: active) {
+  .rk-menu-item:focus-visible {
+    outline: 2px solid var(--rk-focus);
+    outline-offset: -2px;
+  }
 }

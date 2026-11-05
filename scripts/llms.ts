@@ -51,6 +51,16 @@ const modules = [
     .filter((f) => f.endsWith(".tsx") && f !== "chart-parts.tsx")
     .map((f) => `src/components/${f}`),
   "src/theme/provider.tsx",
+  ...readdirSync(join(root, "src/overlays")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/overlays/${f}`),
+  ...readdirSync(join(root, "src/feedback")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/feedback/${f}`),
+  ...readdirSync(join(root, "src/charts")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/charts/${f}`),
+  ...readdirSync(join(root, "src/content")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/content/${f}`),
+  ...readdirSync(join(root, "src/data")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/data/${f}`),
+  ...readdirSync(join(root, "src/forms")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/forms/${f}`),
+  ...readdirSync(join(root, "src/layout")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/layout/${f}`),
+  ...readdirSync(join(root, "src/navigation")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/navigation/${f}`),
+  ...readdirSync(join(root, "src/controls")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/controls/${f}`),
+  ...readdirSync(join(root, "src/motion")).sort().filter((f) => f.endsWith(".tsx")).map((f) => `src/motion/${f}`),
   "src/theme/settings.tsx",
   "src/lib/highlight.tsx",
 ];
@@ -68,7 +78,7 @@ for (const file of modules) {
       .filter((s) => new RegExp(`<${name}[\\s/>]`).test(s.code))
       .sort((a, b) => a.code.length - b.code.length)[0];
     const doc = summary(src, m.index);
-    components += `- \`${name}\` — ${file}:${lineOf(src, m.index)}${story ? `, story \`${story.id}\`` : ""}${doc ? `. ${doc}` : ""}\n`;
+    components += `- \`${name}\` вЂ” ${file}:${lineOf(src, m.index)}${story ? `, story \`${story.id}\`` : ""}${doc ? `. ${doc}` : ""}\n`;
     count++;
   }
 }
@@ -80,7 +90,7 @@ for (const file of readdirSync(join(root, "src/lib")).sort()
   const src = read(file);
   for (const m of src.matchAll(/^export function ([a-z]\w*)/gm)) {
     const doc = summary(src, m.index);
-    hooks += `- \`${m[1]}\` — ${file}:${lineOf(src, m.index)}${doc ? `. ${doc}` : ""}\n`;
+    hooks += `- \`${m[1]}\` вЂ” ${file}:${lineOf(src, m.index)}${doc ? `. ${doc}` : ""}\n`;
   }
 }
 
@@ -88,7 +98,7 @@ const text = `# ${pkg.name}
 
 > ${pkg.description}. React 19, zero runtime dependencies besides React. Vanilla Extract authoring in \`styles/*.css.ts\`, static CSS with \`--rk-*\` custom properties in \`@layer rootik\`; no consumer plugin. Dark-first ("Graphite & Iris"), opt-in Rain.
 
-The source is the reference: each entry below points at the component (read its \`…Props\` interface and JSDoc there) and at a story (\`src/stories/*.stories.tsx\`, open in Ladle with \`?story=<id>\`) that shows real usage.
+The source is the reference: each entry below points at the component (read its \`вЂ¦Props\` interface and JSDoc there) and at a story (\`src/stories/*.stories.tsx\`, open in Ladle with \`?story=<id>\`) that shows real usage.
 
 ## Setup
 
@@ -106,7 +116,7 @@ With Tailwind v4 declare \`@layer theme, base, rootik, components, utilities;\` 
 
 ## Rules
 
-- Style through tokens only (\`src/tokens.css\`: \`--rk-accent\`, \`--rk-surface-1…4\`, \`--rk-text/-2/-3\`, \`--rk-radius*\`, \`--rk-space\`); never hard-code colors.
+- Style through tokens only (\`src/tokens.css\`: \`--rk-accent\`, \`--rk-surface-1вЂ¦4\`, \`--rk-text/-2/-3\`, \`--rk-radius*\`, \`--rk-space\`); never hard-code colors.
 - Props share one vocabulary: \`variant\`, \`size\` (\`sm | md | lg\`), \`tone\` (\`neutral | accent | success | warn | danger | info\`), \`icon: ReactNode\`. Rest props go to the root element; \`className\` merges.
 - Controlled or uncontrolled: \`value\`/\`onChange\` or \`defaultValue\`; open state is \`open\`/\`onOpenChange\`.
 - Wrap form controls in \`Field\` (label, hint, error, aria wiring). Icon-only buttons need \`label\`; status by color needs a text label.
@@ -125,7 +135,7 @@ if (process.argv.includes("--check")) {
     current = read("llms.txt");
   } catch {}
   if (current !== text) {
-    console.error("llms.txt is stale — run `bun run llms`");
+    console.error("llms.txt is stale вЂ” run `bun run llms`");
     process.exit(1);
   }
 } else {

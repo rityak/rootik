@@ -5,9 +5,9 @@ globalStyle(".rk-menu", {
   display: "flex",
   flexDirection: "column",
   gap: "1px",
-  minWidth: "180px",
-  maxWidth: "min(360px, calc(100vw - 16px))",
-  maxHeight: "min(360px, var(--rk-available-h, 360px))",
+  minWidth: "min(180px, var(--rk-floating-max-w, calc(100dvw - 16px)))",
+  maxWidth: "min(360px, var(--rk-floating-max-w, calc(100dvw - 16px)))",
+  maxHeight: "min(360px, var(--rk-available-h, 360px), var(--rk-floating-max-h, calc(100dvh - 16px)))",
   overflowY: "auto",
   padding: "5px",
   borderRadius: `${tokens.radiusMd}`,
@@ -26,7 +26,7 @@ globalStyle(".rk-menu-item", {
   padding: `4px calc(${tokens.space} * 2.5)`,
   margin: "0",
   border: "0",
-  borderRadius: `calc(${tokens.radiusMd} - 5px)`,
+  borderRadius: `max(0px, calc(${tokens.radiusMd} - 5px))`,
   background: "transparent",
   color: `${tokens.text}`,
   font: "inherit",
@@ -44,6 +44,10 @@ globalStyle('.rk-menu-item:focus-visible, .rk-menu-item:focus, .rk-menu-item[dat
 globalStyle('.rk-menu-item[aria-selected="true"]', { color: `${tokens.text}`, fontWeight: "500" });
 
 globalStyle('.rk-menu-item[aria-disabled="true"]', { opacity: "0.4", cursor: "default" });
+globalStyle(".rk-menu-item:focus-visible", {
+  boxShadow: `inset 0 0 0 2px ${tokens.focus}`,
+  "@media": { "(forced-colors: active)": { outline: `2px solid ${tokens.focus}`, outlineOffset: "-2px" } },
+});
 
 globalStyle(".rk-menu-item[data-danger]", { color: `oklch(from ${tokens.danger} calc(l + 0.08) c h)` });
 
@@ -114,9 +118,9 @@ globalStyle(".rk-menu-label", {
 globalStyle(".rk-select-list[data-mono]", { fontFamily: `${tokens.fontMono}` });
 
 globalStyle(".rk-popover", {
-  minWidth: "220px",
-  maxWidth: "min(420px, calc(100vw - 16px))",
-  maxHeight: "var(--rk-available-h, 480px)",
+  minWidth: "min(220px, var(--rk-floating-max-w, calc(100dvw - 16px)))",
+  maxWidth: "min(420px, var(--rk-floating-max-w, calc(100dvw - 16px)))",
+  maxHeight: "min(var(--rk-available-h, 480px), var(--rk-floating-max-h, calc(100dvh - 16px)))",
   overflow: "auto",
   padding: `${tokens.pad}`,
   borderRadius: `${tokens.radiusLg}`,
@@ -194,3 +198,5 @@ globalStyle(".rk-menu-sub-chevron", { flexShrink: "0", marginInlineStart: "auto"
 globalStyle(".rk-tree-select", { gap: "6px", maxWidth: "min(420px, calc(100vw - 16px))" });
 
 globalStyle(".rk-tree-select .rk-tree", { overflowY: "auto", minHeight: "0" });
+
+globalStyle(".rk-menu, .rk-popover", { overscrollBehavior: "contain", overflowWrap: "anywhere" });

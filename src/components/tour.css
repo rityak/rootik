@@ -7,14 +7,9 @@
     0 0 0 2px var(--rk-accent),
     0 0 0 100vmax oklch(var(--rk-shade) / 0.55);
   pointer-events: none;
-  transition:
-    left var(--rk-dur-slow) var(--rk-ease-out),
-    top var(--rk-dur-slow) var(--rk-ease-out),
-    width var(--rk-dur-slow) var(--rk-ease-out),
-    height var(--rk-dur-slow) var(--rk-ease-out);
 }
 .rk-tour {
-  width: min(320px, calc(100vw - 16px));
+  width: min(320px, var(--rk-floating-max-w, calc(100dvw - 16px)));
   padding: 14px;
   border-radius: var(--rk-radius-lg);
   background: var(--rk-glass-bg);
@@ -23,7 +18,7 @@
   font-size: var(--rk-text-sm);
 }
 .rk-tour:focus-visible {
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 .rk-tour-head {
   display: flex;
@@ -66,4 +61,15 @@
   flex: 1;
   color: var(--rk-text-3);
   font-size: var(--rk-text-xs);
+}
+.rk-tour {
+  overflow-wrap: anywhere;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.rk-tour-title {
+  min-width: 0;
+}
+.rk-tour-close {
+  flex-shrink: 0;
 }

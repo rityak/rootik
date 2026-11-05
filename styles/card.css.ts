@@ -1,5 +1,5 @@
 import { createGlobalVar, globalKeyframes, globalStyle } from "@vanilla-extract/css";
-import type { CardProps } from "../src/components/card";
+import type { CardProps } from "../src/content/card";
 import { inverse, tokens } from "./tokens.css";
 
 const variantSelector = (value: NonNullable<CardProps["variant"]>) => `.rk-card[data-variant="${value}"]`;
@@ -129,11 +129,10 @@ globalStyle(variantSelector("inverse"), {
 
 globalStyle(".rk-card[data-interactive]", {
   cursor: "pointer",
-  transition: `translate ${tokens.dur} ${tokens.ease}, box-shadow ${tokens.dur} ${tokens.ease}`,
+  transition: `box-shadow ${tokens.dur} ${tokens.ease}`,
 });
 
 globalStyle(".rk-card[data-interactive]:hover", {
-  translate: "0 -2px",
   boxShadow: `${tokens.shadow2}`,
 });
 
@@ -143,7 +142,7 @@ globalStyle(".rk-card[data-selected]", {
 
 globalStyle(".rk-card:has(> .rk-card-hit:focus-visible)", {
   outline: `2px solid ${tokens.focus}`,
-  outlineOffset: "2px",
+  outlineOffset: "-2px",
 });
 
 globalStyle(
@@ -631,7 +630,7 @@ globalStyle('.rk-kv[data-layout="rows"] .rk-kv-item:last-child', {
 });
 
 globalStyle('.rk-kv[data-layout="rows"] .rk-kv-item dt', {
-  flexShrink: 0,
+  flexShrink: 1,
 });
 
 globalStyle('.rk-kv[data-layout="rows"] .rk-kv-item dd', {
@@ -641,7 +640,7 @@ globalStyle('.rk-kv[data-layout="rows"] .rk-kv-item dd', {
 
 globalStyle('.rk-kv[data-layout="grid"]', {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
+  gridTemplateColumns: "repeat(auto-fill, minmax(min(140px, 100%), 1fr))",
   gap: "14px 20px",
 });
 
@@ -692,4 +691,10 @@ globalStyle(".rk-kv-copy", {
       opacity: 1,
     },
   },
+});
+
+globalStyle(".rk-card-header, .rk-card-footer, .rk-card-actions", { flexWrap: "wrap", minWidth: 0 });
+globalStyle(".rk-card-body, .rk-card-title, .rk-card-desc, .rk-kv dt", {
+  minWidth: 0,
+  overflowWrap: "anywhere",
 });

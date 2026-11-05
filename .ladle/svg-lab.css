@@ -1,0 +1,1756 @@
+/* Generated from styles/svg-lab.css.ts. Run bun run styles; do not edit. */
+.rx-lab {
+  --rk-svg-fill: var(--rx-surface-light);
+  --rk-svg-fill-low: var(--rx-surface-low);
+  --rk-svg-edge-top: var(--rx-edge-top);
+  --rk-svg-edge: var(--rx-edge-bottom);
+  --rk-svg-shadow: var(--rx-shadow);
+  --rk-svg-pattern-color: var(--rk-text-3);
+  --rk-svg-blur: 7px;
+}
+.rx-stage > :not(.rk-svg-backdrop) {
+  position: relative;
+  z-index: 1;
+}
+.rx-lab .rk-input-el:focus-visible {
+  outline: none;
+}
+.rd-app[data-direction^="signal-"] .rx-lab .rk-button[data-svg-border],
+.rd-app[data-direction^="signal-"] .rx-lab .rk-input[data-svg-border] {
+  background: transparent;
+  box-shadow: none;
+}
+.rx-artwork-gallery {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+.rx-artwork-choice {
+  appearance: none;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--rk-line);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--rk-text-2);
+  font: 10px var(--rk-font-mono);
+}
+.rx-artwork-choice[aria-pressed="true"] {
+  border-color: var(--rk-accent-text);
+  color: var(--rk-accent-text);
+}
+.rx-custom-study {
+  position: relative;
+  isolation: isolate;
+  padding: 36px;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid var(--rk-line);
+  background: var(--rx-stage);
+  min-height: 230px;
+}
+.rx-custom-study > div:not(.rk-svg-backdrop) {
+  position: relative;
+  max-width: 410px;
+  z-index: 1;
+}
+.rx-custom-study h2 {
+  font-weight: 350;
+  font-size: 25px;
+  margin-block: 12px;
+}
+.rx-custom-study p {
+  color: var(--rk-text-2);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.rd-app[data-direction]:is([data-screen="svg"], [data-screen="typography"]) {
+  grid-template-columns: 174px minmax(0, 1fr);
+  grid-template-areas: "top top" "side main" "status status";
+}
+.rd-app:is([data-screen="svg"], [data-screen="typography"]) > .rd-inspector {
+  display: none;
+}
+.rx-lab {
+  --rk-accent-hover: oklch(from var(--rk-accent) calc(l - 0.035) c h);
+  --rk-on-accent-hover: var(--rk-on-accent);
+  --rk-accent-soft: color-mix(in oklab, var(--rk-accent) 12%, transparent);
+  --rk-accent-line: var(--rk-accent);
+  --rk-focus: var(--rk-accent);
+  --rk-hover: color-mix(in oklab, var(--rx-secondary) 12%, transparent);
+  --rk-press: color-mix(in oklab, var(--rx-secondary) 20%, transparent);
+  --rk-line-strong: var(--rk-control-edge);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+.rx-theme-choice[data-palette="cobalt"] {
+  --rx-chip-1: oklch(0.935 0.012 250);
+  --rx-chip-2: oklch(0.46 0.17 260);
+  --rx-chip-3: oklch(0.43 0.065 220);
+}
+.rx-lab[data-palette="cobalt"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"]):has(.rx-lab[data-palette="cobalt"]) {
+  --rk-bg: oklch(0.962 0.001 265);
+  --rk-neutral-h: 250;
+  --rk-neutral-c: 0.012;
+  --rk-surface-1: oklch(0.967 0.007 250);
+  --rk-surface-2: oklch(0.995 0.003 250);
+  --rk-surface-3: oklch(0.967 0.007 250);
+  --rk-surface-4: color-mix(in oklab, oklch(0.46 0.17 260) 7%, oklch(0.995 0.003 250));
+  --rk-well: oklch(0.945 0.01 250);
+  --rk-sunken: oklch(0.945 0.01 250);
+  --rk-accent: oklch(0.46 0.17 260);
+  --rk-accent-text: oklch(0.46 0.17 260);
+  --rk-on-accent: oklch(0.995 0.012 250);
+  --rk-text: oklch(0.24 0.012 250);
+  --rk-text-2: oklch(0.38 0.012 250);
+  --rk-text-3: oklch(0.44 0.012 250);
+  --rk-control-edge: oklch(0.51 0.012 250);
+  --rk-inverse: oklch(0.26 0.012 250);
+  --rk-on-inverse: oklch(0.985 0.012 250);
+  --rk-line: color-mix(in oklab, oklch(0.42 0.012 250) 24%, transparent);
+  --rk-tint: 0.995 0.012 250;
+  --rk-shade: 0.24 0.012 250;
+  --rk-danger: oklch(0.46 0.15 25);
+  --rk-success: oklch(0.42 0.095 155);
+  --rk-warn: oklch(0.45 0.095 75);
+  --rk-chart-1: oklch(0.46 0.1 250);
+  --rk-chart-2: oklch(0.46 0.1 45);
+  --rk-chart-3: oklch(0.46 0.1 185);
+  --rk-chart-4: oklch(0.46 0.1 300);
+  --rk-chart-5: oklch(0.46 0.1 135);
+  --rk-chart-6: oklch(0.46 0.1 355);
+  --rk-syntax-string: oklch(0.4 0.075 185);
+  --rk-syntax-number: oklch(0.43 0.085 65);
+  --rk-syntax-boolean: oklch(0.43 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.42 0.012 250) 20%, transparent);
+  --rk-chart-idle: oklch(0.945 0.01 250);
+  --rk-chart-on-fill: oklch(0.995 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.45 0.11 250);
+  --rk-secondary: oklch(0.43 0.065 220);
+  --rk-detail: oklch(0.47 0.04 260);
+  --rk-svg-shadow: oklch(0.28 0.012 250);
+  --rk-svg-fill: oklch(0.995 0.003 250);
+  --rk-svg-fill-low: oklch(0.967 0.007 250);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.995 0.012 250) 88%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.45 0.012 250) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.45 0.012 250) 45%, transparent);
+  --rk-stage: oklch(0.935 0.012 250);
+  --rk-wash: color-mix(in oklab, oklch(0.995 0.003 250) 65%, oklch(0.935 0.012 250));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.4 0.012 250) 20%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.995 0.012 250) 85%, transparent);
+  --rx-secondary: oklch(0.43 0.065 220);
+  --rx-detail: oklch(0.47 0.04 260);
+  --rx-shadow: oklch(0.28 0.012 250);
+  --rx-surface-light: oklch(0.995 0.003 250);
+  --rx-surface-low: oklch(0.967 0.007 250);
+  --rx-edge-top: color-mix(in oklab, oklch(0.995 0.012 250) 88%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.45 0.012 250) 45%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.45 0.012 250) 35%, transparent);
+  --rx-stage: oklch(0.935 0.012 250);
+  --rx-wash: color-mix(in oklab, oklch(0.995 0.003 250) 65%, oklch(0.935 0.012 250));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.4 0.012 250) 20%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.995 0.012 250) 85%, transparent);
+}
+.rd-app[data-direction="signal-dark"] .rx-lab[data-palette="cobalt"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"])[data-direction="signal-dark"]:has(
+  .rx-lab[data-palette="cobalt"]
+) {
+  --rk-bg: oklch(0.175 0.001 265);
+  --rk-neutral-h: 255;
+  --rk-neutral-c: 0.016;
+  --rk-surface-1: oklch(0.235 0.021 255);
+  --rk-surface-2: oklch(0.29 0.024 255);
+  --rk-surface-3: oklch(0.235 0.021 255);
+  --rk-surface-4: color-mix(in oklab, oklch(0.75 0.12 255) 7%, oklch(0.29 0.024 255));
+  --rk-well: oklch(0.2 0.018 255);
+  --rk-sunken: oklch(0.2 0.018 255);
+  --rk-accent: oklch(0.75 0.12 255);
+  --rk-accent-text: oklch(0.75 0.12 255);
+  --rk-on-accent: oklch(0.17 0.016 255);
+  --rk-text: oklch(0.95 0.016 255);
+  --rk-text-2: oklch(0.82 0.016 255);
+  --rk-text-3: oklch(0.73 0.016 255);
+  --rk-control-edge: oklch(0.66 0.016 255);
+  --rk-inverse: oklch(0.93 0.016 255);
+  --rk-on-inverse: oklch(0.2 0.016 255);
+  --rk-line: color-mix(in oklab, oklch(0.78 0.016 255) 24%, transparent);
+  --rk-tint: 0.94 0.016 255;
+  --rk-shade: 0.08 0.016 255;
+  --rk-danger: oklch(0.76 0.13 25);
+  --rk-success: oklch(0.77 0.095 155);
+  --rk-warn: oklch(0.82 0.095 75);
+  --rk-chart-1: oklch(0.66 0.105 250);
+  --rk-chart-2: oklch(0.66 0.105 45);
+  --rk-chart-3: oklch(0.66 0.105 185);
+  --rk-chart-4: oklch(0.66 0.105 300);
+  --rk-chart-5: oklch(0.66 0.105 135);
+  --rk-chart-6: oklch(0.66 0.105 355);
+  --rk-syntax-string: oklch(0.78 0.075 185);
+  --rk-syntax-number: oklch(0.8 0.085 65);
+  --rk-syntax-boolean: oklch(0.8 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.78 0.016 255) 20%, transparent);
+  --rk-chart-idle: oklch(0.2 0.018 255);
+  --rk-chart-on-fill: oklch(0.13 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.78 0.11 250);
+  --rk-secondary: oklch(0.77 0.075 220);
+  --rk-detail: oklch(0.75 0.045 260);
+  --rk-svg-shadow: oklch(0.08 0.016 255);
+  --rk-svg-fill: oklch(0.29 0.024 255);
+  --rk-svg-fill-low: oklch(0.235 0.021 255);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.7 0.016 255) 38%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.7 0.016 255) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.68 0.016 255) 32%, transparent);
+  --rk-stage: oklch(0.17 0.016 255);
+  --rk-wash: color-mix(in oklab, oklch(0.29 0.024 255) 42%, oklch(0.17 0.016 255));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.08 0.016 255) 55%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.65 0.016 255) 17%, transparent);
+  --rx-secondary: oklch(0.77 0.075 220);
+  --rx-detail: oklch(0.75 0.045 260);
+  --rx-shadow: oklch(0.08 0.016 255);
+  --rx-surface-light: oklch(0.29 0.024 255);
+  --rx-surface-low: oklch(0.235 0.021 255);
+  --rx-edge-top: color-mix(in oklab, oklch(0.7 0.016 255) 38%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.68 0.016 255) 32%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.7 0.016 255) 35%, transparent);
+  --rx-stage: oklch(0.17 0.016 255);
+  --rx-wash: color-mix(in oklab, oklch(0.29 0.024 255) 42%, oklch(0.17 0.016 255));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.08 0.016 255) 55%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.65 0.016 255) 17%, transparent);
+}
+.rx-theme-choice[data-palette="albedo"] {
+  --rx-chip-1: oklch(0.94 0.003 285);
+  --rx-chip-2: oklch(0.27 0.018 285);
+  --rx-chip-3: oklch(0.46 0.085 85);
+}
+.rx-lab[data-palette="albedo"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"]):has(.rx-lab[data-palette="albedo"]) {
+  --rk-bg: oklch(0.962 0.001 265);
+  --rk-neutral-h: 285;
+  --rk-neutral-c: 0.003;
+  --rk-surface-1: oklch(0.978 0.002 285);
+  --rk-surface-2: oklch(0.998 0.001 285);
+  --rk-surface-3: oklch(0.978 0.002 285);
+  --rk-surface-4: color-mix(in oklab, oklch(0.27 0.018 285) 7%, oklch(0.998 0.001 285));
+  --rk-well: oklch(0.953 0.003 285);
+  --rk-sunken: oklch(0.953 0.003 285);
+  --rk-accent: oklch(0.27 0.018 285);
+  --rk-accent-text: oklch(0.27 0.018 285);
+  --rk-on-accent: oklch(0.995 0.003 285);
+  --rk-text: oklch(0.24 0.003 285);
+  --rk-text-2: oklch(0.38 0.003 285);
+  --rk-text-3: oklch(0.44 0.003 285);
+  --rk-control-edge: oklch(0.51 0.003 285);
+  --rk-inverse: oklch(0.26 0.003 285);
+  --rk-on-inverse: oklch(0.985 0.003 285);
+  --rk-line: color-mix(in oklab, oklch(0.42 0.003 285) 24%, transparent);
+  --rk-tint: 0.995 0.003 285;
+  --rk-shade: 0.24 0.003 285;
+  --rk-danger: oklch(0.46 0.15 25);
+  --rk-success: oklch(0.42 0.095 155);
+  --rk-warn: oklch(0.45 0.095 75);
+  --rk-chart-1: oklch(0.46 0.1 250);
+  --rk-chart-2: oklch(0.46 0.1 45);
+  --rk-chart-3: oklch(0.46 0.1 185);
+  --rk-chart-4: oklch(0.46 0.1 300);
+  --rk-chart-5: oklch(0.46 0.1 135);
+  --rk-chart-6: oklch(0.46 0.1 355);
+  --rk-syntax-string: oklch(0.4 0.075 185);
+  --rk-syntax-number: oklch(0.43 0.085 65);
+  --rk-syntax-boolean: oklch(0.43 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.42 0.003 285) 20%, transparent);
+  --rk-chart-idle: oklch(0.953 0.003 285);
+  --rk-chart-on-fill: oklch(0.995 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.45 0.11 250);
+  --rk-secondary: oklch(0.46 0.085 85);
+  --rk-detail: oklch(0.45 0.07 295);
+  --rk-svg-shadow: oklch(0.28 0.003 285);
+  --rk-svg-fill: oklch(0.998 0.001 285);
+  --rk-svg-fill-low: oklch(0.978 0.002 285);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.995 0.003 285) 88%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.45 0.003 285) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.45 0.003 285) 45%, transparent);
+  --rk-stage: oklch(0.94 0.003 285);
+  --rk-wash: color-mix(in oklab, oklch(0.998 0.001 285) 65%, oklch(0.94 0.003 285));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.4 0.003 285) 20%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.995 0.003 285) 85%, transparent);
+  --rx-secondary: oklch(0.46 0.085 85);
+  --rx-detail: oklch(0.45 0.07 295);
+  --rx-shadow: oklch(0.28 0.003 285);
+  --rx-surface-light: oklch(0.998 0.001 285);
+  --rx-surface-low: oklch(0.978 0.002 285);
+  --rx-edge-top: color-mix(in oklab, oklch(0.995 0.003 285) 88%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.45 0.003 285) 45%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.45 0.003 285) 35%, transparent);
+  --rx-stage: oklch(0.94 0.003 285);
+  --rx-wash: color-mix(in oklab, oklch(0.998 0.001 285) 65%, oklch(0.94 0.003 285));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.4 0.003 285) 20%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.995 0.003 285) 85%, transparent);
+}
+.rd-app[data-direction="signal-dark"] .rx-lab[data-palette="albedo"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"])[data-direction="signal-dark"]:has(
+  .rx-lab[data-palette="albedo"]
+) {
+  --rk-bg: oklch(0.175 0.001 265);
+  --rk-neutral-h: 285;
+  --rk-neutral-c: 0.004;
+  --rk-surface-1: oklch(0.255 0.006 285);
+  --rk-surface-2: oklch(0.315 0.008 285);
+  --rk-surface-3: oklch(0.255 0.006 285);
+  --rk-surface-4: color-mix(in oklab, oklch(0.89 0.008 85) 7%, oklch(0.315 0.008 285));
+  --rk-well: oklch(0.22 0.005 285);
+  --rk-sunken: oklch(0.22 0.005 285);
+  --rk-accent: oklch(0.89 0.008 85);
+  --rk-accent-text: oklch(0.89 0.008 85);
+  --rk-on-accent: oklch(0.17 0.004 285);
+  --rk-text: oklch(0.95 0.004 285);
+  --rk-text-2: oklch(0.82 0.004 285);
+  --rk-text-3: oklch(0.73 0.004 285);
+  --rk-control-edge: oklch(0.66 0.004 285);
+  --rk-inverse: oklch(0.93 0.004 285);
+  --rk-on-inverse: oklch(0.2 0.004 285);
+  --rk-line: color-mix(in oklab, oklch(0.78 0.004 285) 24%, transparent);
+  --rk-tint: 0.94 0.004 285;
+  --rk-shade: 0.08 0.004 285;
+  --rk-danger: oklch(0.76 0.13 25);
+  --rk-success: oklch(0.77 0.095 155);
+  --rk-warn: oklch(0.82 0.095 75);
+  --rk-chart-1: oklch(0.66 0.105 250);
+  --rk-chart-2: oklch(0.66 0.105 45);
+  --rk-chart-3: oklch(0.66 0.105 185);
+  --rk-chart-4: oklch(0.66 0.105 300);
+  --rk-chart-5: oklch(0.66 0.105 135);
+  --rk-chart-6: oklch(0.66 0.105 355);
+  --rk-syntax-string: oklch(0.78 0.075 185);
+  --rk-syntax-number: oklch(0.8 0.085 65);
+  --rk-syntax-boolean: oklch(0.8 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.78 0.004 285) 20%, transparent);
+  --rk-chart-idle: oklch(0.22 0.005 285);
+  --rk-chart-on-fill: oklch(0.13 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.78 0.11 250);
+  --rk-secondary: oklch(0.78 0.09 85);
+  --rk-detail: oklch(0.76 0.08 295);
+  --rk-svg-shadow: oklch(0.08 0.004 285);
+  --rk-svg-fill: oklch(0.315 0.008 285);
+  --rk-svg-fill-low: oklch(0.255 0.006 285);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.7 0.004 285) 38%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.7 0.004 285) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.68 0.004 285) 32%, transparent);
+  --rk-stage: oklch(0.19 0.004 285);
+  --rk-wash: color-mix(in oklab, oklch(0.315 0.008 285) 42%, oklch(0.19 0.004 285));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.08 0.004 285) 55%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.65 0.004 285) 17%, transparent);
+  --rx-secondary: oklch(0.78 0.09 85);
+  --rx-detail: oklch(0.76 0.08 295);
+  --rx-shadow: oklch(0.08 0.004 285);
+  --rx-surface-light: oklch(0.315 0.008 285);
+  --rx-surface-low: oklch(0.255 0.006 285);
+  --rx-edge-top: color-mix(in oklab, oklch(0.7 0.004 285) 38%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.68 0.004 285) 32%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.7 0.004 285) 35%, transparent);
+  --rx-stage: oklch(0.19 0.004 285);
+  --rx-wash: color-mix(in oklab, oklch(0.315 0.008 285) 42%, oklch(0.19 0.004 285));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.08 0.004 285) 55%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.65 0.004 285) 17%, transparent);
+}
+.rx-theme-choice[data-palette="makima"] {
+  --rx-chip-1: oklch(0.925 0.018 355);
+  --rx-chip-2: oklch(0.46 0.15 26);
+  --rx-chip-3: oklch(0.43 0.06 235);
+}
+.rx-lab[data-palette="makima"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"]):has(.rx-lab[data-palette="makima"]) {
+  --rk-bg: oklch(0.962 0.001 265);
+  --rk-neutral-h: 355;
+  --rk-neutral-c: 0.018;
+  --rk-surface-1: oklch(0.965 0.01 355);
+  --rk-surface-2: oklch(0.992 0.004 355);
+  --rk-surface-3: oklch(0.965 0.01 355);
+  --rk-surface-4: color-mix(in oklab, oklch(0.46 0.15 26) 7%, oklch(0.992 0.004 355));
+  --rk-well: oklch(0.94 0.014 355);
+  --rk-sunken: oklch(0.94 0.014 355);
+  --rk-accent: oklch(0.46 0.15 26);
+  --rk-accent-text: oklch(0.46 0.15 26);
+  --rk-on-accent: oklch(0.995 0.018 355);
+  --rk-text: oklch(0.24 0.018 355);
+  --rk-text-2: oklch(0.38 0.018 355);
+  --rk-text-3: oklch(0.44 0.018 355);
+  --rk-control-edge: oklch(0.51 0.018 355);
+  --rk-inverse: oklch(0.26 0.018 355);
+  --rk-on-inverse: oklch(0.985 0.018 355);
+  --rk-line: color-mix(in oklab, oklch(0.42 0.018 355) 24%, transparent);
+  --rk-tint: 0.995 0.018 355;
+  --rk-shade: 0.24 0.018 355;
+  --rk-danger: oklch(0.46 0.15 25);
+  --rk-success: oklch(0.42 0.095 155);
+  --rk-warn: oklch(0.45 0.095 75);
+  --rk-chart-1: oklch(0.46 0.1 250);
+  --rk-chart-2: oklch(0.46 0.1 45);
+  --rk-chart-3: oklch(0.46 0.1 185);
+  --rk-chart-4: oklch(0.46 0.1 300);
+  --rk-chart-5: oklch(0.46 0.1 135);
+  --rk-chart-6: oklch(0.46 0.1 355);
+  --rk-syntax-string: oklch(0.4 0.075 185);
+  --rk-syntax-number: oklch(0.43 0.085 65);
+  --rk-syntax-boolean: oklch(0.43 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.42 0.018 355) 20%, transparent);
+  --rk-chart-idle: oklch(0.94 0.014 355);
+  --rk-chart-on-fill: oklch(0.995 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.45 0.11 250);
+  --rk-secondary: oklch(0.43 0.06 235);
+  --rk-detail: oklch(0.46 0.075 50);
+  --rk-svg-shadow: oklch(0.28 0.018 355);
+  --rk-svg-fill: oklch(0.992 0.004 355);
+  --rk-svg-fill-low: oklch(0.965 0.01 355);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.995 0.018 355) 88%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.45 0.018 355) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.45 0.018 355) 45%, transparent);
+  --rk-stage: oklch(0.925 0.018 355);
+  --rk-wash: color-mix(in oklab, oklch(0.992 0.004 355) 65%, oklch(0.925 0.018 355));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.4 0.018 355) 20%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.995 0.018 355) 85%, transparent);
+  --rx-secondary: oklch(0.43 0.06 235);
+  --rx-detail: oklch(0.46 0.075 50);
+  --rx-shadow: oklch(0.28 0.018 355);
+  --rx-surface-light: oklch(0.992 0.004 355);
+  --rx-surface-low: oklch(0.965 0.01 355);
+  --rx-edge-top: color-mix(in oklab, oklch(0.995 0.018 355) 88%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.45 0.018 355) 45%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.45 0.018 355) 35%, transparent);
+  --rx-stage: oklch(0.925 0.018 355);
+  --rx-wash: color-mix(in oklab, oklch(0.992 0.004 355) 65%, oklch(0.925 0.018 355));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.4 0.018 355) 20%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.995 0.018 355) 85%, transparent);
+}
+.rd-app[data-direction="signal-dark"] .rx-lab[data-palette="makima"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"])[data-direction="signal-dark"]:has(
+  .rx-lab[data-palette="makima"]
+) {
+  --rk-bg: oklch(0.175 0.001 265);
+  --rk-neutral-h: 265;
+  --rk-neutral-c: 0.01;
+  --rk-surface-1: oklch(0.235 0.012 335);
+  --rk-surface-2: oklch(0.29 0.015 345);
+  --rk-surface-3: oklch(0.235 0.012 335);
+  --rk-surface-4: color-mix(in oklab, oklch(0.75 0.115 26) 7%, oklch(0.29 0.015 345));
+  --rk-well: oklch(0.205 0.01 265);
+  --rk-sunken: oklch(0.205 0.01 265);
+  --rk-accent: oklch(0.75 0.115 26);
+  --rk-accent-text: oklch(0.75 0.115 26);
+  --rk-on-accent: oklch(0.17 0.01 265);
+  --rk-text: oklch(0.95 0.01 265);
+  --rk-text-2: oklch(0.82 0.01 265);
+  --rk-text-3: oklch(0.73 0.01 265);
+  --rk-control-edge: oklch(0.66 0.01 265);
+  --rk-inverse: oklch(0.93 0.01 265);
+  --rk-on-inverse: oklch(0.2 0.01 265);
+  --rk-line: color-mix(in oklab, oklch(0.78 0.01 265) 24%, transparent);
+  --rk-tint: 0.94 0.01 265;
+  --rk-shade: 0.08 0.01 265;
+  --rk-danger: oklch(0.76 0.13 25);
+  --rk-success: oklch(0.77 0.095 155);
+  --rk-warn: oklch(0.82 0.095 75);
+  --rk-chart-1: oklch(0.66 0.105 250);
+  --rk-chart-2: oklch(0.66 0.105 45);
+  --rk-chart-3: oklch(0.66 0.105 185);
+  --rk-chart-4: oklch(0.66 0.105 300);
+  --rk-chart-5: oklch(0.66 0.105 135);
+  --rk-chart-6: oklch(0.66 0.105 355);
+  --rk-syntax-string: oklch(0.78 0.075 185);
+  --rk-syntax-number: oklch(0.8 0.085 65);
+  --rk-syntax-boolean: oklch(0.8 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.78 0.01 265) 20%, transparent);
+  --rk-chart-idle: oklch(0.205 0.01 265);
+  --rk-chart-on-fill: oklch(0.13 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.78 0.11 250);
+  --rk-secondary: oklch(0.77 0.065 235);
+  --rk-detail: oklch(0.78 0.075 55);
+  --rk-svg-shadow: oklch(0.08 0.01 265);
+  --rk-svg-fill: oklch(0.29 0.015 345);
+  --rk-svg-fill-low: oklch(0.235 0.012 335);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.7 0.01 265) 38%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.7 0.01 265) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.68 0.01 265) 32%, transparent);
+  --rk-stage: oklch(0.165 0.01 265);
+  --rk-wash: color-mix(in oklab, oklch(0.29 0.015 345) 42%, oklch(0.165 0.01 265));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.08 0.01 265) 55%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.65 0.01 265) 17%, transparent);
+  --rx-secondary: oklch(0.77 0.065 235);
+  --rx-detail: oklch(0.78 0.075 55);
+  --rx-shadow: oklch(0.08 0.01 265);
+  --rx-surface-light: oklch(0.29 0.015 345);
+  --rx-surface-low: oklch(0.235 0.012 335);
+  --rx-edge-top: color-mix(in oklab, oklch(0.7 0.01 265) 38%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.68 0.01 265) 32%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.7 0.01 265) 35%, transparent);
+  --rx-stage: oklch(0.165 0.01 265);
+  --rx-wash: color-mix(in oklab, oklch(0.29 0.015 345) 42%, oklch(0.165 0.01 265));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.08 0.01 265) 55%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.65 0.01 265) 17%, transparent);
+}
+.rx-theme-choice[data-palette="miyabi"] {
+  --rx-chip-1: oklch(0.9 0.022 190);
+  --rx-chip-2: oklch(0.35 0.075 265);
+  --rx-chip-3: oklch(0.41 0.075 185);
+}
+.rx-lab[data-palette="miyabi"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"]):has(.rx-lab[data-palette="miyabi"]) {
+  --rk-bg: oklch(0.962 0.001 265);
+  --rk-neutral-h: 190;
+  --rk-neutral-c: 0.018;
+  --rk-surface-1: oklch(0.95 0.014 190);
+  --rk-surface-2: oklch(0.985 0.006 190);
+  --rk-surface-3: oklch(0.95 0.014 190);
+  --rk-surface-4: color-mix(in oklab, oklch(0.35 0.075 265) 7%, oklch(0.985 0.006 190));
+  --rk-well: oklch(0.925 0.018 190);
+  --rk-sunken: oklch(0.925 0.018 190);
+  --rk-accent: oklch(0.35 0.075 265);
+  --rk-accent-text: oklch(0.35 0.075 265);
+  --rk-on-accent: oklch(0.995 0.018 190);
+  --rk-text: oklch(0.24 0.018 190);
+  --rk-text-2: oklch(0.38 0.018 190);
+  --rk-text-3: oklch(0.44 0.018 190);
+  --rk-control-edge: oklch(0.51 0.018 190);
+  --rk-inverse: oklch(0.26 0.018 190);
+  --rk-on-inverse: oklch(0.985 0.018 190);
+  --rk-line: color-mix(in oklab, oklch(0.42 0.018 190) 24%, transparent);
+  --rk-tint: 0.995 0.018 190;
+  --rk-shade: 0.24 0.018 190;
+  --rk-danger: oklch(0.46 0.15 25);
+  --rk-success: oklch(0.42 0.095 155);
+  --rk-warn: oklch(0.45 0.095 75);
+  --rk-chart-1: oklch(0.46 0.1 250);
+  --rk-chart-2: oklch(0.46 0.1 45);
+  --rk-chart-3: oklch(0.46 0.1 185);
+  --rk-chart-4: oklch(0.46 0.1 300);
+  --rk-chart-5: oklch(0.46 0.1 135);
+  --rk-chart-6: oklch(0.46 0.1 355);
+  --rk-syntax-string: oklch(0.4 0.075 185);
+  --rk-syntax-number: oklch(0.43 0.085 65);
+  --rk-syntax-boolean: oklch(0.43 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.42 0.018 190) 20%, transparent);
+  --rk-chart-idle: oklch(0.925 0.018 190);
+  --rk-chart-on-fill: oklch(0.995 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.45 0.11 250);
+  --rk-secondary: oklch(0.41 0.075 185);
+  --rk-detail: oklch(0.46 0.13 25);
+  --rk-svg-shadow: oklch(0.28 0.018 190);
+  --rk-svg-fill: oklch(0.985 0.006 190);
+  --rk-svg-fill-low: oklch(0.95 0.014 190);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.995 0.018 190) 88%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.45 0.018 190) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.45 0.018 190) 45%, transparent);
+  --rk-stage: oklch(0.9 0.022 190);
+  --rk-wash: color-mix(in oklab, oklch(0.985 0.006 190) 65%, oklch(0.9 0.022 190));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.4 0.018 190) 20%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.995 0.018 190) 85%, transparent);
+  --rx-secondary: oklch(0.41 0.075 185);
+  --rx-detail: oklch(0.46 0.13 25);
+  --rx-shadow: oklch(0.28 0.018 190);
+  --rx-surface-light: oklch(0.985 0.006 190);
+  --rx-surface-low: oklch(0.95 0.014 190);
+  --rx-edge-top: color-mix(in oklab, oklch(0.995 0.018 190) 88%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.45 0.018 190) 45%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.45 0.018 190) 35%, transparent);
+  --rx-stage: oklch(0.9 0.022 190);
+  --rx-wash: color-mix(in oklab, oklch(0.985 0.006 190) 65%, oklch(0.9 0.022 190));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.4 0.018 190) 20%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.995 0.018 190) 85%, transparent);
+}
+.rd-app[data-direction="signal-dark"] .rx-lab[data-palette="miyabi"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"])[data-direction="signal-dark"]:has(
+  .rx-lab[data-palette="miyabi"]
+) {
+  --rk-bg: oklch(0.175 0.001 265);
+  --rk-neutral-h: 265;
+  --rk-neutral-c: 0.018;
+  --rk-surface-1: oklch(0.215 0.034 260);
+  --rk-surface-2: oklch(0.28 0.035 250);
+  --rk-surface-3: oklch(0.215 0.034 260);
+  --rk-surface-4: color-mix(in oklab, oklch(0.79 0.09 190) 7%, oklch(0.28 0.035 250));
+  --rk-well: oklch(0.185 0.03 265);
+  --rk-sunken: oklch(0.185 0.03 265);
+  --rk-accent: oklch(0.79 0.09 190);
+  --rk-accent-text: oklch(0.79 0.09 190);
+  --rk-on-accent: oklch(0.17 0.018 265);
+  --rk-text: oklch(0.95 0.018 265);
+  --rk-text-2: oklch(0.82 0.018 265);
+  --rk-text-3: oklch(0.73 0.018 265);
+  --rk-control-edge: oklch(0.66 0.018 265);
+  --rk-inverse: oklch(0.93 0.018 265);
+  --rk-on-inverse: oklch(0.2 0.018 265);
+  --rk-line: color-mix(in oklab, oklch(0.78 0.018 265) 24%, transparent);
+  --rk-tint: 0.94 0.018 265;
+  --rk-shade: 0.08 0.018 265;
+  --rk-danger: oklch(0.76 0.13 25);
+  --rk-success: oklch(0.77 0.095 155);
+  --rk-warn: oklch(0.82 0.095 75);
+  --rk-chart-1: oklch(0.66 0.105 250);
+  --rk-chart-2: oklch(0.66 0.105 45);
+  --rk-chart-3: oklch(0.66 0.105 185);
+  --rk-chart-4: oklch(0.66 0.105 300);
+  --rk-chart-5: oklch(0.66 0.105 135);
+  --rk-chart-6: oklch(0.66 0.105 355);
+  --rk-syntax-string: oklch(0.78 0.075 185);
+  --rk-syntax-number: oklch(0.8 0.085 65);
+  --rk-syntax-boolean: oklch(0.8 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.78 0.018 265) 20%, transparent);
+  --rk-chart-idle: oklch(0.185 0.03 265);
+  --rk-chart-on-fill: oklch(0.13 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.78 0.11 250);
+  --rk-secondary: oklch(0.76 0.055 225);
+  --rk-detail: oklch(0.77 0.1 25);
+  --rk-svg-shadow: oklch(0.08 0.018 265);
+  --rk-svg-fill: oklch(0.28 0.035 250);
+  --rk-svg-fill-low: oklch(0.215 0.034 260);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.7 0.018 265) 38%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.7 0.018 265) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.68 0.018 265) 32%, transparent);
+  --rk-stage: oklch(0.155 0.028 265);
+  --rk-wash: color-mix(in oklab, oklch(0.28 0.035 250) 42%, oklch(0.155 0.028 265));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.08 0.018 265) 55%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.65 0.018 265) 17%, transparent);
+  --rx-secondary: oklch(0.76 0.055 225);
+  --rx-detail: oklch(0.77 0.1 25);
+  --rx-shadow: oklch(0.08 0.018 265);
+  --rx-surface-light: oklch(0.28 0.035 250);
+  --rx-surface-low: oklch(0.215 0.034 260);
+  --rx-edge-top: color-mix(in oklab, oklch(0.7 0.018 265) 38%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.68 0.018 265) 32%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.7 0.018 265) 35%, transparent);
+  --rx-stage: oklch(0.155 0.028 265);
+  --rx-wash: color-mix(in oklab, oklch(0.28 0.035 250) 42%, oklch(0.155 0.028 265));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.08 0.018 265) 55%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.65 0.018 265) 17%, transparent);
+}
+.rx-theme-choice[data-palette="hoshino"] {
+  --rx-chip-1: oklch(0.925 0.023 305);
+  --rx-chip-2: oklch(0.43 0.155 305);
+  --rx-chip-3: oklch(0.44 0.105 345);
+}
+.rx-lab[data-palette="hoshino"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"]):has(.rx-lab[data-palette="hoshino"]) {
+  --rk-bg: oklch(0.962 0.001 265);
+  --rk-neutral-h: 305;
+  --rk-neutral-c: 0.018;
+  --rk-surface-1: oklch(0.965 0.014 305);
+  --rk-surface-2: oklch(0.992 0.004 305);
+  --rk-surface-3: oklch(0.965 0.014 305);
+  --rk-surface-4: color-mix(in oklab, oklch(0.43 0.155 305) 7%, oklch(0.992 0.004 305));
+  --rk-well: oklch(0.942 0.019 305);
+  --rk-sunken: oklch(0.942 0.019 305);
+  --rk-accent: oklch(0.43 0.155 305);
+  --rk-accent-text: oklch(0.43 0.155 305);
+  --rk-on-accent: oklch(0.995 0.018 305);
+  --rk-text: oklch(0.24 0.018 305);
+  --rk-text-2: oklch(0.38 0.018 305);
+  --rk-text-3: oklch(0.44 0.018 305);
+  --rk-control-edge: oklch(0.51 0.018 305);
+  --rk-inverse: oklch(0.26 0.018 305);
+  --rk-on-inverse: oklch(0.985 0.018 305);
+  --rk-line: color-mix(in oklab, oklch(0.42 0.018 305) 24%, transparent);
+  --rk-tint: 0.995 0.018 305;
+  --rk-shade: 0.24 0.018 305;
+  --rk-danger: oklch(0.46 0.15 25);
+  --rk-success: oklch(0.42 0.095 155);
+  --rk-warn: oklch(0.45 0.095 75);
+  --rk-chart-1: oklch(0.46 0.1 250);
+  --rk-chart-2: oklch(0.46 0.1 45);
+  --rk-chart-3: oklch(0.46 0.1 185);
+  --rk-chart-4: oklch(0.46 0.1 300);
+  --rk-chart-5: oklch(0.46 0.1 135);
+  --rk-chart-6: oklch(0.46 0.1 355);
+  --rk-syntax-string: oklch(0.4 0.075 185);
+  --rk-syntax-number: oklch(0.43 0.085 65);
+  --rk-syntax-boolean: oklch(0.43 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.42 0.018 305) 20%, transparent);
+  --rk-chart-idle: oklch(0.942 0.019 305);
+  --rk-chart-on-fill: oklch(0.995 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.45 0.11 250);
+  --rk-secondary: oklch(0.44 0.105 345);
+  --rk-detail: oklch(0.43 0.075 225);
+  --rk-svg-shadow: oklch(0.28 0.018 305);
+  --rk-svg-fill: oklch(0.992 0.004 305);
+  --rk-svg-fill-low: oklch(0.965 0.014 305);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.995 0.018 305) 88%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.45 0.018 305) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.45 0.018 305) 45%, transparent);
+  --rk-stage: oklch(0.925 0.023 305);
+  --rk-wash: color-mix(in oklab, oklch(0.992 0.004 305) 65%, oklch(0.925 0.023 305));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.4 0.018 305) 20%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.995 0.018 305) 85%, transparent);
+  --rx-secondary: oklch(0.44 0.105 345);
+  --rx-detail: oklch(0.43 0.075 225);
+  --rx-shadow: oklch(0.28 0.018 305);
+  --rx-surface-light: oklch(0.992 0.004 305);
+  --rx-surface-low: oklch(0.965 0.014 305);
+  --rx-edge-top: color-mix(in oklab, oklch(0.995 0.018 305) 88%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.45 0.018 305) 45%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.45 0.018 305) 35%, transparent);
+  --rx-stage: oklch(0.925 0.023 305);
+  --rx-wash: color-mix(in oklab, oklch(0.992 0.004 305) 65%, oklch(0.925 0.023 305));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.4 0.018 305) 20%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.995 0.018 305) 85%, transparent);
+}
+.rd-app[data-direction="signal-dark"] .rx-lab[data-palette="hoshino"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"])[data-direction="signal-dark"]:has(
+  .rx-lab[data-palette="hoshino"]
+) {
+  --rk-bg: oklch(0.175 0.001 265);
+  --rk-neutral-h: 310;
+  --rk-neutral-c: 0.018;
+  --rk-surface-1: oklch(0.26 0.026 310);
+  --rk-surface-2: oklch(0.32 0.029 310);
+  --rk-surface-3: oklch(0.26 0.026 310);
+  --rk-surface-4: color-mix(in oklab, oklch(0.78 0.115 305) 7%, oklch(0.32 0.029 310));
+  --rk-well: oklch(0.225 0.023 310);
+  --rk-sunken: oklch(0.225 0.023 310);
+  --rk-accent: oklch(0.78 0.115 305);
+  --rk-accent-text: oklch(0.78 0.115 305);
+  --rk-on-accent: oklch(0.17 0.018 310);
+  --rk-text: oklch(0.95 0.018 310);
+  --rk-text-2: oklch(0.82 0.018 310);
+  --rk-text-3: oklch(0.73 0.018 310);
+  --rk-control-edge: oklch(0.66 0.018 310);
+  --rk-inverse: oklch(0.93 0.018 310);
+  --rk-on-inverse: oklch(0.2 0.018 310);
+  --rk-line: color-mix(in oklab, oklch(0.78 0.018 310) 24%, transparent);
+  --rk-tint: 0.94 0.018 310;
+  --rk-shade: 0.08 0.018 310;
+  --rk-danger: oklch(0.76 0.13 25);
+  --rk-success: oklch(0.77 0.095 155);
+  --rk-warn: oklch(0.82 0.095 75);
+  --rk-chart-1: oklch(0.66 0.105 250);
+  --rk-chart-2: oklch(0.66 0.105 45);
+  --rk-chart-3: oklch(0.66 0.105 185);
+  --rk-chart-4: oklch(0.66 0.105 300);
+  --rk-chart-5: oklch(0.66 0.105 135);
+  --rk-chart-6: oklch(0.66 0.105 355);
+  --rk-syntax-string: oklch(0.78 0.075 185);
+  --rk-syntax-number: oklch(0.8 0.085 65);
+  --rk-syntax-boolean: oklch(0.8 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.78 0.018 310) 20%, transparent);
+  --rk-chart-idle: oklch(0.225 0.023 310);
+  --rk-chart-on-fill: oklch(0.13 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.78 0.11 250);
+  --rk-secondary: oklch(0.79 0.1 345);
+  --rk-detail: oklch(0.78 0.075 225);
+  --rk-svg-shadow: oklch(0.08 0.018 310);
+  --rk-svg-fill: oklch(0.32 0.029 310);
+  --rk-svg-fill-low: oklch(0.26 0.026 310);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.7 0.018 310) 38%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.7 0.018 310) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.68 0.018 310) 32%, transparent);
+  --rk-stage: oklch(0.195 0.022 310);
+  --rk-wash: color-mix(in oklab, oklch(0.32 0.029 310) 42%, oklch(0.195 0.022 310));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.08 0.018 310) 55%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.65 0.018 310) 17%, transparent);
+  --rx-secondary: oklch(0.79 0.1 345);
+  --rx-detail: oklch(0.78 0.075 225);
+  --rx-shadow: oklch(0.08 0.018 310);
+  --rx-surface-light: oklch(0.32 0.029 310);
+  --rx-surface-low: oklch(0.26 0.026 310);
+  --rx-edge-top: color-mix(in oklab, oklch(0.7 0.018 310) 38%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.68 0.018 310) 32%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.7 0.018 310) 35%, transparent);
+  --rx-stage: oklch(0.195 0.022 310);
+  --rx-wash: color-mix(in oklab, oklch(0.32 0.029 310) 42%, oklch(0.195 0.022 310));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.08 0.018 310) 55%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.65 0.018 310) 17%, transparent);
+}
+.rx-theme-choice[data-palette="maomao"] {
+  --rx-chip-1: oklch(0.925 0.019 155);
+  --rx-chip-2: oklch(0.4 0.09 160);
+  --rx-chip-3: oklch(0.45 0.075 315);
+}
+.rx-lab[data-palette="maomao"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"]):has(.rx-lab[data-palette="maomao"]) {
+  --rk-bg: oklch(0.962 0.001 265);
+  --rk-neutral-h: 155;
+  --rk-neutral-c: 0.018;
+  --rk-surface-1: oklch(0.964 0.014 155);
+  --rk-surface-2: oklch(0.992 0.004 155);
+  --rk-surface-3: oklch(0.964 0.014 155);
+  --rk-surface-4: color-mix(in oklab, oklch(0.4 0.09 160) 7%, oklch(0.992 0.004 155));
+  --rk-well: oklch(0.943 0.018 155);
+  --rk-sunken: oklch(0.943 0.018 155);
+  --rk-accent: oklch(0.4 0.09 160);
+  --rk-accent-text: oklch(0.4 0.09 160);
+  --rk-on-accent: oklch(0.995 0.018 155);
+  --rk-text: oklch(0.24 0.018 155);
+  --rk-text-2: oklch(0.38 0.018 155);
+  --rk-text-3: oklch(0.44 0.018 155);
+  --rk-control-edge: oklch(0.51 0.018 155);
+  --rk-inverse: oklch(0.26 0.018 155);
+  --rk-on-inverse: oklch(0.985 0.018 155);
+  --rk-line: color-mix(in oklab, oklch(0.42 0.018 155) 24%, transparent);
+  --rk-tint: 0.995 0.018 155;
+  --rk-shade: 0.24 0.018 155;
+  --rk-danger: oklch(0.46 0.15 25);
+  --rk-success: oklch(0.42 0.095 155);
+  --rk-warn: oklch(0.45 0.095 75);
+  --rk-chart-1: oklch(0.46 0.1 250);
+  --rk-chart-2: oklch(0.46 0.1 45);
+  --rk-chart-3: oklch(0.46 0.1 185);
+  --rk-chart-4: oklch(0.46 0.1 300);
+  --rk-chart-5: oklch(0.46 0.1 135);
+  --rk-chart-6: oklch(0.46 0.1 355);
+  --rk-syntax-string: oklch(0.4 0.075 185);
+  --rk-syntax-number: oklch(0.43 0.085 65);
+  --rk-syntax-boolean: oklch(0.43 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.42 0.018 155) 20%, transparent);
+  --rk-chart-idle: oklch(0.943 0.018 155);
+  --rk-chart-on-fill: oklch(0.995 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.45 0.11 250);
+  --rk-secondary: oklch(0.45 0.075 315);
+  --rk-detail: oklch(0.46 0.07 80);
+  --rk-svg-shadow: oklch(0.28 0.018 155);
+  --rk-svg-fill: oklch(0.992 0.004 155);
+  --rk-svg-fill-low: oklch(0.964 0.014 155);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.995 0.018 155) 88%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.45 0.018 155) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.45 0.018 155) 45%, transparent);
+  --rk-stage: oklch(0.925 0.019 155);
+  --rk-wash: color-mix(in oklab, oklch(0.992 0.004 155) 65%, oklch(0.925 0.019 155));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.4 0.018 155) 20%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.995 0.018 155) 85%, transparent);
+  --rx-secondary: oklch(0.45 0.075 315);
+  --rx-detail: oklch(0.46 0.07 80);
+  --rx-shadow: oklch(0.28 0.018 155);
+  --rx-surface-light: oklch(0.992 0.004 155);
+  --rx-surface-low: oklch(0.964 0.014 155);
+  --rx-edge-top: color-mix(in oklab, oklch(0.995 0.018 155) 88%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.45 0.018 155) 45%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.45 0.018 155) 35%, transparent);
+  --rx-stage: oklch(0.925 0.019 155);
+  --rx-wash: color-mix(in oklab, oklch(0.992 0.004 155) 65%, oklch(0.925 0.019 155));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.4 0.018 155) 20%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.995 0.018 155) 85%, transparent);
+}
+.rd-app[data-direction="signal-dark"] .rx-lab[data-palette="maomao"],
+.rd-app:is([data-screen="svg"], [data-screen="typography"])[data-direction="signal-dark"]:has(
+  .rx-lab[data-palette="maomao"]
+) {
+  --rk-bg: oklch(0.175 0.001 265);
+  --rk-neutral-h: 165;
+  --rk-neutral-c: 0.018;
+  --rk-surface-1: oklch(0.24 0.025 165);
+  --rk-surface-2: oklch(0.3 0.028 165);
+  --rk-surface-3: oklch(0.24 0.025 165);
+  --rk-surface-4: color-mix(in oklab, oklch(0.78 0.095 165) 7%, oklch(0.3 0.028 165));
+  --rk-well: oklch(0.21 0.021 165);
+  --rk-sunken: oklch(0.21 0.021 165);
+  --rk-accent: oklch(0.78 0.095 165);
+  --rk-accent-text: oklch(0.78 0.095 165);
+  --rk-on-accent: oklch(0.17 0.018 165);
+  --rk-text: oklch(0.95 0.018 165);
+  --rk-text-2: oklch(0.82 0.018 165);
+  --rk-text-3: oklch(0.73 0.018 165);
+  --rk-control-edge: oklch(0.66 0.018 165);
+  --rk-inverse: oklch(0.93 0.018 165);
+  --rk-on-inverse: oklch(0.2 0.018 165);
+  --rk-line: color-mix(in oklab, oklch(0.78 0.018 165) 24%, transparent);
+  --rk-tint: 0.94 0.018 165;
+  --rk-shade: 0.08 0.018 165;
+  --rk-danger: oklch(0.76 0.13 25);
+  --rk-success: oklch(0.77 0.095 155);
+  --rk-warn: oklch(0.82 0.095 75);
+  --rk-chart-1: oklch(0.66 0.105 250);
+  --rk-chart-2: oklch(0.66 0.105 45);
+  --rk-chart-3: oklch(0.66 0.105 185);
+  --rk-chart-4: oklch(0.66 0.105 300);
+  --rk-chart-5: oklch(0.66 0.105 135);
+  --rk-chart-6: oklch(0.66 0.105 355);
+  --rk-syntax-string: oklch(0.78 0.075 185);
+  --rk-syntax-number: oklch(0.8 0.085 65);
+  --rk-syntax-boolean: oklch(0.8 0.1 300);
+  --rk-qr-plate: oklch(0.995 0.001 265);
+  --rk-qr-ink: oklch(0.13 0.01 265);
+  --rk-chart-grid: color-mix(in oklab, oklch(0.78 0.018 165) 20%, transparent);
+  --rk-chart-idle: oklch(0.21 0.021 165);
+  --rk-chart-on-fill: oklch(0.13 0.001 250);
+  --rk-chart-seq-lo: oklch(0.26 0.035 250);
+  --rk-chart-seq-hi: oklch(0.86 0.12 250);
+  --rk-chart-seq-text-lo: oklch(0.995 0.001 250);
+  --rk-chart-seq-text-hi: oklch(0.07 0.001 250);
+  --rk-info: oklch(0.78 0.11 250);
+  --rk-secondary: oklch(0.77 0.08 315);
+  --rk-detail: oklch(0.79 0.08 80);
+  --rk-svg-shadow: oklch(0.08 0.018 165);
+  --rk-svg-fill: oklch(0.3 0.028 165);
+  --rk-svg-fill-low: oklch(0.24 0.025 165);
+  --rk-svg-edge-top: color-mix(in oklab, oklch(0.7 0.018 165) 38%, transparent);
+  --rk-material-edge: color-mix(in oklab, oklch(0.7 0.018 165) 35%, transparent);
+  --rk-svg-edge: color-mix(in oklab, oklch(0.68 0.018 165) 32%, transparent);
+  --rk-stage: oklch(0.18 0.02 165);
+  --rk-wash: color-mix(in oklab, oklch(0.3 0.028 165) 42%, oklch(0.18 0.02 165));
+  --rk-relief-shadow: color-mix(in oklab, oklch(0.08 0.018 165) 55%, transparent);
+  --rk-relief-light: color-mix(in oklab, oklch(0.65 0.018 165) 17%, transparent);
+  --rx-secondary: oklch(0.77 0.08 315);
+  --rx-detail: oklch(0.79 0.08 80);
+  --rx-shadow: oklch(0.08 0.018 165);
+  --rx-surface-light: oklch(0.3 0.028 165);
+  --rx-surface-low: oklch(0.24 0.025 165);
+  --rx-edge-top: color-mix(in oklab, oklch(0.7 0.018 165) 38%, transparent);
+  --rx-edge-bottom: color-mix(in oklab, oklch(0.68 0.018 165) 32%, transparent);
+  --rx-edge: color-mix(in oklab, oklch(0.7 0.018 165) 35%, transparent);
+  --rx-stage: oklch(0.18 0.02 165);
+  --rx-wash: color-mix(in oklab, oklch(0.3 0.028 165) 42%, oklch(0.18 0.02 165));
+  --rd-relief-dark: color-mix(in oklab, oklch(0.08 0.018 165) 55%, transparent);
+  --rd-relief-light: color-mix(in oklab, oklch(0.65 0.018 165) 17%, transparent);
+}
+.rx-theme-bar,
+.rx-theme-bar > fieldset {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.rx-theme-bar > fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.rx-theme-bar {
+  justify-content: space-between;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rk-line);
+}
+.rx-theme-bar > span {
+  color: var(--rk-text-3);
+  font: 8px var(--rk-font-mono);
+}
+.rx-theme-choice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  color: var(--rk-text);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font: 13px var(--rk-font-sans);
+  text-align: left;
+}
+.rx-theme-choice[aria-pressed="true"] {
+  background: var(--rx-surface-light);
+  border-color: var(--rx-edge);
+}
+.rd-app[data-direction="signal-dark"] .rx-theme-choice[aria-pressed="true"] {
+  background: var(--rx-surface-low);
+}
+.rx-theme-choice small {
+  display: block;
+  color: var(--rk-text-3);
+  font-size: 9px;
+  margin-top: 3px;
+}
+.rx-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 4px 0;
+}
+.rx-intro > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  color: var(--rk-accent-text);
+  font: 10px var(--rk-font-mono);
+  letter-spacing: 0.035em;
+}
+.rx-intro p {
+  max-width: 410px;
+  color: var(--rk-text-3);
+  font-size: 11px;
+  text-align: right;
+}
+.rx-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 22px;
+  min-width: 0;
+}
+.rx-stage {
+  background: radial-gradient(ellipse at 10% 10%, var(--rx-wash), transparent 75%), var(--rx-stage);
+  position: relative;
+  border: 1px solid var(--rk-line);
+  border-radius: 17px;
+  padding: 18px 10px 12px;
+  min-width: 0;
+  isolation: isolate;
+}
+.rx-stage-caption,
+.rx-stage-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 15px;
+  font: 9px var(--rk-font-mono);
+  color: var(--rk-text-3);
+}
+.rx-stage-bottom {
+  padding-block: 4px;
+}
+.rx-stage-bottom > span:last-child {
+  font-size: 8px;
+}
+.rx-hero {
+  min-height: 366px;
+  margin-block: 12px;
+}
+.rx-hero .rk-svg-surface-content {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  min-height: 366px;
+}
+.rx-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font: 9px var(--rk-font-mono);
+  color: var(--rk-text-3);
+}
+.rx-card-top > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.rx-live {
+  font-size: 8px;
+}
+.rx-live i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--rk-success);
+}
+.rx-live[data-active="false"] i {
+  background: var(--rk-text-3);
+}
+.rx-hero-middle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.rx-overline {
+  display: block;
+  font: 8px var(--rk-font-mono);
+  color: var(--rk-text-3);
+  letter-spacing: 0.07em;
+}
+.rx-hero h2 {
+  font-size: clamp(37px, 4cqw, 61px);
+  font-weight: 350;
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+  margin-top: 10px;
+}
+.rx-hero h2 em {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  color: var(--rk-accent-text);
+}
+.rx-hero-middle p {
+  font-size: 10px;
+  color: var(--rk-text-3);
+  margin-top: 14px;
+}
+.rx-orbit {
+  position: relative;
+  width: 134px;
+  height: 134px;
+  flex-shrink: 0;
+  color: var(--rk-accent-text);
+}
+.rx-orbit > svg {
+  width: 100%;
+  height: 100%;
+}
+.rx-orbit > span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.09em;
+  color: var(--rk-text);
+}
+.rx-orbit > span > span {
+  align-self: center;
+  font: 8px var(--rk-font-mono);
+  margin-left: 6px;
+  margin-top: -19px;
+  color: var(--rk-text-3);
+}
+.rx-hero-footer {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: auto;
+}
+.rx-hero-footer > div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--rk-text-3);
+}
+.rx-hero-footer strong {
+  color: var(--rk-text);
+  font-size: 18px;
+  font-weight: 350;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.rx-hero-footer small {
+  font-size: 9px;
+  color: var(--rk-text-3);
+}
+.rx-hero-footer .rk-button {
+  margin-left: auto;
+  font-size: 10px;
+}
+.rx-controls {
+  padding: 15px 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.rx-controls-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--rk-text-2);
+}
+.rx-controls h2 {
+  font-size: 12px;
+  font-weight: 500;
+}
+.rx-controls .rk-slider-label,
+.rx-controls .rk-check-text {
+  font-size: 11px;
+}
+.rx-engine-note {
+  border-top: 1px solid var(--rk-line);
+  padding-top: 16px;
+  margin-top: auto;
+}
+.rx-engine-note > span {
+  display: block;
+  font: 8px var(--rk-font-mono);
+  color: var(--rk-accent-text);
+}
+.rx-engine-note p {
+  font-size: 10px;
+  color: var(--rk-text-3);
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.rx-gallery-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-top: 4px;
+}
+.rx-gallery-head h2 {
+  font-size: 14px;
+  font-weight: 450;
+  letter-spacing: -0.02em;
+}
+.rx-gallery-head > span {
+  font-size: 10px;
+  color: var(--rk-text-3);
+}
+.rx-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+}
+.rx-specimen {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--rk-text);
+  padding: 0;
+  text-align: left;
+  border-radius: 28px;
+  min-width: 0;
+  font: inherit;
+}
+.rx-specimen:focus-visible {
+  outline-offset: -12px;
+}
+.rx-specimen[aria-pressed="true"] .rx-specimen-caption {
+  color: var(--rk-accent-text);
+}
+.rx-gallery-surface {
+  min-height: 235px;
+}
+.rx-gallery-surface .rk-svg-surface-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 235px;
+  gap: 15px;
+}
+.rx-specimen-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--rk-text-3);
+  font: 8px var(--rk-font-mono);
+  letter-spacing: 0.03em;
+}
+.rx-specimen h3 {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 350;
+}
+.rx-specimen p {
+  color: var(--rk-text-2);
+  font-size: 11px;
+  line-height: 1.6;
+  max-width: 300px;
+}
+.rx-specimen-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  font: 8px var(--rk-font-mono);
+  color: var(--rk-text-3);
+}
+.rx-material-line {
+  width: 76px;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, var(--rk-text-3) 0 2px, transparent 2px 5px);
+  opacity: 0.5;
+  border-radius: 4px;
+}
+.rx-in-context {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
+  gap: 20px;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--rk-line);
+}
+.rx-in-context > div:first-child {
+  padding-left: 6px;
+}
+.rx-in-context h2 {
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  margin-top: 9px;
+}
+.rx-in-context p {
+  font-size: 11px;
+  color: var(--rk-text-3);
+  line-height: 1.8;
+  max-width: 320px;
+  margin-top: 12px;
+}
+.rx-control-surface .rk-svg-surface-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rx-inline-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.rx-inline-controls .rk-check-text {
+  font-size: 10px;
+}
+.rd-lab-toolbar,
+.rd-view-picker {
+  flex-wrap: wrap;
+}
+.rd-view-picker button {
+  white-space: nowrap;
+}
+.rd-lab-options {
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.rx-workbench {
+  align-items: start;
+}
+.rx-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 14px;
+}
+.rx-controls-head,
+.rx-engine-note {
+  grid-column: 1 / -1;
+}
+.rx-theme-bar {
+  display: block;
+}
+.rx-theme-bar > fieldset {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.rx-theme-bar > span {
+  display: block;
+  margin-top: 12px;
+  text-align: right;
+}
+.rx-theme-choice {
+  min-width: 0;
+  padding: 12px;
+  cursor: pointer;
+  gap: 8px;
+}
+.rx-theme-choice > span:last-child {
+  min-width: 0;
+}
+.rx-theme-choice small {
+  line-height: 1.5;
+}
+.rx-theme-chips {
+  display: flex;
+  flex-shrink: 0;
+  width: 30px;
+}
+.rx-theme-chips i {
+  width: 13px;
+  height: 26px;
+  border-radius: 8px;
+  margin-right: -4px;
+  border: 1px solid var(--rx-surface-light);
+  background: var(--rx-chip-1);
+}
+.rx-theme-chips i:nth-child(2) {
+  background: var(--rx-chip-2);
+}
+.rx-theme-chips i:nth-child(3) {
+  background: var(--rx-chip-3);
+}
+.rx-color-study {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 24px;
+  border: 1px solid var(--rk-line);
+  border-radius: 16px;
+  background: var(--rx-surface-light);
+}
+.rx-color-study h2 {
+  margin-block: 8px;
+  font-size: 23px;
+  font-weight: 350;
+  letter-spacing: -0.04em;
+}
+.rx-color-study p {
+  font-size: 10px;
+  color: var(--rk-text-3);
+}
+.rx-color-roles {
+  display: flex;
+  gap: 6px;
+  flex: 1 1 240px;
+  max-width: 440px;
+}
+.rx-color-roles > div {
+  flex: 1;
+  min-width: 0;
+  font: 8px var(--rk-font-mono);
+  color: var(--rk-text-2);
+}
+.rx-color-roles i {
+  display: block;
+  height: 34px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--rk-line);
+}
+.rx-color-roles [data-role="ink"] i {
+  background: var(--rk-accent);
+}
+.rx-color-roles [data-role="secondary"] i {
+  background: var(--rx-secondary);
+}
+.rx-color-roles [data-role="detail"] i {
+  background: var(--rx-detail);
+}
+.rx-color-roles [data-role="paper"] i {
+  background: var(--rx-surface-low);
+}
+.rx-color-roles [data-role="graphite"] i {
+  background: var(--rk-text);
+}
+.rx-control-gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.rx-control-specimen {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+  padding: 22px 18px 16px;
+  border: 1px solid var(--rk-line);
+  border-radius: 16px;
+  background: var(--rx-surface-light);
+}
+.rx-control-caption,
+.rx-control-detail {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--rk-text-3);
+  font: 8px var(--rk-font-mono);
+}
+.rx-control-caption > span:first-child {
+  color: var(--rk-accent-text);
+}
+.rx-control-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rx-control-actions > .rx-secondary-action {
+  --rk-btn-bg: color-mix(in oklab, var(--rx-secondary) 13%, var(--rx-surface-light));
+  --rk-btn-fg: var(--rx-secondary);
+  --rk-btn-edge: color-mix(in oklab, var(--rx-secondary) 48%, var(--rx-surface-low));
+  margin-right: auto;
+}
+.rx-control-detail {
+  border-top: 1px solid var(--rk-line);
+  padding-top: 14px;
+  color: var(--rk-text-3);
+}
+.rx-control-states {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 12px;
+  align-items: center;
+  padding: 22px;
+  border: 1px solid var(--rk-line);
+  border-radius: 16px;
+}
+.rx-control-states > .rx-overline {
+  flex-basis: 100%;
+}
+.rx-control-states > .rk-field {
+  flex: 1 1 190px;
+}
+.rx-orbit .rk-svg-artwork svg > :nth-child(3n + 2) {
+  stroke: var(--rx-secondary);
+}
+.rx-orbit .rk-svg-artwork svg > :nth-child(3n + 3) {
+  stroke: var(--rx-detail);
+}
+.rx-hero-footer > div:first-child > svg {
+  color: var(--rx-secondary);
+}
+.rx-hero-footer > div:nth-child(2) > svg {
+  color: var(--rx-detail);
+}
+.rx-lab .rk-field-error {
+  color: var(--rk-danger);
+}
+.rx-lab .rk-input[data-invalid] {
+  --rk-ctl-edge: var(--rk-danger);
+}
+.rx-lab .rk-button[data-svg-border]:focus-visible,
+.rx-lab .rk-input[data-svg-border]:has(:focus-visible) {
+  outline: none;
+}
+.rx-lab .rx-theme-choice:focus-visible,
+.rx-lab .rx-artwork-choice:focus-visible {
+  outline: none;
+  border-color: var(--rk-focus);
+  box-shadow:
+    inset 0 0 0 1px var(--rk-focus),
+    0 2px 5px oklch(var(--rk-shade) / 0.12);
+}
+.rx-lab .rx-specimen:focus-visible {
+  outline: none;
+}
+.rx-specimen[aria-pressed="true"] .rk-svg-surface-rim {
+  stroke: var(--rk-accent-text);
+  stroke-width: 1.5;
+}
+.rx-specimen:focus-visible .rk-svg-surface-rim {
+  stroke: var(--rk-focus);
+  stroke-width: 3;
+}
+@media (max-width: 800px) {
+  .rx-artwork-gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@container (max-width: 1100px) {
+  .rd-app[data-direction]:is([data-screen="svg"], [data-screen="typography"]) {
+    grid-template-columns: 58px minmax(0, 1fr);
+  }
+  .rx-hero h2 {
+    font-size: 45px;
+  }
+  .rx-orbit {
+    width: 112px;
+    height: 112px;
+  }
+  .rx-workbench {
+    grid-template-columns: minmax(0, 1fr) 270px;
+    gap: 16px;
+  }
+  .rx-control-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container (max-width: 780px) {
+  .rd-app[data-direction]:is([data-screen="svg"], [data-screen="typography"]) {
+    grid-template-columns: 54px minmax(0, 1fr);
+    grid-template-rows: 55px 1fr 31px;
+    grid-template-areas: "top top" "side main" "status status";
+  }
+  .rx-workbench {
+    grid-template-columns: 1fr;
+  }
+  .rx-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    padding: 10px 6px;
+  }
+  .rx-controls-head,
+  .rx-engine-note {
+    grid-column: 1 / -1;
+  }
+  .rx-intro {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rx-intro p {
+    text-align: left;
+  }
+  .rx-specimen h3 {
+    font-size: 22px;
+  }
+  .rx-in-context {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .rd-app[data-direction]:is([data-screen="svg"], [data-screen="typography"]) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 50px auto 1fr 31px;
+    grid-template-areas: "top" "side" "main" "status";
+  }
+  .rd-app .rd-sidebar button[title="Material lab"] {
+    flex: 0 0 30px;
+  }
+  .rd-lab .rd-view-picker,
+  .rd-lab .rd-sidebar nav {
+    flex-wrap: wrap;
+  }
+  .rd-app .rd-sidebar button[title="Material lab"] > span {
+    display: none;
+  }
+  .rx-theme-bar > span {
+    display: none;
+  }
+  .rx-theme-bar > fieldset {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rx-theme-choice {
+    flex: 1;
+    padding: 9px;
+    gap: 7px;
+  }
+  .rx-theme-choice small {
+    font-size: 8px;
+  }
+  .rx-theme-choice i {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+  .rx-lab {
+    gap: 18px;
+  }
+  .rx-stage {
+    padding: 15px 0 12px;
+  }
+  .rx-stage-caption,
+  .rx-stage-bottom {
+    padding-inline: 12px;
+    font-size: 8px;
+  }
+  .rx-stage-caption > span:last-child,
+  .rx-stage-bottom > span:last-child {
+    display: none;
+  }
+  .rx-hero {
+    margin-top: 8px;
+    min-height: 354px;
+  }
+  .rx-hero .rk-svg-surface-content {
+    min-height: 354px;
+    gap: 22px;
+  }
+  .rx-card-top {
+    font-size: 8px;
+    gap: 6px;
+  }
+  .rx-card-top > span > svg {
+    display: none;
+  }
+  .rx-hero h2 {
+    font-size: 45px;
+  }
+  .rx-hero-middle {
+    position: relative;
+  }
+  .rx-orbit {
+    position: absolute;
+    width: 87px;
+    height: 87px;
+    right: -4px;
+    top: 38px;
+    opacity: 0.3;
+  }
+  .rx-orbit > span {
+    display: none;
+  }
+  .rx-hero-footer {
+    flex-wrap: wrap;
+    gap: 9px 16px;
+  }
+  .rx-hero-footer .rk-button {
+    width: 100%;
+    margin-left: 0;
+  }
+  .rx-hero-footer strong {
+    font-size: 17px;
+  }
+  .rx-gallery {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .rx-gallery-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .rx-gallery-head h2 {
+    font-size: 13px;
+  }
+  .rx-controls {
+    gap: 22px 15px;
+  }
+  .rx-controls h2 {
+    font-size: 12px;
+  }
+  .rx-controls .rk-slider-label {
+    font-size: 10px;
+  }
+  .rx-controls .rk-check-text {
+    font-size: 10px;
+  }
+  .rx-control-gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (forced-colors: active) {
+  .rx-lab .rk-button[data-svg-border]:focus-visible,
+  .rx-lab .rk-input[data-svg-border]:has(:focus-visible) {
+    outline: 2px solid var(--rk-focus);
+    outline-offset: -2px;
+  }
+}

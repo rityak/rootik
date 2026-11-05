@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  max-width: 280px;
+  max-width: min(280px, var(--rk-floating-max-w, calc(100dvw - 16px)));
   padding: 5px 9px;
   border-radius: calc(var(--rk-radius-sm) * 0.8);
   background: var(--rk-inverse);
@@ -17,4 +17,9 @@
   font-family: var(--rk-font-mono);
   font-size: var(--rk-text-2xs);
   opacity: 0.6;
+}
+.rk-tooltip {
+  overflow-wrap: anywhere;
+  overflow: auto;
+  overscroll-behavior: contain;
 }

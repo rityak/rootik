@@ -1,0 +1,39 @@
+/* Generated from styles/svg-artwork.css.ts. Run bun run styles; do not edit. */
+@keyframes rk-svg-artwork-drift {
+  from {
+    transform: translateY(0) rotate(-2deg);
+  }
+  to {
+    transform: translateY(calc(var(--rk-space) * -1)) rotate(2deg);
+  }
+}
+@keyframes rk-svg-artwork-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.rk-svg-artwork {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  color: currentColor;
+  pointer-events: none;
+}
+.rk-svg-artwork-motion,
+.rk-svg-artwork svg {
+  width: 100%;
+  height: 100%;
+}
+.rk-svg-artwork[data-motion="drift"] .rk-svg-artwork-motion {
+  animation: rk-svg-artwork-drift calc(var(--rk-dur-slow) * 35) ease-in-out infinite alternate;
+  animation-play-state: var(--rk-animation-state);
+}
+.rk-svg-artwork[data-motion="orbit"] .rk-svg-artwork-motion {
+  animation: rk-svg-artwork-orbit calc(var(--rk-dur-slow) * 100) linear infinite;
+  animation-play-state: var(--rk-animation-state);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rk-svg-artwork[data-motion] .rk-svg-artwork-motion {
+    animation-name: none;
+  }
+}

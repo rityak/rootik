@@ -9,8 +9,8 @@ one of them needs it or because a mainstream toolkit (Radix/Mantine/shadcn) has 
 - React 19, TypeScript (strict, `noUncheckedIndexedAccess`), Bun, Biome, Ladle for stories.
 - **Zero runtime deps** besides React. Icons inside the kit are inline SVG (`src/lib/icons.tsx`);
   consumers pass any `ReactNode` as `icon` (lucide works). `lucide-react` is a dev dep for stories only.
-- Static CSS with custom properties, no Tailwind in the kit. The 2.0 migration uses Vanilla Extract in
-  `styles/*.css.ts` for all 74 toolkit stylesheets; generated CSS is never edited by hand.
+- Static CSS with custom properties, no Tailwind in the kit. The 1.0 migration uses Vanilla Extract in
+  `styles/*.css.ts` for toolkit stylesheets; generated CSS is never edited by hand.
   Generated CSS stays in the existing src paths; consumers need no VE plugin. Aggregate CSS uses `@layer rootik`.
 - Node.js 24 runs the VE compiler (Bun's Windows evaluator is incompatible); Bun remains the command/test runtime.
   Edit migrated styles only in `styles/`; `bun run dev` watches them, `bun run styles:check` rejects stale output.
@@ -27,7 +27,7 @@ one of them needs it or because a mainstream toolkit (Radix/Mantine/shadcn) has 
 - Visual regression is local only: `bun run visual` (Playwright) screenshots every story from the Ladle build
   against per-machine baselines in `visual/__screenshots__` (gitignored); `-- --update-snapshots` rewrites them.
 - Release: `npm version <patch|minor>`, `git push --follow-tags`, publish a GitHub Release → `publish.yml`
-  runs `npm publish` (npm Trusted Publishing, no token).
+  runs `npm publish` (npm Trusted Publishing, no token): prerelease tags use `next`, stable tags use `latest`.
 - Ladle's own types don't compile under TS 7: tsconfig `paths` maps `@ladle/react` to `.ladle/ladle-types.d.ts`.
 - Stories live in `src/stories/*.stories.tsx` (one file per family); preview a single story with
   `?story=<family>--<name>&mode=preview`. Layout stories use `Stage` (stories/stage.tsx): material
@@ -72,6 +72,10 @@ src/
 - New component → update `TODO.md` and export it from `src/index.ts`. Components built in parallel PRs get
   their own module + story file, registered up front (stub module, `index.ts`/`styles.css` lines) so the PRs
   never edit the same lines; icons a component alone needs are defined locally with `icon()` from lib/icons.
+- Layout containment: give flex/grid slots explicit zero minima; bound fixed/minimum control widths to
+  available space. Wrap unbroken prose/labels, truncate compact control labels, and keep wide data/code
+  in local scroll containers. Do not hide page overflow as a workaround. Floating layers must fit the
+  visible viewport on open/resize; keep dismiss controls outside shrinking scroll bodies.
 - Code comments: short, in English, only for the non-obvious "why".
 - Every string the kit renders itself (aria-labels, placeholders, default copy) comes from `useLabels()`
   (`src/lib/labels.tsx`), so `<RootikProvider labels>` translates it; props only override.
@@ -81,6 +85,13 @@ src/
   Motion: Off leave a static state. Status by color needs a text alternative (`StatusDot label`,
   `Avatar statusLabel`); toasts with an action or errors don't auto-dismiss.
 - Line endings are LF (`.gitattributes`); Biome fails on CRLF.
+- Every migrated or new module must support the shared `/motion` and SVG decoration toolkit from the start.
+  Provide optional decorative variants and demonstrate them in its story; use `MotionLayer` for clipped SVG
+  light and `startThemeTransition` for event-driven palette/mode changes. Keep effects opt-in, token-timed,
+  and independent of content geometry, focus, hit targets and application state. Respect Motion: Off,
+  system reduced motion, SVG: Off, square corners, forced colors and Fluent. Never animate layout dimensions
+  or move the interactive host for decoration. Animate compositor wrappers; do not add per-frame React
+  state or timer loops. Continuous ambient animation must be explicit. See `MOTION.md`.
 
 ## Style — "Graphite & Iris"
 
@@ -112,4 +123,9 @@ src/
 glass, motion + consumer extensions) and writes them as CSS vars on `<html>`. `AppearanceSettings`
 renders the same schema as a form. Projects extend it with `extensions` — sections of fields, fields can
 nest (`children`, shown when the parent is on) and map to CSS vars (`cssVar`) or custom `apply`.
-Light theme is not shipped: consumers override tokens (see README).
+Signal palettes ship light/dark recipes (`colorMode`) while the package-wide default remains legacy Iris.
+The staged migration is tracked in `MIGRATION-DESIGN.md`: implementations for layout, navigation and controls
+live in `src/layout/`, `src/navigation/` and `src/controls/`, with public subpath/CSS entries and compatibility
+re-exports at old paths. Shared field wiring lives in `src/lib/field-context.tsx`.
+SVG contours are optional (`svgShapes`); Fluent and global square corners must remain supported. See
+`LAYOUT.md`, `NAVIGATION.md` and `CONTROLS.md` before extending these modules.

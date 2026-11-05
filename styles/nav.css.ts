@@ -1,5 +1,5 @@
 import { globalStyle } from "@vanilla-extract/css";
-import type { TabsProps } from "../src/components/nav";
+import type { TabsProps } from "../src/navigation/tabs";
 import { tokens } from "./tokens.css";
 
 const variants = {
@@ -102,11 +102,29 @@ globalStyle('.rk-tabs[data-orientation="vertical"][data-variant="line"] .rk-tabs
   borderRadius: `0 calc(2px * ${tokens.roundness}) calc(2px * ${tokens.roundness}) 0`,
 });
 
-globalStyle('.rk-tabs[data-orientation="vertical"][data-variant="pill"]', { display: "flex", width: "auto" });
+globalStyle('.rk-tabs[data-orientation="vertical"][data-variant="pill"]', {
+  display: "flex",
+  width: "auto",
+  gap: `calc(${tokens.space} * 1.5)`,
+  padding: "0",
+  background: "transparent",
+  boxShadow: "none",
+});
+
+globalStyle('.rk-tabs[data-orientation="vertical"][data-variant="pill"] .rk-tab', {
+  height: "var(--rk-tab-h)",
+});
+
+globalStyle(
+  '.rk-tabs[data-orientation="vertical"][data-variant="pill"] .rk-tab:not([aria-selected="true"]):hover:not(:disabled)',
+  {
+    background: `${tokens.hover}`,
+  },
+);
 
 globalStyle('.rk-tabs[data-orientation="vertical"][data-variant="pill"] .rk-tabs-indicator', {
-  left: "3px",
-  right: "3px",
+  left: "0",
+  right: "0",
 });
 
 globalStyle(".rk-tab", {
@@ -123,6 +141,7 @@ globalStyle(".rk-tab", {
   background: "none",
   color: `${tokens.text2}`,
   font: "inherit",
+  lineHeight: "1",
   fontWeight: "500",
   whiteSpace: "nowrap",
   cursor: "pointer",
@@ -262,6 +281,12 @@ globalStyle(".rk-nav-group-label:is(button)", { cursor: "pointer" });
 globalStyle(".rk-nav-group-label:is(button):hover", { color: `${tokens.text2}` });
 
 globalStyle(".rk-nav-group-items", { display: "flex", flexDirection: "column", gap: "1px" });
+globalStyle(".rk-nav-group-chevron", {
+  flexShrink: 0,
+  color: `${tokens.text3}`,
+  transition: `rotate ${tokens.dur} ${tokens.ease}`,
+});
+globalStyle(".rk-nav-group-chevron[data-open]", { rotate: "90deg" });
 
 globalStyle(".rk-nav-item", {
   position: "relative",
@@ -315,6 +340,7 @@ globalStyle(".rk-nav-link", {
   background: "none",
   color: "inherit",
   font: "inherit",
+  lineHeight: "1",
   fontSize: `${tokens.textMd}`,
   textAlign: "start",
   textDecoration: "none",
@@ -352,7 +378,7 @@ globalStyle(".rk-nav-trailing[data-hover]", {
 
 globalStyle(".rk-nav-item:is(:hover, :focus-within) .rk-nav-trailing[data-hover]", { opacity: "1" });
 
-globalStyle(".rk-dock", {
+globalStyle(".rk-dock.rk-surface", {
   maxWidth: "100%",
   display: "inline-flex",
   alignItems: "center",
@@ -443,7 +469,7 @@ globalStyle('.rk-dock-item:hover:not([aria-current]):not([aria-selected="true"])
   color: `${tokens.text}`,
 });
 
-globalStyle(".rk-dock-item:active:not(:disabled) .rk-icon", { scale: "0.96" });
+globalStyle(".rk-dock-item:active:not(:disabled) .rk-icon", { scale: "var(--rk-button-press-scale, 0.96)" });
 
 globalStyle('.rk-dock-item:is([aria-current="page"], [aria-selected="true"])', {
   background: "var(--rk-dock-active-bg, transparent)",

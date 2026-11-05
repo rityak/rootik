@@ -18,11 +18,38 @@ export type Anchor = RefObject<Element | null> | (() => DOMRect | null);
 const PAD = 8;
 const OPPOSITE: Record<Side, Side> = { top: "bottom", bottom: "top", left: "right", right: "left" };
 
+/** Fixed layers must fit the visible viewport, including zoom and the on-screen keyboard. */
+export function floatingViewport() {
+  const viewport = window.visualViewport;
+  const left = viewport?.offsetLeft ?? 0;
+  const top = viewport?.offsetTop ?? 0;
+  const width = viewport?.width ?? (window.document?.documentElement.clientWidth || window.innerWidth);
+  const height = viewport?.height ?? window.innerHeight;
+  return { left, top, width, height, right: left + width, bottom: top + height };
+}
+
+export function clampFloatingPosition(
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  viewport = floatingViewport(),
+) {
+  return {
+    x: Math.max(viewport.left + PAD, Math.min(x, viewport.right - w - PAD)),
+    y: Math.max(viewport.top + PAD, Math.min(y, viewport.bottom - h - PAD)),
+  };
+}
+
 export function computePosition(a: DOMRect, w: number, h: number, placement: Placement, gap: number) {
   const [first, align = "center"] = placement.split("-") as [Side, string?];
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
-  const room: Record<Side, number> = { top: a.top, bottom: vh - a.bottom, left: a.left, right: vw - a.right };
+  const viewport = floatingViewport();
+  const room: Record<Side, number> = {
+    top: a.top - viewport.top,
+    bottom: viewport.bottom - a.bottom,
+    left: a.left - viewport.left,
+    right: viewport.right - a.right,
+  };
   const vertical = first === "top" || first === "bottom";
   const need = (vertical ? h : w) + gap + PAD;
   const side = room[first] < need && room[OPPOSITE[first]] > room[first] ? OPPOSITE[first] : first;
@@ -36,10 +63,10 @@ export function computePosition(a: DOMRect, w: number, h: number, placement: Pla
     y = align === "start" ? a.top : align === "end" ? a.bottom - h : a.top + a.height / 2 - h / 2;
   }
   return {
-    x: Math.max(PAD, Math.min(x, vw - w - PAD)),
-    y: Math.max(PAD, Math.min(y, vh - h - PAD)),
+    ...clampFloatingPosition(x, y, w, h, viewport),
     side,
-    available: room[side] - gap - PAD,
+    available: Math.max(0, room[side] - gap - PAD),
+    availableHeight: Math.max(0, vertical ? room[side] - gap - PAD : viewport.height - PAD * 2),
   };
 }
 
@@ -89,11 +116,16 @@ export function Floating({
     if (!el?.matches(":popover-open")) return;
     const rect = typeof anchor === "function" ? anchor() : anchor.current?.getBoundingClientRect();
     if (!rect) return;
-    if (matchWidth) el.style.minWidth = `${rect.width}px`;
+    const viewport = floatingViewport();
+    const maxWidth = Math.max(0, viewport.width - PAD * 2);
+    const maxHeight = Math.max(0, viewport.height - PAD * 2);
+    el.style.setProperty("--rk-floating-max-w", `${maxWidth}px`);
+    el.style.setProperty("--rk-floating-max-h", `${maxHeight}px`);
+    if (matchWidth) el.style.minWidth = `${Math.min(rect.width, maxWidth)}px`;
     const p = computePosition(rect, el.offsetWidth, el.offsetHeight, placement, offset);
     el.style.left = `${p.x}px`;
     el.style.top = `${p.y}px`;
-    el.style.setProperty("--rk-available-h", `${Math.max(120, p.available)}px`);
+    el.style.setProperty("--rk-available-h", `${Math.min(maxHeight, Math.max(120, p.availableHeight))}px`);
     el.dataset.side = p.side;
     el.dataset.placed = "";
   }, [anchor, placement, offset, matchWidth]);
@@ -143,9 +175,12 @@ export function Floating({
       });
     };
     const resize = new ResizeObserver(follow);
+    const viewport = window.visualViewport;
     const track = () => {
       window.addEventListener("scroll", follow, true);
       window.addEventListener("resize", follow);
+      viewport?.addEventListener("resize", follow);
+      viewport?.addEventListener("scroll", follow);
       resize.observe(el);
       if (element) resize.observe(element);
       watchMove();
@@ -159,6 +194,8 @@ export function Floating({
         delete el.dataset.placed;
         window.removeEventListener("scroll", follow, true);
         window.removeEventListener("resize", follow);
+        viewport?.removeEventListener("resize", follow);
+        viewport?.removeEventListener("scroll", follow);
         resize.disconnect();
         move?.disconnect();
         cancelAnimationFrame(frame);
@@ -171,6 +208,8 @@ export function Floating({
       el.removeEventListener("toggle", onToggle);
       window.removeEventListener("scroll", follow, true);
       window.removeEventListener("resize", follow);
+      viewport?.removeEventListener("resize", follow);
+      viewport?.removeEventListener("scroll", follow);
       resize.disconnect();
       move?.disconnect();
       cancelAnimationFrame(frame);

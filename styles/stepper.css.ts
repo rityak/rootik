@@ -90,7 +90,7 @@ globalStyle(".rk-step-marker", {
     box-shadow ${tokens.dur} ${tokens.ease}`,
 });
 
-globalStyle(".rk-step-marker > svg", {
+globalStyle(".rk-step-symbol > svg", {
   width: "round(calc(var(--rk-step-marker) * 0.6), 2px)",
   height: "round(calc(var(--rk-step-marker) * 0.6), 2px)",
   strokeWidth: "2.5",
@@ -135,3 +135,35 @@ globalStyle('[data-state="error"] .rk-step-label', {
 });
 
 globalStyle(".rk-step-desc", { color: `${tokens.text3}`, fontSize: `${tokens.textXs}` });
+
+globalStyle(".rk-step-symbol", { display: "grid", placeItems: "center", position: "relative", zIndex: 1 });
+globalStyle(".rk-stepper[data-svg-border] .rk-step-marker", {
+  position: "relative",
+  isolation: "isolate",
+  background: "transparent",
+  boxShadow: "none",
+  vars: { "--rk-svg-control-fill": tokens.surface2, "--rk-svg-control-edge": tokens.controlEdge },
+});
+globalStyle('.rk-stepper[data-svg-border] [data-state="complete"] .rk-step-marker', {
+  vars: { "--rk-svg-control-fill": tokens.accent, "--rk-svg-control-edge": tokens.accent },
+});
+globalStyle('.rk-stepper[data-svg-border] [data-state="current"] .rk-step-marker', {
+  vars: {
+    "--rk-svg-control-fill": tokens.inverse,
+    "--rk-svg-control-edge": tokens.accentText,
+    "--rk-svg-control-stroke": "2",
+  },
+});
+globalStyle('.rk-stepper[data-svg-border] [data-state="error"] .rk-step-marker', {
+  vars: { "--rk-svg-control-fill": tokens.danger, "--rk-svg-control-edge": tokens.danger },
+});
+globalStyle('.rk-stepper[data-svg-border] [data-state="current"] .rk-step-marker > .rk-motion-layer', {
+  opacity: 1,
+});
+
+globalStyle('.rk-stepper[data-svg-border] [data-state="current"] .rk-motion-light', {
+  animationName: "var(--rk-effect-animation)",
+});
+
+globalStyle(".rk-stepper, .rk-step-inner, .rk-step-inner > :last-child", { minWidth: 0, maxWidth: "100%" });
+globalStyle(".rk-step-label, .rk-step-desc", { overflowWrap: "anywhere" });

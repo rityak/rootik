@@ -3,6 +3,7 @@
   margin: 0;
   color: var(--rk-text);
   font: inherit;
+  overflow-wrap: anywhere;
 }
 .rk-text[data-size="xs"] {
   font-size: var(--rk-text-xs);
@@ -33,4 +34,32 @@
 }
 .rk-text[data-text-tone="info"] {
   color: var(--rk-info);
+}
+.rk-text[data-family="sans"] {
+  font-family: var(--rk-font-sans);
+}
+.rk-text[data-family="mono"] {
+  font-family: var(--rk-font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.rk-text[data-family="display"] {
+  font-family: var(--rk-font-display);
+}
+.rk-text[data-weight="normal"] {
+  font-weight: 400;
+}
+.rk-text[data-weight="medium"] {
+  font-weight: 500;
+}
+.rk-text[data-weight="semibold"] {
+  font-weight: 600;
+}
+.rk-text[data-weight="bold"] {
+  font-weight: 700;
+}
+.rk-text[data-italic="true"] {
+  font-style: italic;
+}
+.rk-text[data-italic="false"] {
+  font-style: normal;
 }

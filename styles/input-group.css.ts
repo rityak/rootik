@@ -56,3 +56,7 @@ globalStyle(".rk-input-addon[data-mono]", {
   fontFamily: `${tokens.fontMono}`,
   fontSize: `calc(${tokens.textSm} * 0.94)`,
 });
+
+globalStyle(".rk-input-group", { maxWidth: "100%" });
+globalStyle(".rk-input-addon", { minWidth: 0, flexShrink: 1, overflow: "hidden", textOverflow: "ellipsis" });
+globalStyle(".rk-input-group > .rk-button", { flexShrink: 1 });

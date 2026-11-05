@@ -93,10 +93,21 @@
 .rk-tabs[data-orientation="vertical"][data-variant="pill"] {
   display: flex;
   width: auto;
+  gap: calc(var(--rk-space) * 1.5);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.rk-tabs[data-orientation="vertical"][data-variant="pill"] .rk-tab {
+  height: var(--rk-tab-h);
+}
+.rk-tabs[data-orientation="vertical"][data-variant="pill"]
+  .rk-tab:not([aria-selected="true"]):hover:not(:disabled) {
+  background: var(--rk-hover);
 }
 .rk-tabs[data-orientation="vertical"][data-variant="pill"] .rk-tabs-indicator {
-  left: 3px;
-  right: 3px;
+  left: 0;
+  right: 0;
 }
 .rk-tab {
   position: relative;
@@ -112,6 +123,7 @@
   background: none;
   color: var(--rk-text-2);
   font: inherit;
+  line-height: 1;
   font-weight: 500;
   white-space: nowrap;
   cursor: pointer;
@@ -261,6 +273,14 @@
   flex-direction: column;
   gap: 1px;
 }
+.rk-nav-group-chevron {
+  flex-shrink: 0;
+  color: var(--rk-text-3);
+  transition: rotate var(--rk-dur) var(--rk-ease);
+}
+.rk-nav-group-chevron[data-open] {
+  rotate: 90deg;
+}
 .rk-nav-item {
   --rk-depth: 0;
   position: relative;
@@ -314,6 +334,7 @@
   background: none;
   color: inherit;
   font: inherit;
+  line-height: 1;
   font-size: var(--rk-text-md);
   text-align: start;
   text-decoration: none;
@@ -355,7 +376,7 @@
 .rk-nav-item:is(:hover, :focus-within) .rk-nav-trailing[data-hover] {
   opacity: 1;
 }
-.rk-dock {
+.rk-dock.rk-surface {
   max-width: 100%;
   display: inline-flex;
   align-items: center;
@@ -441,7 +462,7 @@
   color: var(--rk-text);
 }
 .rk-dock-item:active:not(:disabled) .rk-icon {
-  scale: 0.96;
+  scale: var(--rk-button-press-scale, 0.96);
 }
 .rk-dock-item:is([aria-current="page"], [aria-selected="true"]) {
   background: var(--rk-dock-active-bg, transparent);

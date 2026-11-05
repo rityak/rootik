@@ -1,0 +1,118 @@
+/* Generated from styles/feedback-contours.css.ts. Run bun run styles; do not edit. */
+.rk-feedback-surface {
+  position: relative;
+}
+.rk-callout[data-surface] > .rk-overlay-surface {
+  --rk-svg-fill: color-mix(in oklab, var(--rk-tone) 8%, var(--rk-surface-2));
+  --rk-svg-fill-low: color-mix(in oklab, var(--rk-tone) 4%, var(--rk-surface-1));
+  --rk-svg-edge-top: color-mix(in oklab, var(--rk-tone) 30%, var(--rk-line-strong));
+}
+.rk-callout[data-surface] > .rk-overlay-surface[data-flat] {
+  background: color-mix(in oklab, var(--rk-tone) 8%, var(--rk-surface-2));
+}
+.rk-badge[data-svg-border],
+.rk-busy-badge[data-svg-border] {
+  --rk-svg-control-fill: color-mix(in oklab, var(--rk-tone) 15%, var(--rk-surface-1));
+  --rk-svg-control-edge: color-mix(in oklab, var(--rk-tone) 45%, var(--rk-line-strong));
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  box-shadow: none;
+}
+.rk-badge[data-svg-border][data-tone="neutral"] {
+  --rk-svg-control-fill: var(--rk-surface-3);
+  --rk-svg-control-edge: var(--rk-line-strong);
+}
+.rk-badge[data-svg-border][data-variant="solid"] {
+  --rk-svg-control-fill: var(--rk-tone);
+  --rk-svg-control-edge: var(--rk-tone);
+}
+.rk-badge[data-svg-border][data-variant="outline"] {
+  --rk-svg-control-fill: transparent;
+}
+.rk-busy-badge[data-svg-border] {
+  --rk-svg-control-fill: var(--rk-glass-bg);
+  --rk-svg-control-edge: var(--rk-line-strong);
+}
+.rk-badge > .rk-svg-control-frame,
+.rk-busy-badge > .rk-svg-control-frame {
+  z-index: -1;
+}
+.rk-feedback-track {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.rk-meter-track {
+  position: relative;
+}
+.rk-progress-bar,
+.rk-meter-bar {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.rk-progress-bar > .rk-motion-layer,
+.rk-meter-bar > .rk-motion-layer {
+  z-index: 0;
+}
+.rk-spinner[data-variant="orbit"] {
+  border-color: transparent;
+  color: var(--rk-accent-text);
+}
+.rk-spinner[data-variant="orbit"] > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.rk-spinner {
+  position: relative;
+}
+.rk-spinner[data-animation="once"],
+.rk-progress[data-animation="once"] .rk-progress-bar,
+.rk-skeleton[data-animation="once"],
+.rk-skeleton-lines[data-animation="once"] > .rk-skeleton,
+.rk-status[data-animation="once"] .rk-status-dot::after,
+.rk-indicator-anchor[data-animation="once"] .rk-indicator-mark::after {
+  animation-iteration-count: 1;
+}
+.rk-spinner[data-animation="off"],
+.rk-progress[data-animation="off"] .rk-progress-bar,
+.rk-skeleton[data-animation="off"],
+.rk-skeleton-lines[data-animation="off"] > .rk-skeleton,
+.rk-status[data-animation="off"] .rk-status-dot::after,
+.rk-indicator-anchor[data-animation="off"] .rk-indicator-mark::after {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .rk-spinner,
+  .rk-skeleton,
+  .rk-progress-bar,
+  .rk-ring-bar,
+  .rk-status-dot::after,
+  .rk-indicator-mark::after {
+    animation: none;
+    transition: none;
+  }
+  .rk-progress-track[data-indeterminate] > .rk-progress-bar {
+    width: 100%;
+    translate: none;
+    opacity: 0.5;
+  }
+}
+@media (forced-colors: active) {
+  .rk-badge[data-svg-border],
+  .rk-busy-badge[data-svg-border] {
+    background: Canvas;
+    color: CanvasText;
+    outline: 1px solid CanvasText;
+  }
+  .rk-feedback-track,
+  .rk-badge > .rk-svg-control-frame,
+  .rk-busy-badge > .rk-svg-control-frame {
+    display: none;
+  }
+}

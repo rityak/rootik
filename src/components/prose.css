@@ -5,7 +5,7 @@
   color: var(--rk-text-2);
   font-size: var(--rk-text-md);
   line-height: 1.65;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 .rk-prose[data-size="sm"] {
   font-size: var(--rk-text-sm);
@@ -136,4 +136,11 @@
   color: var(--rk-text);
   font-family: var(--rk-font-mono);
   font-size: 0.82em;
+}
+.rk-prose {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.rk-prose :is(video, canvas, iframe, svg) {
+  max-width: 100%;
 }

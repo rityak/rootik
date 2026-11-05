@@ -82,3 +82,6 @@ globalStyle(".rk-file-drop-browse:hover", { textDecorationColor: "currentColor" 
 globalStyle(".rk-file-drop-browse:disabled", { cursor: "not-allowed" });
 
 globalStyle(".rk-file-drop-hint", { color: `${tokens.text3}`, fontSize: `${tokens.textXs}` });
+
+globalStyle(".rk-file-drop, .rk-file-drop-text", { minWidth: 0, maxWidth: "100%", overflowWrap: "anywhere" });
+globalStyle(".rk-file-drop-icon", { flexShrink: 0 });

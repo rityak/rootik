@@ -33,6 +33,7 @@ export const LABELS = {
   remove: "Remove",
   clear: "Clear",
   loading: "Loading",
+  progress: "Progress",
   search: "Search…",
   /** Accessible name of a SearchInput that has no visible label. */
   searchLabel: "Search",
@@ -83,6 +84,7 @@ export const LABELS = {
   total: "Total",
   target: "target",
   heatmap: "Heatmap",
+  other: "Other",
   showTable: "Show as table",
   showChart: "Show as chart",
   copy: "Copy",
@@ -119,6 +121,7 @@ export const LABELS = {
   zoomIn: "Zoom in",
   zoomOut: "Zoom out",
   fitToScreen: "Fit to screen",
+  imageUnavailable: "Image unavailable",
   imageCounter: (index: number, count: number): string => `${index} / ${count}`,
   selectItem: "Select",
   logLevels: "Levels",

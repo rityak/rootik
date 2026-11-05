@@ -87,7 +87,7 @@ globalStyle(".rk-image-grid[data-virtual]", { overflow: "auto", padding: "4px" }
 
 globalStyle(".rk-image-grid-cells", {
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(var(--rk-grid-size, 160px), 1fr))",
+  gridTemplateColumns: "repeat(auto-fill, minmax(min(var(--rk-grid-size, 160px), 100%), 1fr))",
   gap: `calc(${tokens.space} * 3) calc(${tokens.space} * 2)`,
 });
 

@@ -2,6 +2,8 @@
 .rk-shell {
   --rk-shell-gap: calc(var(--rk-space) * 2.5 * var(--rk-shell-space, 1));
   --rk-shell-round: clamp(0, var(--rk-shell-space, 1) * 1000, 1);
+  position: relative;
+  isolation: isolate;
   display: flex;
   gap: var(--rk-shell-gap);
   height: 100dvh;
@@ -11,6 +13,34 @@
   background-position: center;
   background-size: cover;
   overflow: hidden;
+}
+.rk-shell-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.rk-shell > :not(.rk-shell-backdrop, .rk-skip) {
+  position: relative;
+  z-index: 1;
+}
+.rk-shell-part-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.rk-shell-sidebar.rk-svg-surface {
+  flex-direction: column;
+}
+.rk-shell-aside > .rk-svg-surface {
+  flex: 1;
+  min-width: 0;
+}
+.rk-shell-dock .rk-svg-surface .rk-dock {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 .rk-shell :is(.rk-shell-sidebar, .rk-shell-aside, .rk-shell-panel, .rk-shell-dockbar > .rk-dock) {
   border-radius: calc(var(--rk-radius-lg) * var(--rk-shell-round));
@@ -154,13 +184,22 @@
 }
 .rk-titlebar {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr);
   align-items: center;
   gap: 12px;
   min-height: calc(var(--rk-h-md) + 16px);
   padding: 6px 8px 6px 14px;
   user-select: none;
   container: rk-titlebar / inline-size;
+}
+.rk-titlebar:has(> .rk-titlebar-center:empty) {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.rk-titlebar:has(> .rk-titlebar-center:empty) > :is(.rk-titlebar-start, .rk-titlebar-end) {
+  grid-area: auto;
+}
+.rk-titlebar-center:empty {
+  display: none;
 }
 .rk-titlebar-start,
 .rk-titlebar-end {
@@ -526,7 +565,7 @@
 }
 .rk-master-detail {
   display: grid;
-  grid-template-columns: var(--rk-md-list-w) minmax(0, 1fr);
+  grid-template-columns: minmax(0, var(--rk-md-list-w)) minmax(0, 1fr);
   gap: var(--rk-gap, 12px);
   min-height: 0;
 }
@@ -562,6 +601,49 @@
 .rk-master-detail-back:hover {
   background: var(--rk-hover);
   color: var(--rk-text);
+}
+.rk-shell,
+.rk-shell-body,
+.rk-shell-part-content,
+.rk-shell-header,
+.rk-shell-footer,
+.rk-shell-drawer-inner,
+.rk-page-body,
+.rk-page-column,
+.rk-master-detail {
+  min-width: 0;
+}
+.rk-page-column > * {
+  min-width: 0;
+}
+.rk-shell-dock {
+  min-width: 0;
+  max-width: calc(100% - var(--rk-shell-gap) * 2);
+}
+.rk-shell-dock > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.rk-titlebar-controls,
+.rk-titlebar-controls > button {
+  flex-shrink: 0;
+}
+.rk-page-title,
+.rk-page-desc,
+.rk-action-bar-status {
+  overflow-wrap: anywhere;
+}
+.rk-page-actions {
+  min-width: 0;
+  max-width: 100%;
+}
+.rk-status-bar {
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.rk-status-bar-end {
+  flex-shrink: 0;
 }
 @container rk-titlebar (width < 32rem) {
   .rk-titlebar-start {

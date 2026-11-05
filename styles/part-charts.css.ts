@@ -40,11 +40,11 @@ globalStyle(".rk-donut-label", {
 
 globalStyle(".rk-donut-legend", {
   display: "grid",
-  gridTemplateColumns: "auto 1fr auto auto",
+  gridTemplateColumns: "auto minmax(0, 1fr) auto auto",
   gap: "6px 12px",
   alignItems: "center",
   flex: "1",
-  minWidth: "180px",
+  minWidth: "min(180px, 100%)",
   margin: "0",
   padding: "0",
   listStyle: "none",
@@ -77,9 +77,17 @@ globalStyle(".rk-treemap g", { transition: `opacity ${tokens.dur} ${tokens.ease}
 
 globalStyle(".rk-treemap g[data-dim]", { opacity: "0.55" });
 
-globalStyle(".rk-treemap-label", { fill: `${tokens.bg}`, fontSize: `${tokens.textXs}`, fontWeight: "600" });
+globalStyle(".rk-treemap-label", {
+  fill: `${tokens.chartOnFill}`,
+  fontSize: `${tokens.textXs}`,
+  fontWeight: "600",
+});
 
-globalStyle(".rk-treemap-value", { fill: `${tokens.bg}`, opacity: "0.8", fontSize: `${tokens.text2xs}` });
+globalStyle(".rk-treemap-value", {
+  fill: `${tokens.chartOnFill}`,
+  opacity: "0.8",
+  fontSize: `${tokens.text2xs}`,
+});
 
 globalStyle(".rk-treemap [data-idle] text", { fill: `${tokens.text}` });
 
@@ -127,3 +135,8 @@ globalStyle(".rk-bullet-target", {
   borderRadius: `calc(1px * ${tokens.roundness})`,
   background: `${tokens.text}`,
 });
+
+// Fixed-coordinate plots keep their geometry; narrow hosts scroll the plot locally.
+globalStyle(".rk-donut", { minWidth: 0, maxWidth: "100%", overflowX: "auto" });
+
+globalStyle(".rk-donut-legend-label", { minWidth: 0, overflowWrap: "anywhere" });

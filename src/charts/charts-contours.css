@@ -1,0 +1,87 @@
+/* Generated from styles/charts-contours.css.ts. Run bun run styles; do not edit. */
+@keyframes _1067smw0 {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.rk-chart-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 5);
+  min-width: 0;
+}
+.rk-chart-panel-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: space-between;
+  gap: calc(var(--rk-space) * 3);
+}
+.rk-chart-panel-caption {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+.rk-chart-panel-caption h3 {
+  margin: 0;
+  font-size: var(--rk-text-md);
+  font-weight: 550;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+.rk-chart-panel-caption p {
+  margin: var(--rk-space) 0 0;
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+  line-height: 1.5;
+}
+.rk-chart-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rk-space);
+}
+.rk-chart-panel-summary {
+  color: var(--rk-text);
+  font-variant-numeric: tabular-nums;
+}
+.rk-chart-panel-body {
+  position: relative;
+  min-width: 0;
+  isolation: isolate;
+}
+.rk-chart-panel[data-animation="once"] .rk-chart-line {
+  stroke-dasharray: 1px;
+  stroke-dashoffset: 0;
+  animation: _1067smw0 calc(var(--rk-dur-slow) * 2) var(--rk-ease-out) backwards;
+}
+.rk-chart-panel .rk-gauge {
+  max-width: 100%;
+}
+.rk-chart-panel .rk-heatmap-scale {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.rk-chart-panel .rk-heatmap-ramp {
+  width: calc(var(--rk-space) * 16);
+}
+.rk-chart-panel .rk-bars-row {
+  min-width: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rk-chart-panel[data-animation="once"] .rk-chart-line {
+    animation: none;
+  }
+}
+@media (forced-colors: active) {
+  .rk-chart-panel[data-animation="once"] .rk-chart-line {
+    animation: none;
+  }
+}
+@supports not (stroke-dasharray: 1) {
+  .rk-chart-panel[data-animation="once"] .rk-chart-line {
+    animation: none;
+  }
+}

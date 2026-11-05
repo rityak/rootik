@@ -285,21 +285,27 @@ const SECTIONS = [
 ];
 
 export const Contents: Story = () => {
-  const [root, setRoot] = useState<HTMLDivElement | null>(null);
+  const [root, setRoot] = useState<HTMLElement | null>(null);
   const active = useScrollSpy(
     SECTIONS.map((s) => s.id),
     { root, offset: 24 },
   );
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1fr 180px", gap: 24, height: 420 }}>
-      <div ref={setRoot} style={{ overflow: "auto", paddingRight: 8 }}>
+      <section
+        ref={setRoot}
+        // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region must be keyboard reachable
+        tabIndex={0}
+        aria-label="Sections"
+        style={{ overflow: "auto", paddingRight: 8 }}
+      >
         {SECTIONS.map((s) => (
           <section key={s.id} id={s.id} style={{ minHeight: 200, scrollMarginTop: 12 }}>
             <h3 style={{ margin: "0 0 8px" }}>{s.label}</h3>
             <p style={{ color: "var(--rk-text-3)", margin: 0 }}>Settings for {s.label.toLowerCase()}.</p>
           </section>
         ))}
-      </div>
+      </section>
       <TableOfContents items={SECTIONS} active={active} style={{ alignSelf: "start" }} />
     </div>
   );

@@ -56,3 +56,15 @@
   font-family: var(--rk-font-mono);
   font-size: calc(var(--rk-text-sm) * 0.94);
 }
+.rk-input-group {
+  max-width: 100%;
+}
+.rk-input-addon {
+  min-width: 0;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rk-input-group > .rk-button {
+  flex-shrink: 1;
+}

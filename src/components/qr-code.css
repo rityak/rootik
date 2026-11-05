@@ -2,11 +2,13 @@
 .rk-qr {
   display: block;
   flex: none;
+  max-width: 100%;
+  height: auto;
   border-radius: var(--rk-radius-md);
 }
 .rk-qr .rk-qr-plate {
-  fill: var(--rk-inverse);
+  fill: var(--rk-qr-plate);
 }
 .rk-qr .rk-qr-modules {
-  fill: var(--rk-on-inverse);
+  fill: var(--rk-qr-ink);
 }

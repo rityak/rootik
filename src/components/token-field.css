@@ -8,7 +8,7 @@
   padding-inline: 4px calc(var(--rk-space) * 3);
 }
 .rk-token-input {
-  flex: 1 0 80px;
+  flex: 1 1 80px;
   height: calc(var(--rk-input-h) - 8px);
   padding-left: 4px;
 }
@@ -65,4 +65,11 @@
   margin-top: 4px;
   color: oklch(from var(--rk-danger) calc(l + 0.08) c h);
   font-size: var(--rk-text-xs);
+}
+.rk-token,
+.rk-token-text {
+  min-width: 0;
+}
+.rk-token-remove {
+  flex-shrink: 0;
 }

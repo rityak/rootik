@@ -43,11 +43,11 @@
 }
 .rk-donut-legend {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   gap: 6px 12px;
   align-items: center;
   flex: 1;
-  min-width: 180px;
+  min-width: min(180px, 100%);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -90,12 +90,12 @@
   opacity: 0.55;
 }
 .rk-treemap-label {
-  fill: var(--rk-bg);
+  fill: var(--rk-chart-on-fill);
   font-size: var(--rk-text-xs);
   font-weight: 600;
 }
 .rk-treemap-value {
-  fill: var(--rk-bg);
+  fill: var(--rk-chart-on-fill);
   opacity: 0.8;
   font-size: var(--rk-text-2xs);
 }
@@ -153,4 +153,13 @@
   margin-left: -1px;
   border-radius: calc(1px * var(--rk-roundness));
   background: var(--rk-text);
+}
+.rk-donut {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+.rk-donut-legend-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }

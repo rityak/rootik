@@ -22,7 +22,7 @@ globalStyle('.rk-badge[data-tone="neutral"]', { background: `${tokens.surface3}`
 
 globalStyle('.rk-badge[data-variant="solid"]', {
   background: "var(--rk-tone)",
-  color: "oklch(from var(--rk-tone) clamp(0.16, (0.7 - l) * 100, 0.99) 0 0)",
+  color: "var(--rk-on-tone)",
 });
 
 globalStyle('.rk-badge[data-variant="outline"]', {

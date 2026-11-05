@@ -128,10 +128,13 @@ globalStyle(".rk-switch::before", {
   boxShadow: `0 1px 3px oklch(${tokens.shade} / 0.4)`,
   transition: `translate ${tokens.durSlow} ${tokens.spring},
       background-color ${tokens.dur} ${tokens.ease},
-      width ${tokens.dur} ${tokens.ease}`,
+      transform ${tokens.dur} ${tokens.ease}`,
 });
 
-globalStyle(".rk-switch:active:not(:disabled)::before", { width: "calc(var(--rk-sw-h) + 1px)" });
+globalStyle(".rk-switch:active:not(:disabled)::before", {
+  transform: "scaleX(1.25)",
+  transformOrigin: "left center",
+});
 
 globalStyle(".rk-switch:checked", {
   background: `${tokens.accent}`,
@@ -144,7 +147,7 @@ globalStyle(".rk-switch:checked::before", {
 });
 
 globalStyle(".rk-switch:checked:active:not(:disabled)::before", {
-  translate: "calc(var(--rk-sw-w) - var(--rk-sw-h) - 5px) 0",
+  transformOrigin: "right center",
 });
 
 globalStyle('.rk-switch[data-size="sm"]', { vars: { "--rk-sw-w": "26px", "--rk-sw-h": "14px" } });
@@ -203,6 +206,7 @@ globalStyle(".rk-segmented-thumb", {
 });
 
 globalStyle(".rk-segmented-item", {
+  lineHeight: "1",
   position: "relative",
   zIndex: "1",
   display: "inline-flex",
@@ -230,7 +234,7 @@ globalStyle(".rk-segmented-item[data-disabled]", { cursor: "not-allowed", opacit
 
 globalStyle(".rk-segmented-item:has(:focus-visible)", {
   outline: `2px solid ${tokens.focus}`,
-  outlineOffset: "1px",
+  outlineOffset: "-2px",
 });
 
 globalStyle(".rk-segmented-item .rk-icon", { fontSize: "1.1em" });
@@ -259,7 +263,7 @@ globalStyle(".rk-choice-card:has(:checked)", {
 
 globalStyle(".rk-choice-card:has(:focus-visible)", {
   outline: `2px solid ${tokens.focus}`,
-  outlineOffset: "2px",
+  outlineOffset: "-2px",
 });
 
 globalStyle(".rk-choice-card[data-disabled]", { opacity: "0.45", cursor: "not-allowed" });
@@ -386,7 +390,10 @@ globalStyle(".rk-swatch:has(:checked), .rk-swatch[data-checked]", {
       0 0 0 4px var(--rk-swatch)`,
 });
 
-globalStyle(".rk-swatch:has(:focus-visible)", { outline: `2px solid ${tokens.focus}`, outlineOffset: "4px" });
+globalStyle(".rk-swatch:has(:focus-visible)", {
+  outline: `2px solid ${tokens.focus}`,
+  outlineOffset: "-2px",
+});
 
 globalStyle(".rk-swatch[data-custom]", { background: `var(--rk-swatch, ${tokens.spectrum})` });
 
@@ -398,4 +405,17 @@ globalStyle(".rk-swatch[data-custom]:not([data-checked])::after", {
   placeItems: "center",
   color: `${tokens.onInverse}`,
   fontWeight: "700",
+});
+
+// An inward accent ring would disappear against an already accented control.
+globalStyle(
+  ".rk-checkbox:is(:checked, :indeterminate):focus-visible, .rk-radio:checked:focus-visible, .rk-switch:checked:focus-visible",
+  {
+    outlineColor: tokens.onAccent,
+  },
+);
+
+globalStyle(".rk-segmented, .rk-chip-group", { minWidth: 0, maxWidth: "100%", overflowX: "auto" });
+globalStyle(".rk-check-text, .rk-choice-card-label, .rk-choice-card-desc, .rk-choice-card-note", {
+  overflowWrap: "anywhere",
 });

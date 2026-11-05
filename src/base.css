@@ -37,7 +37,7 @@ html {
 }
 :where([class*="rk-"]):focus-visible {
   outline: 2px solid var(--rk-focus);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 :where([class*="rk-"]) {
   box-sizing: border-box;
@@ -88,7 +88,7 @@ html {
 [data-tone] {
   --rk-tone: var(--rk-accent);
   --rk-tone-text: var(--rk-accent-text);
-  --rk-on-tone: oklch(from var(--rk-tone) clamp(0.16, (0.73 - l) * 100, 0.99) 0 0);
+  --rk-on-tone: oklch(from var(--rk-tone) clamp(0.16, (0.63 - l) * 100, 0.99) 0 0);
 }
 [data-tone="neutral"] {
   --rk-tone: var(--rk-text-3);
@@ -190,6 +190,10 @@ html {
   display: contents;
   font-family: var(--rk-font-sans);
   font-size: var(--rk-font-size);
+}
+.rk-floating {
+  max-width: var(--rk-floating-max-w, calc(100dvw - 16px));
+  max-height: var(--rk-floating-max-h, calc(100dvh - 16px));
 }
 @supports selector(::-webkit-scrollbar) {
   * {

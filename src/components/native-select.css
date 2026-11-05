@@ -29,6 +29,10 @@
   }
   .rk-native-select::picker(select) {
     margin-block: 6px;
+    max-width: calc(100dvw - 16px);
+    max-height: min(360px, calc(100dvh - 16px));
+    overflow: auto;
+    overflow-wrap: anywhere;
     padding: 5px;
     border: 0;
     border-radius: var(--rk-radius-md);
@@ -43,7 +47,7 @@
     gap: 8px;
     min-height: calc(var(--rk-h-sm) + 2px);
     padding: 4px calc(var(--rk-space) * 2.5);
-    border-radius: calc(var(--rk-radius-md) - 5px);
+    border-radius: max(0px, calc(var(--rk-radius-md) - 5px));
     font-size: var(--rk-text-md);
   }
   .rk-native-select option:is(:hover, :focus-visible) {

@@ -1,0 +1,338 @@
+.support-app {
+  font-size: var(--rk-text-sm);
+}
+
+.support-sidebar-shell {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.support-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--rk-space) * 1.5);
+  min-height: 0;
+  padding: calc(var(--rk-space) * 2) var(--rk-space);
+  border-inline-end: 1px solid var(--rk-line);
+  background: var(--rk-well-soft);
+}
+
+.support-rail-spacer {
+  flex: 1;
+}
+
+.support-queue {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.support-queue-controls {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 2);
+  padding: calc(var(--rk-space) * 2.5);
+  border-block-end: 1px solid var(--rk-line);
+}
+
+.support-filter-row {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  gap: var(--rk-space);
+}
+
+.support-tags {
+  max-height: 92px;
+  overflow: auto;
+  align-content: flex-start;
+}
+
+.support-ticket-list {
+  min-height: 0;
+  overflow: auto;
+}
+
+.support-ticket {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: calc(var(--rk-space) * 2.5);
+  width: 100%;
+  min-width: 0;
+  padding: calc(var(--rk-space) * 2.5);
+  border: 0;
+  border-block-end: 1px solid var(--rk-line);
+  background: transparent;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.support-ticket:hover {
+  background: var(--rk-hover);
+}
+
+.support-ticket[aria-pressed="true"] {
+  background: var(--rk-accent-soft);
+  box-shadow: inset 2px 0 var(--rk-accent);
+}
+
+.support-ticket:focus-visible {
+  outline: 2px solid var(--rk-focus);
+  outline-offset: -2px;
+}
+
+.support-ticket-copy,
+.support-ticket-end,
+.support-stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.support-ticket-copy {
+  gap: var(--rk-space);
+}
+
+.support-ticket-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.support-ticket-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--rk-space);
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+}
+
+.support-ticket-end {
+  align-items: flex-end;
+  gap: var(--rk-space);
+  color: var(--rk-text-3);
+  font-size: var(--rk-text-xs);
+}
+
+.support-empty {
+  margin: 0;
+  padding: var(--rk-pad);
+  color: var(--rk-text-3);
+  text-align: center;
+}
+
+.support-title,
+.support-value,
+.support-row-actions,
+.support-section-actions,
+.support-history-list,
+.support-status-end,
+.support-status-end > span {
+  display: flex;
+  align-items: center;
+}
+
+.support-title {
+  gap: calc(var(--rk-space) * 1.5);
+  min-width: 0;
+}
+
+.support-title > strong,
+.support-title > .rk-badge:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.support-title > .rk-num {
+  color: var(--rk-text-2);
+}
+
+.support-page .rk-page-column {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 3);
+}
+
+.support-page {
+  container: support-page / inline-size;
+}
+
+.support-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: calc(var(--rk-space) * 2.5);
+}
+
+.support-info-card,
+.support-info-list {
+  min-width: 0;
+}
+
+.support-info-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.support-info-list > div {
+  display: grid;
+  grid-template-columns: minmax(92px, 0.75fr) minmax(0, 1.25fr);
+  align-items: center;
+  min-height: var(--rk-h-md);
+  gap: calc(var(--rk-space) * 2);
+  border-block-end: 1px solid var(--rk-line);
+}
+
+.support-info-list > div:last-child {
+  border-block-end: 0;
+}
+
+.support-info-list dt {
+  color: var(--rk-text-2);
+  font-weight: 600;
+}
+
+.support-info-list dd {
+  min-width: 0;
+  margin: 0;
+  text-align: end;
+  overflow-wrap: anywhere;
+}
+
+.support-value {
+  justify-content: flex-end;
+  gap: var(--rk-space);
+}
+
+.support-stack {
+  align-items: flex-end;
+  gap: var(--rk-space);
+}
+
+.support-stack small {
+  color: var(--rk-text-3);
+}
+
+.support-note-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: calc(var(--rk-space) * 2);
+}
+
+.support-note-empty {
+  width: 100%;
+  padding: calc(var(--rk-space) * 2);
+  border: 0;
+  border-radius: var(--rk-radius-sm);
+  background: transparent;
+  color: var(--rk-text-3);
+  font: inherit;
+  font-style: italic;
+  text-align: center;
+  cursor: pointer;
+}
+
+.support-note-empty:hover {
+  background: var(--rk-hover);
+  color: var(--rk-text-2);
+}
+
+.support-addresses,
+.support-secondary-grid {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--rk-space) * 3);
+}
+
+.support-section,
+.support-history {
+  min-width: 0;
+}
+
+.support-section > header,
+.support-section > header h2,
+.support-history h2 {
+  display: flex;
+  align-items: center;
+}
+
+.support-section > header {
+  justify-content: space-between;
+  gap: calc(var(--rk-space) * 2);
+  margin-block-end: calc(var(--rk-space) * 1.5);
+}
+
+.support-section > header h2,
+.support-history h2 {
+  gap: calc(var(--rk-space) * 1.5);
+  margin: 0;
+  font-size: var(--rk-text-md);
+}
+
+.support-section-actions,
+.support-row-actions,
+.support-history-list,
+.support-status-end {
+  gap: var(--rk-space);
+}
+
+.support-row-actions {
+  justify-content: flex-end;
+}
+
+.support-history-list {
+  flex-wrap: wrap;
+  margin-block-start: calc(var(--rk-space) * 1.5);
+}
+
+.support-templates {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rk-space);
+  padding: calc(var(--rk-space) * 1.5);
+}
+
+.support-status-end {
+  flex-wrap: wrap;
+}
+
+.support-status-end > span {
+  gap: var(--rk-space);
+}
+
+@container support-page (width < 1000px) {
+  .support-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .support-summary-grid > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@container support-page (width < 680px) {
+  .support-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .support-summary-grid > :last-child {
+    grid-column: auto;
+  }
+
+  .support-note-editor {
+    grid-template-columns: 1fr;
+  }
+
+  .support-section > header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

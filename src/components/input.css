@@ -94,7 +94,7 @@
 .rk-textarea:is(:focus-visible, :has(:focus-visible)),
 .rk-select-trigger:is(:focus-visible, :has(:focus-visible)) {
   outline: 2px solid var(--rk-focus);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 .rk-input[data-invalid],
 .rk-textarea[data-invalid],
@@ -232,4 +232,17 @@
 }
 .rk-input input::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
+}
+.rk-field-control {
+  max-width: 100%;
+}
+.rk-field-label,
+.rk-field-hint,
+.rk-field-error,
+.rk-field-aside {
+  overflow-wrap: anywhere;
+}
+.rk-textarea {
+  min-width: 0;
+  max-width: 100%;
 }

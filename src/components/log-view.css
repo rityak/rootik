@@ -71,7 +71,7 @@
 }
 .rk-log-row[data-level="error"] {
   --rk-tone: var(--rk-danger);
-  --rk-tone-text: oklch(from var(--rk-danger) calc(l + 0.08) c h);
+  --rk-tone-text: var(--rk-danger);
   color: var(--rk-text);
 }
 .rk-log-row:is([data-level="warn"], [data-level="error"]) {
@@ -93,7 +93,6 @@
   min-width: calc(var(--rk-log-digits, 3) * 1ch);
   text-align: end;
   color: var(--rk-text-3);
-  opacity: 0.7;
   user-select: none;
 }
 .rk-log-time {

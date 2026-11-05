@@ -55,7 +55,9 @@
   rotate: 90deg;
 }
 .rk-json-key {
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--rk-text);
 }
 .rk-json-key::after {
@@ -86,13 +88,13 @@
   white-space: nowrap;
 }
 .rk-json-value[data-kind="string"] {
-  color: oklch(from var(--rk-chart-3) calc(l + 0.14) c h);
+  color: var(--rk-syntax-string);
 }
 .rk-json-value[data-kind="number"] {
-  color: oklch(from var(--rk-chart-2) calc(l + 0.12) c h);
+  color: var(--rk-syntax-number);
 }
 .rk-json-value[data-kind="boolean"] {
-  color: oklch(from var(--rk-chart-4) calc(l + 0.16) c h);
+  color: var(--rk-syntax-boolean);
 }
 .rk-json-value:is([data-kind="null"], [data-kind="undefined"]) {
   color: var(--rk-text-3);
@@ -106,4 +108,8 @@
 .rk-json-actions .rk-button {
   width: 22px;
   height: 22px;
+}
+.rk-json {
+  max-width: 100%;
+  overflow-x: auto;
 }

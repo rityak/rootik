@@ -56,7 +56,12 @@ globalStyle(".rk-json-toggle svg", {
 
 globalStyle(".rk-json-toggle svg[data-open]", { rotate: "90deg" });
 
-globalStyle(".rk-json-key", { flex: "none", color: `${tokens.text}` });
+globalStyle(".rk-json-key", {
+  flex: "0 1 auto",
+  minWidth: 0,
+  overflowWrap: "anywhere",
+  color: `${tokens.text}`,
+});
 
 globalStyle(".rk-json-key::after", { content: '":"', color: `${tokens.text3}` });
 
@@ -85,15 +90,15 @@ globalStyle(".rk-json-value", {
 });
 
 globalStyle('.rk-json-value[data-kind="string"]', {
-  color: `oklch(from ${tokens.chart3} calc(l + 0.14) c h)`,
+  color: tokens.syntaxString,
 });
 
 globalStyle('.rk-json-value[data-kind="number"]', {
-  color: `oklch(from ${tokens.chart2} calc(l + 0.12) c h)`,
+  color: tokens.syntaxNumber,
 });
 
 globalStyle('.rk-json-value[data-kind="boolean"]', {
-  color: `oklch(from ${tokens.chart4} calc(l + 0.16) c h)`,
+  color: tokens.syntaxBoolean,
 });
 
 globalStyle('.rk-json-value:is([data-kind="null"], [data-kind="undefined"])', {
@@ -104,3 +109,6 @@ globalStyle('.rk-json-value:is([data-kind="null"], [data-kind="undefined"])', {
 globalStyle(".rk-json-actions", { display: "inline-flex", marginInlineStart: "auto", flex: "none" });
 
 globalStyle(".rk-json-actions .rk-button", { width: "22px", height: "22px" });
+
+// Deep indentation remains navigable without widening the surrounding page.
+globalStyle(".rk-json", { maxWidth: "100%", overflowX: "auto" });

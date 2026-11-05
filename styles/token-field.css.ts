@@ -11,7 +11,7 @@ globalStyle(".rk-token-field", {
 });
 
 globalStyle(".rk-token-input", {
-  flex: "1 0 80px",
+  flex: "1 1 80px",
   height: "calc(var(--rk-input-h) - 8px)",
   paddingLeft: "4px",
 });
@@ -64,3 +64,6 @@ globalStyle(".rk-token-error", {
   color: `oklch(from ${tokens.danger} calc(l + 0.08) c h)`,
   fontSize: `${tokens.textXs}`,
 });
+
+globalStyle(".rk-token, .rk-token-text", { minWidth: 0 });
+globalStyle(".rk-token-remove", { flexShrink: 0 });

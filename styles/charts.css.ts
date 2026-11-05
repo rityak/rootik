@@ -160,3 +160,5 @@ globalStyle(".rk-chart-brush-overview", { marginInline: "8px" });
 globalStyle(".rk-chart-brush-overview svg", { display: "block", overflow: "visible" });
 
 globalStyle(".rk-chart-brush-shade", { fill: `${tokens.bg}`, opacity: "0.7" });
+
+globalStyle(".rk-legend li", { minWidth: 0, maxWidth: "100%", overflowWrap: "anywhere" });

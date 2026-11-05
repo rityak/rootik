@@ -1,0 +1,139 @@
+/* Generated from styles/content-contours.css.ts. Run bun run styles; do not edit. */
+.rk-content-surface {
+  position: relative;
+}
+.rk-card[data-surface] {
+  gap: calc(var(--rk-space) * 4);
+  overflow: visible;
+}
+.rk-card[data-surface]::before,
+.rk-card[data-surface]::after {
+  display: none;
+}
+.rk-card[data-surface] > .rk-card-header {
+  min-height: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+.rk-card[data-surface] > .rk-card-body,
+.rk-card[data-surface] .rk-card-collapse-inner > .rk-card-body {
+  padding: 0;
+}
+.rk-card[data-surface] :is(.rk-card-header, .rk-card-body, .rk-card-footer) {
+  min-width: 0;
+}
+.rk-card[data-surface] > .rk-card-footer,
+.rk-card[data-surface] .rk-card-collapse-inner > .rk-card-footer {
+  padding: calc(var(--rk-space) * 3) 0 0;
+  background: transparent;
+  flex-wrap: wrap;
+}
+.rk-card[data-surface] .rk-card-title {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+.rk-card[data-surface] .rk-card-collapse-inner {
+  gap: calc(var(--rk-space) * 4);
+}
+.rk-card[data-surface][data-interactive]:hover,
+.rk-card[data-surface][data-selected] {
+  box-shadow: none;
+}
+.rk-card[data-surface][data-selected] {
+  --rk-svg-edge-top: var(--rk-accent-text);
+  --rk-svg-edge: var(--rk-accent-text);
+}
+.rk-card:has(> .rk-card-hit:focus-visible) {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--rk-focus);
+}
+.rk-card[data-surface]:has(> .rk-card-hit:focus-visible) {
+  --rk-svg-edge-top: var(--rk-focus);
+  --rk-svg-edge: var(--rk-focus);
+  box-shadow: none;
+}
+.rk-card[data-surface]:has(> .rk-card-hit:focus-visible) > .rk-overlay-surface .rk-svg-surface-rim {
+  stroke-width: 2;
+}
+.rk-card[data-surface]:has(> .rk-card-hit:focus-visible) > .rk-overlay-surface[data-flat] {
+  box-shadow: inset 0 0 0 2px var(--rk-focus);
+}
+.rk-card[data-running][data-animation="once"]::after {
+  animation-iteration-count: 1;
+}
+.rk-card[data-running][data-animation="off"]::after {
+  display: none;
+}
+.rk-content-motion {
+  inset: var(--rk-overlay-pad);
+  border-radius: var(--rk-radius-sm);
+}
+.rk-disclosure-surface {
+  display: contents;
+}
+.rk-disclosure-surface[data-surface] {
+  display: block;
+  position: relative;
+  isolation: isolate;
+}
+.rk-disclosure-surface > .rk-overlay-surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.rk-disclosure-surface > .rk-overlay-surface[data-flat] {
+  box-shadow: inset 0 0 0 1px var(--rk-line);
+}
+.rk-disclosure[data-surface] > summary {
+  padding: 0;
+  min-height: var(--rk-h-md);
+  border-radius: var(--rk-radius-sm);
+}
+.rk-disclosure[data-surface] > .rk-disclosure-body {
+  padding: calc(var(--rk-space) * 3) 0 0;
+  overflow-wrap: anywhere;
+}
+.rk-disclosure-surface + .rk-disclosure-surface > .rk-disclosure {
+  border-top: 0;
+  border-radius: var(--rk-radius-md);
+}
+.rk-text-shimmer[data-active][data-animation="once"] {
+  animation-iteration-count: 1;
+}
+.rk-code-editor:has(textarea:focus-visible) {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--rk-focus);
+}
+.rk-card[data-surface] > .rk-card-header > :is(.rk-card-toggle, .rk-card-heading) {
+  flex: 1 1 min(100%, calc(var(--rk-space) * 56));
+}
+.rk-card[data-surface] > .rk-card-header > .rk-card-actions {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.rk-disclosure-surface:not([data-surface]) + .rk-disclosure-surface:not([data-surface]) > .rk-disclosure {
+  border-top: 1px solid var(--rk-line);
+  border-radius: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rk-text-shimmer[data-active],
+  .rk-card[data-running]::after {
+    animation: none;
+  }
+  .rk-text-shimmer[data-active] {
+    background: none;
+    color: var(--rk-text-3);
+  }
+}
+@media (forced-colors: active) {
+  .rk-card:has(> .rk-card-hit:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+  .rk-code-editor:has(textarea:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

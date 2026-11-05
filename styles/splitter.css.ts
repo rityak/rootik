@@ -52,3 +52,38 @@ globalStyle('[data-orientation="vertical"] > .rk-splitter-handle', { height: "1p
 globalStyle('[data-orientation="vertical"] > .rk-splitter-handle::before', { inset: "-4px 0" });
 
 globalStyle('[data-orientation="vertical"] > .rk-splitter-handle::after', { inset: "-1px 0" });
+
+globalStyle(".rk-splitter[data-grip] > .rk-splitter-handle", {
+  background: "transparent",
+  color: tokens.text3,
+  isolation: "isolate",
+});
+globalStyle('.rk-splitter[data-grip][data-orientation="horizontal"] > .rk-splitter-handle', {
+  width: `calc(${tokens.space} * 3)`,
+});
+globalStyle('.rk-splitter[data-grip][data-orientation="vertical"] > .rk-splitter-handle', {
+  height: `calc(${tokens.space} * 3)`,
+});
+globalStyle(".rk-splitter-grip", {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  translate: "-50% -50%",
+  width: `calc(${tokens.space} * 2)`,
+  height: `calc(${tokens.space} * 8)`,
+  pointerEvents: "none",
+});
+globalStyle('[data-orientation="vertical"] > .rk-splitter-handle > .rk-splitter-grip', { rotate: "90deg" });
+globalStyle(".rk-splitter-handle > .rk-motion-layer", { overflow: "hidden" });
+// A one-pixel separator cannot contain a two-pixel outline; paint the existing line instead.
+globalStyle(".rk-splitter-handle:focus-visible::after", {
+  inset: 0,
+  opacity: 1,
+  background: tokens.focus,
+  "@media": { "(forced-colors: active)": { background: "Highlight", forcedColorAdjust: "none" } },
+});
+globalStyle(".rk-splitter[data-grip] > .rk-splitter-handle:focus-visible", {
+  outline: `2px solid ${tokens.focus}`,
+  outlineOffset: "-2px",
+});
+globalStyle(".rk-splitter[data-grip] > .rk-splitter-handle:focus-visible::after", { opacity: 0 });

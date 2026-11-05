@@ -31,7 +31,7 @@
 }
 .rk-badge[data-variant="solid"] {
   background: var(--rk-tone);
-  color: oklch(from var(--rk-tone) clamp(0.16, (0.7 - l) * 100, 0.99) 0 0);
+  color: var(--rk-on-tone);
 }
 .rk-badge[data-variant="outline"] {
   background: transparent;

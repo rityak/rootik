@@ -1,0 +1,123 @@
+/* Generated from styles/controls-contours.css.ts. Run bun run styles; do not edit. */
+.rk-select-trigger[data-svg-border],
+.rk-native-select-wrap[data-svg-border],
+.rk-textarea-wrap[data-svg-border],
+.rk-choice-card[data-svg-border],
+.rk-chip[data-svg-border] {
+  --rk-svg-control-fill: var(--rk-well);
+  --rk-svg-control-edge: var(--rk-control-edge);
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  box-shadow: none;
+}
+.rk-select-trigger[data-svg-border] > .rk-svg-control-frame {
+  z-index: -1;
+}
+.rk-native-select-wrap[data-svg-border] > .rk-svg-control-frame {
+  z-index: -1;
+}
+.rk-textarea-wrap[data-svg-border] > .rk-svg-control-frame {
+  z-index: -1;
+}
+.rk-choice-card[data-svg-border] > .rk-svg-control-frame {
+  z-index: -1;
+}
+.rk-chip[data-svg-border] > .rk-svg-control-frame {
+  z-index: -1;
+}
+.rk-native-select-wrap[data-svg-border] > select,
+.rk-textarea-wrap[data-svg-border] > textarea {
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+}
+.rk-textarea-wrap {
+  display: grid;
+  min-width: 0;
+}
+.rk-textarea-wrap > textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+.rk-native-select-wrap[data-svg-border] > select {
+  position: relative;
+}
+.rk-native-select-wrap[data-svg-border][data-disabled] > .rk-svg-control-frame,
+.rk-textarea-wrap[data-svg-border][data-disabled] > .rk-svg-control-frame {
+  opacity: 0.5;
+}
+.rk-choice-card[data-svg-border]:hover:not([data-disabled]):not(:has(:checked)),
+.rk-chip[data-svg-border]:hover:not(:disabled, [aria-pressed="true"]) {
+  --rk-svg-control-fill: var(--rk-hover);
+}
+.rk-choice-card[data-svg-border]:has(:checked) {
+  --rk-svg-control-fill: var(--rk-accent-soft);
+  --rk-svg-control-edge: var(--rk-accent);
+}
+.rk-chip[data-svg-border][aria-pressed="true"] {
+  --rk-svg-control-fill: var(--rk-inverse);
+  --rk-svg-control-edge: var(--rk-inverse);
+}
+.rk-chip[data-svg-border] {
+  line-height: 1;
+}
+.rk-select-trigger[data-svg-border]:hover:not(:disabled),
+.rk-native-select-wrap[data-svg-border]:hover:not([data-disabled]),
+.rk-textarea-wrap[data-svg-border]:hover:not([data-disabled]) {
+  --rk-svg-control-edge: var(--rk-text-3);
+}
+.rk-select-trigger[data-svg-border][aria-expanded="true"] {
+  --rk-svg-control-edge: var(--rk-accent);
+}
+.rk-select-trigger[data-svg-border]:focus-visible,
+.rk-native-select-wrap[data-svg-border]:has(:focus-visible),
+.rk-textarea-wrap[data-svg-border]:has(:focus-visible),
+.rk-choice-card[data-svg-border]:has(:focus-visible),
+.rk-chip[data-svg-border]:focus-visible {
+  --rk-svg-control-edge: var(--rk-focus);
+  --rk-svg-control-stroke: 3;
+  outline: none;
+}
+.rk-chip[data-svg-border][aria-pressed="true"]:focus-visible {
+  --rk-svg-control-edge: var(--rk-on-inverse);
+}
+.rk-select-trigger[data-svg-border][aria-invalid="true"],
+.rk-native-select-wrap[data-svg-border][data-invalid],
+.rk-textarea-wrap[data-svg-border][data-invalid] {
+  --rk-svg-control-edge: var(--rk-danger);
+}
+.rk-select-trigger[data-svg-border],
+.rk-native-select-wrap[data-svg-border],
+.rk-textarea-wrap[data-svg-border],
+.rk-choice-card[data-svg-border],
+.rk-chip[data-svg-border],
+.rk-button[data-svg-border] {
+  transition: none;
+}
+.rk-button[data-svg-border] > .rk-svg-control-frame {
+  filter: drop-shadow(0 calc(var(--rk-space) / 2) var(--rk-space) oklch(var(--rk-shade) / 0.1));
+}
+.rk-button[data-svg-border]:disabled {
+  box-shadow: none;
+}
+:is(.rk-choice-card, .rk-chip, .rk-select-trigger)[data-svg-border]:is(
+  :hover,
+  :focus-within,
+  :has(:checked),
+  [aria-pressed="true"],
+  [aria-expanded="true"]
+) {
+  background: transparent;
+  box-shadow: none;
+}
+@media (forced-colors: active) {
+  .rk-select-trigger[data-svg-border]:focus-visible,
+  .rk-native-select-wrap[data-svg-border]:has(:focus-visible),
+  .rk-textarea-wrap[data-svg-border]:has(:focus-visible),
+  .rk-choice-card[data-svg-border]:has(:focus-visible),
+  .rk-chip[data-svg-border]:focus-visible {
+    outline: 2px solid var(--rk-focus);
+    outline-offset: -2px;
+  }
+}

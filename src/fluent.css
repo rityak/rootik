@@ -1,5 +1,7 @@
 /* Generated from styles/fluent.css.ts. Run bun run styles; do not edit. */
 :where(:root, [data-rk-scope], [data-rk-style="rootik"]) {
+  --rk-button-press-scale: initial;
+  --rk-button-primary-shadow: initial;
   --rk-selected-bg: initial;
   --rk-selected-fg: initial;
   --rk-selected-shadow: initial;
@@ -20,6 +22,8 @@
   --rk-dock-indicator-shadow: initial;
 }
 :where([data-rk-style="fluent"]) {
+  --rk-button-press-scale: 1;
+  --rk-button-primary-shadow: none;
   --rk-highlight: inset 0 0 0 0 transparent;
   --rk-shadow-1: 0 0 0 1px var(--rk-line);
   --rk-shadow-2: 0 0 0 1px var(--rk-line-strong), 0 8px 24px -12px oklch(var(--rk-shade) / 0.6);

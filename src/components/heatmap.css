@@ -80,12 +80,12 @@
   place-items: center;
   aspect-ratio: 1;
   border-radius: calc(3px * var(--rk-roundness));
-  color: var(--rk-text);
+  color: var(--rk-chart-seq-text-lo);
   font-size: var(--rk-text-2xs);
   transition: box-shadow var(--rk-dur) var(--rk-ease);
 }
 .rk-heatmap-cell[data-bright] {
-  color: var(--rk-on-inverse);
+  color: var(--rk-chart-seq-text-hi);
 }
 .rk-heatmap-cell[data-empty] {
   background: var(--rk-hatch), var(--rk-well-soft);

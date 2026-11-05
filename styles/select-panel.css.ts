@@ -7,7 +7,20 @@ globalStyle(".rk-select-panel", {
   gap: `calc(${tokens.space} * 1.5)`,
   width: "280px",
   padding: "6px",
-  overflow: "hidden",
+  overflow: "auto",
+});
+
+globalStyle(".rk-select-panel[data-surface] > .rk-popover-title", { padding: 0 });
+globalStyle(".rk-select-panel[data-surface] > .rk-select-panel-foot", {
+  paddingInline: 0,
+  display: "grid",
+  gridTemplateColumns: "minmax(0, 1fr) auto",
+  gap: `calc(${tokens.space} * 2)`,
+});
+globalStyle(".rk-select-panel[data-surface] > .rk-select-panel-foot > :first-child", {
+  gridColumn: "1 / -1",
+  whiteSpace: "normal",
+  overflowWrap: "anywhere",
 });
 
 globalStyle(".rk-select-panel .rk-popover-title", { padding: "4px 6px 0" });
@@ -18,7 +31,7 @@ globalStyle(".rk-select-panel-list", {
   display: "flex",
   flexDirection: "column",
   gap: "1px",
-  maxHeight: "min(300px, calc(var(--rk-available-h, 420px) - 120px))",
+  maxHeight: "max(0px, min(300px, calc(var(--rk-available-h, 420px) - 120px)))",
   overflowY: "auto",
   outline: "none",
 });
@@ -68,3 +81,9 @@ globalStyle(".rk-select-panel-foot", {
 });
 
 globalStyle(".rk-select-panel-foot > :first-child", { flex: "1" });
+
+globalStyle(".rk-select-panel-list", {
+  minHeight: `min(${tokens.hMd}, var(--rk-floating-max-h, calc(100dvh - 16px)))`,
+  overscrollBehavior: "contain",
+});
+globalStyle(".rk-select-panel-foot", { flexShrink: 0, flexWrap: "wrap", minWidth: 0 });

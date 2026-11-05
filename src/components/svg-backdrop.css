@@ -1,0 +1,35 @@
+/* Generated from styles/svg-backdrop.css.ts. Run bun run styles; do not edit. */
+@keyframes rk-svg-background-drift {
+  from {
+    transform: translate(0, 0) scale(1.02);
+  }
+  to {
+    transform: translate(var(--rk-space), var(--rk-space)) scale(1.02);
+  }
+}
+.rk-svg-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  color: var(--rk-svg-pattern-color, var(--rk-text-3));
+  background: var(--rk-svg-backdrop, transparent);
+}
+.rk-svg-backdrop-field,
+.rk-svg-backdrop-motion {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.rk-svg-backdrop[data-animated] .rk-svg-backdrop-motion {
+  animation: rk-svg-background-drift calc(var(--rk-dur-slow) * 70) ease-in-out infinite alternate;
+  animation-play-state: var(--rk-animation-state);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rk-svg-backdrop[data-animated] .rk-svg-backdrop-motion {
+    animation-name: none;
+  }
+}
