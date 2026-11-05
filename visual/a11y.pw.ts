@@ -79,11 +79,11 @@ test("phone story fits a 375px viewport", async ({ page }) => {
 test("support workspace filters tickets, switches tabs and adds an IP", async ({ page }) => {
   await openStory(page, "layouts--support-workspace");
   const tickets = page.locator(".support-ticket");
-  await page.getByRole("searchbox", { name: "Поиск по тикетам" }).fill("SSL");
-  await expect(tickets).toHaveCount(2);
+  await page.getByRole("searchbox", { name: "Поиск по тикетам" }).fill("Проверка");
+  await expect(tickets).toHaveCount(3);
   await page.getByRole("searchbox", { name: "Поиск по тикетам" }).fill("");
   await page.getByRole("tab", { name: /Бэкапы/ }).click();
-  await expect(page.getByText("Автоматический backup")).toBeVisible();
+  await expect(page.getByText("Демо-снимок A")).toBeVisible();
   await page.getByRole("tab", { name: "IP-адреса" }).click();
   const rows = page.getByRole("table", { name: "IPv4 адреса" }).locator("tbody tr");
   await expect(rows).toHaveCount(2);
